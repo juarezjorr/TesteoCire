@@ -1,0 +1,170 @@
+$inactive_text_color: #999999;
+$active_text_color: #445f70;
+$select_text_color: rgb(107, 124, 143);
+$borde_color: #dddddd;
+
+.date_selector {
+	height: 35px;
+	padding: 1px 10px;
+	font-size: 12px;
+	float: right;
+	z-index: 1000;
+
+	.date_selector_box {
+		float: left;
+
+		.avanzador {
+			border: 0px solid $select_text_color;
+			float: left;
+
+			.icono {
+				font-size: 20px;
+				padding: 3px 5px;
+				cursor: pointer;
+				&:hover {
+					color: $select_text_color;
+				}
+			}
+			.prev {
+				padding-right: 15px;
+			}
+			.next {
+				padding-left: 5px;
+			}
+		}
+
+		.date_selector_date {
+			display: inline-block;
+			text-align: center;
+			border: 1px solid $borde_color;
+			border-radius: 3px;
+			cursor: pointer;
+			float: left;
+			&:hover {
+				background-color: $select_text_color;
+				color: #ffffff;
+				opacity: 0.5;
+			}
+		}
+		.date_selector_periodos {
+			display: block;
+			float: left;
+			position: relative;
+			display: none;
+			.date_selector_periodo {
+				text-align: center;
+				border: 1px solid $borde_color;
+				padding: 1px 10px;
+				width: 250px;
+				border-radius: 3px;
+				cursor: pointer;
+				&:hover {
+					background-color: $select_text_color;
+					color: #ffffff;
+					opacity: 0.5;
+				}
+			}
+			.date_selector_periodo_options {
+				background-color: #ffffff;
+				border: 1px solid $borde_color;
+				padding: 3px;
+				max-height: 200px;
+				position: absolute;
+				top: 25px;
+				width: 100%;
+				overflow: auto;
+				display: none;
+				z-index: 1000;
+
+				.date_selector_periodo_items {
+					padding: 1px 5px;
+					cursor: pointer;
+					border-radius: 3px;
+					&:hover {
+						background-color: $select_text_color;
+						color: #ffffff;
+						opacity: 0.5;
+					}
+				}
+			}
+		}
+	}
+	.date_selector_list {
+		float: left;
+		padding: 5px;
+		position: relative;
+		.date_selector_result {
+			text-align: center;
+			border: 1px solid $borde_color;
+			padding: 1px 10px;
+			width: 80px;
+			border-radius: 3px;
+			cursor: pointer;
+			&:hover {
+				background-color: $select_text_color;
+				color: #ffffff;
+				opacity: 0.5;
+			}
+		}
+		.date_selector_options {
+			background-color: #ffffff;
+			border: 1px solid $borde_color;
+			padding: 3px;
+			position: absolute;
+			top: 27px;
+			width: 80px;
+			display: none;
+			z-index: 1000;
+
+			.date_selector_item {
+				padding: 3px 5px;
+				cursor: pointer;
+				border-radius: 3px;
+				&:hover {
+					background-color: $select_text_color;
+					color: #ffffff;
+					opacity: 0.5;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1800px) {
+	.date_selector_box {
+		padding: 5px;
+		.avanzador {
+			border: 0px solid $select_text_color;
+			float: left;
+			width: 30px;
+			height: 25px;
+		}
+	}
+	.date_selector_date {
+		width: 250px;
+		padding: 2px 10px;
+	}
+}
+
+@media screen and (max-width: 468px) {
+	.date_selector {
+		padding: 1px 2px;
+
+		.date_selector_box {
+			float: left;
+			padding: 1px;
+			.avanzador {
+				border: 0px solid $select_text_color;
+				float: left;
+				width: 25px;
+				height: 25px;
+			}
+		}
+
+		.date_selector_date {
+			width: 160px;
+			padding: 2px 1px;
+			font-size: 0.9em;
+		}
+	}
+}

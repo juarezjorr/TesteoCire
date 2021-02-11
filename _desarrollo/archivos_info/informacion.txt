@@ -1,0 +1,12 @@
+
+
+
+
+define('FOLDER_PATH', '/cttrentals');               /* DESARROLLO LOCAL */
+
+
+ define('HOST', 'localhost');
+ define('USER', 'root');
+ define('PASSWORD', '');
+ define('DB_NAME', 'cttrentals');
+

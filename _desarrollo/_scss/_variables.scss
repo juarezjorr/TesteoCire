@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+$font_primary: 'Titillium Web', sans-serif;
+$font_secundary: 'Bebas Neue', cursive;
+$font_color_principal: #999999;
+
+// $color_btn_default_top: rgba(14, 143, 171, 0.3);
+// $color_btn_default_bot: rgba(14, 143, 171, 0.8);
+
+//$color_btn_default_top: #6aaceb;
+// $color_btn_default_bot: #32689b;
+
+$setColor: #3c5878;
+
+$color_btn_default_top: rgba($setColor, 0.4);
+$color_btn_default_bot: rgba($setColor, 1);
+
+$color_deep_table: #ffffff;
+
+$color_deep_body: rgba($setColor, 0.1);
+$color_deep_foot: rgba($setColor, 0.3);
+$color_deep_modl: rgba(#000000, 0.6);
+
+$color_btn_cancela_top: rgba(223, 45, 1, 0.3);
+$color_btn_cancela_bot: rgba(223, 45, 1, 0.8);
+
+//$color_btn_default_top: rgba(50, 104, 155, 0.4);
+//$color_btn_default_bot: rgba(50, 104, 155, 1);
+
+// $color_btn_cancela_top: rgba(223, 45, 1, 0.3);
+// $color_btn_cancela_bot: rgba(223, 45, 1, 0.8);
+
+// $color_deep_body: rgba(50, 104, 155, 0.08);
+// $color_deep_foot: rgba(50, 104, 155, 0.2);
+// $color_deep_modl: rgba(0, 0, 0, 0.6);

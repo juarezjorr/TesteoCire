@@ -1,0 +1,11 @@
+{
+    "version": 3,
+    "mappings": "ACAA,OAAO,CAAC,2FAAI;AACZ,OAAO,CAAC,uEAAI;ACDZ,AAAA,CAAC,CAAC;EACD,OAAO,EAAE,CAAC;EACV,MAAM,EAAE,CAAC;EACT,UAAU,EAAE,UAAU,GACtB;;AACD,AAAA,IAAI,CAAC;EACJ,WAAW,EDHG,eAAe,EAAE,UAAU;ECIzC,SAAS,EAAE,IAAI,GACf",
+    "sources": [
+        "../../../_desarrollo/_scss/estilos.scss",
+        "../../../_desarrollo/_scss/_variables.scss",
+        "../../../_desarrollo/_scss/_custom.scss"
+    ],
+    "names": [],
+    "file": "estilos.css"
+}
