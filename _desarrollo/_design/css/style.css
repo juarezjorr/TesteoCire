@@ -1,0 +1,46 @@
+:root {
+	--dark: #16191c;
+	--dark-x: #1e2126;
+	--light: #ffffff;
+}
+
+body {
+	font-family: 'Titillium Web', sans-serif;
+	font-weight: 400;
+	color: var(--light);
+}
+
+.bg-dark {
+	background-color: var(--dark) !important;
+}
+.bg-dark-x {
+	background-color: var(--dark-x);
+}
+.form-control,
+.btn {
+	min-height: 1.125rem;
+	line-height: initial;
+}
+.set-login {
+	max-width: 500px;
+}
+
+.logo {
+	width: 100px;
+}
+
+.carousel-item {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.img-1 {
+	background-image: url(../img/slider/slider-001.jpg);
+}
+.img-2 {
+	background-image: url(../img/slider/slider-002.jpg);
+}
+.img-3 {
+	background-image: url(../img/slider/slider-003.jpg);
+}
