@@ -8,5 +8,39 @@
 
 body {
   font-family: "Titillium Web", sans-serif;
-  font-size: 14px; }
+  font-size: 14px;
+  color: #1e2126; }
+
+.bg-dark {
+  background-color: #16191c !important; }
+
+.bg-dark-x {
+  background-color: #1e2126; }
+
+.form-control,
+.btn {
+  min-height: 1.125rem;
+  line-height: initial;
+  color: #ffffff; }
+
+.set-login {
+  max-width: 500px;
+  color: #ffffff; }
+
+.logo {
+  width: 80px; }
+
+.carousel-item {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.img-1 {
+  background-image: url(../img/slider/slider-001.jpg); }
+
+.img-2 {
+  background-image: url(../img/slider/slider-002.jpg); }
+
+.img-3 {
+  background-image: url(../img/slider/slider-003.jpg); }
 /*# sourceMappingURL=estilos.css.map */

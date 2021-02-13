@@ -12,7 +12,7 @@ DROP TABLE `cttrentals`.`ctt_post`;
 CREATE TABLE `cttrentals`.`ctt_users` (
   `usr_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del usuario',
   `usr_username` 		VARCHAR(45) NOT NULL		 COMMENT 'Usuario',
-  `usr_password` 		VARCHAR(45) NULL			 COMMENT 'Contraseña del Usuario',
+  `usr_password` 		VARCHAR(200) NULL			 COMMENT 'Contraseña del Usuario',
   `usr_dt_registry` 	DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de registro del usuario en el sistema',
   `usr_dt_last_access` 	DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de ultimo acceso al sistema',
   `usr_dt_change_pwd` 	DATETIME NULL DEFAULT (NOW() + 180) COMMENT 'Fecha proxima definida del cambio de sistema',

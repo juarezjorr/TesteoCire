@@ -30,7 +30,7 @@ class LoginController extends Controller
     if($this->verify($request_params))
       return $this->renderErrorMessage('El usuario y password son obligatorios');
 
-    $result = $this->model->signIn($request_params['txtNumEmpleado']);
+    $result = $this->model->signIn($request_params['txtEmployee']);
 
     $numeros = $result->num_rows;
     if(!$result->num_rows)
@@ -45,7 +45,7 @@ class LoginController extends Controller
     $user = $result->usr_id . '|' . $result->usr_username . '|' . $result->usr_fullname . '|' . $result->prf_id . '|' . $result->mod_id  . '|' . $result->prf_mod_start;
 
     $this->session->init();
-    $this->session->add('usuario', $user  );
+    $this->session->add('usuario', $user);
 
     $page = $result->prf_mod_start;
 
@@ -68,7 +68,7 @@ class LoginController extends Controller
   private function verify($request_params)
   {
     
-    return empty($request_params['txtNumEmpleado']) OR empty($request_params['txtPassword']);
+    return empty($request_params['txtEmployee']) OR empty($request_params['txtPassword']);
   }
 
   private function renderErrorMessage($message)

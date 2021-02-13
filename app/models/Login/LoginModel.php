@@ -11,14 +11,14 @@ public function __construct()
 }
 
 /*  ---- Obtiene los datos del usuarios logueado ---- */
-	public function signIn($username)
+	public function signIn($employee)
 	{
-		$username = $this->db->real_escape_string($username);
+		$employee = $this->db->real_escape_string($employee);
 
-		$sql = "SELECT usr.*, urm.mod_id, prf.prf_mod_start FROM ctt_users AS usr
-				INNER JOIN ctt_user_module AS urm ON urm.usr_id = usr.usr_id
-				INNER JOIN ctt_profiles AS prf ON prf.prf_id = usr.prf_id
-				WHERE usr.usr_name = '{$username}';";
+		$sql = "SELECT *  FROM ctt_users AS usr 
+				INNER JOIN ctt_employees AS emp ON emp.emp_id = usr.emp_id
+				INNER JOIN ctt_profiles AS prf ON prf.prf_id = usr.prf_id 
+				WHERE emp.emp_number = '{$employee}'";
 				
 		return $this->db->query($sql);
 	}

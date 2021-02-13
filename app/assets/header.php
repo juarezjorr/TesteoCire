@@ -7,7 +7,15 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>SICOAC</title>
+		<title>CTT Exp & Rentals</title>
+
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+			crossorigin="anonymous"
+		/>
 
 		<link rel="stylesheet" href="<?= PATH_ASSETS . 'lib/daterangepicker/daterangepicker.css' ?>" />
 		<link rel="stylesheet" href="<?= PATH_ASSETS . 'lib/dataTable/datatables.min.css' ?>" />
@@ -17,13 +25,3 @@
 		<link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/css/estilos.css' ?>">
 
 	</head>
-
-	<body>
-	<header>
-		<div class="logo"></div>
-		<div class="central_section"></div>
-		<div class="user_section"></div>
-		<div class="menu_section"></div>
-	</header>
-
-        

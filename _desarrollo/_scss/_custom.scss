@@ -6,4 +6,42 @@
 body {
 	font-family: $font_primary;
 	font-size: 14px;
+	color: $dark-x;
+}
+
+.bg-dark {
+	background-color: $dark !important;
+}
+.bg-dark-x {
+	background-color: $dark-x;
+}
+.form-control,
+.btn {
+	min-height: 1.125rem;
+	line-height: initial;
+	color: $light;
+}
+.set-login {
+	max-width: 500px;
+	color: $light;
+}
+
+.logo {
+	width: 80px;
+}
+
+.carousel-item {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.img-1 {
+	background-image: url(../img/slider/slider-001.jpg);
+}
+.img-2 {
+	background-image: url(../img/slider/slider-002.jpg);
+}
+.img-3 {
+	background-image: url(../img/slider/slider-003.jpg);
 }
