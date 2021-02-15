@@ -42,10 +42,10 @@ class LoginController extends Controller
       return $this->renderErrorMessage('La contraseña es incorrecta');
 
 
-    $user = $result->usr_id . '|' . $result->usr_username . '|' . $result->usr_fullname . '|' . $result->prf_id . '|' . $result->mod_id  . '|' . $result->prf_mod_start;
+    $user = $result->usr_id . '|' . $result->usr_username . '|' . $result->emp_fullname . '|' . $result->prf_id . '|' . $result->mod_id  . '|' . $result->prf_mod_start;
 
     $this->session->init();
-    $this->session->add('usuario', $user);
+    $this->session->add('user', $user);
 
     $page = $result->prf_mod_start;
 

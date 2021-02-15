@@ -120,40 +120,30 @@ function limpia_campos() {
 function verifica_usuario() {
 	var galleta = Cookies.get('user');
 
+	console.log(galleta);
 	if (galleta == undefined) {
 		window.location = 'Login';
 	} else {
-		var cerradura = galleta.split('|')[2];
-		var candado = cerradura.split('');
-
-		var usuario = galleta.split('|')[4].replace(/\+/g, ' ');
-
-		var H = `<div class="user_space">${usuario} <i class="fas fa-power-off salir"></i></div>`;
-
-		$('.user_section').html(H);
-
-		$('.salir').on('click', function () {
-			window.location = 'Login/logout';
-		});
-
-		if (candado[pos] != 1) {
-			//	console.log(candado[pos]);
-			$('.salir').trigger('click');
-		}
-
-		activa_menu();
+		var pagina = 'Menu/menu';
+		var par = `[{"userid":"${galleta[0]}"}]`;
+		var tipo = 'html';
+		var selector = set_menu_on_page;
+		fillField(pagina, par, tipo, selector);
 	}
 }
 
-function activa_menu() {
-	var galleta = Cookies.get('user');
-	var per = galleta.split('|')[2].split('');
+function set_menu_on_page(dt) {
+	$('header').html(dt);
 
-	$('.menu li').each(function (v, u) {
-		if (per[v] == 1) {
-			$(this).removeClass('noshow');
-		} else {
-			$(this).addClass('noshow');
-		}
+	var galleta = Cookies.get('user');
+	var usuario = galleta.split('|')[2].replace(/\+/g, ' ');
+	console.log(usuario);
+
+	var H = `<div class="user_space">${usuario} <i class="fas fa-power-off salir"></i></div>`;
+
+	$('.user-sign-out').html(H);
+
+	$('.salir').on('click', function () {
+		window.location = 'Login/logout';
 	});
 }

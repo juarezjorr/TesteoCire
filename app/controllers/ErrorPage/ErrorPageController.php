@@ -1,34 +1,19 @@
 <?php
 defined('BASEPATH') or exit('No se permite acceso directo');
-
 /**
- * Home controller
- */
+* 
+*/
 class ErrorPageController extends Controller
 {
-  /**
-   * string 
-   */
-  public $nombre;
+  public $path_inicio;
 
-  /**
-   * object 
-   */
-  public $model;
-
-
-  /**
-  * Método estándar
-  */
+  public function __construct()
+  {
+    $this->path_inicio = FOLDER_PATH;
+  }
+  
   public function exec()
   {
-    $this->show();
+    $this->render(__class__, array('path_inicio' => $this->path_inicio));
   }
-
-  public function show()
-    {
-      $params = array('nombre' => $this->nombre);
-      $this->render(__CLASS__, $params); 
-    }
-
 }
