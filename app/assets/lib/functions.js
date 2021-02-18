@@ -126,14 +126,15 @@ function verifica_usuario() {
 	} else {
 		var pagina = 'Menu/menu';
 		var par = `[{"userid":"${galleta[0]}"}]`;
-		var tipo = 'html';
+		var tipo = 'json';
 		var selector = set_menu_on_page;
 		fillField(pagina, par, tipo, selector);
 	}
 }
 
 function set_menu_on_page(dt) {
-	$('header').html(dt);
+	
+	build_menu(dt);
 
 	var galleta = Cookies.get('user');
 	var usuario = galleta.split('|')[2].replace(/\+/g, ' ');
@@ -141,9 +142,35 @@ function set_menu_on_page(dt) {
 
 	var H = `<div class="user_space">${usuario} <i class="fas fa-power-off salir"></i></div>`;
 
-	$('.user-sign-out').html(H);
+	$('.sign-out').html(H);
 
 	$('.salir').on('click', function () {
 		window.location = 'Login/logout';
 	});
 }
+
+function build_menu(dt){
+
+console.log(dt);
+	$.each(dt, function(v,u){
+		if (u.mnu_parent == 0){
+			let H = `<li><a href="${u.mod_item}">${u.mnu_item}</a>${sublevel(u.mnu_id, u.sons, dt)}</li>`;
+			$('ul.menu').append(H)
+		}
+	});
+}
+
+function sublevel(id, sn, dt){
+	let H = '';
+	if (sn > 0){
+		H += `<ul>`;
+		$.each(dt, function(v,u){
+			if (u.mnu_parent == id){
+				H +=  `<li><a href="${u.mod_item}">${u.mnu_item}</a></li>`
+			}
+		});
+		H += `</ul>`;
+	}
+	return H
+}
+

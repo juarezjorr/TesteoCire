@@ -1,0 +1,152 @@
+body  {
+    font-family: Arial;
+}
+
+header  {
+    display:flex;
+    background-color: #333333;
+    color: #FFFFFF;
+}
+.logo  {
+    width: 250px;
+    padding: 10px 2px 0px 5px;
+    line-height: 3rem;
+    border: 1px solid #FFFFFF;
+}
+
+.sign-out  {
+    padding: 10px 20px 0 0;
+    line-height: 3rem;
+    text-align: right;
+    border: 1px solid #FFFFFF;
+    width: 200px;
+}
+.menu_bar {
+    display: none;
+}
+
+/* ESTILOS GENERALES*/
+nav {
+    width: 100%;
+}
+nav ul {
+    flex:4;
+    list-style: none;
+    padding: 0%;
+}
+
+nav li {
+    line-height: 3rem;
+    position: relative;
+}
+.menu ul {
+    position: absolute;
+}
+nav a{
+    color: #dddddd;
+    display: block;
+    padding: 0 1.0em;
+    text-decoration: none;
+    transition: .4s;
+}
+
+nav a:hover  {
+    background-color: rgba(0,0,0,0.5);
+}
+
+
+
+/* PRIMER NIVEL */
+.menu  {
+    background-color: #333333;
+    display: table;
+    /* width: 90%; */
+}
+
+.menu > li  {
+ float: left;
+}
+
+/* SEGUNDO NIVEL */
+nav li li {
+    background-color: #222222;
+    max-height: 0;
+    overflow: hidden;
+    transition: all .8s;
+    width: 200px;
+}
+
+nav li:hover > ul > li {
+    max-height: 100vh;
+    overflow: visible;
+}
+
+.menu > li > ul {
+    top: 100%;
+}
+
+/* TERCER NIVEL */
+.menu ul ul  {
+    left: 100%;
+    top:0;
+}
+
+
+@media screen and (max-width:800px){
+    header {
+        position: fixed;
+    }
+   header nav {
+        width: 100%;
+        overflow: auto;
+        height: 100vh;
+        top:55px;
+        right: 100%;
+        position: fixed;
+        background-color: #333333;
+        padding-bottom: 100px;
+        
+    }
+    
+    header nav ul li { 
+        display: block;
+        float: none;
+        width: 100%;
+    }
+    
+    header .menu a {
+        border-bottom: 1px solid rgba(255,255,255,0.3);
+        padding:  0.5rem;
+        width: 100%;
+
+    }
+
+    .menu ul {
+        position: relative;
+    }
+
+    .menu > li > ul {
+        top: 100%;
+    }
+    .menu ul ul  {
+        left: 0;
+        top:0;
+    }
+
+    .menu_bar  {
+        display: block;
+        position: fixed;
+        width: 100%;
+        background-color: #333333;
+    }
+
+    .menu_bar .bt_menu  {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        color: #FFFFFF;
+        font-size: 25px;
+        padding: 10px;
+        text-align: right;
+    }
+}

@@ -8,6 +8,12 @@ DROP TABLE `cttrentals`.`ctt_user_module`;
 DROP TABLE `cttrentals`.`ctt_employees`;
 DROP TABLE `cttrentals`.`ctt_post`;
 DROP TABLE `cttrentals`.`ctt_menu`;
+DROP TABLE `cttrentals`.`ctt_stores`;
+DROP TABLE `cttrentals`.`ctt_categories`;
+DROP TABLE `cttrentals`.`ctt_subcategories`;
+DROP TABLE `cttrentals`.`ctt_services`;
+DROP TABLE `cttrentals`.`ctt_suppliers`;
+DROP TABLE `cttrentals`.`ctt_products`;
 
 
 CREATE TABLE `cttrentals`.`ctt_users` (
@@ -17,7 +23,7 @@ CREATE TABLE `cttrentals`.`ctt_users` (
 	`usr_dt_registry` 		DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de registro del usuario en el sistema',
 	`usr_dt_last_access` 	DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de ultimo acceso al sistema',
 	`usr_dt_change_pwd` 	DATETIME NULL DEFAULT (NOW() + 180) COMMENT 'Fecha proxima definida del cambio de sistema',
-	`prf_id` 				INT NULL 					 COMMENT 'ID del perfil relacion usuario - perfil',
+	`prf_id` 				INT NULL 					 COMMENT 'ID del perfil relacion ctt_profiles',
 	`emp_id` 				INT NULL 					 COMMENT 'ID del empleado relacion ctt_employees',
 PRIMARY KEY (`usr_id`))
 COMMENT = 'Tabla de Usuarios registrados';
@@ -84,9 +90,73 @@ CREATE TABLE `cttrentals`.`ctt_menu` (
 	`mnu_parent`			INT NULL		 			 COMMENT 'ID del menu padre',
 	`mnu_item`				VARCHAR(100) NOT NULL		 COMMENT 'Elementos del menu',
 	`mnu_description`		VARCHAR(300) NULL			 COMMENT 'Descripción del elemento del menu',
-	`mod_id`				INT NULL		 			 COMMENT 'ID del modulo relación ctt_module ctt_menu',
+	`mod_id`				INT NULL		 			 COMMENT 'ID del modulo relación ctt_module',
 PRIMARY KEY (`mnu_id`))
 COMMENT = 'Tabla de los elementos que componene el menu susperior';
 
+CREATE TABLE `cttrentals`.`ctt_stores` (
+	`str_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del almacén',
+	`str_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del almacén',
+	`str_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del almacen 1-Activo, 0-Inactivo',
+	`str_type`				VARCHAR(100) NULL			 COMMENT 'Tipo de almacén',
+PRIMARY KEY (`str_id`))
+COMMENT = 'Listado de almacenes.';
 
+CREATE TABLE `cttrentals`.`ctt_categories` (
+	`cat_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del catálogo',
+	`cat_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del catálogo',
+	`cat_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del catálogo 1-Activo, 0-Inactivo',
+PRIMARY KEY (`cat_id`))
+COMMENT = 'Catálogo.';
 
+CREATE TABLE `cttrentals`.`ctt_subcategories` (
+	`sbc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la subcategoría',
+	`sbc_code`				VARCHAR(10) NULL 			 COMMENT 'Clave de la subcategoría',
+	`sbc_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre de la subcategoría',
+	`sbc_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus de la subcategoría 1-Activo, 0-Inactivo',
+	`cat_id` 				INT NOT NULL   				 COMMENT 'ID del catálogo relación ctt_categories',
+PRIMARY KEY (`sbc_id`))
+COMMENT = 'Subcategorias.';
+
+CREATE TABLE `cttrentals`.`ctt_services` (
+	`srv_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del servicio',
+	`srv_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del servicio',
+	`srv_description`		VARCHAR(300) NULL 			 COMMENT 'Nombre del servicio',
+	`srv_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del servicio 1-Activo, 0-Inactivo',
+PRIMARY KEY (`srv_id`))
+COMMENT = 'Tipificación de los servicios.';
+
+CREATE TABLE `cttrentals`.`ctt_suppliers` (
+	`sup_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del proveedor',
+	`sup_buseiness_name`	VARCHAR(100) NULL 			 COMMENT 'Nombre de la empresa',
+	`sup_contact`			VARCHAR(100) NULL 			 COMMENT 'Nombre del responsable',
+	`sup_rfc`				VARCHAR(15)  NULL 			 COMMENT 'Registro Federal de Contribuyentes',
+	`sup_emal`				VARCHAR(100)  NULL 			 COMMENT 'Correo electrónico',
+	`sup_phone`				VARCHAR(100)  NULL 			 COMMENT 'Número telefónico',
+	`sup_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del proveedor 1-Activo, 0-Inactivo',
+PRIMARY KEY (`sup_id`))
+COMMENT = 'Proveedores de la empresa.';
+
+CREATE TABLE `cttrentals`.`ctt_products` (
+	`prd_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del proveedor',
+	`prd_sku`				VARCHAR(10) NULL 			 COMMENT 'SKU identificador del producto',
+    `prd_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del producto',
+	`prd_english_name`		VARCHAR(100)  NULL 			 COMMENT 'Nombre del producto en ingles',
+    `prd_model`				VARCHAR(50) NULL 			 COMMENT 'Modelo del producto',
+	`prd_serial_number`		VARCHAR(50)  NULL 			 COMMENT 'Numero de serie del producto',
+	`prd_cost`				decimal(10,2)  NULL			 COMMENT 'Costo unitario del producto',
+    `prd_price`				decimal(10,2)  NULL			 COMMENT 'Precio unitario del producto',
+	`prd_coin_type`			VARCHAR(30)  NULL 			 COMMENT 'Tipo de moneda',
+    `prd_document`			blob  NULL 			 		 COMMENT 'Manual del producto',
+    `prd_data_sheet`		blob  NULL 			 		 COMMENT 'Ficha técnica del producto',
+    `prd_warranty`			blob  NULL 			 		 COMMENT 'Garantía del producto',
+    `prd_date_registry`		datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
+    `prd_date_down`			datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de baja del producto',
+	`prd_visibility`		VARCHAR(1) NULL		 		 COMMENT 'Visibilidad del producto en cotización 1-visible, 0-no visible',
+    `prd_comments`			VARCHAR(300) NULL	 		 COMMENT 'Observaciones',
+    `prd_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
+    `sbc_id` 				INT NULL 					 COMMENT 'ID de la subcategoría relacion ctt_subcategories',
+    `sup_id` 				INT NULL 					 COMMENT 'ID de la proveedor relacion ctt_suppliers',
+    `srv_id` 				INT NULL 					 COMMENT 'ID del tipo de servicio relacion ctt_services',
+PRIMARY KEY (`prd_id`))
+COMMENT = 'Productos de la empresa.';

@@ -3,19 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-02-2021 a las 21:59:48
+-- Tiempo de generación: 17-02-2021 a las 22:41:03
 -- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 7.4.14
+-- Versión de PHP: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `cttrentals`
@@ -44,7 +38,9 @@ TRUNCATE TABLE `ctt_menu`;
 
 INSERT INTO `ctt_menu` (`mnu_id`, `mnu_parent`, `mnu_item`, `mnu_description`, `mod_id`) VALUES
 (1, 0, 'Inventarios', 'Seccion de inventarios', 1),
-(2, 0, 'Cotizaciones', 'Seccion de cotizaciones', 2);
+(2, 0, 'Programación', 'Seccion de programaciones', 2),
+(3, 1, 'Almacenes', 'Seccion de almacenes', 3),
+(4, 1, 'Categorias', 'Seccion de categorias', 4);
 
 --
 -- Truncar tablas antes de insertar `ctt_modules`
@@ -56,8 +52,10 @@ TRUNCATE TABLE `ctt_modules`;
 --
 
 INSERT INTO `ctt_modules` (`mod_id`, `mod_code`, `mod_name`, `mod_description`, `mod_item`) VALUES
-(1, 'invt', 'Inventarios', 'Modulo que controla los inventarios', 'Inventory'),
-(2, 'cotz', 'Cotizaciones', 'Modulo de cotizaciones', 'MarketRates');
+(1, 'invt', 'Inventarios', 'Modulo que controla los inventarios', ''),
+(2, 'prog', 'Programación', 'Modulo de programación', ''),
+(3, 'alma', 'Almacenes', 'Modulo de almacenes', 'storehouse'),
+(4, 'categ', 'Categorias', 'Modulo de categorias', 'categories');
 
 --
 -- Truncar tablas antes de insertar `ctt_post`
@@ -104,9 +102,7 @@ TRUNCATE TABLE `ctt_user_module`;
 
 INSERT INTO `ctt_user_module` (`urm_id`, `usr_id`, `mod_id`) VALUES
 (1, 1, 1),
-(2, 1, 2);
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -25,8 +25,32 @@
     $this->render(__CLASS__, $params);
   }
 
-// Listado de salidas pendients
-	public function menu($request_params)
+// Listado de elementos del menu
+  public function menu($request_params)
+	{
+	//$params =  $this->session->get('user');
+		$result = $this->model->listaMenu($request_params['userid']);
+		$i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"mnu_id":"0"}]';	
+        }
+
+        // $params = array('unidad' => $res);
+        // $this->render(__CLASS__, $params);
+
+        echo $res;
+	}
+
+
+
+// Listado de elementos del menu
+	public function lista_menu($request_params)
 	{
 	//$params =  $this->session->get('user');
 		$result = $this->model->listaMenu($request_params['userid']);

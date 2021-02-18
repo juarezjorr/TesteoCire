@@ -4,7 +4,9 @@
 	//   require ROOT . FOLDER_PATH . "/app/assets/menu.php";
 ?>
 
-<header></header>
+<header>
+	<?php require ROOT . FOLDER_PATH . "/app/assets/menu.php"; ?>
+</header>
 <div class="container">
 	<div class="contenido"></div>
 </div>
