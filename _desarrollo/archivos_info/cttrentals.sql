@@ -32,30 +32,28 @@ INSERT INTO `ctt_employees` (`emp_id`, `emp_number`, `emp_fullname`, `emp_area`,
 --
 
 TRUNCATE TABLE `ctt_menu`;
---
--- Volcado de datos para la tabla `ctt_menu`
---
-
 INSERT INTO `ctt_menu` (`mnu_id`, `mnu_parent`, `mnu_item`, `mnu_description`, `mod_id`) VALUES
 (1, 0, 'Inventarios', 'Seccion de inventarios', 1),
 (2, 0, 'Programación', 'Seccion de programaciones', 2),
 (3, 1, 'Almacenes', 'Seccion de almacenes', 3),
-(4, 1, 'Categorias', 'Seccion de categorias', 4);
+(4, 1, 'Categorias', 'Seccion de categorias', 4),
+(5, 0, 'Administración','Seccion de administración',5),
+(6, 5, 'Usuarios','Seccion de usuarios', 6),
+(7, 3, 'Movimiento entre almacenes','Sección de movimientos entre almacenes',7);
 
 --
 -- Truncar tablas antes de insertar `ctt_modules`
 --
 
 TRUNCATE TABLE `ctt_modules`;
---
--- Volcado de datos para la tabla `ctt_modules`
---
-
 INSERT INTO `ctt_modules` (`mod_id`, `mod_code`, `mod_name`, `mod_description`, `mod_item`) VALUES
-(1, 'invt', 'Inventarios', 'Modulo que controla los inventarios', ''),
-(2, 'prog', 'Programación', 'Modulo de programación', ''),
-(3, 'alma', 'Almacenes', 'Modulo de almacenes', 'storehouse'),
-(4, 'categ', 'Categorias', 'Modulo de categorias', 'categories');
+(1, 'invt', 'Inventarios', 'Modulo que controla los inventarios', '#'),
+(2, 'prog', 'Programación', 'Modulo de programación', '#'),
+(3, 'alma', 'Almacenes', 'Modulo de almacenes', '#'),
+(4, 'categ', 'Categorias', 'Modulo de categorias', 'categories'),
+(5, 'admin', 'Administracion', 'Modulo de administración', '#'),
+(6, 'users', 'Usuarios', 'Modulo de usuarios','#'),
+(7, 'mvalm', 'Movimiento de almacenes','Modulo de movimiento entre almacenes','movestores');
 
 --
 -- Truncar tablas antes de insertar `ctt_post`
@@ -96,13 +94,12 @@ INSERT INTO `ctt_users` (`usr_id`, `usr_username`, `usr_password`, `usr_dt_regis
 --
 
 TRUNCATE TABLE `ctt_user_module`;
---
--- Volcado de datos para la tabla `ctt_user_module`
---
-
 INSERT INTO `ctt_user_module` (`urm_id`, `usr_id`, `mod_id`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
-(4, 1, 4);
+(4, 1, 4),
+(5, 1, 5),
+(6, 1, 6),
+(7, 1, 7);
 COMMIT;

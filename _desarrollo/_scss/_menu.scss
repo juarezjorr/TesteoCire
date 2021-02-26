@@ -1,21 +1,34 @@
 
 
 header  {
-    display:flex;
-    background-color: #333333;
+    position: fixed;
+    background-color: $dark;
     color: #FFFFFF;
+    top:0;
+    left:0;
+    right: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    z-index: 200;
+    
 }
-.logo  {
+.logos  {
     width: 250px;
-    padding: 10px 2px 0px 5px;
+    padding: 5px 2px 0px 5px;
     line-height: 3rem;
+    float: left;
+    grid-column: 1 /span 1;
+
 }
 
 .sign-out  {
-    padding: 10px 20px 0 0;
-    line-height: 3rem;
+    padding: 7px 10px 0 0;
     text-align: right;
-    width: 200px;
+    grid-column: 7 / span 1;
+    height: 2.5rem;
+    i {
+        margin: 0 5px;
+    }
 }
 .menu_bar {
     display: none;
@@ -24,26 +37,35 @@ header  {
 /* ESTILOS GENERALES*/
 nav {
     width: 100%;
+    height: 2.5rem;
+    grid-column: 2 / span 4;
+    display:grid;
+    grid-template-columns: repeat(7, 1fr);
 }
 nav ul {
-    flex:4;
+
     list-style: none;
     padding: 0%;
+    
 }
 
 nav li {
-    line-height: 3rem;
+    line-height: 2.2rem;
     position: relative;
+}
+.menu  {
+    grid-column: 1/ span 6;
 }
 .menu ul {
     position: absolute;
 }
+
 nav a{
     color: #dddddd;
     display: block;
-    padding: 0 1.0em;
+    padding: 0 1.40em;
     text-decoration: none;
-    transition: .4s;
+    transition: 0.5s;
 }
 
 nav a:hover  {
@@ -56,7 +78,7 @@ nav a:hover  {
 
 /* PRIMER NIVEL */
 .menu  {
-    background-color: #333333;
+    background-color: $dark;
     display: table;
     /* width: 90%; */
 }
@@ -67,11 +89,11 @@ nav a:hover  {
 
 /* SEGUNDO NIVEL */
 nav li li {
-    background-color: #222222;
+    background-color: $dark-x;
     max-height: 0;
     overflow: hidden;
-    transition: all .8s;
-    width: 200px;
+    transition: all 0.9s;
+    width: 220px;
 }
 
 nav li:hover > ul > li {
@@ -83,6 +105,7 @@ nav li:hover > ul > li {
     top: 100%;
 }
 
+
 /* TERCER NIVEL */
 .menu ul ul  {
     left: 100%;
@@ -90,41 +113,75 @@ nav li:hover > ul > li {
 }
 
 
-@media screen and (max-width:800px){
+
+@media screen and (max-width:1000px){
     header {
         position: fixed;
-    }
-   header nav {
+        height: 55px;
+       display: block;
+    
+        .logos  {
+          
+        }
+
+        .sign-out  {
+          position: absolute;
+          bottom: 10px;
+          padding: 0 10px 0 10px;
+          text-align: right;
+          width: 100%;
+        }
+
+    nav {
+   
         width: 100%;
         overflow: auto;
-        height: 100vh;
-        top:55px;
+        height: 95vh;
+        top:50px;
         right: 100%;
-        position: fixed;
-        background-color: #333333;
+        position: absolute;
+        background-color: $dark;
         padding-bottom: 100px;
-        
+        display: block;
+       
     }
-    
-    header nav ul li { 
+       
+    nav ul li { 
         display: block;
         float: none;
         width: 100%;
+       
     }
-    
+
+
+     
     header .menu a {
         border-bottom: 1px solid rgba(255,255,255,0.3);
         padding:  0.5rem;
         width: 100%;
+        display: block;
+       
 
     }
+.menu {
+    display: block;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
 
+}
     .menu ul {
         position: relative;
+    }
+    nav li {
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        line-height: 3.5rem;
     }
 
     .menu > li > ul {
         top: 100%;
+    }
+    .menu > li > ul > li {
+        padding-left: 20px;
     }
     .menu ul ul  {
         left: 0;
@@ -135,7 +192,10 @@ nav li:hover > ul > li {
         display: block;
         position: fixed;
         width: 100%;
-        background-color: #333333;
+        background-color: transparent;
+        // border: 1px solid #ff00FF;
+        grid-column: 1 / span 1;
+        z-index: 40;
     }
 
     .menu_bar .bt_menu  {
@@ -147,4 +207,5 @@ nav li:hover > ul > li {
         padding: 10px;
         text-align: right;
     }
+}
 }

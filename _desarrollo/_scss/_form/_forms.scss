@@ -1,0 +1,9 @@
+@import 'textbox';
+
+
+.form-group  {
+    background-color: $form;
+    overflow: hidden;
+    padding: 1rem;
+    border-radius: 4px;
+}

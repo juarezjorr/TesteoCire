@@ -14,15 +14,23 @@ DROP TABLE `cttrentals`.`ctt_subcategories`;
 DROP TABLE `cttrentals`.`ctt_services`;
 DROP TABLE `cttrentals`.`ctt_suppliers`;
 DROP TABLE `cttrentals`.`ctt_products`;
+DROP TABLE `cttrentals`.`ctt_prod_documents`;
+DROP TABLE `cttrentals`.`ctt_accessories`;
+DROP TABLE `cttrentals`.`ctt_actions`;
+DROP TABLE `cttrentals`.`ctt_activity_log`;
+DROP TABLE `cttrentals`.`ctt_store_exchange`;
+DROP TABLE `cttrentals`.`ctt_type_exchange`;
+DROP TABLE `cttrentals`.`ctt_store_product`;
 
 
 CREATE TABLE `cttrentals`.`ctt_users` (
 	`usr_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del usuario',
 	`usr_username` 			VARCHAR(45) NOT NULL		 COMMENT 'Usuario',
 	`usr_password` 			VARCHAR(200) NULL			 COMMENT 'Contraseña del Usuario',
-	`usr_dt_registry` 		DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de registro del usuario en el sistema',
-	`usr_dt_last_access` 	DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de ultimo acceso al sistema',
-	`usr_dt_change_pwd` 	DATETIME NULL DEFAULT (NOW() + 180) COMMENT 'Fecha proxima definida del cambio de sistema',
+	`usr_dt_registry` 		DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del usuario en el sistema',
+	`usr_dt_last_access` 	DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de ultimo acceso al sistema',
+	`usr_dt_change_pwd` 	DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha proxima definida del cambio de sistema',
+	`usr_status` 			VARCHAR(1) NULL			 	 COMMENT 'Estatus del usuario 1-Activo, 0-Inactivo',
 	`prf_id` 				INT NULL 					 COMMENT 'ID del perfil relacion ctt_profiles',
 	`emp_id` 				INT NULL 					 COMMENT 'ID del empleado relacion ctt_employees',
 PRIMARY KEY (`usr_id`))
@@ -70,7 +78,8 @@ CREATE TABLE `cttrentals`.`ctt_employees` (
 	`emp_number`			VARCHAR(50) NOT NULL		 COMMENT 'Numero del empleado',
 	`emp_fullname`			VARCHAR(100) NOT NULL		 COMMENT 'Nombre del empleado',
 	`emp_area` 				VARCHAR(50) NULL			 COMMENT 'Area a la que pertenece el empleado',
-	`emp_status`			VARCHAR(1) NULL			 	 COMMENT 'Estatus del empleado 1-activo, 2-inactivo',
+	`emp_report_to`			INT NULL			 		 COMMENT 'ID del empleado jefe inmediato relacion asi mismo',
+	`emp_status`			VARCHAR(1) NULL			 	 COMMENT 'Estatus del empleado 1-Activo, 0-Inactivo',
 	`pos_id`				INT NULL			 	 	 COMMENT 'ID del puesto relación ctt_post',
 PRIMARY KEY (`emp_id`))
 COMMENT = 'Tabla de los empleados de la empresa';
@@ -80,7 +89,7 @@ CREATE TABLE `cttrentals`.`ctt_post` (
 	`pos_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del puesto',
 	`pos_name`				VARCHAR(50) NOT NULL		 COMMENT 'Nombre del puesto',
 	`pos_description`		VARCHAR(300) NOT NULL		 COMMENT 'Descripción del puesto',
-	`pos_status`			VARCHAR(1) NULL			 	 COMMENT 'Estatus del puesto 1-activo, 2-inactivo',
+	`pos_status`			VARCHAR(1) NULL			 	 COMMENT 'Estatus del puesto 1-Activo, 0-Inactivo',
 PRIMARY KEY (`pos_id`))
 COMMENT = 'Tabla de los empleados de la empresa';
 
@@ -147,11 +156,8 @@ CREATE TABLE `cttrentals`.`ctt_products` (
 	`prd_cost`				decimal(10,2)  NULL			 COMMENT 'Costo unitario del producto',
     `prd_price`				decimal(10,2)  NULL			 COMMENT 'Precio unitario del producto',
 	`prd_coin_type`			VARCHAR(30)  NULL 			 COMMENT 'Tipo de moneda',
-    `prd_document`			blob  NULL 			 		 COMMENT 'Manual del producto',
-    `prd_data_sheet`		blob  NULL 			 		 COMMENT 'Ficha técnica del producto',
-    `prd_warranty`			blob  NULL 			 		 COMMENT 'Garantía del producto',
-    `prd_date_registry`		datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
-    `prd_date_down`			datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de baja del producto',
+    `prd_date_registry`		datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
+    `prd_date_down`			datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de baja del producto',
 	`prd_visibility`		VARCHAR(1) NULL		 		 COMMENT 'Visibilidad del producto en cotización 1-visible, 0-no visible',
     `prd_comments`			VARCHAR(300) NULL	 		 COMMENT 'Observaciones',
     `prd_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
@@ -160,3 +166,72 @@ CREATE TABLE `cttrentals`.`ctt_products` (
     `srv_id` 				INT NULL 					 COMMENT 'ID del tipo de servicio relacion ctt_services',
 PRIMARY KEY (`prd_id`))
 COMMENT = 'Productos de la empresa.';
+
+CREATE TABLE `cttrentals`.`ctt_prod_documents` (
+	`doc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del documento',
+	`doc_code`				VARCHAR(100) NULL		 	 COMMENT 'Código del documento',
+	`doc_name`				VARCHAR(100) NULL		 	 COMMENT 'Nombre del documento',
+    `doc_type`				VARCHAR(50) NULL		 	 COMMENT 'Tipo de docuemnto',
+	`doc_size`				INT NULL		 			 COMMENT 'Tamaño del docuemnto',
+    `doc_content_type`		VARCHAR(100) NULL		 	 COMMENT 'Tipo del contenido del documento',
+    `doc_document`			BLOB NULL		 			 COMMENT 'Contetnido del documento',
+    `prd_id` 				INT NULL 					 COMMENT 'ID del producto relacion ctt_productos',
+PRIMARY KEY (`doc_id`))
+COMMENT = 'Documentos relacionados con el producto';
+
+CREATE TABLE `cttrentals`.`ctt_accessories` (
+	`acr_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del accesorio',
+	`acr_parent`			INT NULL		 			 COMMENT 'ID del producto padre',
+    `acr_status`			VARCHAR(1)  NULL		 	 COMMENT 'Estatus del accesorio D-Disponible, N-No disponible',
+	`prd_id`				INT NULL					 COMMENT 'Id del producto relaciòn ctt_products',
+PRIMARY KEY (`acr_id`))
+COMMENT = 'Productos o accesorios dependientes de otros productos';
+
+CREATE TABLE `cttrentals`.`ctt_actions` (
+	`acc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la acción',
+	`acc_description`		VARCHAR(300) NOT NULL		 COMMENT 'Descripción de la acción realizada por el usuario en un modulo',
+	`acc_type`				VARCHAR(50) NOT NULL		 COMMENT 'Tipo de accion',
+	`mod_id` 				INT NULL 					 COMMENT 'ID del modulo relacion ctt_module',
+PRIMARY KEY (`acc_id`))
+COMMENT = 'Tabla de tipos de acciones realizadas por un usuario dentro del sistema';
+
+CREATE TABLE `cttrentals`.`ctt_activity_log` (
+	`log_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la bitácora',
+	`log_date`				DATETIME NULL DEFAULT CURRENT_TIMESTAMP  COMMENT 'Fecha de registro de la actividad',
+	`log_event`				VARCHAR(100) NOT NULL		 COMMENT 'Detalle de la acción realizada',
+    `emp_number`			VARCHAR(50) NOT NULL		 COMMENT 'Numero del empleado',
+	`emp_fullname`			VARCHAR(100) NOT NULL		 COMMENT 'Nombre del empleado',
+    `acc_id` 				INT NULL 					 COMMENT 'ID de la accion relacion ctt_actions',
+PRIMARY KEY (`log_id`))
+COMMENT = 'Bitácora de actividades realizadas en el sistema';
+
+CREATE TABLE `cttrentals`.`ctt_store_exchange` (
+	`exc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del movimiento',
+	`exc_date`				DATETIME NULL DEFAULT CURRENT_TIMESTAMP  COMMENT 'Fecha de registro del movimiento',
+	`exc_sku_product`		VARCHAR(100) NOT NULL		 COMMENT 'SKU del producto',
+    `exc_location`			VARCHAR(50) NOT NULL		 COMMENT '? Ubicacion_destino',
+	`exc_comments`			VARCHAR(300) NOT NULL		 COMMENT 'Comentarios referentes al movimiento',
+    `exc_proyect`			VARCHAR(100) NOT NULL		 COMMENT 'Nombre del proyecto',
+    `exc_employee_name`		VARCHAR(100) NOT NULL		 COMMENT 'Nombre del empleado',
+    `ext_id` 				INT NULL 					 COMMENT 'ID del tipo de movimiento relación ctt_type_exchange',
+PRIMARY KEY (`exc_id`))
+COMMENT = 'Movimientos de productos entre almacenes';
+
+CREATE TABLE `cttrentals`.`ctt_type_exchange` (
+	`ext_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del tipo de movimiento',
+	`ext_code`				VARCHAR(100) NOT NULL		 COMMENT 'Còdigo del tipo de movimiento',
+	`ext_type`				VARCHAR(1) NOT NULL		 	 COMMENT 'Tipo de movimiento E-Entrada, S-Salida, R-Renta',
+	`ext_description`		VARCHAR(300) NOT NULL		 COMMENT 'Descripcion del movimiento',
+PRIMARY KEY (`ext_id`))
+COMMENT = 'Tipos de movimientos entre almacenes';
+
+CREATE TABLE `cttrentals`.`ctt_store_product` (
+  	`stp_id` 				INT(11) NOT NULL AUTO_INCREMENT COMMENT 'ID del registro',
+  	`stp_quantity` 			INT(11) NOT NULL DEFAULT 0   COMMENT 'Cantidad de productos',
+  	`str_id` 				INT(11) NOT NULL 			 COMMENT 'ID del almacen relacion ctt_store',
+  	`prd_id` 				INT(11) NOT NULL			 COMMENT 'ID del producto relacion ctt_products',
+PRIMARY KEY (`stp_id`))
+COMMENT='Tabla de cantidad de productos en almacen';
+
+
+

@@ -4,14 +4,14 @@
 
 
 			
-	<div class="logo"><h5>CTT Exp & Rentals</h5></div>
+	<div class="logos"><h5>CTT Exp & Rentals</h5></div>
 	<div class="menu_bar">
 		<a href="#" class="bt_menu"><i class="fas fa-bars"></i></a>
 	</div>
 	<nav>
 		<ul class="menu"></ul>
+		<div class="sign-out"></div>
 	</nav>
-	<div class="sign-out"></div>
 		
 
 	<script src="<?= PATH_VIEWS .	'Menu/Menu.js' ?>"></script>
