@@ -11,6 +11,7 @@
 
 		public function __construct()
 		{
+			$this->model = new UsuariosModel();
 			$this->session= new Session();
 			$this->session->init();
 			if($this->session->getStatus()===1 || empty($this->session->get('user')))
@@ -21,5 +22,36 @@
 		  $params = array('user' => $this->session->get('user'));
 		  $this->render(__CLASS__, $params);
 		}
+
+		public function GetUsuarios()
+		{
+	      $result = $this->model->GetUsuarios();
+		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		}
+
+		public function SaveUsuario($request_params)
+		{
+		  if($request_params['IdUsuario'] == ""){
+			$result = $this->model->SaveUsuario($request_params);	  
+		  }else{
+			$result = $this->model->ActualizaUsuario($request_params);	  
+		  }
+
+		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		}
+
+		public function GetUsuario($request_params)
+		{
+	      $result = $this->model->GetUsuario($request_params);
+		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		}
+
+		public function DeleteUsuario($request_params)
+		{
+		  $result = $this->model->DeleteUsuario($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
+		}
+
+
 	  
 	}

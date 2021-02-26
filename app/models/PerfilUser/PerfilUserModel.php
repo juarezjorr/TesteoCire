@@ -8,10 +8,18 @@ class PerfilUserModel extends Model
 		parent::__construct();
 	}
 
-// Optiene los modulos existentes
-	public function GetModules()
+// Optiene los modulos existentes - TODOS
+	public function GetModules($params)
 	{
-		$qry = "select mod_id,mod_code,mod_name,mod_description from ctt_modules;";
+		if ($params['ModUser'] == '') {
+			$qry = "select mod_id,mod_code,mod_name,mod_description from ctt_modules;";
+		}  else {
+			if($params['tipeModul'] == 'Asig'){
+				$qry = "select mod_id,mod_code,mod_name,mod_description from ctt_modules where mod_id in (".$params['ModUser'].");"; //Asignados
+			}else{
+				$qry = "select mod_id,mod_code,mod_name,mod_description from ctt_modules where mod_id not in (".$params['ModUser'].");"; // Disponibles
+			}
+		}	
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
@@ -24,7 +32,7 @@ class PerfilUserModel extends Model
 		return $lista;
 	}
 
-// Optiene los modulos existentes
+// Optiene los Perfiles existentes
 	public function GetPerfiles()
 	{
 		$qry = "select prf_id,prf_code, prf_name, prf_description from ctt_profiles;";
@@ -40,28 +48,124 @@ class PerfilUserModel extends Model
 		return $lista;
 	}
 
+	// Optiene los Perfiles existentes
+	public function getIdModuluesPerfiles($params)
+	{
+		//Optenemos los reportes asociados al perfil
+		$qry = "SELECT mod_id FROM ctt_profile_module WHERE prf_id = '".$params['idPerfil']."'";
+		$result = $this->db->query($qry);
+		$modulesAsing = "";
+		while ($row = $result->fetch_row()){
+			$modulesAsing .= $row[0].",";
+		}
+		$modulesAsing = substr($modulesAsing, 0, -1);
+		return $modulesAsing;
+	}
 
+	
+
+//Guarda perfil
 	public function SavePerfil($params)
 	{
         $estatus = 0;
-	try {
-		$qry = "insert into ctt_profiles ( prf_code, prf_name, prf_description, prf_mod_start) 
-                values('".$params['CodPerfil']."','".$params['NomPerfil']."','".$params['DesPerfil']."', 'menu');";
-		$this->db->query($qry);
-		$con = mysqli_connect(HOST, USER, PASSWORD, DB_NAME);
-		$lastid = mysqli_insert_id($con); 
-		$arrayModules = split(',', $params['modulesAsig']);
-		
-		foreach ($arrayModules as $id) {
-			$qry = "insert into ctt_profile_module (prf_id,mod_id) values (".$lastid.",".$id.");";
-			$this->db->query($qry);
-		}
-		$estatus = 1;
-	} catch (Exception $e) {
-		$estatus = 0;
-		//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
-	}
+			try {
+				//Inserta perfil
+				$qry = "insert into ctt_profiles ( prf_code, prf_name, prf_description, prf_mod_start) 
+						values('".$params['CodPerfil']."','".$params['NomPerfil']."','".$params['DesPerfil']."', 'menu');";
+				$this->db->query($qry);
+
+				//optiene id de perfil insertado
+				$qry = "SELECT MAX(prf_id) AS id FROM ctt_profiles;";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+				    $lastid = trim($row[0]);
+				}
+
+				//inserta relacion modulo perfil
+				$arrayModules = explode(",", $params['modulesAsig']);
+				foreach ($arrayModules as $id) {
+					$qry = "insert into ctt_profile_module (prf_id,mod_id) values (".$lastid.",".$id.");";
+					$this->db->query($qry);
+				}
+				$estatus = 1;
+			} catch (Exception $e) {
+				$estatus = 0;
+				//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+			}
 		return $estatus;
+	}
+
+//Actuliza perfil
+	public function ActualizaPerfil($params)
+	{
+        $estatus = 0;
+			try {
+				//Actualiza perfil
+				$qry = "UPDATE ctt_profiles
+						SET prf_code = '".$params['CodPerfil']."',
+							prf_name = '".$params['NomPerfil']."',
+							prf_description = '".$params['DesPerfil']."',
+							prf_mod_start = 'menu'
+						WHERE prf_id = ".$params['IdPerfil'].";";
+				$this->db->query($qry);
+				//Borra los modulos asignados anteriormente 
+				$qry = "DELETE FROM ctt_profile_module WHERE prf_id ='".$params['IdPerfil']."'";
+				$result = $this->db->query($qry);
+
+				//inserta relacion modulo perfil
+				$arrayModules = explode(",", $params['modulesAsig']);
+				foreach ($arrayModules as $id) {
+					$qry = "insert into ctt_profile_module (prf_id,mod_id) values (".$params['IdPerfil'].",".$id.");";
+					$this->db->query($qry);
+				}
+				$estatus = 1;
+			} catch (Exception $e) {
+				$estatus = 0;
+				//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+			}
+		return $estatus;
+	}
+
+
+//borra perfil
+	public function DeletePerfil($params)
+	{
+        $estatus = 0;
+			try {
+				//Borra perfil
+				$qry = "DELETE FROM ctt_profiles WHERE prf_id ='".$params['IdPerfil']."'";
+				$this->db->query($qry);
+				$estatus = 1;
+			} catch (Exception $e) {
+				$estatus = 0;
+				//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+			}
+		return $estatus;
+	}
+
+
+	public function GetDataPerfil($params)
+	{
+		//Optenemos los reportes asociados al perfil
+		$qry = "SELECT mod_id FROM ctt_profile_module WHERE prf_id = '".$params['id']."'";
+		$result = $this->db->query($qry);
+		$modulesAsing = "";
+		while ($row = $result->fetch_row()){
+			$modulesAsing .= $row[0].",";
+		}
+		$modulesAsing = substr($modulesAsing, 0, -1);
+
+		//Optenemos los informacion del Usuario
+		$qry = "SELECT prf_id,prf_code, prf_name, prf_description FROM ctt_profiles WHERE prf_id ='" .$params['id']."'";
+		$result = $this->db->query($qry);
+		if ($row = $result->fetch_row()) {
+			$item = array("prf_id" =>$row[0],
+			"prf_code" =>utf8_decode($row[1]),
+			"prf_name"=>utf8_decode($row[2]),
+			"prf_description"=>$row[3],
+			"prf_modulesAsing"=>$modulesAsing);
+		}
+		return $item;
 	}
 
 }

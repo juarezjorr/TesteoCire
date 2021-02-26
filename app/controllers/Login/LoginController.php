@@ -62,7 +62,9 @@ class LoginController extends Controller
       header('location: ' . FOLDER_PATH .'/changePassword');
     } else {
 
-    header('location: ' . FOLDER_PATH .'/perfilUSER');
+      //header('location: ' . FOLDER_PATH .'/perfilUSER');
+      header('location: ' . FOLDER_PATH .'/usuarios');
+
      // header('location: ' . FOLDER_PATH .'/' . $page);
     }
 

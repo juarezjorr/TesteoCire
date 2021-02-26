@@ -23,9 +23,15 @@
 		  $this->render(__CLASS__, $params);
 		}
 
-		public function GetModules()
+		public function GetModules($request_params)
 		{
-	      $result = $this->model->GetModules();
+	      $result = $this->model->GetModules($request_params);
+		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		}
+
+		public function getIdModuluesPerfiles($request_params)
+		{
+	      $result = $this->model->getIdModuluesPerfiles($request_params);
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 	  
@@ -38,7 +44,23 @@
 
 		public function SavePerfil($request_params)
 		{
-		  $result = $this->model->SavePerfil($request_params);	  
+		  if($request_params['IdPerfil'] == ""){
+			$result = $this->model->SavePerfil($request_params);	  
+		  }else{
+			$result = $this->model->ActualizaPerfil($request_params);	  
+		  }
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
+		}
+
+		public function DeletePerfil($request_params)
+		{
+		  $result = $this->model->DeletePerfil($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
+		}
+
+		public function GetDataPerfil($request_params)
+		{
+		  $result = $this->model->GetDataPerfil($request_params);	  
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
 		}
 	}
