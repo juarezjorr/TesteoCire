@@ -40,6 +40,10 @@ class MoveStoresController extends Controller
 				$res =  '[{"ext_id":"0"}]';	
 			}
 			echo $res;
+
+			  
+		  // $params = array('unidad' => $res);
+		  // $this->render(__CLASS__, $params);
 	}
 
 // Lista los almacenes 
@@ -57,10 +61,6 @@ class MoveStoresController extends Controller
 		  } else {
 			  $res =  '[{"str_id":"0"}]';	
 		  }
-  
-		  // $params = array('unidad' => $res);
-		  // $this->render(__CLASS__, $params);
-  
 		  echo $res;
 		
 	}
@@ -79,11 +79,42 @@ class MoveStoresController extends Controller
 		} else {
 			$res =  '[{"prd_id":"0"}]';	
 		}
-
-		// $params = array('unidad' => $res);
-		// $this->render(__CLASS__, $params);
-
 		echo $res;
-		
+	} 
+
+// Lista los almacenes 
+	public function listExchanges($request_params)
+	{
+		$params =  $this->session->get('user');
+		$result = $this->model->listExchanges($request_params['guid']);
+		$i = 0;
+		while($row = $result->fetch_assoc()){
+			$rowdata[$i] = $row;
+			$i++;
+		}
+		if ($i>0){
+			$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+		} else {
+			$res =  '[{"exc_id":"0"}]';	
+		}
+		echo $res;
+	} 
+
+// Registra los movimientos entre almacenes
+	public function SaveExchange($request_params)
+	{
+		$params =  $this->session->get('user');
+		$result = $this->model->SaveExchange($request_params, $params);
+		$res = $result;
+        echo $res;
+	} 
+
+// Actualiza la situacion del almacen
+	public function ApplyExchange($request_params)
+	{
+		$params =  $this->session->get('user');
+		$result = $this->model->ApplyExchange($request_params);
+		$res = $result;
+        echo $res;
 	} 
 }

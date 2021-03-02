@@ -208,11 +208,16 @@ COMMENT = 'Bitácora de actividades realizadas en el sistema';
 CREATE TABLE `cttrentals`.`ctt_store_exchange` (
 	`exc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del movimiento',
 	`exc_date`				DATETIME NULL DEFAULT CURRENT_TIMESTAMP  COMMENT 'Fecha de registro del movimiento',
+	`exc_guid`				VARCHAR(200) NOT NULL		 COMMENT 'codigo del movimiento',
 	`exc_sku_product`		VARCHAR(100) NOT NULL		 COMMENT 'SKU del producto',
-    `exc_location`			VARCHAR(50) NOT NULL		 COMMENT '? Ubicacion_destino',
+	`exc_product_name`		VARCHAR(200) NOT NULL		 COMMENT 'Nombre del producto',
+	`exc_quantity`			INT NULL		 			 COMMENT 'Cantidad de piezas',
+	`exc_serie_product`		VARCHAR(200) NOT NULL		 COMMENT 'Numero de series del producto',
+    `exc_store`				VARCHAR(50) NOT NULL		 COMMENT 'Almacen que afecto el movimiento',
 	`exc_comments`			VARCHAR(300) NOT NULL		 COMMENT 'Comentarios referentes al movimiento',
     `exc_proyect`			VARCHAR(100) NOT NULL		 COMMENT 'Nombre del proyecto',
     `exc_employee_name`		VARCHAR(100) NOT NULL		 COMMENT 'Nombre del empleado',
+	`ext_code`				VARCHAR(100) NOT NULL		 COMMENT 'Còdigo del tipo de movimiento',
     `ext_id` 				INT NULL 					 COMMENT 'ID del tipo de movimiento relación ctt_type_exchange',
 PRIMARY KEY (`exc_id`))
 COMMENT = 'Movimientos de productos entre almacenes';
@@ -222,6 +227,7 @@ CREATE TABLE `cttrentals`.`ctt_type_exchange` (
 	`ext_code`				VARCHAR(100) NOT NULL		 COMMENT 'Còdigo del tipo de movimiento',
 	`ext_type`				VARCHAR(1) NOT NULL		 	 COMMENT 'Tipo de movimiento E-Entrada, S-Salida, R-Renta',
 	`ext_description`		VARCHAR(300) NOT NULL		 COMMENT 'Descripcion del movimiento',
+	`ext_link`				INT NULL					 COMMENT 'Relacion con otro movimiento',
 PRIMARY KEY (`ext_id`))
 COMMENT = 'Tipos de movimientos entre almacenes';
 

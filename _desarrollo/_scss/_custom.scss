@@ -9,20 +9,23 @@ body {
 	color: $dark-x;
 }
 
-h1, h2, h3, h4   {
+h1,
+h2,
+h3,
+h4 {
 	font-family: $font_secundary;
 }
 
-h1  {
+h1 {
 	font-size: 1.9rem;
 }
-h2  {
+h2 {
 	font-size: 1.7rem;
 }
 h3 {
 	font-size: 1.5rem;
 }
-h4  {
+h4 {
 	font-size: 1.3rem;
 }
 
@@ -63,6 +66,6 @@ h4  {
 	background-image: url(../img/slider/slider-003.jpg);
 }
 
-.contenido  {
+.contenido {
 	padding-top: 80px;
 }

@@ -50,7 +50,7 @@
 		</div>
 		<div class="row">
 			<div class="mb-3 p-4">
-				<table class="table table-sm table-responsive-md">
+				<table class="table table-sm table-responsive-md" id="tblExchanges">
 					<thead>
 						<tr>
 							<th>SKU</th>

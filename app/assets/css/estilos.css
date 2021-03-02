@@ -13,7 +13,10 @@ body {
   color: #3d4755;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: "Bebas Neue", cursive;
 }
 
@@ -289,7 +292,7 @@ nav li:hover > ul > li {
 }
 
 .form-group {
-  background-color: #D6DBDF;
+  background-color: #f3f3f3;
   overflow: hidden;
   padding: 1rem;
   border-radius: 4px;
