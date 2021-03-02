@@ -1,6 +1,6 @@
-<mxfile modified="2021-02-26T04:30:04.908Z" host="8f6ddcab-65e3-4f55-bc64-410ac6f3ea25" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.53.2 Chrome/87.0.4280.141 Electron/11.2.1 Safari/537.36" etag="iB8lPPeAc2nSXx31v9KG" version="14.2.4" type="embed" pages="2">
+<mxfile modified="2021-03-02T00:22:19.040Z" host="147b2133-a77f-4f6c-be64-545a9f56ba5e" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.53.2 Chrome/87.0.4280.141 Electron/11.2.1 Safari/537.36" etag="BJi6NU80tcTGeDZcak62" version="14.2.4" type="embed" pages="2">
     <diagram id="kmsEypxPmVz_Vl7ECJFX" name="Usuarios">
-        <mxGraphModel dx="547" dy="374" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+        <mxGraphModel dx="650" dy="352" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -356,7 +356,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="7eteFTFEP_zfqLJSvVE4" name="Página-2">
-        <mxGraphModel dx="547" dy="374" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+        <mxGraphModel dx="650" dy="352" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
             <root>
                 <mxCell id="Pd0lMm26_LEoXVVrBA5k-0"/>
                 <mxCell id="Pd0lMm26_LEoXVVrBA5k-1" parent="Pd0lMm26_LEoXVVrBA5k-0"/>
