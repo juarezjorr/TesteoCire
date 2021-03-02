@@ -1,3 +1,4 @@
+var table = null;
 $(document).ready(function() {
     getUsuariosTable(); 
     //Modal - lista - Permisos *
@@ -98,6 +99,7 @@ function validaFormulario() {
 
 //Edita el Usuario *
 function EditUsuario(id,idPerfil) {
+    UnSelectRowTable();
     LimpiaModal();
     getPerfilesUsuario(idPerfil)
     var location = "Usuarios/GetUsuario";
@@ -131,9 +133,15 @@ function EditUsuario(id,idPerfil) {
 
 //confirm para borrar *
 function ConfirmDeletUser(id) {
+    UnSelectRowTable();
     $('#BorrarUsuariosModal').modal('show');
     $('#IdUsuarioBorrar').val(id);
 }
+
+function UnSelectRowTable() {
+    setTimeout(() => {table.rows().deselect();}, 10);
+}
+
 //BORRAR USUARIO * 
 function DeletUsuario() {
     var location = "Usuarios/DeleteUsuario";
@@ -245,7 +253,7 @@ function getUsuariosTable() {
 
             });
             
-            var table = $('#usuariosTable').DataTable({
+            table = $('#usuariosTable').DataTable({
                 select: {
                     style: 'multi', info: false
                 },

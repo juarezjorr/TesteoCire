@@ -1,20 +1,21 @@
 var table = null;
 $(document).ready(function() {
-    getAlmacenesTable(); 
+    getSubCategoriasTable(); 
     //Open modal *
-    $('#nuevoAlmacen').on('click', function(){    
+    $('#nuevaSubCategoria').on('click', function(){    
         LimpiaModal();
-        $('#formProveedor').removeClass('was-validated');
+        getCategorias();
+        $('#formSubCategorias').removeClass('was-validated');
     });
     //Guardar almacen *
-    $('#GuardarAlmacen').on('click', function(){   
+    $('#GuardarCategoria').on('click', function(){   
         if(validaFormulario() == 1){
-            SaveAlmacen();        
+            SaveSubCategoria();        
         }
     });
     //borra almacen +
-    $('#BorrarProveedor').on('click', function(){    
-        DeletAlmacen();
+    $('#BorrarSubCategoria').on('click', function(){    
+        DeletSubCategoria();
     });  
 });
 
@@ -33,10 +34,10 @@ function validaFormulario() {
 }
 
 //Edita el Proveedores *
-function EditAlmacen(id) {
+function EditSubCategoria(id,idCategoria) {
     UnSelectRowTable();
     LimpiaModal();
-    var location = "Almacenes/GetAlmacen";
+    var location = "SubCategorias/GetSubCategoria";
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -44,42 +45,45 @@ function EditAlmacen(id) {
              },
             url: location,
         success: function (respuesta) {
-            console.log(respuesta);
-            $('#NomAlmacen').val(respuesta.str_name);
-            $('#IdAlmacen').val(respuesta.str_id);
-            $("#selectTipoAlmacen option[id='"+respuesta.str_type+"']").attr("selected", "selected");
-          $('#AlmacenModal').modal('show');
+            $('#NomSubCategoria').val(respuesta.sbc_name);
+            $('#IdSubCategoria').val(respuesta.sbc_id);
+            $('#CodSubCategoria').val(respuesta.sbc_code);
+            getCategorias(idCategoria)
+
+          $('#SubCategoriaModal').modal('show');
         },
         error: function (EX) {console.log(EX);}
     }).done(function () {});
 
 }
 //confirm para borrar **
-function ConfirmDeletAlmacen(id) {
+function ConfirmDeletSubCategoria(id) {
     UnSelectRowTable();
-    $('#BorrarAlmacenModal').modal('show');
-    $('#IdAlmacenBorrar').val(id);
+    $('#BorrarSubCategoriaModal').modal('show');
+    $('#IdSubCategoriaBorrar').val(id);
 }
 
 function UnSelectRowTable() {
     setTimeout(() => {table.rows().deselect();}, 10);
 }
 
+
+
 //BORRAR  * *
-function DeletAlmacen() {
-    var location = "Almacenes/DeleteAlmacen";
-    IdAlmacen = $('#IdAlmacenBorrar').val();
+function DeletSubCategoria() {
+    var location = "SubCategorias/DeleteSubCategoria";
+    IdSubCategoria = $('#IdSubCategoriaBorrar').val();
     $.ajax({
             type: "POST",
             dataType: 'JSON',
             data: { 
-                    IdAlmacen : IdAlmacen
+                    IdSubCategoria : IdSubCategoria
              },
             url: location,
         success: function (respuesta) {
             if(respuesta = 1){
-                getAlmacenesTable(); 
-                $('#BorrarAlmacenModal').modal('hide');
+                getSubCategoriasTable(); 
+                $('#BorrarSubCategoriaModal').modal('hide');
             }
         },
         error: function (EX) {console.log(EX);}
@@ -87,23 +91,27 @@ function DeletAlmacen() {
 }
 
 //Guardar Almacen **
-function SaveAlmacen() {
-        var location = "Almacenes/SaveAlmacen";
-        var IdAlmacen = $('#IdAlmacen').val();
-        var NomAlmacen = $('#NomAlmacen').val();
-        var tipoAlmacen = $("#selectTipoAlmacen option:selected").attr("id");
+function SaveSubCategoria() {
+        var location = "SubCategorias/SaveSubCategoria";
+        var IdSubCategoria = $('#IdSubCategoria').val();
+        var NomSubCategoria = $('#NomSubCategoria').val();
+        var CodSubCategoria = $('#CodSubCategoria').val();
+        var idCategoria = $("#selectRowCategorias option:selected").attr("id");
+
+
         $.ajax({
             type: "POST",
             dataType: 'JSON',
-            data: { IdAlmacen : IdAlmacen,
-                    NomAlmacen : NomAlmacen,
-                    tipoAlmacen : tipoAlmacen
+            data: { IdSubCategoria : IdSubCategoria,
+                    NomSubCategoria : NomSubCategoria,
+                    CodSubCategoria : CodSubCategoria,
+                    idCategoria : idCategoria
              },
             url: location,
         success: function (respuesta) {
             if(respuesta = 1){
-                getAlmacenesTable();
-                $('#AlmacenModal').modal('hide');
+                getSubCategoriasTable();
+                $('#SubCategoriaModal').modal('hide');
             }
         },
         error: function (EX) {console.log(EX);}
@@ -112,18 +120,43 @@ function SaveAlmacen() {
 
 //Limpia datos en modal  **
 function LimpiaModal() {
-    $('#NomAlmacen').val("");
-    $('#IdAlmacen').val("");
-    $("#selectTipoAlmacen").val( "0" );
+    $('#NomSubCategoria').val("");
+    $('#IdSubCategoria').val("");
+    $('#selectRowCategorias').html("");
+    $('#CodSubCategoria').val("");
+}
+
+// Optiene los perfiles disponibles *
+function getCategorias(id) {
+    var location = 'categorias/GetCategorias';                
+    $.ajax({
+            type: "GET",
+            dataType: 'JSON',
+            url: location,
+        success: function (respuesta) {
+            console.log(respuesta);
+            var renglon = "<option id='0'  value=''>Seleccione una categoria...</option> ";
+            respuesta.forEach(function(row, index) {
+                renglon += '<option id='+row.cat_id+'  value="">'+row.cat_name+'</option> ';
+            });
+            $("#selectRowCategorias").append(renglon);
+            if(id != ""){
+                $("#selectRowCategorias option[id='"+id+"']").attr("selected", "selected");
+            }
+        },
+        error: function () {
+        }
+    }).done(function () {
+    });
 }
 
 
 
 //obtiene la informacion de tabla Proveedores *
-function getAlmacenesTable() {
-    var location = 'Almacenes/GetAlmacenes';                
-    $('#AlmacenesTable').DataTable().destroy();
-    $("#tablaAlmacenesRow").html('');
+function getSubCategoriasTable() {
+    var location = 'SubCategorias/GetSubCategorias';                
+    $('#SubCategoriasTable').DataTable().destroy();
+    $("#tablaSubCategoriasRow").html('');
 
     $.ajax({
             type: "POST",
@@ -133,19 +166,20 @@ function getAlmacenesTable() {
                 var renglon = "";
                 respuesta.forEach(function (row, index) {
                     renglon = "<tr>"
-                        + "<td class='dtr-control'>" + row.str_id + "</td>"
-                        + "<td>" + row.str_name + "</td>"
-                        + "<td>" + row.str_type + "</td>"
+                        + "<td class='dtr-control'>" + row.sbc_id + "</td>"
+                        + "<td>" + row.sbc_name + "</td>"
+                        + "<td>" + row.sbc_code + "</td>"
+                        + "<td>" + row.cat_name + "</td>"
                         + '<td class="text-center"> '
-                        + '<button onclick="EditAlmacen(' + row.str_id + ')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen"></i></button>'
-                        + '<button onclick="ConfirmDeletAlmacen(' + row.str_id + ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-trash"></i></button>'
+                        + '<button onclick="EditSubCategoria(' + row.sbc_id +','+ row.cat_id +')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen"></i></button>'
+                        + '<button onclick="ConfirmDeletSubCategoria(' + row.sbc_id + ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-trash"></i></button>'
                         + '</td>'
                         + "</tr>";
-                    $("#tablaAlmacenesRow").append(renglon);
+                    $("#tablaSubCategoriasRow").append(renglon);
 
                 });
 
-                table = $('#AlmacenesTable').DataTable({
+                 table = $('#SubCategoriasTable').DataTable({
                     select: {
                         style: 'multi', info: false
                     },
@@ -163,7 +197,7 @@ function getAlmacenesTable() {
                                 idSelected += index[0] + ",";
                             });
                             idSelected = idSelected.slice(0, -1);
-                            if (idSelected != "") { ConfirmDeletAlmacen(idSelected); }
+                            if (idSelected != "") { ConfirmDeletSubCategoria(idSelected); }
                         }
                     }
                     ],
@@ -179,7 +213,7 @@ function getAlmacenesTable() {
                     }
                 });
 
-                $('#AlmacenesTable tbody').on('click', 'tr', function () {
+                $('#SubCategoriasTable tbody').on('click', 'tr', function () {
                     setTimeout(() => {
                         RenglonesSelection = table.rows({ selected: true }).count();
                         if (RenglonesSelection == 0 || RenglonesSelection == 1) {
@@ -201,4 +235,3 @@ function getAlmacenesTable() {
     }).done(function () {
     });
 }
-

@@ -1,3 +1,4 @@
+var table = null;
 $(document).ready(function() {
     getPerfilesTable(); 
     //Modal - lista - Permisos
@@ -46,6 +47,7 @@ function validaFormulario() {
 }
 
 function EditPerfil(id) {
+    UnSelectRowTable();
     LimpiaModal();
     var location = "perfilUser/GetDataPerfil";
     $.ajax({
@@ -73,9 +75,15 @@ function EditPerfil(id) {
 }
 
 function ConfirmDeletPerfil(id) {
+    UnSelectRowTable();
     $('#BorrarPerfilModal').modal('show');
     $('#IdPerfilBorrrar').val(id);
 }
+
+function UnSelectRowTable() {
+    setTimeout(() => {table.rows().deselect();}, 10);
+}
+
 function DeletPerfil() {
     var location = "perfilUser/DeletePerfil";
     var IdPerfil = $('#IdPerfilBorrrar').val();
@@ -173,7 +181,7 @@ function getPerfilesTable() {
             });
 
 
-            var table = $('#perfilesTable').DataTable({
+            table = $('#perfilesTable').DataTable({
                 select: {
                     style: 'multi', info: false
                 },

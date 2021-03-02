@@ -1,20 +1,20 @@
 var table = null;
 $(document).ready(function() {
-    getAlmacenesTable(); 
+    getCategoriasTable(); 
     //Open modal *
-    $('#nuevoAlmacen').on('click', function(){    
+    $('#nuevaCategoria').on('click', function(){    
         LimpiaModal();
-        $('#formProveedor').removeClass('was-validated');
+        $('#formCategorias').removeClass('was-validated');
     });
     //Guardar almacen *
-    $('#GuardarAlmacen').on('click', function(){   
+    $('#GuardarCategoria').on('click', function(){   
         if(validaFormulario() == 1){
-            SaveAlmacen();        
+            SaveCategoria();        
         }
     });
     //borra almacen +
     $('#BorrarProveedor').on('click', function(){    
-        DeletAlmacen();
+        DeletCategoria();
     });  
 });
 
@@ -33,10 +33,10 @@ function validaFormulario() {
 }
 
 //Edita el Proveedores *
-function EditAlmacen(id) {
+function EditCategoria(id) {
     UnSelectRowTable();
     LimpiaModal();
-    var location = "Almacenes/GetAlmacen";
+    var location = "Categorias/GetCategoria";
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -44,42 +44,42 @@ function EditAlmacen(id) {
              },
             url: location,
         success: function (respuesta) {
-            console.log(respuesta);
-            $('#NomAlmacen').val(respuesta.str_name);
-            $('#IdAlmacen').val(respuesta.str_id);
-            $("#selectTipoAlmacen option[id='"+respuesta.str_type+"']").attr("selected", "selected");
-          $('#AlmacenModal').modal('show');
+            $('#NomCategoria').val(respuesta.cat_name);
+            $('#IdCategoria').val(respuesta.cat_id);
+          $('#CategoriaModal').modal('show');
         },
         error: function (EX) {console.log(EX);}
     }).done(function () {});
 
 }
 //confirm para borrar **
-function ConfirmDeletAlmacen(id) {
+function ConfirmDeletCategoria(id) {
     UnSelectRowTable();
-    $('#BorrarAlmacenModal').modal('show');
-    $('#IdAlmacenBorrar').val(id);
+    $('#BorrarCategoriaModal').modal('show');
+    $('#IdCategoriaBorrar').val(id);
 }
 
 function UnSelectRowTable() {
     setTimeout(() => {table.rows().deselect();}, 10);
 }
 
+
+
 //BORRAR  * *
-function DeletAlmacen() {
-    var location = "Almacenes/DeleteAlmacen";
-    IdAlmacen = $('#IdAlmacenBorrar').val();
+function DeletCategoria() {
+    var location = "Categorias/DeleteCategoria";
+    IdCategoria = $('#IdCategoriaBorrar').val();
     $.ajax({
             type: "POST",
             dataType: 'JSON',
             data: { 
-                    IdAlmacen : IdAlmacen
+                    IdCategoria : IdCategoria
              },
             url: location,
         success: function (respuesta) {
             if(respuesta = 1){
-                getAlmacenesTable(); 
-                $('#BorrarAlmacenModal').modal('hide');
+                getCategoriasTable(); 
+                $('#BorrarCategoriaModal').modal('hide');
             }
         },
         error: function (EX) {console.log(EX);}
@@ -87,23 +87,21 @@ function DeletAlmacen() {
 }
 
 //Guardar Almacen **
-function SaveAlmacen() {
-        var location = "Almacenes/SaveAlmacen";
-        var IdAlmacen = $('#IdAlmacen').val();
-        var NomAlmacen = $('#NomAlmacen').val();
-        var tipoAlmacen = $("#selectTipoAlmacen option:selected").attr("id");
+function SaveCategoria() {
+        var location = "Categorias/SaveCategoria";
+        var IdCategoria = $('#IdCategoria').val();
+        var NomCategoria = $('#NomCategoria').val();
         $.ajax({
             type: "POST",
             dataType: 'JSON',
-            data: { IdAlmacen : IdAlmacen,
-                    NomAlmacen : NomAlmacen,
-                    tipoAlmacen : tipoAlmacen
+            data: { IdCategoria : IdCategoria,
+                    NomCategoria : NomCategoria
              },
             url: location,
         success: function (respuesta) {
             if(respuesta = 1){
-                getAlmacenesTable();
-                $('#AlmacenModal').modal('hide');
+                getCategoriasTable();
+                $('#CategoriaModal').modal('hide');
             }
         },
         error: function (EX) {console.log(EX);}
@@ -112,18 +110,18 @@ function SaveAlmacen() {
 
 //Limpia datos en modal  **
 function LimpiaModal() {
-    $('#NomAlmacen').val("");
-    $('#IdAlmacen').val("");
+    $('#NomCategoria').val("");
+    $('#IdCategoria').val("");
     $("#selectTipoAlmacen").val( "0" );
 }
 
 
 
 //obtiene la informacion de tabla Proveedores *
-function getAlmacenesTable() {
-    var location = 'Almacenes/GetAlmacenes';                
-    $('#AlmacenesTable').DataTable().destroy();
-    $("#tablaAlmacenesRow").html('');
+function getCategoriasTable() {
+    var location = 'Categorias/GetCategorias';                
+    $('#CategoriasTable').DataTable().destroy();
+    $("#tablaCategoriasRow").html('');
 
     $.ajax({
             type: "POST",
@@ -133,19 +131,18 @@ function getAlmacenesTable() {
                 var renglon = "";
                 respuesta.forEach(function (row, index) {
                     renglon = "<tr>"
-                        + "<td class='dtr-control'>" + row.str_id + "</td>"
-                        + "<td>" + row.str_name + "</td>"
-                        + "<td>" + row.str_type + "</td>"
+                        + "<td class='dtr-control'>" + row.cat_id + "</td>"
+                        + "<td>" + row.cat_name + "</td>"
                         + '<td class="text-center"> '
-                        + '<button onclick="EditAlmacen(' + row.str_id + ')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen"></i></button>'
-                        + '<button onclick="ConfirmDeletAlmacen(' + row.str_id + ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-trash"></i></button>'
+                        + '<button onclick="EditCategoria(' + row.cat_id + ')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen"></i></button>'
+                        + '<button onclick="ConfirmDeletCategoria(' + row.cat_id + ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-trash"></i></button>'
                         + '</td>'
                         + "</tr>";
-                    $("#tablaAlmacenesRow").append(renglon);
+                    $("#tablaCategoriasRow").append(renglon);
 
                 });
 
-                table = $('#AlmacenesTable').DataTable({
+                 table = $('#CategoriasTable').DataTable({
                     select: {
                         style: 'multi', info: false
                     },
@@ -163,7 +160,7 @@ function getAlmacenesTable() {
                                 idSelected += index[0] + ",";
                             });
                             idSelected = idSelected.slice(0, -1);
-                            if (idSelected != "") { ConfirmDeletAlmacen(idSelected); }
+                            if (idSelected != "") { ConfirmDeletCategoria(idSelected); }
                         }
                     }
                     ],
@@ -179,7 +176,7 @@ function getAlmacenesTable() {
                     }
                 });
 
-                $('#AlmacenesTable tbody').on('click', 'tr', function () {
+                $('#CategoriasTable tbody').on('click', 'tr', function () {
                     setTimeout(() => {
                         RenglonesSelection = table.rows({ selected: true }).count();
                         if (RenglonesSelection == 0 || RenglonesSelection == 1) {

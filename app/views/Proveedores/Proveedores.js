@@ -1,3 +1,4 @@
+var table = null;
 $(document).ready(function() {
     getProveedoresTable(); 
     //Open modal *
@@ -36,6 +37,7 @@ function validaFormulario() {
 
 //Edita el Proveedores *
 function EditProveedores(id) {
+    UnSelectRowTable();
     LimpiaModal();
     var location = "Proveedores/GetProveedor";
     $.ajax({
@@ -63,8 +65,13 @@ function EditProveedores(id) {
 
 //confirm para borrar **
 function ConfirmDeletProveedor(id) {
+    UnSelectRowTable();
     $('#BorrarProveedorModal').modal('show');
     $('#IdProveedorBorrar').val(id);
+}
+
+function UnSelectRowTable() {
+    setTimeout(() => {table.rows().deselect();}, 10);
 }
 //BORRAR  * *
 function DeletProveedor() {
@@ -160,7 +167,7 @@ function getProveedoresTable() {
 
                 });
 
-                var table = $('#ProveedoresTable').DataTable({
+                table = $('#ProveedoresTable').DataTable({
                     select: {
                         style: 'multi', info: false
                     },
