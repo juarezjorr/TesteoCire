@@ -147,7 +147,7 @@ class UsuariosModel extends Model
 		return $estatus;
 	}
 
-	//borra perfil
+	//borra usuario
 	public function DeleteUsuario($params)
 	{
 		$estatus = 0;
@@ -155,7 +155,7 @@ class UsuariosModel extends Model
 				//Borra perfil
 				$qry = "UPDATE ctt_users
 						SET usr_status = 0
-						WHERE usr_id = ".$params['IdUsuario'].";";
+						WHERE usr_id in (".$params['IdUsuario'].");";
 				$this->db->query($qry);
 				$estatus = 1;
 			} catch (Exception $e) {

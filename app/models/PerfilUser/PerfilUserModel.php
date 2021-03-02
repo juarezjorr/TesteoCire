@@ -35,7 +35,7 @@ class PerfilUserModel extends Model
 // Optiene los Perfiles existentes
 	public function GetPerfiles()
 	{
-		$qry = "select prf_id,prf_code, prf_name, prf_description from ctt_profiles;";
+		$qry = "select prf_id,prf_code, prf_name, prf_description from ctt_profiles where prf_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
@@ -127,13 +127,16 @@ class PerfilUserModel extends Model
 	}
 
 
-//borra perfil
+
+	//borra perfil
 	public function DeletePerfil($params)
 	{
-        $estatus = 0;
+		$estatus = 0;
 			try {
 				//Borra perfil
-				$qry = "DELETE FROM ctt_profiles WHERE prf_id ='".$params['IdPerfil']."'";
+				$qry = "UPDATE ctt_profiles
+						SET prf_status = 0
+						WHERE prf_id in (".$params['IdPerfil'].");";
 				$this->db->query($qry);
 				$estatus = 1;
 			} catch (Exception $e) {
@@ -142,6 +145,7 @@ class PerfilUserModel extends Model
 			}
 		return $estatus;
 	}
+
 
 
 	public function GetDataPerfil($params)

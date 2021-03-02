@@ -276,6 +276,22 @@ color: #212529 ;
   background-color: #0069d9 !important;
 }
 
+.btnDatableAddRed{
+  /*padding: 0px !important;*/
+  margin: 0px  0px  10px  0px !important;
+  border: none !important;
+  background: none !important;
+  background-color: #ff3c00 !important;
+  border-radius: 4px !important;
+  transition: background 0.5s ease-in-out !important;
+  color: white !important;
+  visibility: hidden;
+}
+
+.btnDatableAddRed:hover {
+  background-color: #d90000 !important;
+}
+
 
 
 .btn-add{
@@ -389,3 +405,4 @@ background: #919191;
   background-color: #af230a !important;
   color: #ececec !important;
 }
+

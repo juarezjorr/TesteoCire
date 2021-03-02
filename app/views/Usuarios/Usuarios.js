@@ -32,7 +32,7 @@ $(document).ready(function() {
 
     //borra Usuario +
     $('#BorrarUsuario').on('click', function(){    
-        DeletPerfil();
+        DeletUsuario();
     });  
 });
 
@@ -135,9 +135,9 @@ function ConfirmDeletUser(id) {
     $('#IdUsuarioBorrar').val(id);
 }
 //BORRAR USUARIO * 
-function DeletPerfil() {
+function DeletUsuario() {
     var location = "Usuarios/DeleteUsuario";
-    IdUsuario = $('#IdUsuarioBorrar').val();
+    var IdUsuario = $('#IdUsuarioBorrar').val();
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -244,19 +244,28 @@ function getUsuariosTable() {
                 $("#tablaUsuariosRow").append(renglon);
 
             });
-
-
             
-
-
-
-            $('#usuariosTable').DataTable({
-                select: true, 
+            var table = $('#usuariosTable').DataTable({
+                select: {
+                    style: 'multi', info: false
+                },
                 lengthMenu: [ [10, 50, 100, -1], ['10 Filas', '25 Filas', '50 Filas', 'Mostrar todo'] ], 
                 dom: 'Bfrtip', 
                 buttons: [ { extend: 'pdf', className: 'btnDatableAdd',text: '<i class="btn-add" >PDF</i>' },
                            { extend: 'excel', className: 'btnDatableAdd',text: '<i class="btn-add" >Excel</i>' }, 
-                           { extend: 'pageLength', className: 'btnDatableAdd' }
+                           { extend: 'pageLength', className: 'btnDatableAdd' },
+                           {
+                               text: 'Borrar seleccionados', className: 'btnDatableAddRed',
+                               action: function () {
+                                   var selected = table.rows({ selected: true }).data();
+                                   var idSelected = "";
+                                   selected.each(function (index) {
+                                       idSelected += index[0] + ",";
+                                   });
+                                   idSelected = idSelected.slice(0, -1);
+                                   if (idSelected != "") { ConfirmDeletUser(idSelected); }
+                               }
+                           }
                            ],                
                 columnDefs: [
                     { responsivePriority: 1, targets: 0 },
@@ -270,6 +279,22 @@ function getUsuariosTable() {
                 }
 
             });
+
+
+            $('#usuariosTable tbody').on('click', 'tr', function () {
+                setTimeout(() => {
+                    RenglonesSelection = table.rows({ selected: true }).count();
+                    if (RenglonesSelection == 0 || RenglonesSelection == 1) {
+                        $(".btnDatableAddRed").css("visibility", "hidden");
+                    } else {
+                        $(".btnDatableAddRed").css("visibility", "visible");
+                    }
+                }, 10);
+            });
+
+
+
+
         },
         error: function () {
         }
