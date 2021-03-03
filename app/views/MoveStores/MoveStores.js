@@ -205,6 +205,12 @@ function update_store(ap) {
 
 function applied_exchange(dt) {
    console.log(dt);
+   $('#txtTypeExchange').val(0);
+   $('#txtStoreSource').val(0);
+   $('#txtStoreTarget').val(0);
+   $('#txtProducts').html(
+      '<option value="0" selected>Selecciona producto</option>'
+   );
 }
 
 function exchange_result(dt) {}

@@ -14,6 +14,7 @@ define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
 /////////////////////////////////////
 
 define('FOLDER_PATH', '/cttrentals');               /* DESARROLLO LOCAL */
+//define('FOLDER_PATH', '/TesteoCire');               /* DESARROLLO LOCAL */
 
 
 define('ROOT', $_SERVER['DOCUMENT_ROOT']);
@@ -51,7 +52,7 @@ define('DEFAULT_CONTROLLER', 'Login');
 define('HOST', 'localhost');
 define('USER', 'root');
 define('PASSWORD', '');
-define('DB_NAME', 'cttrentals');
+define('DB_NAME', 'cttapp_cire');
 
 
 

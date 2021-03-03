@@ -50,10 +50,10 @@ INSERT INTO `ctt_modules` (`mod_id`, `mod_code`, `mod_name`, `mod_description`, 
 (1, 'invt', 'Inventarios', 'Modulo que controla los inventarios', '#'),
 (2, 'prog', 'Programación', 'Modulo de programación', '#'),
 (3, 'alma', 'Almacenes', 'Modulo de almacenes', '#'),
-(4, 'categ', 'Categorias', 'Modulo de categorias', 'categories'),
+(4, 'categ', 'Categorias', 'Modulo de categorias', 'Categories'),
 (5, 'admin', 'Administracion', 'Modulo de administración', '#'),
 (6, 'users', 'Usuarios', 'Modulo de usuarios','#'),
-(7, 'mvalm', 'Movimiento de almacenes','Modulo de movimiento entre almacenes','movestores');
+(7, 'mvalm', 'Movimiento de almacenes','Modulo de movimiento entre almacenes','MoveStores');
 
 --
 -- Truncar tablas antes de insertar `ctt_post`
@@ -70,7 +70,7 @@ TRUNCATE TABLE `ctt_profiles`;
 --
 
 INSERT INTO `ctt_profiles` (`prf_id`, `prf_code`, `prf_name`, `prf_description`, `prf_mod_start`) VALUES
-(1, 'supuser', 'Super usuario', 'Control total sobre toda la aplicación', 'start');
+(1, 'supuser', 'Super usuario', 'Control total sobre toda la aplicación', 'Start');
 
 --
 -- Truncar tablas antes de insertar `ctt_profile_module`
