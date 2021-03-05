@@ -51,7 +51,7 @@ define('DEFAULT_CONTROLLER', 'Login');
 define('HOST', 'localhost');
 define('USER', 'root');
 define('PASSWORD', '');
-define('DB_NAME', 'cttrentals');
+define('DB_NAME', 'cttapp_cire');
 
 
 
