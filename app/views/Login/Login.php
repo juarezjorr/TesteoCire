@@ -31,7 +31,7 @@
 
 	</head>
 	<body class="bg-dark">
-		<section>
+		<section class="login-section">
 			<div class="row g-0">
 				<div class="col-lg-8 d-none d-lg-block">
 					<div id="carousel_login" class="carousel slide" data-bs-ride="carousel">
