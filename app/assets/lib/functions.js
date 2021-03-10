@@ -119,8 +119,6 @@ function limpia_campos() {
 
 function verifica_usuario() {
 	var galleta = Cookies.get('user');
-
-	console.log(galleta);
 	if (galleta == undefined) {
 		window.location = 'Login';
 	} else {
@@ -138,8 +136,6 @@ function set_menu_on_page(dt) {
 
 	var galleta = Cookies.get('user');
 	var usuario = galleta.split('|')[2].replace(/\+/g, ' ');
-	console.log(usuario);
-
 	var H = `<div class="user_space">${usuario} <i class="fas fa-power-off salir"></i></div>`;
 
 	$('.sign-out').html(H);
@@ -150,8 +146,6 @@ function set_menu_on_page(dt) {
 }
 
 function build_menu(dt){
-
-console.log(dt);
 	$.each(dt, function(v,u){
 		if (u.mnu_parent == 0){
 			let H = `<li><a href="${u.mod_item}">${u.mnu_item}</a>${sublevel(u.mnu_id, u.sons, dt)}</li>`;
@@ -166,7 +160,7 @@ function sublevel(id, sn, dt){
 		H += `<ul>`;
 		$.each(dt, function(v,u){
 			if (u.mnu_parent == id){
-				H +=  `<li><a href="${u.mod_item}">${u.mnu_item}</a></li>`
+				H +=  `<li><a href="${u.mod_item}">${u.mnu_item}</a>${sublevel(u.mnu_id, u.sons, dt)}</li>`
 			}
 		});
 		H += `</ul>`;

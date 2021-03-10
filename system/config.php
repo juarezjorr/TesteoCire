@@ -14,6 +14,7 @@ define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
 /////////////////////////////////////
 
 define('FOLDER_PATH', '/cttrentals');               /* DESARROLLO LOCAL */
+//define('FOLDER_PATH', '/TesteoCire');               /* DESARROLLO LOCAL */
 
 
 define('ROOT', $_SERVER['DOCUMENT_ROOT']);

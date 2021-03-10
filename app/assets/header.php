@@ -10,12 +10,7 @@
 		<title>CTT Exp & Rentals</title>
 
 				<!-- Bootstrap CSS -->
-				<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-			crossorigin="anonymous"
-		/>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 		<!-- fontawesome -->
 		<script src="https://kit.fontawesome.com/72178fea46.js" crossorigin="anonymous"></script>
 
@@ -25,14 +20,13 @@
 			rel="stylesheet"
 		/>
 
-		<title>CTT Exp & Rentals</title>
-
-		<script src="<?=  PATH_ASSETS . 'lib/jquery.js' ?>"></script>
-
 
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<link rel="stylesheet" href="<?= PATH_ASSETS . 'lib/daterangepicker/daterangepicker.css' ?>" />
 		<link rel="stylesheet" href="<?= PATH_ASSETS . 'lib/dataTable/datatables.min.css' ?>" />
 		<link rel="stylesheet" href="<?= PATH_ASSETS .	'css/estilos.css' ?>" />
+
+		<script src="<?=  PATH_ASSETS . 'lib/jquery.js' ?>"></script>
+		<script src="<?=  PATH_ASSETS . 'lib/jquery-ui.js' ?>"></script>
 
 	</head>
