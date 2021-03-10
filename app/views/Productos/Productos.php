@@ -221,7 +221,7 @@
             <div>
                <div class="modal-footer">
                   <div class="col-12" style="padding: 0px 70px 0px 70px !important;">
-                     <button type="button"  class="btn btn-primary btn-lg btn-block" style="font-size: 1rem !important;" id="GuardarCategoria">Guardar Categorias</button>
+                     <button type="button"  class="btn btn-primary btn-lg btn-block" style="font-size: 1rem !important;" id="GuardarCategoria">Guardar Producto</button>
                   </div>
                </div>
             </div>

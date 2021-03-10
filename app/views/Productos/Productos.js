@@ -112,6 +112,16 @@ function DeletProducto() {
         }).done(function () {});
 }
 
+function addZeroNumber(number, length) {
+    var my_string = '' + number;
+    var largo = my_string.length;
+    if(largo > length){var restar = largo - length; my_string = my_string.substring(restar, largo); }
+    while (my_string.length < length) {
+        my_string = '0' + my_string;
+    }
+    return my_string;
+}
+
 //Guardar Almacen **
 function SaveProducto() {
         var location = "productos/SaveProductos";
@@ -126,8 +136,15 @@ function SaveProducto() {
         var DesProducto = $('#DesProducto').val();
         var idStoreProducto = $('#idStoreProducto').val();
 
-
+        var idCategoria = $("#selectRowCategorias option:selected").attr("id");
         var idSubCategoria = $("#selectRowSubCategorias option:selected").attr("id");
+
+/*         console.log(addZeroNumber(idCategoria,2));
+        console.log(addZeroNumber(idSubCategoria,2));
+        console.log(addZeroNumber(ModelProducto,3)); */
+
+
+
         var idTipeService = $("#selectRowService option:selected").attr("id");
         var idProveedor = $("#selectRowProovedores option:selected").attr("id");
         var idMoneda = $("#selectMonedaProducto option:selected").attr("id");
