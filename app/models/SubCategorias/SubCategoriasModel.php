@@ -23,13 +23,18 @@ class SubCategoriasModel extends Model
 		return $estatus;
 	}
 // Optiene las subcategorias existentes
-	public function GetSubCategorias()
+	public function GetSubCategorias($request)
 	{
+		$qryExt = "";
+		if($request["idCategoria"] != "0"){
+			$qryExt = "and u.cat_id = ".$request["idCategoria"];
+		}
+
 		$qry = "SELECT u.sbc_id, u.sbc_code, u.sbc_name, u.cat_id , e.cat_name
                 FROM ctt_subcategories AS U 
                 JOIN ctt_categories AS E
                 ON U.cat_id = E.cat_id
-                WHERE sbc_status = 1;";
+                WHERE sbc_status = 1 ".$qryExt.";";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
@@ -55,7 +60,6 @@ class SubCategoriasModel extends Model
 		}
 		return $item;
 	}
-
 
     public function ActualizaSubCategoria($params)
 	{

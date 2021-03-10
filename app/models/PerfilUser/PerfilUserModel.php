@@ -24,11 +24,12 @@ class PerfilUserModel extends Model
 		$lista = array();
 		while ($row = $result->fetch_row()){
 			$item = array("mod_id" =>$row[0],
-						"mod_code" =>utf8_decode($row[1]),
-						"mod_name"=>utf8_decode($row[2]),
+						"mod_code" =>$row[1],
+						"mod_name"=>$row[2],
 						"mod_description"=>$row[3]);
 			array_push($lista, $item);
 		}
+		//print_r($lista);
 		return $lista;
 	}
 
@@ -40,8 +41,8 @@ class PerfilUserModel extends Model
 		$lista = array();
 		while ($row = $result->fetch_row()){
 			$item = array("prf_id" =>$row[0],
-						"prf_code" =>utf8_decode($row[1]),
-						"prf_name"=>utf8_decode($row[2]),
+						"prf_code" =>$row[1],
+						"prf_name"=>$row[2],
 						"prf_description"=>$row[3]);
 			array_push($lista, $item);
 		}
@@ -70,8 +71,8 @@ class PerfilUserModel extends Model
         $estatus = 0;
 			try {
 				//Inserta perfil
-				$qry = "insert into ctt_profiles ( prf_code, prf_name, prf_description, prf_mod_start) 
-						values('".$params['CodPerfil']."','".$params['NomPerfil']."','".$params['DesPerfil']."', 'menu');";
+				$qry = "insert into ctt_profiles ( prf_code, prf_name, prf_description, prf_mod_start,prf_status) 
+						values('".$params['CodPerfil']."','".$params['NomPerfil']."','".$params['DesPerfil']."', 'menu',1);";
 				$this->db->query($qry);
 
 				//optiene id de perfil insertado
@@ -164,8 +165,8 @@ class PerfilUserModel extends Model
 		$result = $this->db->query($qry);
 		if ($row = $result->fetch_row()) {
 			$item = array("prf_id" =>$row[0],
-			"prf_code" =>utf8_decode($row[1]),
-			"prf_name"=>utf8_decode($row[2]),
+			"prf_code" =>$row[1],
+			"prf_name"=>$row[2],
 			"prf_description"=>$row[3],
 			"prf_modulesAsing"=>$modulesAsing);
 		}

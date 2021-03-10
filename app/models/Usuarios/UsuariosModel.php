@@ -83,8 +83,8 @@ class UsuariosModel extends Model
 				}
 
 				//Inserta Usuario
-				$qry = "insert into ctt_users (usr_username, usr_password, usr_dt_registry, emp_id, prf_id) 
-				      values('".$params['UserNameUsuario']."','".$params['PassUsuario']."',NOW(),".$lastid.", ".$params['idPerfil']." ) ;";
+				$qry = "insert into ctt_users (usr_username, usr_password, usr_dt_registry, emp_id, prf_id,usr_status) 
+				      values('".$params['UserNameUsuario']."','".$params['PassUsuario']."',NOW(),".$lastid.", ".$params['idPerfil'].",1 ) ;";
 				$this->db->query($qry);
 
 				//optiene id de Usuario insertado

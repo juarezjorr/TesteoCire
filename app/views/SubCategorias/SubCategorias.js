@@ -1,6 +1,6 @@
 var table = null;
 $(document).ready(function() {
-    getSubCategoriasTable(); 
+    getSubCategoriasTable("0"); 
     //Open modal *
     $('#nuevaSubCategoria').on('click', function(){    
         LimpiaModal();
@@ -82,7 +82,7 @@ function DeletSubCategoria() {
             url: location,
         success: function (respuesta) {
             if(respuesta = 1){
-                getSubCategoriasTable(); 
+                getSubCategoriasTable("0"); 
                 $('#BorrarSubCategoriaModal').modal('hide');
             }
         },
@@ -110,7 +110,7 @@ function SaveSubCategoria() {
             url: location,
         success: function (respuesta) {
             if(respuesta = 1){
-                getSubCategoriasTable();
+                getSubCategoriasTable("0");
                 $('#SubCategoriaModal').modal('hide');
             }
         },
@@ -126,12 +126,13 @@ function LimpiaModal() {
     $('#CodSubCategoria').val("");
 }
 
-// Optiene los perfiles disponibles *
+// Optiene los categorias disponibles *
 function getCategorias(id) {
     var location = 'categorias/GetCategorias';                
     $.ajax({
-            type: "GET",
+            type: "POST",
             dataType: 'JSON',
+            data:{id:id},
             url: location,
         success: function (respuesta) {
             console.log(respuesta);
@@ -153,7 +154,7 @@ function getCategorias(id) {
 
 
 //obtiene la informacion de tabla Proveedores *
-function getSubCategoriasTable() {
+function getSubCategoriasTable(idCategoria) {
     var location = 'SubCategorias/GetSubCategorias';                
     $('#SubCategoriasTable').DataTable().destroy();
     $("#tablaSubCategoriasRow").html('');
@@ -161,6 +162,7 @@ function getSubCategoriasTable() {
     $.ajax({
             type: "POST",
             dataType: 'JSON',
+            data:{idCategoria:idCategoria},
             url: location,
             _success: function (respuesta) {
                 var renglon = "";

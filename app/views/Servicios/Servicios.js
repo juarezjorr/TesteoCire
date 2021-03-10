@@ -1,6 +1,6 @@
 var table = null;
 $(document).ready(function() {
-    getServiciosTable(); 
+    getServiciosTable(0); 
     //Open modal *
     $('#nuevoServicios').on('click', function(){    
         LimpiaModal();
@@ -80,7 +80,7 @@ function DeletServicio() {
             url: location,
         success: function (respuesta) {
             if(respuesta = 1){
-                getServiciosTable(); 
+                getServiciosTable(0); 
                 $('#BorrarServiciosModal').modal('hide');
             }
         },
@@ -105,7 +105,7 @@ function SaveServicios() {
             url: location,
         success: function (respuesta) {
             if(respuesta = 1){
-                getServiciosTable();
+                getServiciosTable(0);
                 $('#ServiciosModal').modal('hide');
             }
         },
@@ -123,7 +123,7 @@ function LimpiaModal() {
 
 
 //obtiene la informacion de tabla Proveedores *
-function getServiciosTable() {
+function getServiciosTable(id) {
     var location = 'Servicios/GetServicios';                
     $('#ServiciosTable').DataTable().destroy();
     $("#tablaServiciosRow").html('');
@@ -131,6 +131,7 @@ function getServiciosTable() {
     $.ajax({
             type: "POST",
             dataType: 'JSON',
+            data:{id:id},
             url: location,
             _success: function (respuesta) {
                 var renglon = "";

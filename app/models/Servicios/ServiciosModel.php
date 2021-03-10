@@ -24,9 +24,11 @@ class ServiciosModel extends Model
 		return $estatus;
 	}
 // Optiene los Usuaios existentes
-	public function GetServicios()
+	public function GetServicios($request)
 	{
-		$qry = "SELECT srv_id, srv_name, srv_description FROM ctt_services WHERE srv_status = 1;";
+
+
+		$qry = "SELECT srv_id, srv_name, srv_description FROM ctt_services WHERE srv_status = 1 ;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){

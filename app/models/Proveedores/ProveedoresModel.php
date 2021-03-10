@@ -13,7 +13,7 @@ class ProveedoresModel extends Model
 	{
         $estatus = 0;
 			try {
-                $qry = "INSERT INTO ctt_suppliers (sup_buseiness_name, sup_contact, sup_rfc, sup_emal, sup_phone,sup_status)
+                $qry = "INSERT INTO ctt_suppliers (sup_buseiness_name, sup_contact, sup_rfc, sup_email, sup_phone,sup_status)
                 VALUES('".$params['NomProveedor']."','".$params['ContactoProveedor']."','".$params['RfcProveedor']."','".$params['EmailProveedor']."','".$params['PhoneProveedor']."',1);";
                 $this->db->query($qry);	
 				$estatus = 1;
@@ -25,7 +25,7 @@ class ProveedoresModel extends Model
 // Optiene los Usuaios existentes
 	public function GetProveedores()
 	{
-		$qry = "SELECT sup_id, sup_buseiness_name, sup_contact, sup_rfc, sup_emal, sup_phone FROM ctt_suppliers where sup_status = 1;";
+		$qry = "SELECT sup_id, sup_buseiness_name, sup_contact, sup_rfc, sup_email, sup_phone FROM ctt_suppliers where sup_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
@@ -33,7 +33,7 @@ class ProveedoresModel extends Model
 						"sup_buseiness_name" =>utf8_decode($row[1]),
 						"sup_contact"=>utf8_decode($row[2]),
 						"sup_rfc"=>$row[3],
-						"sup_emal"=>$row[4],
+						"sup_email"=>$row[4],
                         "sup_phone"=>$row[5]);
 			array_push($lista, $item);
 		}
@@ -42,7 +42,7 @@ class ProveedoresModel extends Model
 
     public function GetProveedor($params)
 	{
-		$qry = "SELECT sup_id, sup_buseiness_name, sup_contact, sup_rfc, sup_emal, sup_phone FROM ctt_suppliers
+		$qry = "SELECT sup_id, sup_buseiness_name, sup_contact, sup_rfc, sup_email, sup_phone FROM ctt_suppliers
         WHERE sup_id =  ".$params['id'].";";
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
@@ -50,7 +50,7 @@ class ProveedoresModel extends Model
 			"sup_buseiness_name" =>utf8_decode($row[1]),
 			"sup_contact"=>utf8_decode($row[2]),
 			"sup_rfc"=>$row[3],
-			"sup_emal"=>$row[4],
+			"sup_email"=>$row[4],
 			"sup_phone"=>$row[5]);
 		}
 		return $item;
@@ -65,7 +65,7 @@ class ProveedoresModel extends Model
                 SET sup_buseiness_name = '".$params['NomProveedor']."'
                 ,sup_contact = '".$params['ContactoProveedor']."'
                 ,sup_rfc = '".$params['RfcProveedor']."' 
-                ,sup_emal = '".$params['EmailProveedor']."'
+                ,sup_email = '".$params['EmailProveedor']."'
                 ,sup_phone = '".$params['PhoneProveedor']."'
                 WHERE Sup_id = ".$params['IdProveedor'].";";
 

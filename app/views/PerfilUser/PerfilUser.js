@@ -236,7 +236,7 @@ function getPerfilesTable() {
 }
 
 //Optiene los modulos 
-function getModulesList(ModUser,tipeModul,) {
+function getModulesList(ModUser,tipeModul) {
     var location = 'perfilUser/GetModules';
     $.ajax({
             type: "POST",
@@ -248,7 +248,6 @@ function getModulesList(ModUser,tipeModul,) {
             url: location,
         success: function (respuesta) {
             var renglon = "";
-
             if(tipeModul == "Asig"){
                 respuesta.forEach(function(row, index) {
                     renglon ='<a href="#" class="list-group-item list-group-item-action" id="'+row.mod_id+'">'+row.mod_code+' - '+row.mod_name+'<br><span class="list-group-item-Text">'+row.mod_description+'</span></a>';
@@ -261,7 +260,7 @@ function getModulesList(ModUser,tipeModul,) {
                 });
             }
         },
-        error: function () {
+        error: function (jqXHR, textStatus, errorThrown) {
         }
     }).done(function () {
     });

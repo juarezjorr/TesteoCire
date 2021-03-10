@@ -23,31 +23,31 @@
 		  $this->render(__CLASS__, $params);
 		}
 
-		public function GetSubCategoria($request_params)
+		public function GetProducto($request_params)
 		{
-	      $result = $this->model->GetSubCategoria($request_params);
+	      $result = $this->model->GetProducto($request_params);
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
-		public function SaveSubCategoria($request_params)
+		public function SaveProductos($request_params)
 		{
-		  if($request_params['IdSubCategoria'] == ""){
-			$result = $this->model->SaveSubCategoria($request_params);	  
+		  if($request_params['IdProducto'] == ""){
+			$result = $this->model->SaveProductos($request_params);	  
 		  }else{
-			$result = $this->model->ActualizaSubCategoria($request_params);	  
+			$result = $this->model->ActualizaProducto($request_params);	  
 		  }
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
-		public function GetSubCategorias($request_params)
+		public function GetProductos($request_params)
 		{
-	      $result = $this->model->GetSubCategorias($request_params);
+	      $result = $this->model->GetProductos($request_params);
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
-		public function DeleteSubCategoria($request_params)
+		public function DeleteProducto($request_params)
 		{
-		  $result = $this->model->DeleteSubCategoria($request_params);	  
+		  $result = $this->model->DeleteProducto($request_params);	  
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
 		}
 
