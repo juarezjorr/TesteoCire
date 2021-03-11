@@ -298,3 +298,208 @@ nav li:hover > ul > li {
   border-radius: 4px;
 }
 /*# sourceMappingURL=estilos.css.map */
+
+/*******************ESTILOS JUAN*******************/
+.listContainer{
+  height: 200px !important;
+  overflow-y: scroll;
+}
+
+.list-group-item {
+    font-weight: 600 !important;
+    font-size: .65rem;
+    padding: 0.1rem .3rem !important;
+    color: rgb(55, 0, 255) ;
+}
+
+.list-group-item-Text{
+  font-size: .6rem !important;
+  font-weight: 200 !important;
+  color: black ;
+
+}
+
+.colorSecundario{
+  color:#9a9a9a; 
+}
+
+
+.form-control {
+color: #212529 ;
+} 
+/*Estilos data table adicionales */
+.btn_Datatable{
+  padding: 0px !important;
+  margin: 0px !important;
+  border: none !important;
+  background: none !important;
+}
+
+.button-page-length{
+  padding: 4px !important;
+  margin: 5px 10px 5px 5px !important;
+  border: none !important;
+  background: none !important;
+  background-color: #007bff !important;
+  border-radius: 4px !important;
+  transition: background 0.5s ease-in-out !important;
+  color: white !important;
+}
+
+.button-page-length:hover {
+  background-color: #0069d9 !important;
+}
+
+.dt-button-collection {
+  width: 100px !important;
+  padding: 3px 12px 3px 3px!important;
+}
+
+.btnDatableAdd{
+  /*padding: 0px !important;*/
+  margin: 0px  0px  10px  0px !important;
+  border: none !important;
+  background: none !important;
+  background-color: #007bff !important;
+  border-radius: 4px !important;
+  transition: background 0.5s ease-in-out !important;
+  color: white !important;
+}
+
+.btnDatableAdd:hover {
+  background-color: #0069d9 !important;
+}
+
+.btnDatableAddRed{
+  /*padding: 0px !important;*/
+  margin: 0px  0px  10px  0px !important;
+  border: none !important;
+  background: none !important;
+  background-color: #ff3c00 !important;
+  border-radius: 4px !important;
+  transition: background 0.5s ease-in-out !important;
+  color: white !important;
+  visibility: hidden;
+}
+
+.btnDatableAddRed:hover {
+  background-color: #d90000 !important;
+}
+
+
+
+.btn-add{
+  font-style: normal !important;
+  font-size: 12px !important;
+}
+
+
+::-webkit-scrollbar {
+width: 4px;
+}
+
+::-webkit-scrollbar-track {
+background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+background: #b5b5b5; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #919191; 
+}
+
+/*********************/
+
+.row {
+  margin-right: 5px !important;
+  margin-left: 5px !important;
+  margin-bottom: 13px;
+
+}
+
+.close:focus {
+  outline: none;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+
+.modal-footer {
+  
+  border-top: none;
+
+}
+
+.btn-lg  {
+  padding: 0.4rem 1rem !important;
+  font-size: 1 rem !important;
+}
+
+
+.form-control {
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.3rem 0.75rem;
+  font-size: .7rem !important;
+}
+
+.col-espace{
+  margin-bottom: 13px;
+}
+
+
+
+.custom-select {
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.3rem 0.75rem !important;
+  font-size: .7rem !important;
+}
+
+.btn-Edit-Perfil {
+  font-size: .7rem !important;
+}
+
+.invalid-feedback {
+  margin-top: 0.1rem;
+}
+
+.card-body-add{
+  padding: .4rem !important;
+}
+
+.margin-cero{
+  margin-bottom: 0px !important;
+}
+
+.margin-der{
+  margin-right: .5rem !important;
+}
+
+.btn-icon-edit {
+  color: #585858 !important;
+  transition: background 0.5s ease-in-out !important;
+}
+
+.btn-icon-edit:hover  {
+  box-shadow: none !important;
+  background-color: #058a38 !important;
+  color: #ececec !important;
+}
+
+.btn-icon-delete {
+  color: #585858 !important;
+  transition: background 0.5s ease-in-out !important;
+}
+
+.btn-icon-delete:hover  {
+  box-shadow: none !important;
+  background-color: #af230a !important;
+  color: #ececec !important;
+}
+
+.marginR{
+  margin-right: 7px !important;
+}
