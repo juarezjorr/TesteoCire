@@ -1,31 +1,17 @@
 <?php 
-  	defined('BASEPATH') or exit('No se permite acceso directo'); 	  
+  	defined('BASEPATH') or exit('No se permite acceso directo'); 
+     require ROOT . FOLDER_PATH . "/app/assets/header.php";	  
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/bootstrap.css' ?>">
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/dataTables.bootstrap4.min.css' ?>">
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/responsive.bootstrap4.min.css' ?>">
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/buttons.dataTables.min.css' ?>">
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/select.bootstrap4.min.css' ?>">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/css/all.css' ?>" />
-        
-		<title>CTT Exp & Rentals</title>
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/css/estilos.css' ?>">
- 	</head>
-<body class="">
-			<div class="container">
+<header>
+	<?php require ROOT . FOLDER_PATH . "/app/assets/menu.php"; ?>
+</header>
+<div class="container-fluid">
+   <div class="contenido">
+   		<h1>Almacenes</h1>
 				<div class="row" style="margin-bottom: 10px !important;">
 					<div class="col-md-6"></div>
 					<div class="col-12 col-md-6 text-right">
-					<button id="nuevoAlmacen" type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#AlmacenModal">
+					<button id="nuevoAlmacen" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AlmacenModal">
                     <i class="fas fa-user margin-der"> </i>   Nuevo Almacen
 					</button>
 					</div>
@@ -33,14 +19,13 @@
 
 				<div class="row">
 					<div class="col-12 col-md-12">		
-                      <table id="AlmacenesTable" class="table table-striped table-bordered dt-responsive nowrap table-hover" style="width:100%">         
+                      <table id="AlmacenesTable" class="display  display compact nowrap" style="width:100%">         
                             <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Nombre</th>
-                                    <th>Tipo</th>
-                                    <th>Comandos</th>
-
+                                    <th style="width: 30px"></th>
+                                    <th style="width: 20px">Id</th>
+                                    <th style="width: 300px">Nombre</th>
+                                    <th style="width: 100px">Tipo</th>
                                 </tr>
                             </thead>
                             <tbody id="tablaAlmacenesRow">
@@ -48,8 +33,8 @@
                         </table>
                     </div>
 				</div>
-			</div>
-
+   </div>
+</div>
 <!-- Modal Agregar Almacen -->
 <div class="modal fade" id="AlmacenModal" tabindex="-1" aria-labelledby="AlmacenModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered">
@@ -145,7 +130,10 @@
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.html5.min.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.print.min.js' ?>"></script>
 
-<script src="<?=  PATH_VIEWS . 'almacenes/Almacenes.js' ?>"></script>
 
-</body>
-</html>
+</div>
+
+<script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'Almacenes/Almacenes.js' ?>"></script>
+
+<?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>

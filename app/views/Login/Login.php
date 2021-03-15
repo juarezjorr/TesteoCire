@@ -57,6 +57,7 @@
 									placeholder="Ingresa tu numero de empleado"
 									id="txtEmployee"
 									name="txtEmployee"
+									autocomplete="off"
 									aria-describedby="employeeHelp"
 								/>
 								<div id="employeeHelp" class="form-text">

@@ -1,3 +1,5 @@
+@import "_form/forms";
+
 * {
 	padding: 0;
 	margin: 0;
@@ -6,7 +8,8 @@
 body {
 	font-family: $font_primary;
 	font-size: 14px;
-	color: $dark-x;
+	color: $dark;
+	background-color: $color_deep_body;
 }
 
 h1,
@@ -18,6 +21,7 @@ h4 {
 
 h1 {
 	font-size: 1.9rem;
+	border-bottom: 1px solid #0d75d6;
 }
 h2 {
 	font-size: 1.7rem;
@@ -35,12 +39,22 @@ h4 {
 .bg-dark-x {
 	background-color: $dark-x;
 }
+
+// start LOGIN  -------------
 .login-section {
 	.form-control,
 	.btn {
 		min-height: 1.125rem;
 		line-height: initial;
 		color: $light;
+	}
+	input {
+		color: $dark;
+		border: 1px solid $light;
+		&:focus,
+		&:valid  {
+			background-color: #000000;
+		}
 	}
 }
 .set-login {
@@ -67,9 +81,9 @@ h4 {
 .img-3 {
 	background-image: url(../img/slider/slider-003.jpg);
 }
-
+// end LOGIN  -------------
 .contenido {
-	padding-top: 60px;
+	padding-top: 50px;
 }
 
 .form-floating > .form-control {
@@ -77,7 +91,9 @@ h4 {
 	padding: 0.5rem 0.5rem;
 }
 .form-floating > label {
-	padding: 0.5rem 1.2rem;
+	padding: 0.5rem 0.5rem;
+	opacity: 0.8;
+	color: #000000;
 }
 
 .mvst_group {
@@ -87,17 +103,35 @@ h4 {
 	grid-template-rows: 1fr;
 	overflow: auto;
 
-	.form-group {
-		height: calc(100vh - 120px);
-		overflow: auto;
-	}
 	.mvst_panel {
 		overflow: auto;
 	}
 	.mvst_table {
 		width: 100%;
 		overflow: auto;
+		padding: 0px 10px;
 	}
+}
+
+.form-floating {
+	& > .form-select {
+		height: calc(3rem + 5px);
+		padding: 1rem 0.75rem;
+		// padding-top: 1.625rem;
+		// padding-bottom: 0.625rem;
+	}
+	input {
+		font-size: 3.3rem;
+		font-weight: 900;
+	}
+
+}
+
+.text-right {
+	text-align: right;
+}
+.text-center {
+	text-align: center;
 }
 .dataTables_wrapper {
 	display: block;
@@ -115,10 +149,10 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 div.dataTables_wrapper div.dataTables_length select {
-	margin-left: 0.5em;
-	margin-right: 1.2rem;
+	margin-left: 0.3em;
+	margin-right: 0.8em;
 	display: inline-block;
-	width: 35px;
+	width: 50px;
 	font-size: 0.9em;
 }
 div.dataTables_wrapper .btn,
@@ -158,6 +192,20 @@ div.dataTables_wrapper div.btn-group button.btn-print {
 div.dataTables_wrapper div.btn-group button.btn-apply {
 	width: auto;
 }
+
+div.dataTables_wrapper .dataTables_paginate .paginate_button {
+	padding: 2px 4px;
+	background-color: #ffffff;
+	.page-link {
+		padding: 0.35rem 0.63rem;
+		border-radius: 4px;
+		border: none;
+		&:hover {
+			background-color: #555555;
+			color: #ffffff;
+		}
+	}
+}
 .notify {
 	font-size: 1.2rem;
 	text-align: center;
@@ -171,12 +219,20 @@ table {
 	td.edit {
 		text-align: center;
 		i {
-			color: #bb0000;
-			font-size: 1.1em;
+			font-size: 1em;
+			margin: 1px 6px;
 			cursor: pointer;
-
-			&:hover {
-				color: #ff0000;
+			&.kill {
+				color: #dd0000;
+				&:hover {
+					color: #ff0000;
+				}
+			}
+			&.modif {
+				color: #0d75d6;
+				&:hover {
+					color: #51a7f4;
+				}
 			}
 		}
 	}
@@ -228,6 +284,95 @@ table {
 	}
 }
 
+/*  -----   MODALES    -------*/
+.container-fluid {
+	padding: 0;
+}
+.row {
+	margin: 0;
+	padding: 0;
+	--bs-gutter-x: 0;
+}
+
+.close:focus {
+	outline: none;
+}
+
+.modal-header {
+	border-bottom: none;
+}
+
+.modal-footer {
+	border-top: none;
+}
+
+.btn-lg {
+	padding: 0.4rem 1rem !important;
+	font-size: 1 rem !important;
+}
+
+.form-control {
+	height: calc(1.5em + 0.75rem + 2px);
+	padding: 0.3rem 0.75rem;
+	font-size: 0.7rem !important;
+}
+
+.col-espace {
+	margin-bottom: 13px;
+}
+
+.custom-select {
+	height: calc(1.5em + 0.75rem + 2px);
+	padding: 0.3rem 0.75rem !important;
+	font-size: 0.7rem !important;
+}
+
+.btn-Edit-Perfil {
+	font-size: 0.7rem !important;
+}
+
+.invalid-feedback {
+	margin-top: 0.1rem;
+}
+
+.card-body-add {
+	padding: 0.4rem !important;
+}
+
+.margin-cero {
+	margin-bottom: 0px !important;
+}
+
+.margin-der {
+	margin-right: 0.5rem !important;
+}
+
+.btn-icon-edit {
+	color: #585858 !important;
+	transition: background 0.5s ease-in-out !important;
+}
+
+.btn-icon-edit:hover {
+	box-shadow: none !important;
+	background-color: #058a38 !important;
+	color: #ececec !important;
+}
+
+.btn-icon-delete {
+	color: #585858 !important;
+	transition: background 0.5s ease-in-out !important;
+}
+
+.btn-icon-delete:hover {
+	box-shadow: none !important;
+	background-color: #af230a !important;
+	color: #ececec !important;
+}
+
+.marginR {
+	margin-right: 7px !important;
+}
+
 @media screen and (max-width: 780px) {
 	.container-fluid {
 		padding: 5px;
@@ -246,10 +391,6 @@ table {
 		grid-template-columns: 1fr;
 		grid-template-rows: 2fr;
 
-		.form-group {
-			height: auto;
-			padding: 5px 0;
-		}
 
 		.mvst_panel {
 			width: 100%;

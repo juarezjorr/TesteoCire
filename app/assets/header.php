@@ -25,7 +25,7 @@
 			href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Titillium+Web:wght@400;600&display=swap"
 			rel="stylesheet"
 		/>
-
+		
 
 		<link rel="stylesheet" href="<?= PATH_ASSETS .	'css/estilos.css' ?>" />
 
