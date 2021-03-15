@@ -136,8 +136,19 @@ function DeletProducto() {
    }).done(function () {});
 }
 
+function addZeroNumber(number, length) {
+    var my_string = '' + number;
+    var largo = my_string.length;
+    if(largo > length){var restar = largo - length; my_string = my_string.substring(restar, largo); }
+    while (my_string.length < length) {
+        my_string = '0' + my_string;
+    }
+    return my_string;
+}
+
 //Guardar Almacen **
 function SaveProducto() {
+<<<<<<< HEAD
    var location = 'productos/SaveProductos';
    var IdProducto = $('#IdProducto').val();
    var NomProducto = $('#NomProducto').val();
@@ -155,6 +166,33 @@ function SaveProducto() {
    var idProveedor = $('#selectRowProovedores option:selected').attr('id');
    var idMoneda = $('#selectMonedaProducto option:selected').attr('id');
    var idAlmacen = $('#selectRowAlmacen option:selected').attr('id');
+=======
+        var location = "productos/SaveProductos";
+        var IdProducto = $('#IdProducto').val();
+        var NomProducto = $('#NomProducto').val();
+        var NomEngProducto = $('#NomEngProducto').val();
+        var ModelProducto = $('#ModelProducto').val();
+        var SerieProducto = $('#SerieProducto').val();
+        var CostProducto = $('#CostProducto').val();
+        var PriceProducto = $('#PriceProducto').val();
+        var SkuProducto = $('#SkuProducto').val();
+        var DesProducto = $('#DesProducto').val();
+        var idStoreProducto = $('#idStoreProducto').val();
+
+        var idCategoria = $("#selectRowCategorias option:selected").attr("id");
+        var idSubCategoria = $("#selectRowSubCategorias option:selected").attr("id");
+
+/*         console.log(addZeroNumber(idCategoria,2));
+        console.log(addZeroNumber(idSubCategoria,2));
+        console.log(addZeroNumber(ModelProducto,3)); */
+
+
+
+        var idTipeService = $("#selectRowService option:selected").attr("id");
+        var idProveedor = $("#selectRowProovedores option:selected").attr("id");
+        var idMoneda = $("#selectMonedaProducto option:selected").attr("id");
+        var idAlmacen = $("#selectRowAlmacen option:selected").attr("id");
+>>>>>>> CTTRentals/Desarrollo
 
    var visible = 0;
    if ($('#checkProducto').prop('checked')) {

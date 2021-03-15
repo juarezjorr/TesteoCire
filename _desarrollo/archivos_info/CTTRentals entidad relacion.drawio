@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 <mxfile modified="2021-03-10T18:37:01.275Z" host="2507b1ee-2163-40f4-a733-3c88019d8095" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.54.1 Chrome/87.0.4280.141 Electron/11.3.0 Safari/537.36" etag="fLMcBmSTxM19vHg-JigN" version="14.2.4" type="embed" pages="3">
     <diagram id="kmsEypxPmVz_Vl7ECJFX" name="Usuarios">
         <mxGraphModel dx="1137" dy="795" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+=======
+<mxfile modified="2021-03-03T13:44:01.720Z" host="3b14346b-9090-4bf1-9b64-2e4237b0e042" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.53.2 Chrome/87.0.4280.141 Electron/11.2.1 Safari/537.36" etag="JisKELijTJ3jrKP5cN48" version="14.2.4" type="embed" pages="3">
+    <diagram id="kmsEypxPmVz_Vl7ECJFX" name="Usuarios">
+        <mxGraphModel dx="784" dy="687" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+>>>>>>> CTTRentals/Desarrollo
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -485,7 +491,11 @@
         </mxGraphModel>
     </diagram>
     <diagram id="7eteFTFEP_zfqLJSvVE4" name="Productos">
+<<<<<<< HEAD
         <mxGraphModel dx="1137" dy="795" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+=======
+        <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" page="1" fold="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+>>>>>>> CTTRentals/Desarrollo
             <root>
                 <mxCell id="Pd0lMm26_LEoXVVrBA5k-0"/>
                 <mxCell id="Pd0lMm26_LEoXVVrBA5k-1" parent="Pd0lMm26_LEoXVVrBA5k-0"/>
@@ -1297,7 +1307,10 @@
                 <mxCell id="9VYuLi7w5bvWU621x6dm-14" value="&lt;h4&gt;&lt;font style=&quot;line-height: 0%&quot;&gt;&lt;span style=&quot;font-size: 12px&quot;&gt;Movimientos-inventarios&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;span style=&quot;font-weight: normal&quot;&gt;Intercambio de productos entre almacenes.&lt;/span&gt;&lt;/h4&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=0;spacingTop=-13;whiteSpace=wrap;overflow=hidden;rounded=0;fontFamily=Tahoma;fontSize=9;fontColor=#999999;" parent="Z43iQ2_q7HOuT7YK7iSb-0" vertex="1">
                     &#xa;                    &#xa;&#xa;
                     <mxGeometry y="231.23000000000002" width="160" height="47.77" as="geometry"/>
+<<<<<<< HEAD
                     &#xa;                    &#xa;&#xa;
+=======
+>>>>>>> CTTRentals/Desarrollo
                 </mxCell>
                 &#xa;                &#xa;&#xa;
             </root>
