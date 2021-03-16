@@ -1,23 +1,38 @@
-DROP TABLE `cttapp_cire`.`ctt_prod_documents`;
-CREATE TABLE `cttapp_cire`.`ctt_products_documents` (
-	`dcp_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de relacion producto-documento',
-    `prd_id` 				INT NULL 					 COMMENT 'ID del producto relacion ctt_productos',
-	`doc_id`				INT NULL		 	 		 COMMENT 'ID del documento relación ctt_documents',
-PRIMARY KEY (`dcp_id`))
-COMMENT = 'Relación de documentos con productos';
+TRUNCATE TABLE `ctt_menu`;
+INSERT INTO `ctt_menu` (`mnu_id`, `mnu_parent`, `mnu_item`, `mnu_description`, `mod_id`) VALUES
+(1, 0, 'Inventarios', 'Seccion de inventarios', 1),
+(2, 0, 'Programación', 'Seccion de programaciones', 2),
+(3, 1, 'Almacenes', 'Seccion de almacenes', 3),
+(4, 1, 'Categorias', 'Seccion de categorias', 4),
+(5, 0, 'Administración', 'Seccion de administración', 5),
+(6, 5, 'Usuarios', 'Seccion de usuarios', 6),
+(7, 3, 'Movimiento entre almacenes', 'Sección de movimientos entre almacenes', 7),
+(8, 3, 'Listado de almacenes', 'Sección de edición de almacenes', 8),
+(9, 4, 'Listado de categorias', 'Sección de edición de categorias', 9),
+(10, 4, 'Listado de productos', 'Sección de edición de productos', 10);
 
-CREATE TABLE `cttapp_cire`.`ctt_documents` (
-	`doc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del documento',
-	`doc_code`				VARCHAR(100) NULL		 	 COMMENT 'Código del documento',
-	`doc_name`				VARCHAR(100) NULL		 	 COMMENT 'Nombre del documento',
-    `doc_type`				VARCHAR(50) NULL		 	 COMMENT 'Tipo de docuemnto',
-	`doc_size`				INT NULL		 			 COMMENT 'Tamaño del docuemnto',
-    `doc_content_type`		VARCHAR(100) NULL		 	 COMMENT 'Tipo del contenido del documento',
-    `doc_document`			BLOB NULL		 			 COMMENT 'Contenido del documento',
-PRIMARY KEY (`doc_id`))
-COMMENT = 'Documentos de productos';
+TRUNCATE TABLE `ctt_modules`;
+INSERT INTO `ctt_modules` (`mod_id`, `mod_code`, `mod_name`, `mod_description`, `mod_item`) VALUES
+(1, 'invt', 'Inventarios', 'Modulo que controla los inventarios', '#'),
+(2, 'prog', 'Programación', 'Modulo de programación', '#'),
+(3, 'alma', 'Almacenes', 'Modulo de almacenes', '#'),
+(4, 'categ', 'Categorias', 'Modulo de categorias', 'Categories'),
+(5, 'admin', 'Administracion', 'Modulo de administración', '#'),
+(6, 'users', 'Usuarios', 'Modulo de usuarios', 'Usuarios'),
+(7, 'mvalm', 'Movimiento de almacenes', 'Modulo de movimiento entre almacenes', 'MoveStores'),
+(8, 'mvalm', 'Lista de almacenes', 'Modulo de edición de almacenes', 'Almacenes'),
+(9, 'lscat', 'Lista de categorias', 'Modúlo de edicion de categorias', 'Categorias'),
+(10, 'prods', 'Lista de productos', 'Modúlo de edicion de productos', 'Productos');
 
-ALTER TABLE `cttapp_cire`.`ctt_store_exchange` RENAME TO  `cttapp_cire`.`ctt_stores_exchange` ;
-ALTER TABLE `cttapp_cire`.`ctt_store_product` RENAME TO  `cttapp_cire`.`ctt_stores_products` ;
-ALTER TABLE `cttapp_cire`.`ctt_user_module` RENAME TO  `cttapp_cire`.`ctt_users_modules` ;
-ALTER TABLE `cttapp_cire`.`ctt_profile_module` RENAME TO  `cttapp_cire`.`ctt_profiles_modules` ;
+TRUNCATE TABLE `ctt_users_modules`;
+INSERT INTO `ctt_users_modules` (`urm_id`, `usr_id`, `mod_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 1, 6),
+(7, 1, 7),
+(8, 1, 8),
+(9, 1, 9),
+(10, 1, 10);
