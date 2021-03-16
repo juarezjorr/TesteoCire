@@ -93,7 +93,7 @@ h4 {
 .form-floating > label {
 	padding: 0.5rem 0.5rem;
 	opacity: 0.8;
-	color: #000000;
+	color: $inputs-label;
 }
 
 .mvst_group {
@@ -138,6 +138,7 @@ h4 {
 	.dataTables_filter {
 		label {
 			display: block;
+			color: $inputs-label;
 		}
 	}
 }

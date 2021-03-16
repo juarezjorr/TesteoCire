@@ -4,18 +4,17 @@
 // @import "textarea";
 
 .form-group {
-    background-color: $dark;
+    background-color: $grey-form;
     overflow: hidden;
     padding: 8px;
     border-radius: 4px;
     height: calc(100vh - 120px);
     overflow: auto;
     padding: 10px;
-    color: $light;
+    color: $inputs-label;
 }
 
-
-@media screen and (max-width:750px){
+@media screen and (max-width: 750px) {
     .form-group {
         padding: 10px;
     }
