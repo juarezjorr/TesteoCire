@@ -13,18 +13,11 @@ class UsuariosModel extends Model
 // Optiene los Usuaios existentes
 	public function GetUsuarios()
 	{
-		$qry = "SELECT usr_id, usr_username, usr_password, prf_id, emp_id FROM ctt_users WHERE usr_status = 1 ;";
-		$result = $this->db->query($qry);
-		$lista = array();
-		while ($row = $result->fetch_row()){
-			$item = array("usr_id" =>$row[0],
-						"usr_username" =>utf8_decode($row[1]),
-						"usr_password"=>utf8_decode($row[2]),
-						"prf_id"=>$row[3],
-						"emp_id"=>$row[4]);
-			array_push($lista, $item);
-		}
-		return $lista;
+		$qry = "SELECT u.usr_id, u.usr_username, e.emp_fullname, e.emp_number, p.prf_name, u.usr_dt_registry, u.usr_dt_last_access FROM ctt_users as u
+		INNER JOIN ctt_employees as e on e.emp_id = u.emp_id
+		LEFT JOIN ctt_profiles as p on p.prf_id = u.prf_id
+		WHERE u.usr_status = '1'";
+		return $this->db->query($qry);
 	}
 
 

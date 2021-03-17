@@ -1,9 +1,21 @@
-@import 'textbox';
+@import "input";
+@import "select";
+@import "radio";
+// @import "textarea";
 
-
-.form-group  {
-    background-color: $form;
+.form-group {
+    background-color: $grey-form;
     overflow: hidden;
-    padding: 1rem;
+    padding: 8px;
     border-radius: 4px;
+    height: calc(100vh - 120px);
+    overflow: auto;
+    padding: 10px;
+    color: $inputs-label;
+}
+
+@media screen and (max-width: 750px) {
+    .form-group {
+        padding: 10px;
+    }
 }

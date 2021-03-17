@@ -7,7 +7,7 @@
 	<?php require ROOT . FOLDER_PATH . "/app/assets/menu.php"; ?>
 </header>
 <div class="container-fluid">
-		<div class="contenido">
+	<div class="contenido">
 			<h1>Movimiento entre almacenes</h1>
 		<div class="row mvst_group">
 			<div class="mb-3 mvst_panel">
@@ -37,7 +37,7 @@
 							Cantidad disponible <span id="txtQuantityStored" class="notify">&nbsp;</span>
 						</div>
 						<div class="col-md-5 col-lg-5 col-xl-5 mb-2 form-floating">
-							<input id="txtQuantity" type="text" class="form-control form-control-sm text-center" >
+							<input id="txtQuantity" type="text" class="form-control form-control-sm text-center number" >
 							<label for="txtQuantity">Cantidad</label>
 						</div>
 					</div>
@@ -80,19 +80,7 @@
 						</tr>
 					</thead>
 					<tbody>	
-<!-- <tr>
-<td class="support"></td>	
-<td class="sku"></td>
-	<td class="product-name">PHANTOM FLEX 2K/4K</td>
-	<td class="quantity"><span>1</span></td>
-	<td class="serie-product">1234</td>
-	<td class="code-type">STA</td>
-	<td class="store-name">CAMARA</td>
-	<td class="code-type">ETA</td>
-	<td class="store-name">MINIMAX D</td>
-	<td class="comments"><div>Por otra parte, informamos a usted, que sus datos personales no serán compartidos con ninguna autoridad, empresa, organización o personas distintas a nosostros y serán utilizados exclusivamente para los fines señalados.</div>
-</td>
-</tr> -->
+
 					</tbody>
 	
 				</table>

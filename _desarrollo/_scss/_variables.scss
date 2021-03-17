@@ -1,13 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
-$font_primary: 'Titillium Web', sans-serif;
-$font_secundary: 'Bebas Neue', cursive;
-$font_color_principal: #999999;
-$light: #ffffff;
-$dark: #283446;
-$dark-x: #3d4755;
-$form: #f3f3f3;
+$inputs-label: #2c333a;
 
 // $color_btn_default_top: rgba(14, 143, 171, 0.3);
 // $color_btn_default_bot: rgba(14, 143, 171, 0.8);
@@ -28,6 +22,16 @@ $color_deep_modl: rgba(#000000, 0.6);
 
 $color_btn_cancela_top: rgba(223, 45, 1, 0.3);
 $color_btn_cancela_bot: rgba(223, 45, 1, 0.8);
+
+$font_primary: "Titillium Web", sans-serif;
+$font_secundary: "Bebas Neue", cursive;
+$font_color_principal: #999999;
+$light: #F0F0F0;
+$dark: $color_btn_default_bot; //#3c5878; // #283446;
+$dark-x: $color_btn_cancela_top; //#3c5878; // #3d4755;
+
+$grey-form: #d3d3d3;
+
 
 //$color_btn_default_top: rgba(50, 104, 155, 0.4);
 //$color_btn_default_bot: rgba(50, 104, 155, 1);

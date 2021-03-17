@@ -147,7 +147,9 @@ function set_menu_on_page(dt) {
 
 function build_menu(dt){
 	$.each(dt, function(v,u){
+		
 		if (u.mnu_parent == 0){
+			
 			let H = `<li><a href="${u.mod_item}">${u.mnu_item}</a>${sublevel(u.mnu_id, u.sons, dt)}</li>`;
 			$('ul.menu').append(H)
 		}
@@ -160,7 +162,8 @@ function sublevel(id, sn, dt){
 		H += `<ul>`;
 		$.each(dt, function(v,u){
 			if (u.mnu_parent == id){
-				H +=  `<li><a href="${u.mod_item}">${u.mnu_item}</a>${sublevel(u.mnu_id, u.sons, dt)}</li>`
+				let sons = (u.sons > 0) ? '<i class="fas fa-angle-right"></i>':'';
+				H +=  `<li><a href="${u.mod_item}">${u.mnu_item}${sons}</a>${sublevel(u.mnu_id, u.sons, dt)}</li>`
 			}
 		});
 		H += `</ul>`;

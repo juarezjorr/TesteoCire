@@ -24,7 +24,7 @@ class CategoriasModel extends Model
 // Optiene los Usuaios existentes
 	public function GetCategorias()
 	{
-		$qry = "SELECT cat_id, cat_name FROM ctt_categories WHERE cat_status = 1;";
+		$qry = "SELECT cat_id, cat_name FROM ctt_categories WHERE cat_status = '1';";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
