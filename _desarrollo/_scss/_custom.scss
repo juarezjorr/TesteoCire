@@ -35,11 +35,13 @@ h4 {
 .bg-dark-x {
 	background-color: $dark-x;
 }
-.form-control,
-.btn {
-	min-height: 1.125rem;
-	line-height: initial;
-	color: $light;
+.login-section {
+	.form-control,
+	.btn {
+		min-height: 1.125rem;
+		line-height: initial;
+		color: $light;
+	}
 }
 .set-login {
 	max-width: 500px;
@@ -67,5 +69,194 @@ h4 {
 }
 
 .contenido {
-	padding-top: 80px;
+	padding-top: 60px;
+}
+
+.form-floating > .form-control {
+	height: 100%;
+	padding: 0.5rem 0.5rem;
+}
+.form-floating > label {
+	padding: 0.5rem 1.2rem;
+}
+
+.mvst_group {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 300px auto;
+	grid-template-rows: 1fr;
+	overflow: auto;
+
+	.form-group {
+		height: calc(100vh - 120px);
+		overflow: auto;
+	}
+	.mvst_panel {
+		overflow: auto;
+	}
+	.mvst_table {
+		width: 100%;
+		overflow: auto;
+	}
+}
+.dataTables_wrapper {
+	display: block;
+	.dataTables_filter {
+		label {
+			display: block;
+		}
+	}
+}
+div.dataTables_wrapper div.dataTables_filter input {
+	margin-left: 0.5em;
+	display: inline-block;
+	width: 150px;
+	font-size: 0.9em;
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+	margin-left: 0.5em;
+	margin-right: 1.2rem;
+	display: inline-block;
+	width: 35px;
+	font-size: 0.9em;
+}
+div.dataTables_wrapper .btn,
+div.dataTables_wrapper div.btn-group button.btn-secundary {
+	margin-left: 0;
+	margin-right: 0;
+	display: inline-block;
+	// width: 35px;
+	padding: 0px;
+	background-color: transparent;
+	border: none;
+	border-radius: 0;
+}
+div.dataTables_wrapper div.btn-group button.btn-excel,
+div.dataTables_wrapper div.btn-group button.btn-pdf,
+div.dataTables_wrapper div.btn-group button.btn-print,
+div.dataTables_wrapper div.btn-group button.btn-apply {
+	// margin-left: 0.5em;
+	margin-right: 0.2rem;
+	display: inline-block;
+	padding: 0.08em 7px;
+	font-weight: normal;
+	font-size: 1.1em;
+	background-color: #888888;
+	background-color: rgb(16, 130, 252);
+	color: #ffffff;
+	border-radius: 3px;
+	&:hover {
+		background-color: #333333;
+	}
+}
+div.dataTables_wrapper div.btn-group button.btn-excel,
+div.dataTables_wrapper div.btn-group button.btn-pdf,
+div.dataTables_wrapper div.btn-group button.btn-print {
+	width: 35px;
+}
+div.dataTables_wrapper div.btn-group button.btn-apply {
+	width: auto;
+}
+.notify {
+	font-size: 1.2rem;
+	text-align: center;
+	background-color: rgba(100, 100, 100, 0.1);
+	border-radius: 3px;
+	padding: 4px;
+	display: block;
+}
+
+table {
+	td.edit {
+		text-align: center;
+		i {
+			color: #bb0000;
+			font-size: 1.1em;
+			cursor: pointer;
+
+			&:hover {
+				color: #ff0000;
+			}
+		}
+	}
+	td.sku {
+		text-align: center;
+		.hide-support {
+			display: none;
+		}
+	}
+	td.product-name {
+		text-align: left;
+		font-weight: 900;
+	}
+	td.quantity {
+		text-align: center;
+
+		span {
+			padding: 3px 8px;
+			background-color: #005599;
+			color: #ffffff;
+			font-weight: 900;
+			font-size: 0.8em;
+			margin: 2px 0;
+			border-radius: 5px;
+		}
+	}
+	td.serie-product {
+		text-align: center;
+	}
+	td.code-type_s,
+	td.code-type_t {
+		text-align: center;
+		font-weight: 900;
+	}
+	td.store-name_s,
+	td.store-name_t {
+		text-align: center;
+	}
+	td.comments {
+		width: 350px;
+		div {
+			width: 350px;
+			text-align: left;
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}
+
+@media screen and (max-width: 780px) {
+	.container-fluid {
+		padding: 5px;
+
+		.contenido {
+			width: 100%;
+
+			.row {
+				padding: 0;
+				margin: 0;
+			}
+		}
+	}
+	.mvst_group {
+		display: block;
+		grid-template-columns: 1fr;
+		grid-template-rows: 2fr;
+
+		.form-group {
+			height: auto;
+			padding: 5px 0;
+		}
+
+		.mvst_panel {
+			width: 100%;
+			padding: 0;
+		}
+		.mvst_table {
+			width: 100%;
+		}
+	}
 }

@@ -94,6 +94,7 @@ class MoveStoresController extends Controller
 		}
 		if ($i>0){
 			$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			//$res =  json_encode($rowdata, JSON_HEX_QUOT);
 		} else {
 			$res =  '[{"exc_id":"0"}]';	
 		}
@@ -109,12 +110,35 @@ class MoveStoresController extends Controller
         echo $res;
 	} 
 
+
 // Actualiza la situacion del almacen
-	public function ApplyExchange($request_params)
+	public function UpdateStores($request_params)
 	{
-		$params =  $this->session->get('user');
-		$result = $this->model->ApplyExchange($request_params);
-		$res = $result;
-        echo $res;
+		echo $request_params['mov'] ;
+		if ($request_params['mov'] == 'S' ){
+			$params =  $this->session->get('user');
+			$result = $this->model->UpdateStoresSource($request_params);
+			$res = $result;
+			echo $res;
+		}
+		if ($request_params['mov'] == 'T' ){
+			$params =  $this->session->get('user');
+			$item = $this->model->SechingProducts($request_params);
+			$num_items = $item->fetch_object();
+
+			if ($num_items->items > 0){
+				echo 'update';
+				// actualiza la cantidad en el almacen destino
+				$result = $this->model->UpdateProducts($request_params);
+				
+			} else {
+				echo 'insert';
+				//agrega la relación almacen - producto
+				$result = $this->model->InsertProducts($request_params);
+				
+			}
+			$res = $result;
+			echo $res;
+		}
 	} 
 }

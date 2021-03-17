@@ -29,8 +29,6 @@
   public function menu($request_params)
 	{
 	//$params =  $this->session->get('user');
-
-  //print_r($request_params['userid']);
 		$result = $this->model->listaMenu($request_params['userid']);
 		$i = 0;
         while($row = $result->fetch_assoc()){
