@@ -1,0 +1,51 @@
+.check-data,
+.radio-data {
+    font-family: $font_secundary;
+}
+
+.radio-data input[type="radio"],
+.check-data input[type="checkbox"] {
+    display: none;
+
+    &:checked + label {
+        padding: 5px 8px;
+        background-color: $inputs-label;
+        border-radius: 3px;
+        color: $light;
+        &:before  {
+            display: none;
+        }
+    }
+}
+
+.radio-data label,
+.check-data label {
+    padding: 4px 8px 4px 32px;
+    display: inline-block;
+    font-size: 1em;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: rgba($inputs-label, 0.1);
+    }
+
+    &:before {
+        content: "";
+        width: 17px;
+        height: 17px;
+        display: inline-block;
+        background-color: none;
+        border: 3px solid $inputs-label;
+        border-radius: 50%;
+        position: absolute;
+        left: 8px;
+        color: $inputs-label;
+    }
+}
+
+.check-data label:before  {
+    border-radius: 3px;
+}

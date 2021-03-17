@@ -1,0 +1,60 @@
+.input-data {
+    width: 100%;
+    position: relative;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 3px;
+    margin: 10px 0;
+
+    input {
+        width: 100%;
+        height: 100%;
+        color: #595f6e;
+        padding-top: 12px;
+        border: none;
+        outline: none;
+        
+        &:focus + .label-name .content-name,
+        &:valid + .label-name .content-name {
+            transform: translateY(-100%);
+            color: $inputs-label;
+            font-size: 00.9em;
+        }
+        &:focus + .label-name::after,
+        &:valid + .label-name::after {
+            transform: translateX(0%);
+        }
+
+
+    }
+
+
+    label {
+        position: absolute;
+        bottom: 0px;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        border-bottom: 1px solid #bbbbbb;
+       // font-family: $font_secundary;
+        
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0px;
+            bottom: -1px;
+            height: 100%;
+            width: 100%;
+            border-bottom: 3px solid $inputs-label;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+    }
+    .content-name {
+        position: absolute;
+        bottom: 5px;
+        left: 8px;
+        transition: all 0.3s ease;
+    }
+}

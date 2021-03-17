@@ -1,0 +1,119 @@
+a {
+    text-decoration: none;
+    color: $font_color_principal;
+}
+
+.select-data {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    .select-container  {
+        overflow: hidden;
+    }
+
+    .select {
+        background-color: $light;
+        width: 100%;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.16);
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.2s ease all;
+        margin-bottom: 2px;
+        padding: 8px;
+        position: relative;
+        border: 2px solid transparent;
+        z-index: 200;
+
+        &.active,
+        &:hover {
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.16);
+            border: 2px solid $inputs-label;
+        }
+        &.active:before {
+            content: "";
+            display: block;
+            height: 0;
+            width: 0;
+            border-top: 10px solid $inputs-label;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            position: absolute;
+            bottom: -20px;
+            left: calc(50% - 15px);
+        }
+        i {
+            font-size: 20px;
+            margin-right: 8px;
+            color: $inputs-label;
+        }
+    }
+
+    .options {
+        background: $light;
+        border-radius: 4px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.46);
+        max-height: 200px;
+        overflow: auto;
+        z-index: 100;
+        width: 100%;
+        display: none;
+        &.active {
+            display: block;
+            animation: fadeIn 0.3s forwards;
+        }
+        .option-container {
+            padding: 8px;
+            overflow: hidden;
+            &:hover {
+                background-color: $inputs-label;
+                color: $light;
+                & .title,
+                & .descrip {
+                    color: $light;
+                }
+            }
+        }
+    }
+    .option-container {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        transition: 0.2s ease all;
+        i {
+            font-size: 0.75rem;
+            margin-right: 5px;
+        }
+    }
+    .title {
+        font-family: $font_secundary;
+        font-size: 1rem;
+        line-height: 0.9rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+    }
+    .descrip {
+        font-size: 0.72rem;
+        color: $font_color_principal;
+        line-height: 0.9rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateY(-200);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

@@ -1,27 +1,14 @@
 <?php 
-  	defined('BASEPATH') or exit('No se permite acceso directo'); 	  
+	defined('BASEPATH') or exit('No se permite acceso directo'); 
+	require ROOT . FOLDER_PATH . "/app/assets/header.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/bootstrap.css' ?>">
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/dataTables.bootstrap4.min.css' ?>">
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/responsive.bootstrap4.min.css' ?>">
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/buttons.dataTables.min.css' ?>">
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/lib/DataTable_J/Css/select.bootstrap4.min.css' ?>">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/css/all.css' ?>" />
-        
-		<title>CTT Exp & Rentals</title>
-        <link rel="stylesheet" href="<?= FOLDER_PATH . '/app/assets/css/estilos.css' ?>">
- 	</head>
-<body class="">
-			<div class="container">
+<header>
+	<?php require ROOT . FOLDER_PATH . "/app/assets/menu.php"; ?>
+</header>
+<div class="container-fluid">
+	<div class="contenido">
+			<h1>Productos</h1>
 				<div class="row" style="margin-bottom: 10px !important;">
 					<div class="col-md-6"></div>
 					<div class="col-12 col-md-6 text-right">
@@ -33,24 +20,23 @@
 
 				<div class="row">
 					<div class="col-12 col-md-12">		
-                      <table id="ProductosTable" class="table table-striped table-bordered dt-responsive nowrap table-hover" style="width:100%">         
+                      <table id="ProductosTable" class="display compact nowrap" style="width:100%">         
                             <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Nombre</th>
-                                    <th>Nombre English</th>
-                                    <th>Sku</th>
-                                    <th>Modelo</th>
-                                    <th>Serial</th>
-                                    <th>Cost</th>
-                                    <th>Price</th>
-                                    <th>Comentarios</th>
-                                    <th>Tipo Servicio</th>
-
-                                    <th>Categoria</th>
-                                    <th>SubCategoria</th>
-                                    <th>Almacen</th>
-                                    <th>Comandos</th>
+									<th style="width:30px">&nbsp;</th>
+                                    <th style="width:20px">Id</th>
+                                    <th style="width:300px">Nombre</th>
+                                    <th style="width:300px">Nombre English</th>
+                                    <th style="width:50px">Sku</th>
+                                    <th style="width:60px">Modelo</th>
+                                    <th style="width:60px">Serial</th>
+                                    <th style="width:70px">Cost</th>
+                                    <th style="width:70px">Price</th>
+                                    <th style="width:300px">Comentarios</th>
+                                    <th style="width:50px">Tipo Servicio</th>
+                                    <th style="width:70px">Categoria</th>
+                                    <th style="width:70px">SubCategoria</th>
+                                    <th style="width:70px">Almacen</th>
                                 </tr>
                             </thead>
                             <tbody id="tablaProductosRow">
@@ -59,6 +45,7 @@
                     </div>
 				</div>
 			</div>
+</div>
 
 <!-- Modal Agregar Almacen -->
 <div class="modal fade" id="ProductoModal" tabindex="-1" aria-labelledby="ProductoModalLabel" aria-hidden="true">
@@ -255,10 +242,10 @@
             </div>
 		</div>
 
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/bootstrap.bundle.min.js' ?>"></script>
+ <!-- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/bootstrap.bundle.min.js' ?>"></script> -->
 
  <!--  librerias para boostrap-->	
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jquery-3.5.1.js' ?>"></script>
+ <!-- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jquery-3.5.1.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jquery.dataTables.min.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.bootstrap4.min.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.responsive.min.js' ?>"></script>
@@ -270,9 +257,10 @@
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/pdfmake.min.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/vfs_fonts.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.html5.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.print.min.js' ?>"></script>
+ <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.print.min.js' ?>"></script> -->
 
+ 
+<script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
 <script src="<?=  PATH_VIEWS . 'Productos/Productos.js' ?>"></script>
 
-</body>
-</html>
+<?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>

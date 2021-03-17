@@ -31,20 +31,16 @@ class LoginController extends Controller
       return $this->renderErrorMessage('El usuario y password son obligatorios');
 
     $result = $this->model->signIn($request_params['txtEmployee']);
-    
+
     $numeros = $result->num_rows;
-    if(!$result->num_rows){
-      return $this->renderErrorMessage("El usuario {$request_params['txtEmployee']} no fue encontrado");
-    }
+    if(!$result->num_rows)
+      return $this->renderErrorMessage("El usuario {$request_params['txtUsername']} no fue encontrado");
 
     $result = $result->fetch_object();
-    
-    if($request_params['txtPassword'] != $result->usr_password){
+     
+    if(!password_verify($request_params['txtPassword'], $result->usr_password))
       return $this->renderErrorMessage('La contraseña es incorrecta');
-    }
-    /*if(!password_verify($request_params['txtPassword'], $result->usr_password)){
-      return $this->renderErrorMessage('La contraseña es incorrecta');
-    }*/
+
 
     $user = $result->usr_id . '|' . $result->usr_username . '|' . $result->emp_fullname . '|' . $result->prf_id . '|' . $result->mod_id  . '|' . $result->prf_mod_start;
 
@@ -62,10 +58,7 @@ class LoginController extends Controller
       header('location: ' . FOLDER_PATH .'/changePassword');
     } else {
 
-      //header('location: ' . FOLDER_PATH .'/perfilUSER');
-      header('location: ' . FOLDER_PATH .'/usuarios');
-
-     // header('location: ' . FOLDER_PATH .'/' . $page);
+      header('location: ' . FOLDER_PATH .'/' . $page);
     }
 
   //$params =  $this->session->get('usuario');
