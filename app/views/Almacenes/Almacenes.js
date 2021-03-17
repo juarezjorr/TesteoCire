@@ -215,7 +215,8 @@ function getAlmacenesTable() {
                   //Aquí es donde generas el botón personalizado
                   text:
                      '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
-               },
+               }
+               ,
                {
                   text: 'Borrar seleccionados',
                   className: 'btn-apply',
