@@ -1,6 +1,7 @@
 <?php
 	defined('BASEPATH') or exit('No se permite acceso directo');
 	require_once ROOT . FOLDER_PATH . '/app/models/Usuarios/UsuariosModel.php';
+	require_once ROOT . FOLDER_PATH . '/app/models/Actions/ActionsModel.php';
 	require_once LIBS_ROUTE . 'Session.php';
 
 	class UsuariosController extends Controller
@@ -8,10 +9,13 @@
 
 		private $session;
 		public $model;
+		public $modelActions;
 
 		public function __construct()
 		{
 			$this->model = new UsuariosModel();
+			$this->modelActions = new ActionsModel();
+
 			$this->session= new Session();
 			$this->session->init();
 			if($this->session->getStatus()===1 || empty($this->session->get('user')))
