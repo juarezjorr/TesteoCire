@@ -30,8 +30,9 @@ class MoveStoresModel extends Model
 	{
 		$store = $this->db->real_escape_string($store);
 		$qry = "SELECT * FROM ctt_products AS pr
-				INNER JOIN ctt_stores_products AS ex ON ex.prd_id = pr.prd_id 
-				WHERE pr.prd_status = 1 AND stp_quantity > 0";
+				INNER JOIN ctt_series AS sr ON sr.prd_id = pr.prd_id
+				INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id
+				WHERE sr.ser_status = 1 AND st.stp_quantity > 0;";
 		return $this->db->query($qry);
 	}	
 // Listado de Movimientos
