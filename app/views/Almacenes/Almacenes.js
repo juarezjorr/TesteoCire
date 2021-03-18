@@ -1,4 +1,5 @@
 var table = null;
+var positionRow = 0;
 
 $(document).ready(function () {
    verifica_usuario();
@@ -22,6 +23,23 @@ function inicial() {
    $('#BorrarProveedor').on('click', function () {
       DeletAlmacen();
    });
+   
+   $('#LimpiarFormulario').on('click', function () {
+      LimpiaModal();
+   });
+
+   $('#AlmacenesTable tbody').on('click', 'tr', function () {
+      positionRow = (table.page.info().page * table.page.info().length) + $(this).index();
+
+      setTimeout(() => {
+         RenglonesSelection = table.rows({ selected: true }).count();
+         if (RenglonesSelection == 0 || RenglonesSelection == 1) {
+             $(".btn-apply").css("visibility", "hidden");
+         } else {
+             $(".btn-apply").css("visibility", "visible");
+         }
+     }, 10);
+   });
 }
 
 //Valida los campos seleccionado *
@@ -41,6 +59,8 @@ function validaFormulario() {
 function EditAlmacen(id) {
    UnSelectRowTable();
    LimpiaModal();
+   $('#titulo').text('Editar almacen');
+
    var location = 'Almacenes/GetAlmacen';
    $.ajax({
       type: 'POST',
@@ -48,14 +68,9 @@ function EditAlmacen(id) {
       data: { id: id },
       url: location,
       success: function (respuesta) {
-         console.log(respuesta);
-         $('#NomAlmacen').val(respuesta.str_name);
          $('#IdAlmacen').val(respuesta.str_id);
-         $("#selectTipoAlmacen option[id='" + respuesta.str_type + "']").attr(
-            'selected',
-            'selected'
-         );
-         $('#AlmacenModal').modal('show');
+         $('#NomAlmacen').val(respuesta.str_name);
+         $('#selectTipoAlmacen').val(respuesta.str_type);
       },
       error: function (EX) {
          console.log(EX);
@@ -64,15 +79,13 @@ function EditAlmacen(id) {
 }
 //confirm para borrar **
 function ConfirmDeletAlmacen(id) {
-   UnSelectRowTable();
+   //UnSelectRowTable();
    $('#BorrarAlmacenModal').modal('show');
    $('#IdAlmacenBorrar').val(id);
 }
 
 function UnSelectRowTable() {
-   setTimeout(() => {
-      table.rows().deselect();
-   }, 10);
+   setTimeout(() => {table.rows().deselect();}, 10);
 }
 
 //BORRAR  * *
@@ -88,7 +101,12 @@ function DeletAlmacen() {
       url: location,
       success: function (respuesta) {
          if ((respuesta = 1)) {
-            getAlmacenesTable();
+            var arrayAlmacen = IdAlmacen.split(',');
+            if(arrayAlmacen.length == 1){
+               table.row(':eq('+positionRow+')').remove().draw();
+            }else{
+               table.rows({ selected: true }).remove().draw();
+            }
             $('#BorrarAlmacenModal').modal('hide');
          }
       },
@@ -114,10 +132,21 @@ function SaveAlmacen() {
       },
       url: location,
       success: function (respuesta) {
-         if ((respuesta = 1)) {
-            getAlmacenesTable();
-            $('#AlmacenModal').modal('hide');
-         }
+            if(IdAlmacen != ''){
+               table.row(':eq('+positionRow+')').remove().draw();
+            }
+            if ((respuesta != 0)) {
+               //getAlmacenesTable();
+               var rowNode = table.row.add( {
+                  [0]:  '<button onclick="EditAlmacen('+respuesta+')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button><button onclick="ConfirmDeletAlmacen('+respuesta+')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
+                  [1]:   respuesta,
+                  [2]:   NomAlmacen,
+                  [3]:   tipoAlmacen
+               }).draw().node();
+               $( rowNode ).find('td').eq(0).addClass('edit');
+               $( rowNode ).find('td').eq(1).addClass('text-center');
+              LimpiaModal();
+            }
       },
       error: function (EX) {
          console.log(EX);
@@ -127,6 +156,7 @@ function SaveAlmacen() {
 
 //Limpia datos en modal  **
 function LimpiaModal() {
+   $('#titulo').text('Nuevo Almacen');
    $('#NomAlmacen').val('');
    $('#IdAlmacen').val('');
    $('#selectTipoAlmacen').val('0');
@@ -224,7 +254,7 @@ function getAlmacenesTable() {
                      var selected = table.rows({ selected: true }).data();
                      var idSelected = '';
                      selected.each(function (index) {
-                        idSelected += index[0] + ',';
+                        idSelected += index[1] + ',';
                      });
                      idSelected = idSelected.slice(0, -1);
                      if (idSelected != '') {
@@ -246,17 +276,6 @@ function getAlmacenesTable() {
             language: {
                url: './app/assets/lib/dataTable/spanish.json',
             },
-         });
-
-         $('#AlmacenesTable tbody').on('click', 'tr', function () {
-            setTimeout(() => {
-               RenglonesSelection = table.rows({ selected: true }).count();
-               if (RenglonesSelection == 0 || RenglonesSelection == 1) {
-                  $('.btnDatableAddRed').css('visibility', 'hidden');
-               } else {
-                  $('.btnDatableAddRed').css('visibility', 'visible');
-               }
-            }, 10);
          });
       },
       get success() {

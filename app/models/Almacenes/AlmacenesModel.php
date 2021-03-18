@@ -16,7 +16,12 @@ class AlmacenesModel extends Model
                 $qry = "INSERT INTO ctt_stores(str_name, str_type,str_status) 
                 VALUES ('".$params['NomAlmacen']."','".$params['tipoAlmacen']."',1)";
                 $this->db->query($qry);	
-				$estatus = 1;
+				$qry = "SELECT MAX(str_id) AS id FROM ctt_stores;";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+				    $lastid = trim($row[0]);
+				}
+				$estatus = $lastid;
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -60,7 +65,7 @@ class AlmacenesModel extends Model
                 WHERE str_id = ".$params['IdAlmacen'].";";
 
 				$this->db->query($qry);	
-				$estatus = 1;
+				$estatus = $params['IdAlmacen'];
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -74,7 +79,7 @@ class AlmacenesModel extends Model
         try {
             $qry = "UPDATE ctt_stores
                     SET str_status = 0
-                    WHERE str_id in (".$params['IdAlmacen'].");";
+                    WHERE str_id in (".$params['IdAlmacen'].")";
             $this->db->query($qry);
             $estatus = 1;
         } catch (Exception $e) {

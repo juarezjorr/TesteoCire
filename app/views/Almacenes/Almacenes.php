@@ -11,12 +11,18 @@
 				<!-- Start área de formularios -->
 				<div class="mb-3 mvst_panel">
 					<div class="form-group">
-						<h4>Nuevo Almacen</h4>  
+						<h4 id="titulo">Nuevo Almacen</h4>  
 						<form id="formProveedor" class="row g-3 needs-validation" novalidate>
-							<div class="row">
+
+							<div class="row" hidden>
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="IdAlmacen" name="IdAlmacen" type="text" class="form-control form-control-sm" >
-									<label for="IdAlmacen">Nombre almacen</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="NomAlmacen" name="NomAlmacen" type="text" class="form-control form-control-sm" >
+									<label for="NomAlmacen">Nombre almacen</label>
 									<div class="invalid-feedback">Escriba un Nombre de almacen.</div>
 								</div>
 							</div>
@@ -25,8 +31,8 @@
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectTipoAlmacen"  name="selectTipoAlmacen"  class="form-select form-select-sm required">
 										<option value="0" selected>Selecciona tipo de almacen</option>
-										<option id='estaticos'  value=''>Estatico</option> 
-										<option id='moviles'  value=''>Movil</option> 
+										<option id='estaticos'  value='estaticos'>Estatico</option> 
+										<option id='moviles'  value='moviles'>Movil</option> 
 									</select>
 									<label for="selectTipoAlmacen" class="form-label">Tipo de almacen</label>
 									<div class="invalid-feedback">Selecciona un tipo.</div>
@@ -166,6 +172,8 @@
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.responsive.min.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/responsive.bootstrap4.min.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.select.min.js' ?>"></script>
+ <script type="text/javascript" src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script><font></font>
+
 
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.buttons.min.js' ?>"></script>
  <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jszip.min.js' ?>"></script>

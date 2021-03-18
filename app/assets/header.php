@@ -28,6 +28,8 @@
 		
 
 		<link rel="stylesheet" href="<?= PATH_ASSETS .	'css/estilos.css' ?>" />
+		<link rel="stylesheet" href="<?= PATH_ASSETS .	'css/estilosJ.css' ?>" />
+
 
 		<script src="<?=  PATH_ASSETS . 'lib/jquery.js' ?>"></script>
 		<script src="<?=  PATH_ASSETS . 'lib/jquery-ui.js' ?>"></script>
