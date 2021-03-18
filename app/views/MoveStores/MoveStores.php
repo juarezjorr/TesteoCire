@@ -8,7 +8,7 @@
 </header>
 <div class="container-fluid">
 	<div class="contenido">
-			<h1>Movimiento entre almacenes</h1>
+			
 		<div class="row mvst_group">
 			<div class="mb-3 mvst_panel">
 				<div class="form-group">
@@ -63,6 +63,7 @@
 			</div>
 		
 			<div class="mb-3 mvst_table">
+			<h1>Movimiento entre almacenes</h1>
 				<table class="display compact nowrap"  id="tblExchanges">
 					<thead>
 						<tr>

@@ -83,7 +83,7 @@ h4 {
 }
 // end LOGIN  -------------
 .contenido {
-	padding-top: 50px;
+	
 }
 
 .form-floating > .form-control {
@@ -98,18 +98,22 @@ h4 {
 
 .mvst_group {
 	width: 100%;
+	height: 100vh;
 	display: grid;
 	grid-template-columns: 300px auto;
 	grid-template-rows: 1fr;
 	overflow: auto;
+	
 
 	.mvst_panel {
 		overflow: auto;
+		height: 100%;
+		background-color: #cc0000;
 	}
 	.mvst_table {
 		width: 100%;
 		overflow: auto;
-		padding: 0px 10px;
+		padding: 60px 10px 0 10px;
 	}
 }
 
@@ -380,6 +384,7 @@ table {
 
 		.contenido {
 			width: 100%;
+			
 
 			.row {
 				padding: 0;
@@ -391,6 +396,7 @@ table {
 		display: block;
 		grid-template-columns: 1fr;
 		grid-template-rows: 2fr;
+		height: calc(100vh - 42px);
 
 
 		.mvst_panel {

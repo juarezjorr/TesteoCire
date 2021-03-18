@@ -1,29 +1,6 @@
 -- CREATE DATABASE `cttapp_cire` 
 
 DROP TABLE `cttapp_cire`.`ctt_users`;
-DROP TABLE `cttapp_cire`.`ctt_profiles`;
-DROP TABLE `cttapp_cire`.`ctt_modules`;
-DROP TABLE `cttapp_cire`.`ctt_profile_module`;
-DROP TABLE `cttapp_cire`.`ctt_user_module`;
-DROP TABLE `cttapp_cire`.`ctt_employees`;
-DROP TABLE `cttapp_cire`.`ctt_post`;
-DROP TABLE `cttapp_cire`.`ctt_menu`;
-DROP TABLE `cttapp_cire`.`ctt_stores`;
-DROP TABLE `cttapp_cire`.`ctt_categories`;
-DROP TABLE `cttapp_cire`.`ctt_subcategories`;
-DROP TABLE `cttapp_cire`.`ctt_services`;
-DROP TABLE `cttapp_cire`.`ctt_suppliers`;
-DROP TABLE `cttapp_cire`.`ctt_products`;
-DROP TABLE `cttapp_cire`.`ctt_product_document`;
-DROP TABLE `cttapp_cire`.`ctt_documents`;
-DROP TABLE `cttapp_cire`.`ctt_accessories`;
-DROP TABLE `cttapp_cire`.`ctt_actions`;
-DROP TABLE `cttapp_cire`.`ctt_activity_log`;
-DROP TABLE `cttapp_cire`.`ctt_store_exchange`;
-DROP TABLE `cttapp_cire`.`ctt_type_exchange`;
-DROP TABLE `cttapp_cire`.`ctt_store_product`;
-
-
 CREATE TABLE `cttapp_cire`.`ctt_users` (
 	`usr_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del usuario',
 	`usr_username` 			VARCHAR(45) NOT NULL		 COMMENT 'Usuario',
@@ -37,7 +14,7 @@ CREATE TABLE `cttapp_cire`.`ctt_users` (
 PRIMARY KEY (`usr_id`))
 COMMENT = 'Tabla de Usuarios registrados';
 
-
+DROP TABLE `cttapp_cire`.`ctt_profiles`;
 CREATE TABLE `cttapp_cire`.`ctt_profiles` (
 	`prf_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del perfil',
 	`prf_code`				VARCHAR(50) NOT NULL		 COMMENT 'Código del perfi',
@@ -47,33 +24,33 @@ CREATE TABLE `cttapp_cire`.`ctt_profiles` (
 PRIMARY KEY (`prf_id`))
 COMMENT = 'Tabla de Perfiles';
 
-
+DROP TABLE `cttapp_cire`.`ctt_modules`;
 CREATE TABLE `cttapp_cire`.`ctt_modules` (
 	`mod_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del módulo',
 	`mod_code`				VARCHAR(50) NOT NULL		 COMMENT 'Código del modulo',
 	`mod_name`				VARCHAR(50) NULL			 COMMENT 'Nombre del modulo',
 	`mod_description`		VARCHAR(300) NULL			 COMMENT 'Descripción del módulo',
-	`mod_item`				VARCHAR(50) NULL			 COMMENT 'Elemento URL destino',
+	`mod_item`				VARCHAR(50) NULL			 COMMENT 'metodo que corresponde la sección',
 PRIMARY KEY (`mod_id`))
 COMMENT = 'Tabla de Módulos que componen el sistema';
 
-
-CREATE TABLE `cttapp_cire`.`ctt_profile_module` (
+DROP TABLE `cttapp_cire`.`ctt_profiles_modules`;
+CREATE TABLE `cttapp_cire`.`ctt_profiles_modules` (
 	`pfm_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la relacion perfil - modulo',
 	`prf_id` 				INT NOT NULL		 		 COMMENT 'FK ID del perfil relacion ctt_profile',
 	`mod_id` 				INT NOT NULL			 	 COMMENT 'FK ID del modulo relación ctt_modulo',
 PRIMARY KEY (`pfm_id`))
 COMMENT = 'Tabla pivote m_to_m ctt_profile - ctt_modulo';
 
-
-CREATE TABLE `cttapp_cire`.`ctt_user_module` (
+DROP TABLE `cttapp_cire`.`ctt_users_modules`;
+CREATE TABLE `cttapp_cire`.`ctt_users_modules` (
 	`urm_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la relacion usuario - modulo',
 	`usr_id` 				INT NOT NULL		 		 COMMENT 'FK ID del usuario relacion ctt_users',
 	`mod_id` 				INT NOT NULL			 	 COMMENT 'FK ID del modulo relación ctt_modules',
 PRIMARY KEY (`urm_id`))
 COMMENT = 'Tabla pivote m_to_m ctt_usuarios - ctt_modules';
 
-
+DROP TABLE `cttapp_cire`.`ctt_employees`;
 CREATE TABLE `cttapp_cire`.`ctt_employees` (
 	`emp_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del empleado',
 	`emp_number`			VARCHAR(50) NOT NULL		 COMMENT 'Numero del empleado',
@@ -85,16 +62,16 @@ CREATE TABLE `cttapp_cire`.`ctt_employees` (
 PRIMARY KEY (`emp_id`))
 COMMENT = 'Tabla de los empleados de la empresa';
 
-
-CREATE TABLE `cttapp_cire`.`ctt_post` (
+DROP TABLE `cttapp_cire`.`ctt_position`;
+CREATE TABLE `cttapp_cire`.`ctt_position` (
 	`pos_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del puesto',
 	`pos_name`				VARCHAR(50) NOT NULL		 COMMENT 'Nombre del puesto',
 	`pos_description`		VARCHAR(300) NOT NULL		 COMMENT 'Descripción del puesto',
 	`pos_status`			VARCHAR(1) NULL			 	 COMMENT 'Estatus del puesto 1-Activo, 0-Inactivo',
 PRIMARY KEY (`pos_id`))
-COMMENT = 'Tabla de los empleados de la empresa';
+COMMENT = 'Puestos de empleados en la empresa';
 
-
+DROP TABLE `cttapp_cire`.`ctt_menu`;
 CREATE TABLE `cttapp_cire`.`ctt_menu` (
 	`mnu_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del menu',
 	`mnu_parent`			INT NULL		 			 COMMENT 'ID del menu padre',
@@ -104,6 +81,7 @@ CREATE TABLE `cttapp_cire`.`ctt_menu` (
 PRIMARY KEY (`mnu_id`))
 COMMENT = 'Tabla de los elementos que componene el menu susperior';
 
+DROP TABLE `cttapp_cire`.`ctt_stores`;
 CREATE TABLE `cttapp_cire`.`ctt_stores` (
 	`str_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del almacén',
 	`str_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del almacén',
@@ -112,6 +90,7 @@ CREATE TABLE `cttapp_cire`.`ctt_stores` (
 PRIMARY KEY (`str_id`))
 COMMENT = 'Listado de almacenes.';
 
+DROP TABLE `cttapp_cire`.`ctt_categories`;
 CREATE TABLE `cttapp_cire`.`ctt_categories` (
 	`cat_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del catálogo',
 	`cat_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del catálogo',
@@ -119,6 +98,7 @@ CREATE TABLE `cttapp_cire`.`ctt_categories` (
 PRIMARY KEY (`cat_id`))
 COMMENT = 'Catálogo.';
 
+DROP TABLE `cttapp_cire`.`ctt_subcategories`;
 CREATE TABLE `cttapp_cire`.`ctt_subcategories` (
 	`sbc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la subcategoría',
 	`sbc_code`				VARCHAR(10) NULL 			 COMMENT 'Clave de la subcategoría',
@@ -128,6 +108,7 @@ CREATE TABLE `cttapp_cire`.`ctt_subcategories` (
 PRIMARY KEY (`sbc_id`))
 COMMENT = 'Subcategorias.';
 
+DROP TABLE `cttapp_cire`.`ctt_services`;
 CREATE TABLE `cttapp_cire`.`ctt_services` (
 	`srv_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del servicio',
 	`srv_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del servicio',
@@ -136,6 +117,7 @@ CREATE TABLE `cttapp_cire`.`ctt_services` (
 PRIMARY KEY (`srv_id`))
 COMMENT = 'Tipificación de los servicios.';
 
+DROP TABLE `cttapp_cire`.`ctt_suppliers`;
 CREATE TABLE `cttapp_cire`.`ctt_suppliers` (
 	`sup_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del proveedor',
 	`sup_buseiness_name`	VARCHAR(100) NULL 			 COMMENT 'Nombre de la empresa',
@@ -147,18 +129,15 @@ CREATE TABLE `cttapp_cire`.`ctt_suppliers` (
 PRIMARY KEY (`sup_id`))
 COMMENT = 'Proveedores de la empresa.';
 
+DROP TABLE `cttapp_cire`.`ctt_products`;
 CREATE TABLE `cttapp_cire`.`ctt_products` (
 	`prd_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del proveedor',
 	`prd_sku`				VARCHAR(10) NULL 			 COMMENT 'SKU identificador del producto',
     `prd_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del producto',
 	`prd_english_name`		VARCHAR(100)  NULL 			 COMMENT 'Nombre del producto en ingles',
     `prd_model`				VARCHAR(50) NULL 			 COMMENT 'Modelo del producto',
-	`prd_serial_number`		VARCHAR(50)  NULL 			 COMMENT 'Numero de serie del producto',
-	`prd_cost`				decimal(10,2)  NULL			 COMMENT 'Costo unitario del producto',
     `prd_price`				decimal(10,2)  NULL			 COMMENT 'Precio unitario del producto',
 	`prd_coin_type`			VARCHAR(30)  NULL 			 COMMENT 'Tipo de moneda',
-    `prd_date_registry`		datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
-    `prd_date_down`			datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de baja del producto',
 	`prd_visibility`		VARCHAR(1) NULL		 		 COMMENT 'Visibilidad del producto en cotización 1-visible, 0-no visible',
     `prd_comments`			VARCHAR(300) NULL	 		 COMMENT 'Observaciones',
     `prd_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
@@ -168,6 +147,23 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
 PRIMARY KEY (`prd_id`))
 COMMENT = 'Productos de la empresa.';
 
+DROP TABLE `cttapp_cire`.`ctt_series`;
+CREATE TABLE `cttapp_cire`.`ctt_series` (
+	`ser_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la serie',
+	`ser_sku`				VARCHAR(10) NULL 			 COMMENT 'SKU identificador del producto',
+	`ser_serial_number`		VARCHAR(50)  NULL 			 COMMENT 'Numero de serie del producto',
+	`ser_cost`				decimal(10,2)  NULL			 COMMENT 'Costo unitario del producto',
+    `ser_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
+	`ser_situation`			VARCHAR(5)  NULL 			 COMMENT 'Situación de estatus dentro del proceso ',
+    `ser_stage`				VARCHAR(5) NULL 			 COMMENT 'Etapa dentro del proceso',
+    `ser_date_registry`		datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
+    `ser_date_down`			datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de baja del producto',
+	`ser_lonely`			VARCHAR(1) NULL		 		 COMMENT 'Se puede rentar sin accesosrios 1-si, 0-no',
+    `prd_id` 				INT NULL 					 COMMENT 'ID del producto relacion ctt_productos',
+PRIMARY KEY (`ser_id`))
+COMMENT = 'Numero serie de productos correspondientes a un modelo.';
+
+DROP TABLE `cttapp_cire`.`ctt_products_documents`;
 CREATE TABLE `cttapp_cire`.`ctt_products_documents` (
 	`dcp_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de relacion producto-documento',
     `prd_id` 				INT NULL 					 COMMENT 'ID del producto relacion ctt_productos',
@@ -175,6 +171,7 @@ CREATE TABLE `cttapp_cire`.`ctt_products_documents` (
 PRIMARY KEY (`dcp_id`))
 COMMENT = 'Relación de documentos con productos';
 
+DROP TABLE `cttapp_cire`.`ctt_documents`;
 CREATE TABLE `cttapp_cire`.`ctt_documents` (
 	`doc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del documento',
 	`doc_code`				VARCHAR(100) NULL		 	 COMMENT 'Código del documento',
@@ -186,14 +183,16 @@ CREATE TABLE `cttapp_cire`.`ctt_documents` (
 PRIMARY KEY (`doc_id`))
 COMMENT = 'Documentos de productos';
 
+DROP TABLE `cttapp_cire`.`ctt_accessories`;
 CREATE TABLE `cttapp_cire`.`ctt_accessories` (
 	`acr_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del accesorio',
 	`acr_parent`			INT NULL		 			 COMMENT 'ID del producto padre',
     `acr_status`			VARCHAR(1)  NULL		 	 COMMENT 'Estatus del accesorio D-Disponible, N-No disponible',
-	`prd_id`				INT NULL					 COMMENT 'Id del producto relaciòn ctt_products',
+	`ser_id`				INT NULL					 COMMENT 'Id del producto relaciòn ctt_products',
 PRIMARY KEY (`acr_id`))
 COMMENT = 'Productos o accesorios dependientes de otros productos';
 
+DROP TABLE `cttapp_cire`.`ctt_actions`;
 CREATE TABLE `cttapp_cire`.`ctt_actions` (
 	`acc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la acción',
 	`acc_description`		VARCHAR(300) NOT NULL		 COMMENT 'Descripción de la acción realizada por el usuario en un modulo',
@@ -202,6 +201,7 @@ CREATE TABLE `cttapp_cire`.`ctt_actions` (
 PRIMARY KEY (`acc_id`))
 COMMENT = 'Tabla de tipos de acciones realizadas por un usuario dentro del sistema';
 
+DROP TABLE `cttapp_cire`.`ctt_activity_log`;
 CREATE TABLE `cttapp_cire`.`ctt_activity_log` (
 	`log_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la bitácora',
 	`log_date`				DATETIME NULL DEFAULT CURRENT_TIMESTAMP  COMMENT 'Fecha de registro de la actividad',
@@ -212,7 +212,8 @@ CREATE TABLE `cttapp_cire`.`ctt_activity_log` (
 PRIMARY KEY (`log_id`))
 COMMENT = 'Bitácora de actividades realizadas en el sistema';
 
-CREATE TABLE `cttapp_cire`.`ctt_store_exchange` (
+DROP TABLE `cttapp_cire`.`ctt_stores_exchange`;
+CREATE TABLE `cttapp_cire`.`ctt_stores_exchange` (
 	`exc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del movimiento',
 	`exc_date`				DATETIME NULL DEFAULT CURRENT_TIMESTAMP  COMMENT 'Fecha de registro del movimiento',
 	`exc_guid`				VARCHAR(200) NOT NULL		 COMMENT 'codigo del movimiento',
@@ -229,20 +230,23 @@ CREATE TABLE `cttapp_cire`.`ctt_store_exchange` (
 PRIMARY KEY (`exc_id`))
 COMMENT = 'Movimientos de productos entre almacenes';
 
+DROP TABLE `cttapp_cire`.`ctt_type_exchange`;
 CREATE TABLE `cttapp_cire`.`ctt_type_exchange` (
 	`ext_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del tipo de movimiento',
 	`ext_code`				VARCHAR(100) NOT NULL		 COMMENT 'Còdigo del tipo de movimiento',
 	`ext_type`				VARCHAR(1) NOT NULL		 	 COMMENT 'Tipo de movimiento E-Entrada, S-Salida, R-Renta',
 	`ext_description`		VARCHAR(300) NOT NULL		 COMMENT 'Descripcion del movimiento',
 	`ext_link`				INT NULL					 COMMENT 'Relacion con otro movimiento',
+	`ext_affect_product`	VARCHAR(5) NOT NULL		 	 COMMENT 'Clave de afectaciòn a la situaciòn del producto',
 PRIMARY KEY (`ext_id`))
 COMMENT = 'Tipos de movimientos entre almacenes';
 
-CREATE TABLE `cttapp_cire`.`ctt_store_product` (
+DROP TABLE `cttapp_cire`.`ctt_stores_products`;
+CREATE TABLE `cttapp_cire`.`ctt_stores_products` (
   	`stp_id` 				INT(11) NOT NULL AUTO_INCREMENT COMMENT 'ID del registro',
   	`stp_quantity` 			INT(11) NOT NULL DEFAULT 0   COMMENT 'Cantidad de productos',
   	`str_id` 				INT(11) NOT NULL 			 COMMENT 'ID del almacen relacion ctt_store',
-  	`prd_id` 				INT(11) NOT NULL			 COMMENT 'ID del producto relacion ctt_products',
+  	`ser_id` 				INT(11) NOT NULL			 COMMENT 'ID del numerode serie relacion ctt_series',
 PRIMARY KEY (`stp_id`))
 COMMENT='Tabla de cantidad de productos en almacen';
 
