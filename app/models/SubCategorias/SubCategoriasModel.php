@@ -16,7 +16,13 @@ class SubCategoriasModel extends Model
                 $qry = "INSERT INTO ctt_subcategories(sbc_code, sbc_name, sbc_status, cat_id)
                 VALUES('".$params['CodSubCategoria']."','".$params['NomSubCategoria']."',1,'".$params['idCategoria']."')";
                 $this->db->query($qry);	
-				$estatus = 1;
+
+				$qry = "SELECT MAX(sbc_id) AS id FROM ctt_subcategories;";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+				    $lastid = trim($row[0]);
+				}
+				$estatus = $lastid;
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -34,15 +40,15 @@ class SubCategoriasModel extends Model
                 FROM ctt_subcategories AS U 
                 JOIN ctt_categories AS E
                 ON U.cat_id = E.cat_id
-                WHERE sbc_status = 1 ".$qryExt.";";
+                WHERE sbc_status = 1 and E.cat_status = 1".$qryExt.";";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
 			$item = array("sbc_id" =>$row[0],
-						"sbc_code" =>utf8_decode($row[1]),
-                        "sbc_name" =>utf8_decode($row[2]),
-                        "cat_id" =>utf8_decode($row[3]),
-                        "cat_name" =>utf8_decode($row[4]));
+						"sbc_code" =>$row[1],
+                        "sbc_name" =>$row[2],
+                        "cat_id" =>$row[3],
+                        "cat_name" =>$row[4]);
 			array_push($lista, $item);
 		}
 		return $lista;
@@ -54,9 +60,9 @@ class SubCategoriasModel extends Model
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("sbc_id" =>$row[0],
-			"sbc_code" =>utf8_decode($row[1]),
-            "sbc_name" =>utf8_decode($row[2]),
-            "cat_id" =>utf8_decode($row[3]));
+			"sbc_code" =>$row[1],
+            "sbc_name" =>$row[2],
+            "cat_id" =>$row[3]);
 		}
 		return $item;
 	}
@@ -72,7 +78,7 @@ class SubCategoriasModel extends Model
                 WHERE sbc_id =  ".$params['IdSubCategoria'].";";
 
 				$this->db->query($qry);	
-				$estatus = 1;
+				$estatus = $params['IdSubCategoria'];
 			} catch (Exception $e) {
 				$estatus = 0;
 			}

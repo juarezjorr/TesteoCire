@@ -23,6 +23,10 @@ function inicial() {
         DeletCategoria();
     });  
 
+    $('#LimpiarFormulario').on('click', function () {
+      LimpiaModal();
+   });
+
     $('#CategoriasTable tbody').on('click', 'tr', function () {
       positionRow = (table.page.info().page * table.page.info().length) + $(this).index();
 
@@ -275,7 +279,9 @@ function getCategoriasTable() {
       set success(value) {
          this._success = value;
       },
-      error: function () {},
+      error: function ( jqXHR, textStatus, errorThrown) {
+         console.log( jqXHR, textStatus, errorThrown);
+      },
    }).done(function () {});
 }
 
