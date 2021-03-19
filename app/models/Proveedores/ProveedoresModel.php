@@ -16,7 +16,15 @@ class ProveedoresModel extends Model
                 $qry = "INSERT INTO ctt_suppliers (sup_buseiness_name, sup_contact, sup_rfc, sup_email, sup_phone,sup_status)
                 VALUES('".$params['NomProveedor']."','".$params['ContactoProveedor']."','".$params['RfcProveedor']."','".$params['EmailProveedor']."','".$params['PhoneProveedor']."',1);";
                 $this->db->query($qry);	
-				$estatus = 1;
+
+				$qry = "SELECT MAX(sup_id) AS id FROM ctt_suppliers;";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+				    $lastid = trim($row[0]);
+				}
+
+
+				$estatus = $lastid;
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -70,7 +78,7 @@ class ProveedoresModel extends Model
                 WHERE Sup_id = ".$params['IdProveedor'].";";
 
 				$this->db->query($qry);	
-				$estatus = 1;
+				$estatus = $params['IdProveedor'];
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
