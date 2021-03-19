@@ -21,23 +21,23 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="NomAlmacen" name="NomAlmacen" type="text" class="form-control form-control-sm" >
+									<input id="NomAlmacen" name="NomAlmacen" type="text" class="form-control form-control-sm" required>
 									<label for="NomAlmacen">Nombre almacen</label>
-									<div class="invalid-feedback">Escriba un Nombre de almacen.</div>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectTipoAlmacen"  name="selectTipoAlmacen"  class="form-select form-select-sm required">
-										<option value="0" selected>Selecciona tipo de almacen</option>
+									<select id="selectTipoAlmacen"  name="selectTipoAlmacen"  class="form-select form-select-sm" required>
+										<option id='' value="0" >Selecciona tipo de almacen</option>
 										<option id='estaticos'  value='estaticos'>Estatico</option> 
 										<option id='moviles'  value='moviles'>Movil</option> 
 									</select>
 									<label for="selectTipoAlmacen" class="form-label">Tipo de almacen</label>
-									<div class="invalid-feedback">Selecciona un tipo.</div>
 								</div>
 							</div>
+
+
 
 							<div class="row">
 								<div class="col-6">

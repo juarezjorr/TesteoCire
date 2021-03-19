@@ -11,7 +11,6 @@ function inicial() {
    //Open modal *
    $('#nuevoAlmacen').on('click', function () {
       LimpiaModal();
-      $('#formProveedor').removeClass('was-validated');
    });
    //Guardar almacen *
    $('#GuardarAlmacen').on('click', function () {
@@ -109,6 +108,7 @@ function DeletAlmacen() {
             }
             $('#BorrarAlmacenModal').modal('hide');
          }
+         LimpiaModal();
       },
       error: function (EX) {
          console.log(EX);
@@ -160,6 +160,8 @@ function LimpiaModal() {
    $('#NomAlmacen').val('');
    $('#IdAlmacen').val('');
    $('#selectTipoAlmacen').val('0');
+   $('#formProveedor').removeClass('was-validated');
+
 }
 
 //obtiene la informacion de tabla Proveedores *

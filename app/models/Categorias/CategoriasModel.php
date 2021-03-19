@@ -15,7 +15,13 @@ class CategoriasModel extends Model
 			try {
                 $qry = "INSERT INTO ctt_categories(cat_name, cat_status)VALUES ('".$params['NomCategoria']."',1)";
                 $this->db->query($qry);	
-				$estatus = 1;
+				$qry = "SELECT MAX(cat_id) AS id FROM ctt_categories;";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+				    $lastid = trim($row[0]);
+				}
+
+				$estatus = $lastid;
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -24,14 +30,15 @@ class CategoriasModel extends Model
 // Optiene los Usuaios existentes
 	public function GetCategorias()
 	{
-		$qry = "SELECT cat_id, cat_name FROM ctt_categories WHERE cat_status = '1';";
+		$qry = "SELECT cat_id, cat_name FROM ctt_categories WHERE cat_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
 			$item = array("cat_id" =>$row[0],
-						"cat_name" =>utf8_decode($row[1]));
+						"cat_name" =>$row[1]);
 			array_push($lista, $item);
 		}
+		//print_r($lista);
 		return $lista;
 	}
 
@@ -41,7 +48,7 @@ class CategoriasModel extends Model
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("cat_id" =>$row[0],
-			"cat_name" =>utf8_decode($row[1]));
+			"cat_name" =>$row[1]);
 		}
 		return $item;
 	}
@@ -56,7 +63,7 @@ class CategoriasModel extends Model
                 WHERE cat_id = ".$params['IdCategoria'].";";
 
 				$this->db->query($qry);	
-				$estatus = 1;
+				$estatus = $params['IdCategoria'];
 			} catch (Exception $e) {
 				$estatus = 0;
 			}

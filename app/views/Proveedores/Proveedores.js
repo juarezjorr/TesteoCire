@@ -119,6 +119,7 @@ function DeletProveedor() {
                 }
                 $('#BorrarProveedorModal').modal('hide');
              }
+             LimpiaModal();
         },
         error: function (EX) {console.log(EX);}
         }).done(function () {});

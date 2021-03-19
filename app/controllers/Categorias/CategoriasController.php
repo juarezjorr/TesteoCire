@@ -25,17 +25,8 @@
 
 		public function GetCategoria($request_params)
 		{
-
-
-
-
-
 	      $result = $this->model->GetCategoria($request_params);
-
-
-
-
-	   echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
 		public function SaveCategoria($request_params)
@@ -51,15 +42,12 @@
 		public function GetCategorias($request_params)
 		{
 	      $result = $this->model->GetCategorias($request_params);
-		   echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
 		public function DeleteCategoria($request_params)
 		{
 		  $result = $this->model->DeleteCategoria($request_params);	  
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
-		}
-
-
-	  
+		} 
 	}
