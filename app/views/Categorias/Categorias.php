@@ -46,12 +46,12 @@
 
 					<div class="row">
 						<div class="col-12 col-md-12">		
-								<table id="CategoriasTable" class="display  display compact nowrap" style="width:100%">         
+								<table id="CategoriasTable" class="display compact nowrap" style="width:100%">         
 										<thead>
 											<tr>
 													<th style="width: 30px"></th>
-													<th style="width: 20px">Id</th>
-													<th style="width: 300px">Nombre</th>
+													<th style="width: 30px">Id</th>
+													<th style="width: auto">Nombre</th>
 
 											</tr>
 										</thead>
@@ -111,6 +111,6 @@
 </div>
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
-<script src="<?=  PATH_VIEWS . 'categorias/categorias.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'Categorias/Categorias.js' ?>"></script>
 
 <?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>
