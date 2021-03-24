@@ -66,12 +66,12 @@
 
 					<div class="row">
 						<div class="col-12 col-md-12">		
-								<table id="AlmacenesTable" class="display  display compact nowrap" style="width:100%">         
+								<table id="AlmacenesTable" class="display compact nowrap" style="width:100%">         
 										<thead>
 											<tr>
 													<th style="width: 30px"></th>
 													<th style="width: 20px">Id</th>
-													<th style="width: 300px">Nombre</th>
+													<th style="width: auto">Nombre</th>
 													<th style="width: 100px">Tipo</th>
 											</tr>
 										</thead>

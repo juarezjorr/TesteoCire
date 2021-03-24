@@ -69,7 +69,7 @@ function setting_table() {
       language: {
          url: 'app/assets/lib/dataTable/spanish.json',
       },
-      scrollY: 'calc(100vh - 240px)',
+      scrollY: 'calc(100vh - 260px)',
       scrollX: true,
       fixedHeader: true,
       columns: [
@@ -182,7 +182,7 @@ function drawProducts(str) {
    if (pr[0][1].prd_id != 0) {
       $.each(pr, function (v, u) {
          if (str == u[1].str_id) {
-            let H = `<option value="${u[1].prd_id}" data-content="${u[1].prd_sku}|${u[1].stp_quantity}|${u[1].prd_serial_number}|${u[1].stp_id}">${u[1].prd_serial_number} - ${u[1].prd_name}</option>`;
+            let H = `<option value="${u[1].prd_id}" data-content="${u[1].prd_sku}|${u[1].stp_quantity}|${u[1].ser_serial_number}|${u[1].stp_id}">${u[1].ser_serial_number} - ${u[1].prd_name}</option>`;
             $('#txtProducts').append(H);
          }
       });

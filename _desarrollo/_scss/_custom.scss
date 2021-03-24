@@ -17,6 +17,7 @@ h2,
 h3,
 h4 {
 	font-family: $font_secundary;
+	margin-bottom: 1.25rem;
 }
 
 h1 {
@@ -52,7 +53,7 @@ h4 {
 		color: $dark;
 		border: 1px solid $light;
 		&:focus,
-		&:valid  {
+		&:valid {
 			background-color: #000000;
 		}
 	}
@@ -82,16 +83,13 @@ h4 {
 	background-image: url(../img/slider/slider-003.jpg);
 }
 // end LOGIN  -------------
-.contenido {
-	
-}
 
 .form-floating > .form-control {
 	height: 100%;
 	padding: 0.5rem 0.5rem;
 }
 .form-floating > label {
-	padding: 0.5rem 0.5rem;
+	padding: 0.8rem 1.5rem;
 	opacity: 0.8;
 	color: $inputs-label;
 }
@@ -103,12 +101,11 @@ h4 {
 	grid-template-columns: 300px auto;
 	grid-template-rows: 1fr;
 	overflow: auto;
-	
 
 	.mvst_panel {
 		overflow: auto;
 		height: 100%;
-		background-color: #cc0000;
+		padding: 0;
 	}
 	.mvst_table {
 		width: 100%;
@@ -120,15 +117,16 @@ h4 {
 .form-floating {
 	& > .form-select {
 		height: calc(3rem + 5px);
-		padding: 1rem 0.75rem;
-		// padding-top: 1.625rem;
-		// padding-bottom: 0.625rem;
+		padding: 1.05rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 900;
+		padding-top: 1rem;
+		padding-bottom: 0.625rem;
 	}
 	input {
-		font-size: 3.3rem;
+		font-size: 1.1rem;
 		font-weight: 900;
 	}
-
 }
 
 .text-right {
@@ -176,23 +174,22 @@ div.dataTables_wrapper div.btn-group button.btn-pdf,
 div.dataTables_wrapper div.btn-group button.btn-print,
 div.dataTables_wrapper div.btn-group button.btn-apply {
 	// margin-left: 0.5em;
-	margin-right: 0.2rem;
+	margin-right: 0.5rem;
 	display: inline-block;
-	padding: 0.08em 7px;
+	padding: 0.1rem 0.95rem;
 	font-weight: normal;
 	font-size: 1.1em;
-	background-color: #888888;
-	background-color: rgb(16, 130, 252);
+	background-color: $dark;
 	color: #ffffff;
-	border-radius: 3px;
+	border-radius: 8px;
 	&:hover {
-		background-color: #333333;
+		background-color: $darkhover;
 	}
 }
 div.dataTables_wrapper div.btn-group button.btn-excel,
 div.dataTables_wrapper div.btn-group button.btn-pdf,
 div.dataTables_wrapper div.btn-group button.btn-print {
-	width: 35px;
+	width: auto;
 }
 div.dataTables_wrapper div.btn-group button.btn-apply {
 	width: auto;
@@ -201,13 +198,34 @@ div.dataTables_wrapper div.btn-group button.btn-apply {
 div.dataTables_wrapper .dataTables_paginate .paginate_button {
 	padding: 2px 4px;
 	background-color: #ffffff;
+	border: none;
+	&:hover {
+		background-color: #cc0000;
+	}
+
 	.page-link {
 		padding: 0.35rem 0.63rem;
 		border-radius: 4px;
 		border: none;
+		// background-color: $dark;
+		// color: #ffffff;
 		&:hover {
-			background-color: #555555;
+			background-color: $darkhover;
 			color: #ffffff;
+		}
+	}
+
+	&.page-item {
+		&.active {
+			.page-link {
+				background-color: $dark;
+			}
+			&:hover {
+				background-color: none;
+			}
+		}
+		&:hover {
+			background-color: none;
 		}
 	}
 }
@@ -228,13 +246,13 @@ table {
 			margin: 1px 6px;
 			cursor: pointer;
 			&.kill {
-				color: #dd0000;
+				color: $btn-red;
 				&:hover {
 					color: #ff0000;
 				}
 			}
 			&.modif {
-				color: #0d75d6;
+				color: $dark;
 				&:hover {
 					color: #51a7f4;
 				}
@@ -288,94 +306,17 @@ table {
 		}
 	}
 }
-
-/*  -----   MODALES    -------*/
-.container-fluid {
-	padding: 0;
+.btn {
+	border-radius: 1rem;
+	padding: 8px 20px;
 }
-.row {
-	margin: 0;
-	padding: 0;
-	--bs-gutter-x: 0;
+.btn-primary {
+	background-color: $dark;
+	border: $dark;
 }
-
-.close:focus {
-	outline: none;
-}
-
-.modal-header {
-	border-bottom: none;
-}
-
-.modal-footer {
-	border-top: none;
-}
-
-.btn-lg {
-	padding: 0.4rem 1rem !important;
-	font-size: 1 rem !important;
-}
-
-.form-control {
-	height: calc(1.5em + 0.75rem + 2px);
-	padding: 0.3rem 0.75rem;
-	font-size: 0.7rem !important;
-}
-
-.col-espace {
-	margin-bottom: 13px;
-}
-
-.custom-select {
-	height: calc(1.5em + 0.75rem + 2px);
-	padding: 0.3rem 0.75rem !important;
-	font-size: 0.7rem !important;
-}
-
-.btn-Edit-Perfil {
-	font-size: 0.7rem !important;
-}
-
-.invalid-feedback {
-	margin-top: 0.1rem;
-}
-
-.card-body-add {
-	padding: 0.4rem !important;
-}
-
-.margin-cero {
-	margin-bottom: 0px !important;
-}
-
-.margin-der {
-	margin-right: 0.5rem !important;
-}
-
-.btn-icon-edit {
-	color: #585858 !important;
-	transition: background 0.5s ease-in-out !important;
-}
-
-.btn-icon-edit:hover {
-	box-shadow: none !important;
-	background-color: #058a38 !important;
-	color: #ececec !important;
-}
-
-.btn-icon-delete {
-	color: #585858 !important;
-	transition: background 0.5s ease-in-out !important;
-}
-
-.btn-icon-delete:hover {
-	box-shadow: none !important;
-	background-color: #af230a !important;
-	color: #ececec !important;
-}
-
-.marginR {
-	margin-right: 7px !important;
+.btn-danger {
+	background-color: $btn-red;
+	border: $btn-red;
 }
 
 @media screen and (max-width: 780px) {
@@ -384,7 +325,6 @@ table {
 
 		.contenido {
 			width: 100%;
-			
 
 			.row {
 				padding: 0;
@@ -397,7 +337,6 @@ table {
 		grid-template-columns: 1fr;
 		grid-template-rows: 2fr;
 		height: calc(100vh - 42px);
-
 
 		.mvst_panel {
 			width: 100%;

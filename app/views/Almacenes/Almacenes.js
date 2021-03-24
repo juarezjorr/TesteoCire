@@ -269,7 +269,7 @@ function getAlmacenesTable() {
             //    { responsivePriority: 1, targets: 0 },
             //    { responsivePriority: 2, targets: -1 },
             // ],
-            scrollY: 'calc(100vh - 260px)',
+            scrollY: 'calc(100vh - 280px)',
             scrollX: true,
             // scrollCollapse: true,
             paging: true,
