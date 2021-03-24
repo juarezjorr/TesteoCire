@@ -17,7 +17,14 @@ class ServiciosModel extends Model
                             VALUES('".$params['NomServicio']."','".$params['DesServicio']."',1)";
 
                 $this->db->query($qry);	
-				$estatus = 1;
+
+				$qry = "SELECT MAX(srv_id) AS id FROM ctt_services;";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+				    $lastid = trim($row[0]);
+				}
+
+				$estatus = $lastid;
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -63,7 +70,7 @@ class ServiciosModel extends Model
                 WHERE srv_id = ".$params['IdServicio'].";";
 
 				$this->db->query($qry);	
-				$estatus = 1;
+				$estatus = $params['IdServicio'];
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
