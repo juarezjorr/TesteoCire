@@ -1,22 +1,46 @@
 var table = null;
-$(document).ready(function() {
+var positionRow = 0;
+
+$(document).ready(function () {
+    verifica_usuario();
+    inicial();
+ });
+
+ function inicial() {
     getPuestoTable(); 
     //Open modal *
     $('#nuevoPuesto').on('click', function(){    
         LimpiaModal();
-        $('#formCategorias').removeClass('was-validated');
+        $('#formPuestos').removeClass('was-validated');
     });
     //Guardar almacen *
-    $('#GuardarCategoria').on('click', function(){   
+    $('#GuardarPuesto').on('click', function(){   
         if(validaFormulario() == 1){
             SavePuesto();        
         }
     });
     //borra almacen +
-    $('#BorrarProveedor').on('click', function(){    
-        DeletCategoria();
+    $('#BorrarPuesto').on('click', function(){    
+        DeletPuesto();
     });  
-});
+
+    $('#LimpiarFormulario').on('click', function () {
+        LimpiaModal();
+     });
+  
+      $('#PuestoTable tbody').on('click', 'tr', function () {
+        positionRow = (table.page.info().page * table.page.info().length) + $(this).index();
+  
+        setTimeout(() => {
+           RenglonesSelection = table.rows({ selected: true }).count();
+           if (RenglonesSelection == 0 || RenglonesSelection == 1) {
+               $(".btn-apply").css("visibility", "hidden");
+           } else {
+               $(".btn-apply").css("visibility", "visible");
+           }
+       }, 10);
+     });
+}
 
 //Valida los campos seleccionado *
 function validaFormulario() {
@@ -36,6 +60,8 @@ function validaFormulario() {
 function EditPuesto(id) {
     UnSelectRowTable();
     LimpiaModal();
+    $('#titulo').text('Editar Puesto');
+
     var location = "Puestos/GetPuesto";
     $.ajax({
             type: "POST",
@@ -54,8 +80,8 @@ function EditPuesto(id) {
 
 }
 //confirm para borrar **
-function ConfirmDeletCategoria(id) {
-    UnSelectRowTable();
+function ConfirmDeletPuesto(id) {
+    //UnSelectRowTable();
     $('#BorrarPuestoModal').modal('show');
     $('#IdPuestoBorrar').val(id);
 }
@@ -65,7 +91,7 @@ function UnSelectRowTable() {
 }
 
 //BORRAR  * *
-function DeletCategoria() {
+function DeletPuesto() {
     var location = "Puestos/DeletePuesto";
     IdPuesto = $('#IdPuestoBorrar').val();
     $.ajax({
@@ -76,10 +102,16 @@ function DeletCategoria() {
              },
             url: location,
         success: function (respuesta) {
-            if(respuesta = 1){
-                getPuestoTable(); 
+            if ((respuesta = 1)) {
+                var arrayObJ = IdPuesto.split(',');
+                if(arrayObJ.length == 1){
+                   table.row(':eq('+positionRow+')').remove().draw();
+                }else{
+                   table.rows({ selected: true }).remove().draw();
+                }
                 $('#BorrarPuestoModal').modal('hide');
-            }
+             }
+             LimpiaModal();
         },
         error: function (EX) {console.log(EX);}
         }).done(function () {});
@@ -101,10 +133,21 @@ function SavePuesto() {
              },
             url: location,
         success: function (respuesta) {
-            if(respuesta = 1){
-                getPuestoTable();
-                $('#PuestoModal').modal('hide');
-            }
+            if(IdPuesto != ''){
+                table.row(':eq('+positionRow+')').remove().draw();
+             }
+             if ((respuesta != 0)) {
+                //getAlmacenesTable();
+                var rowNode = table.row.add( {
+                   [0]:  '<button onclick="EditPuesto('+respuesta+')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button><button onclick="ConfirmDeletPuesto('+respuesta+')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
+                   [1]:   respuesta,
+                   [2]:   NomPuesto,
+                   [3]:   DesPuesto
+                }).draw().node();
+                $( rowNode ).find('td').eq(0).addClass('edit');
+                $( rowNode ).find('td').eq(1).addClass('text-center');
+               LimpiaModal();
+             }
         },
         error: function (EX) {console.log(EX);}
         }).done(function () {});    
@@ -115,6 +158,7 @@ function LimpiaModal() {
     $('#NomPuesto').val("");
     $('#IdPuesto').val("");
     $('#DesPuesto').val("");
+    $('#titulo').text('Nuevo Puesto');
 }
 
 
@@ -138,7 +182,7 @@ function getPuestoTable() {
                         + "<td>" + row.pos_description + "</td>"
                         + '<td class="text-center"> '
                         + '<button onclick="EditPuesto(' + row.pos_id + ')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen"></i></button>'
-                        + '<button onclick="ConfirmDeletCategoria(' + row.pos_id + ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-trash"></i></button>'
+                        + '<button onclick="ConfirmDeletPuesto(' + row.pos_id + ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-trash"></i></button>'
                         + '</td>'
                         + "</tr>";
                     $("#tablaPuestoRow").append(renglon);
@@ -163,7 +207,7 @@ function getPuestoTable() {
                                 idSelected += index[0] + ",";
                             });
                             idSelected = idSelected.slice(0, -1);
-                            if (idSelected != "") { ConfirmDeletCategoria(idSelected); }
+                            if (idSelected != "") { ConfirmDeletPuesto(idSelected); }
                         }
                     }
                     ],
@@ -202,3 +246,127 @@ function getPuestoTable() {
     });
 }
 
+function getPuestoTable() {
+    var location = 'Puestos/GetPuestos';                
+    $('#PuestoTable').DataTable().destroy();
+    $("#tablaPuestoRow").html('');
+ 
+    $.ajax({
+       type: 'POST',
+       dataType: 'JSON',
+       url: location,
+       _success: function (respuesta) {
+          var renglon = '';
+          respuesta.forEach(function (row, index) {
+             renglon =
+                '<tr>' +
+               
+                '<td class="text-center edit"> ' +
+                    '<button onclick="EditPuesto(' + row.pos_id +')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button>' +
+                    '<button onclick="ConfirmDeletPuesto(' + row.pos_id +')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>' +
+                '</td>' +
+ 
+                "<td class='dtr-control text-center'>" +
+                row.pos_id +
+                '</td>' +
+ 
+                '<td>' +
+                row.pos_name +
+                '</td>' +
+
+                '<td>' +
+                row.pos_description +
+                '</td>' +
+ 
+                
+                '</tr>';
+             $('#tablaPuestoRow').append(renglon);
+          });
+ 
+          let title = 'Puesto';
+          let filename =
+             title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
+ 
+          table = $('#PuestoTable').DataTable({
+             order: [[1, 'asc']],
+             select: {
+                style: 'multi',
+                info: false,
+             },
+             lengthMenu: [
+                [10, 25, 50, 100, -1],
+                ['10', '25', '50', 'Todo'],
+             ],
+             dom: 'Blfrtip',
+             buttons: [
+                {
+                   extend: 'pdf',
+                   footer: true,
+                   title: title,
+                   filename: filename,
+                   //   className: 'btnDatableAdd',
+                   text:
+                      '<button class="btn btn-pdf"><i class="fas fa-file-pdf"></i></button>',
+                },
+                {
+                   extend: 'excel',
+                   footer: true,
+                   title: title,
+                   filename: filename,
+                   //   className: 'btnDatableAdd',
+                   text:
+                      '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
+                },
+                
+                {
+                   //Botón para imprimir
+                   extend: 'print',
+                   footer: true,
+                   title: title,
+                   filename: filename,
+ 
+                   //Aquí es donde generas el botón personalizado
+                   text:
+                      '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
+                }
+                ,
+                {
+                   text: 'Borrar seleccionados',
+                   className: 'btn-apply',
+                   action: function () {
+                      var selected = table.rows({ selected: true }).data();
+                      var idSelected = '';
+                      selected.each(function (index) {
+                         idSelected += index[1] + ',';
+                      });
+                      idSelected = idSelected.slice(0, -1);
+                      if (idSelected != '') {
+                         ConfirmDeletPuesto(idSelected);
+                      }
+                   },
+                },
+                
+             ],
+             
+             scrollY: 'calc(100vh - 260px)',
+             scrollX: true,
+             // scrollCollapse: true,
+             paging: true,
+             pagingType: 'simple_numbers',
+             fixedHeader: true,
+             language: {
+                url: './app/assets/lib/dataTable/spanish.json',
+             },
+          });
+       },
+       get success() {
+          return this._success;
+       },
+       set success(value) {
+          this._success = value;
+       },
+       error: function ( jqXHR, textStatus, errorThrown) {
+          console.log( jqXHR, textStatus, errorThrown);
+       },
+    }).done(function () {});
+ }
