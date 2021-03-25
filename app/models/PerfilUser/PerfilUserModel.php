@@ -88,7 +88,8 @@ class PerfilUserModel extends Model
 					$qry = "insert into ctt_profile_module (prf_id,mod_id) values (".$lastid.",".$id.");";
 					$this->db->query($qry);
 				}
-				$estatus = 1;
+
+				$estatus = $lastid;
 			} catch (Exception $e) {
 				$estatus = 0;
 				//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
@@ -119,7 +120,7 @@ class PerfilUserModel extends Model
 					$qry = "insert into ctt_profile_module (prf_id,mod_id) values (".$params['IdPerfil'].",".$id.");";
 					$this->db->query($qry);
 				}
-				$estatus = 1;
+				$estatus = $params['IdPerfil'];
 			} catch (Exception $e) {
 				$estatus = 0;
 				//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
