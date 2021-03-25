@@ -9,6 +9,7 @@
 		private $session;
 		public $model;
 
+
 		public function __construct()
 		{
 			$this->model = new DocumentosModel();
@@ -23,61 +24,38 @@
 		  $this->render(__CLASS__, $params);
 		}
 
-		public function GetCategoria($request_params)
+		public function GetDocumento($request_params)
 		{
-	      $result = $this->model->GetCategoria($request_params);
+	      $result = $this->model->GetDocumento($request_params);
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
 		public function SaveDocumento($request_params)
 		{
-			
-			$Nombre = $request_params['NomDocumento'];
-			$Code = $request_params['CodDocumento'];
-			$Type = $request_params['Ext'];
-			$Size = $_FILES['file']['size'];
-			$Content_type = $_FILES['file']['type'];
+			if($request_params['idDocumento'] == ""){
+				$result = $this->model->SaveDocumento($request_params);	  
+			}else{
+				$result = $this->model->ActualizaDocumento($request_params);	  
+			}
+		  echo $result;	
+		}
 
-			//$data = addslashes(fread(fopen($binary_File, "r"), filesize($binary_File)));
-
-			$Documento_binario = base64_encode((file_get_contents($_FILES['file']['tmp_name'])));
-
-
-		  if($request_params['idDocumento'] == ""){
-			$result = $this->model->SaveDocumento($Nombre,$Code,$Size,$Type,$Content_type,$Documento_binario,$request_params);	  
-		  }else{
-			$result = $this->model->ActualizaCategoria($request_params);	  
-		  }
+		public function GetDocumentos($request_params)
+		{
+	      $result = $this->model->GetDocumentos($request_params);
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
-		public function GetCategorias($request_params)
+		public function DeleteDocumentos($request_params)
 		{
-	      $result = $this->model->GetCategorias($request_params);
-		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
-		}
-
-		public function DeleteCategoria($request_params)
-		{
-		  $result = $this->model->DeleteCategoria($request_params);	  
+		  $result = $this->model->DeleteDocumentos($request_params);	  
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
 		}
 
 		public function verDocumento($request_params)
 		{
 		  $result = $this->model->verDocumento($request_params);	
-		  //header para tranformar la salida en el tipo de archivo que hemos guardado
-/* 		  header("Content-type: ".$result['doc_content_type']); 
-		  header('Content-Disposition: attachment; filename="'.$result['doc_name'].'"');
-		
-		//imprimir el archivo
-	      echo $result['doc_document'];   */
-		  //print_r($result['doc_document']);
-
-		  $archivo = "";
-
-		  echo json_encode($archivo ,JSON_UNESCAPED_UNICODE);	
-
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
 		}
 
 
