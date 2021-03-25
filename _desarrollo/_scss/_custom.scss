@@ -123,7 +123,8 @@ h4 {
 		padding-top: 1rem;
 		padding-bottom: 0.625rem;
 	}
-	input {
+	input,
+	textarea {
 		font-size: 1.1rem;
 		font-weight: 900;
 	}
@@ -193,6 +194,9 @@ div.dataTables_wrapper div.btn-group button.btn-print {
 }
 div.dataTables_wrapper div.btn-group button.btn-apply {
 	width: auto;
+}
+div.dataTables_wrapper div.btn-group button.hidden-field {
+	visibility: hidden;
 }
 
 div.dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -269,6 +273,11 @@ table {
 		text-align: left;
 		font-weight: 900;
 	}
+
+	td.supply {
+		text-align: left;
+		font-weight: 300;
+	}
 	td.quantity {
 		text-align: center;
 
@@ -317,6 +326,46 @@ table {
 .btn-danger {
 	background-color: $btn-red;
 	border: $btn-red;
+}
+
+// Listador de elementos pertenecientes a un input
+
+.list-finder {
+	position: relative;
+	.list-group {
+		width: 100%;
+		height: 300px;
+		padding: 12px;
+		position: absolute;
+		top: 53px;
+		left: 0px;
+		z-index: 10;
+		&.list-hide {
+			display: none;
+		}
+		.list-items {
+			border-radius: 5px;
+			box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+			width: 100%;
+			height: 100%;
+			padding: 4px;
+			background-color: #ffffff;
+			overflow: auto;
+			.list-item {
+				width: 100%;
+				padding: 6px;
+				cursor: pointer;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				&:hover {
+					background-color: rgba(0, 0, 0, 0.3);
+					color: #ffffff;
+				}
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 780px) {

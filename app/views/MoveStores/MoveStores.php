@@ -67,15 +67,15 @@
 				<table class="display compact nowrap"  id="tblExchanges">
 					<thead>
 						<tr>
-							<th style="width: 80px">soppr</th>
-							<th style="width: 30px"></th>
-							<th style="width: 80px">SKU</th>
+							<th style="width:  80px">soppr</th>
+							<th style="width:  30px"></th>
+							<th style="width:  80px">SKU</th>
 							<th style="width: 350px">Producto</th>
-							<th style="width: 60px">Cantidad</th>
+							<th style="width:  60px">Cantidad</th>
 							<th style="width: 100px">No. Serie</th>
-							<th style="width: 50px">Tipo Origen</th>
+							<th style="width:  50px">Tipo Origen</th>
 							<th style="width: 150px">Almacen Origen</th>
-							<th style="width: 50px">Tipo Destino</th>
+							<th style="width:  50px">Tipo Destino</th>
 							<th style="width: 150px">Almacen Destino</th>
 							<th style="width: 350px">Nota</th>
 						</tr>

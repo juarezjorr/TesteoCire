@@ -22,22 +22,22 @@ function inicial() {
    $('#BorrarProveedor').on('click', function () {
       DeletAlmacen();
    });
-   
+
    $('#LimpiarFormulario').on('click', function () {
       LimpiaModal();
    });
 
    $('#AlmacenesTable tbody').on('click', 'tr', function () {
-      positionRow = (table.page.info().page * table.page.info().length) + $(this).index();
+      positionRow = table.page.info().page * table.page.info().length + $(this).index();
 
       setTimeout(() => {
-         RenglonesSelection = table.rows({ selected: true }).count();
+         RenglonesSelection = table.rows({selected: true}).count();
          if (RenglonesSelection == 0 || RenglonesSelection == 1) {
-             $(".btn-apply").css("visibility", "hidden");
+            $('.btn-apply').css('visibility', 'hidden');
          } else {
-             $(".btn-apply").css("visibility", "visible");
+            $('.btn-apply').css('visibility', 'visible');
          }
-     }, 10);
+      }, 10);
    });
 }
 
@@ -64,7 +64,7 @@ function EditAlmacen(id) {
    $.ajax({
       type: 'POST',
       dataType: 'JSON',
-      data: { id: id },
+      data: {id: id},
       url: location,
       success: function (respuesta) {
          $('#IdAlmacen').val(respuesta.str_id);
@@ -84,7 +84,9 @@ function ConfirmDeletAlmacen(id) {
 }
 
 function UnSelectRowTable() {
-   setTimeout(() => {table.rows().deselect();}, 10);
+   setTimeout(() => {
+      table.rows().deselect();
+   }, 10);
 }
 
 //BORRAR  * *
@@ -101,10 +103,13 @@ function DeletAlmacen() {
       success: function (respuesta) {
          if ((respuesta = 1)) {
             var arrayAlmacen = IdAlmacen.split(',');
-            if(arrayAlmacen.length == 1){
-               table.row(':eq('+positionRow+')').remove().draw();
-            }else{
-               table.rows({ selected: true }).remove().draw();
+            if (arrayAlmacen.length == 1) {
+               table
+                  .row(':eq(' + positionRow + ')')
+                  .remove()
+                  .draw();
+            } else {
+               table.rows({selected: true}).remove().draw();
             }
             $('#BorrarAlmacenModal').modal('hide');
          }
@@ -132,21 +137,32 @@ function SaveAlmacen() {
       },
       url: location,
       success: function (respuesta) {
-            if(IdAlmacen != ''){
-               table.row(':eq('+positionRow+')').remove().draw();
-            }
-            if ((respuesta != 0)) {
-               //getAlmacenesTable();
-               var rowNode = table.row.add( {
-                  [0]:  '<button onclick="EditAlmacen('+respuesta+')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button><button onclick="ConfirmDeletAlmacen('+respuesta+')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
-                  [1]:   respuesta,
-                  [2]:   NomAlmacen,
-                  [3]:   tipoAlmacen
-               }).draw().node();
-               $( rowNode ).find('td').eq(0).addClass('edit');
-               $( rowNode ).find('td').eq(1).addClass('text-center');
-              LimpiaModal();
-            }
+         if (IdAlmacen != '') {
+            table
+               .row(':eq(' + positionRow + ')')
+               .remove()
+               .draw();
+         }
+         if (respuesta != 0) {
+            //getAlmacenesTable();
+            var rowNode = table.row
+               .add({
+                  [0]:
+                     '<button onclick="EditAlmacen(' +
+                     respuesta +
+                     ')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button><button onclick="ConfirmDeletAlmacen(' +
+                     respuesta +
+                     ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
+                  [1]: respuesta,
+                  [2]: NomAlmacen,
+                  [3]: tipoAlmacen,
+               })
+               .draw()
+               .node();
+            $(rowNode).find('td').eq(0).addClass('edit');
+            $(rowNode).find('td').eq(1).addClass('text-center');
+            LimpiaModal();
+         }
       },
       error: function (EX) {
          console.log(EX);
@@ -161,7 +177,6 @@ function LimpiaModal() {
    $('#IdAlmacen').val('');
    $('#selectTipoAlmacen').val('0');
    $('#formProveedor').removeClass('was-validated');
-
 }
 
 //obtiene la informacion de tabla Proveedores *
@@ -179,7 +194,6 @@ function getAlmacenesTable() {
          respuesta.forEach(function (row, index) {
             renglon =
                '<tr>' +
-              
                '<td class="text-center edit"> ' +
                '<button onclick="EditAlmacen(' +
                row.str_id +
@@ -197,14 +211,12 @@ function getAlmacenesTable() {
                '<td>' +
                row.str_type +
                '</td>' +
-               
                '</tr>';
             $('#tablaAlmacenesRow').append(renglon);
          });
 
          let title = 'Almacenes';
-         let filename =
-            title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
+         let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
 
          table = $('#AlmacenesTable').DataTable({
             order: [[1, 'asc']],
@@ -224,8 +236,7 @@ function getAlmacenesTable() {
                   title: title,
                   filename: filename,
                   //   className: 'btnDatableAdd',
-                  text:
-                     '<button class="btn btn-pdf"><i class="fas fa-file-pdf"></i></button>',
+                  text: '<button class="btn btn-pdf"><i class="fas fa-file-pdf"></i></button>',
                },
                {
                   extend: 'excel',
@@ -233,10 +244,9 @@ function getAlmacenesTable() {
                   title: title,
                   filename: filename,
                   //   className: 'btnDatableAdd',
-                  text:
-                     '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
+                  text: '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
                },
-               
+
                {
                   //Botón para imprimir
                   extend: 'print',
@@ -245,15 +255,13 @@ function getAlmacenesTable() {
                   filename: filename,
 
                   //Aquí es donde generas el botón personalizado
-                  text:
-                     '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
-               }
-               ,
+                  text: '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
+               },
                {
                   text: 'Borrar seleccionados',
-                  className: 'btn-apply',
+                  className: 'btn-apply hidden-field',
                   action: function () {
-                     var selected = table.rows({ selected: true }).data();
+                     var selected = table.rows({selected: true}).data();
                      var idSelected = '';
                      selected.each(function (index) {
                         idSelected += index[1] + ',';

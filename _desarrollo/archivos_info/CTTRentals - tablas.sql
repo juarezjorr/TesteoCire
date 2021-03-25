@@ -125,6 +125,7 @@ CREATE TABLE `cttapp_cire`.`ctt_suppliers` (
 	`sup_rfc`				VARCHAR(15)  NULL 			 COMMENT 'Registro Federal de Contribuyentes',
 	`sup_email`				VARCHAR(100)  NULL 			 COMMENT 'Correo electrónico',
 	`sup_phone`				VARCHAR(100)  NULL 			 COMMENT 'Número telefónico',
+	`sup_behaviour`			VARCHAR(1) NULL		 		 COMMENT 'Comportamiento del proveedor C-Compra, R-Renta',
 	`sup_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del proveedor 1-Activo, 0-Inactivo',
 PRIMARY KEY (`sup_id`))
 COMMENT = 'Proveedores de la empresa.';
@@ -136,7 +137,7 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
     `prd_name`				VARCHAR(100) NULL 			 COMMENT 'Nombre del producto',
 	`prd_english_name`		VARCHAR(100)  NULL 			 COMMENT 'Nombre del producto en ingles',
     `prd_model`				VARCHAR(50) NULL 			 COMMENT 'Modelo del producto',
-    `prd_price`				decimal(10,2)  NULL			 COMMENT 'Precio unitario del producto',
+    `prd_price`				DECIMAL(10,2)  NULL			 COMMENT 'Precio unitario del producto',
 	`prd_coin_type`			VARCHAR(30)  NULL 			 COMMENT 'Tipo de moneda',
 	`prd_visibility`		VARCHAR(1) NULL		 		 COMMENT 'Visibilidad del producto en cotización 1-visible, 0-no visible',
     `prd_comments`			VARCHAR(300) NULL	 		 COMMENT 'Observaciones',
@@ -152,13 +153,14 @@ CREATE TABLE `cttapp_cire`.`ctt_series` (
 	`ser_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la serie',
 	`ser_sku`				VARCHAR(10) NULL 			 COMMENT 'SKU identificador del producto',
 	`ser_serial_number`		VARCHAR(50)  NULL 			 COMMENT 'Numero de serie del producto',
-	`ser_cost`				decimal(10,2)  NULL			 COMMENT 'Costo unitario del producto',
+	`ser_cost`				DECIMAL(10,2)  NULL			 COMMENT 'Costo unitario del producto',
     `ser_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
 	`ser_situation`			VARCHAR(5)  NULL 			 COMMENT 'Situación de estatus dentro del proceso ',
     `ser_stage`				VARCHAR(5) NULL 			 COMMENT 'Etapa dentro del proceso',
-    `ser_date_registry`		datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
-    `ser_date_down`			datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de baja del producto',
+    `ser_date_registry`		DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
+    `ser_date_down`			DATETIME NULL  				 COMMENT 'Fecha de baja del producto',
 	`ser_lonely`			VARCHAR(1) NULL		 		 COMMENT 'Se puede rentar sin accesosrios 1-si, 0-no',
+	`ser_behaviour`			VARCHAR(1) NOT NULL	 		 COMMENT 'Comportamiento del producto C-Compra, R-Renta',
     `prd_id` 				INT NULL 					 COMMENT 'ID del producto relacion ctt_productos',
 PRIMARY KEY (`ser_id`))
 COMMENT = 'Numero serie de productos correspondientes a un modelo.';
@@ -176,8 +178,8 @@ CREATE TABLE `cttapp_cire`.`ctt_documents` (
 	`doc_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID del documento',
 	`doc_code`				VARCHAR(100) NULL		 	 COMMENT 'Código del documento',
 	`doc_name`				VARCHAR(100) NULL		 	 COMMENT 'Nombre del documento',
-    `doc_type`				VARCHAR(50) NULL		 	 COMMENT 'Tipo de docuemnto',
-	`doc_size`				INT NULL		 			 COMMENT 'Tamaño del docuemnto',
+    `doc_type`				VARCHAR(50) NULL		 	 COMMENT 'Tipo de documento',
+	`doc_size`				INT NULL		 			 COMMENT 'Tamaño del documento',
     `doc_content_type`		VARCHAR(100) NULL		 	 COMMENT 'Tipo del contenido del documento',
     `doc_document`			BLOB NULL		 			 COMMENT 'Contetnido del documento',
 PRIMARY KEY (`doc_id`))
@@ -250,5 +252,20 @@ CREATE TABLE `cttapp_cire`.`ctt_stores_products` (
 PRIMARY KEY (`stp_id`))
 COMMENT='Tabla de cantidad de productos en almacen';
 
+DROP TABLE `cttapp_cire`.`ctt_subletting`;
+CREATE TABLE `cttapp_cire`.`ctt_subletting` (
+  	`sub_id` 				INT(11) NOT NULL AUTO_INCREMENT COMMENT 'ID del subarrendo',
+  	`sub_price` 			DECIMAL(10,2)  NULL	 DEFAULT 0   COMMENT 'precio de renta del producto por unidad',
+  	`sub_coin_type`			VARCHAR(30)  NULL 			 COMMENT 'Tipo de moneda',
+	`sub_quantity` 			INT(11) NULL   			 	 COMMENT 'Cantidad de piezas subarrendadas',
+  	`sub_date_start` 		DATETIME NULL   			 COMMENT 'Fecha de inicio de periodo de subarrendo',
+  	`sub_date_end` 			DATETIME NULL   			 COMMENT 'Fecha de término de periodo de subarrendo',
+  	`sub_comments`			VARCHAR(300) NOT NULL		 COMMENT 'Comentarios referentes al subarrendo',
+  	`ser_id`				INT(11) NULL		 		 COMMENT 'Id del serial del producto relacion ctt_serial',
+	`sup_id`				INT(11) NULL		 		 COMMENT 'Id del proveedor relacion ctt_suppliers',
+	`prj_id`				INT(11) NULL		 		 COMMENT 'Id del proyecto ',
+	
+PRIMARY KEY (`sub_id`))
+COMMENT='Tabla de situación de subarrendos';
 
 
