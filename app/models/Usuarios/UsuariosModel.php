@@ -13,7 +13,7 @@ class UsuariosModel extends Model
 // Optiene los Usuaios existentes
 	public function GetUsuarios()
 	{
-		$qry = "SELECT u.usr_id, u.usr_username, e.emp_fullname, e.emp_number, p.prf_name, u.usr_dt_registry, u.usr_dt_last_access FROM ctt_users as u
+		$qry = "SELECT u.usr_id, u.usr_username, e.emp_fullname, e.emp_number, p.prf_name, u.usr_dt_registry, u.usr_dt_last_access ,p.prf_id FROM ctt_users as u
 		INNER JOIN ctt_employees as e on e.emp_id = u.emp_id
 		LEFT JOIN ctt_profiles as p on p.prf_id = u.prf_id
 		WHERE u.usr_status = '1'";
@@ -24,31 +24,36 @@ class UsuariosModel extends Model
 	public function GetUsuario($params)
 	{
 		//Optenemos los reportes asociados al usuario
-		$qry = "SELECT mod_id FROM ctt_user_module WHERE usr_id = '".$params['id']."'";
+		$qry = "SELECT mod_id FROM ctt_users_modules WHERE usr_id = '".$params['id']."'";
 		$result = $this->db->query($qry);
 		$modulesAsing = "";
+
 		while ($row = $result->fetch_row()){
 			$modulesAsing .= $row[0].",";
 		}
 		$modulesAsing = substr($modulesAsing, 0, -1);
 
 		$qry = "SELECT 
-					U.usr_id, U.usr_username, U.usr_password, U.prf_id, E.emp_id, E.emp_number, E.emp_fullname, E.emp_area, E.pos_id
-				FROM ctt_users AS U
-				JOIN ctt_employees AS E
-				ON U.emp_id = E.emp_id
-				where U.usr_id =  ".$params['id'].";";
+					u.usr_id, u.usr_username, e.emp_fullname, e.emp_number, p.prf_name, u.usr_dt_registry, u.usr_dt_last_access ,p.prf_id , e.emp_area, e.emp_id , e.emp_report_to , e.pos_id, u.usr_password
+				FROM ctt_users AS u
+				INNER JOIN ctt_employees as e on e.emp_id = u.emp_id
+		        LEFT JOIN ctt_profiles as p on p.prf_id = u.prf_id
+				where u.usr_id =  ".$params['id'].";";
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("usr_id" =>$row[0],
-			"usr_username" =>utf8_decode($row[1]),
-			"usr_password"=>utf8_decode($row[2]),
-			"prf_id"=>$row[3],
-			"emp_id"=>$row[4],
-			"emp_number"=>$row[5],
-			"emp_fullname"=>$row[6],
-			"emp_area"=>$row[7],
-			"pos_id"=>$row[8],
+			"usr_username" =>$row[1],
+			"emp_fullname"=>$row[2],
+			"emp_number"=>$row[3],
+			"prf_name"=>$row[4],
+			"usr_dt_registry"=>$row[5],
+			"usr_dt_last_access"=>$row[6],
+			"prf_id"=>$row[7],
+			"emp_area"=>$row[8],
+			"emp_id"=>$row[9],
+			"emp_report_to"=>$row[10],	
+			"pos_id"=>$row[11],
+			"usr_password"=>$row[12],
 			"modulesAsing"=>$modulesAsing);
 		}
 		return $item;
@@ -64,8 +69,8 @@ class UsuariosModel extends Model
 			try {
 
 				//Inserta Usuario-Empleado
-				$qry = "insert into ctt_employees(emp_number, emp_fullname, emp_area, emp_status, pos_id) 
-				values(".$params['NumEmpUsuario'].",'".$params['NomUsuario']."', '".$params['AreaEmpUsuario']."',1,1);";
+				$qry = "insert into ctt_employees(emp_number, emp_fullname, emp_area, emp_status, pos_id, emp_report_to) 
+				values(".$params['NumEmpUsuario'].",'".$params['NomUsuario']."', '".$params['AreaEmpUsuario']."',1,".$params['idPuesto'].",".$params['idUserReport'].");";
 				$this->db->query($qry);
 
 				//optiene id de Usuario insertado
@@ -90,10 +95,10 @@ class UsuariosModel extends Model
 				//inserta relacion modulo perfil
 				$arrayModules = explode(",", $params['modulesAsig']);
 				foreach ($arrayModules as $id) {
-					$qry = "insert into ctt_user_module (usr_id,mod_id) values (".$lastid.",".$id.");";
+					$qry = "insert into ctt_users_modules (usr_id,mod_id) values (".$lastid.",".$id.");";
 					$this->db->query($qry);
 				}
-				$estatus = 1;
+				$estatus = $lastid;
 			} catch (Exception $e) {
 				$estatus = 0;
 				//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
@@ -123,16 +128,16 @@ class UsuariosModel extends Model
 				$this->db->query($qry);
 
 				//Borra los modulos asignados anteriormente al usuario 
-				$qry = "DELETE FROM ctt_user_module WHERE usr_id ='".$params['IdUsuario']."'";
+				$qry = "DELETE FROM ctt_users_modules WHERE usr_id ='".$params['IdUsuario']."'";
 				$result = $this->db->query($qry);
 
 				//inserta relacion modulo perfil
 				$arrayModules = explode(",", $params['modulesAsig']);
 				foreach ($arrayModules as $id) {
-					$qry = "insert into ctt_user_module (usr_id,mod_id) values (".$params['IdUsuario'].",".$id.");";
+					$qry = "insert into ctt_users_modules (usr_id,mod_id) values (".$params['IdUsuario'].",".$id.");";
 					$this->db->query($qry);
 				}
-				$estatus = 1;
+				$estatus = $params['IdUsuario'];
 			} catch (Exception $e) {
 				$estatus = 0;
 				//echo 'Excepción capturada: ',  $e->getMessage(), "\n";
