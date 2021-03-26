@@ -146,7 +146,7 @@
 
 				<!-- Start área de listado -->
 				<div class="mb-3 mvst_table">
-					<h1>Categorias</h1>
+					<h1>Usuarios</h1>
 
 					<div class="row">
 						<div class="col-12 col-md-12">		
