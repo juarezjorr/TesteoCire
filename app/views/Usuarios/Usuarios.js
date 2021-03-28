@@ -461,9 +461,6 @@ function getUsuariosTable() {
    }).done(function () {});
 }
 
-
-
-
 function getUserReport(id) {
     $('#selectRowUserReporta').html("");
     var location = 'Usuarios/GetUsuarios';                

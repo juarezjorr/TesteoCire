@@ -33,7 +33,7 @@
 								</div>
 							</div>
 
-                     <div class="row">
+                            <div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowCategorias"  name="selectRowCategorias"  class="form-select form-select-sm" required>
 									</select>
