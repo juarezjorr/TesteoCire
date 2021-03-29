@@ -108,6 +108,7 @@ class ProductosModel extends Model
 
     public function GetProducto($params)
 	{
+		$prd_id = $params['id'];
 		$qry = "SELECT pro.prd_id,pro.prd_sku, pro.prd_name, pro.prd_english_name, pro.prd_model
 					,pro.prd_cost, pro.prd_price, pro.prd_coin_type, pro.prd_visibility
 					,pro.prd_comments, pro.sbc_id, pro.sup_id, pro.srv_id, cat.cat_id, storeP.str_id 
@@ -118,7 +119,7 @@ class ProductosModel extends Model
 					INNER JOIN ctt_store_product AS storeP ON storeP.prd_id = pro.prd_id
 					INNER JOIN ctt_stores AS store ON store.str_id = storeP.str_id
 					INNER JOIN ctt_services AS serv ON serv.srv_id = pro.srv_id
-					where pro.prd_status = 1 and pro.prd_id =  ".$params['id'].";";
+					where pro.prd_status = 1 and pro.prd_id = $prd_id;";
 
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
