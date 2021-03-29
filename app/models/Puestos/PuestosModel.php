@@ -17,7 +17,13 @@ class PuestosModel extends Model
 						     VALUES('".$params['NomPuesto']."','".$params['DesPuesto']."',1)";
 
                 $this->db->query($qry);	
-				$estatus = 1;
+				$qry = "SELECT MAX(pos_id) AS id FROM ctt_post;";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+				    $lastid = trim($row[0]);
+				}
+
+				$estatus = $lastid;
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -61,7 +67,7 @@ class PuestosModel extends Model
 				WHERE  pos_id = ".$params['IdPuesto'].";";
 
 				$this->db->query($qry);	
-				$estatus = 1;
+				$estatus = $params['IdPuesto'];
 			} catch (Exception $e) {
 				$estatus = 0;
 			}

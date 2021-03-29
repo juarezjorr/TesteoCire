@@ -35,23 +35,12 @@ class SubCategoriasModel extends Model
 		if($request["idCategoria"] != "0"){
 			$qryExt = "and u.cat_id = ".$request["idCategoria"];
 		}
-
 		$qry = "SELECT u.sbc_id, u.sbc_code, u.sbc_name, u.cat_id , e.cat_name
                 FROM ctt_subcategories AS U 
                 JOIN ctt_categories AS E
                 ON U.cat_id = E.cat_id
-                WHERE sbc_status = 1 and E.cat_status = 1".$qryExt.";";
-		$result = $this->db->query($qry);
-		$lista = array();
-		while ($row = $result->fetch_row()){
-			$item = array("sbc_id" =>$row[0],
-						"sbc_code" =>$row[1],
-                        "sbc_name" =>$row[2],
-                        "cat_id" =>$row[3],
-                        "cat_name" =>$row[4]);
-			array_push($lista, $item);
-		}
-		return $lista;
+                WHERE sbc_status = 1 and E.cat_status = 1 ".$qryExt.";";
+		return $this->db->query($qry);
 	}
 
     public function GetSubCategoria($params)

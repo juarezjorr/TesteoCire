@@ -1,266 +1,235 @@
 <?php 
-	defined('BASEPATH') or exit('No se permite acceso directo'); 
-	require ROOT . FOLDER_PATH . "/app/assets/header.php";
+  	defined('BASEPATH') or exit('No se permite acceso directo'); 
+	  require ROOT . FOLDER_PATH . "/app/assets/header.php";	  
 ?>
-
 <header>
 	<?php require ROOT . FOLDER_PATH . "/app/assets/menu.php"; ?>
 </header>
 <div class="container-fluid">
 	<div class="contenido">
-			<h1>Productos</h1>
-				<div class="row" style="margin-bottom: 10px !important;">
-					<div class="col-md-6"></div>
-					<div class="col-12 col-md-6 text-right">
-					<button id="nuevoProducto" type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#ProductoModal">
-               <i class="fas fa-box marginR"></i> Nuevo Producto
-					</button>
+		<div class="row mvst_group">
+				<!-- Start área de formularios -->
+				<div class="mb-3 mvst_panel">
+					<div class="form-group">
+						<h4 id="titulo">Nuevo Producto</h4>  
+						<form id="formProducto" class="row g-3 needs-validation" novalidate>
+
+							<div class="row" hidden>
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+								<input id="idStoreProducto" name="idStoreProducto" type="text" class="form-control form-control-sm" >
+
+									<input id="IdProducto" name="IdProducto" type="text" class="form-control form-control-sm" >
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="NomProducto" name="NomProducto" type="text" class="form-control form-control-sm" required >
+									<label for="NomProducto">Nombre Producto</label>
+								</div>
+							</div>
+                     		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="NomEngProducto" name="NomEngProducto" type="text" class="form-control form-control-sm" required >
+									<label for="NomEngProducto">Nombre Ingles Producto</label>
+								</div>
+							</div>
+                     		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="ModelProducto" name="ModelProducto" type="text" class="form-control form-control-sm" maxlength="3" style="text-transform: uppercase" required >
+									<label for="ModelProducto">Modelo Producto</label>
+								</div>
+							</div>
+
+<!--                      		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="SerieProducto" name="SerieProducto" type="text" class="form-control form-control-sm" required >
+									<label for="SerieProducto">Numero de serie Producto</label>
+								</div>
+							</div> -->
+
+                     		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="CostProducto" name="CostProducto" type="text" class="form-control form-control-sm" required >
+									<label for="CostProducto">Costo Producto</label>
+								</div>
+							</div>
+
+                     		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="PriceProducto" name="PriceProducto" type="text" class="form-control form-control-sm" required >
+									<label for="PriceProducto">Precio Producto</label>
+								</div>
+							</div>
+
+                     		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="DesProducto" name="DesProducto" type="text" class="form-control form-control-sm" required >
+									<label for="DesProducto">Descripcion Producto</label>
+								</div>
+							</div>
+
+
+                    		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectMonedaProducto"  name="selectMonedaProducto"  class="form-select form-select-sm" required>
+									</select>
+									<label for="selectMonedaProducto" class="form-label">Tipo de moneda</label>
+								</div>
+							</div>
+
+                   			<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowCategorias"  name="selectRowCategorias"  class="form-select form-select-sm" required>
+									</select>
+									<label for="selectRowCategorias" class="form-label">Categoria</label>
+								</div>
+							</div>
+
+                    		 <div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowSubCategorias"  name="selectRowSubCategorias"  class="form-select form-select-sm" required>
+									</select>
+									<label for="selectRowSubCategorias" class="form-label">SubCategoria</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowService"  name="selectRowService"  class="form-select form-select-sm" required>
+									</select>
+									<label for="selectRowService" class="form-label">Tipo de servicio</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowProovedores"  name="selectRowProovedores"  class="form-select form-select-sm" required>
+									</select>
+									<label for="selectRowProovedores" class="form-label">Proveedor</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowAlmacen"  name="selectRowAlmacen"  class="form-select form-select-sm" required>
+									</select>
+									<label for="selectRowAlmacen" class="form-label">Almacen</label>
+								</div>
+							</div>
+
+<!-- 							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowDocument"  name="selectRowDocument"  class="form-select form-select-sm" required>
+									</select>
+									<label for="selectRowDocument" class="form-label">Almacen</label>
+								</div>
+							</div> -->
+
+
+							<div class="row">
+								<div class="col-6">
+									<button type="button"  class="btn btn-primary btn-sm btn-block" style="font-size: 1rem !important;" id="GuardarCategoria">Guardar</button>
+								</div>
+								<div class="col-6">
+									<button type="button"  class="btn btn-danger btn-sm btn-block" style="font-size: 1rem !important;" id="LimpiarFormulario">Limpiar</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
+				<!-- End área de formularios -->
 
-				<div class="row">
-					<div class="col-12 col-md-12">		
-                      <table id="ProductosTable" class="display compact nowrap" style="width:100%">         
-                            <thead>
-                                <tr>
-									<th style="width:30px">&nbsp;</th>
-                                    <th style="width:20px">Id</th>
-                                    <th style="width:300px">Nombre</th>
-                                    <th style="width:300px">Nombre English</th>
-                                    <th style="width:50px">Sku</th>
-                                    <th style="width:60px">Modelo</th>
-                                    <th style="width:60px">Serial</th>
-                                    <th style="width:70px">Cost</th>
-                                    <th style="width:70px">Price</th>
-                                    <th style="width:300px">Comentarios</th>
-                                    <th style="width:50px">Tipo Servicio</th>
-                                    <th style="width:70px">Categoria</th>
-                                    <th style="width:70px">SubCategoria</th>
-                                    <th style="width:70px">Almacen</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaProductosRow">
-                            </tbody>
-                        </table>
-                    </div>
+				<!-- Start área de listado -->
+				<div class="mb-3 mvst_table">
+					<h1>Productos</h1>
+
+					<div class="row">
+						<div class="col-12 col-md-12">		
+								<table id="ProductosTable" class="display compact nowrap" style="width:100%">         
+										<thead>
+											<tr>
+													<th style="width: 30px"></th>
+													<th style="width: 30px">Id</th>
+													<th style="width: auto">Nombre</th>
+                                       <th style="width: auto">Nombre ingles</th>
+                                       <th style="width: auto">SKU</th>
+                                       <th style="width: auto">Model</th>
+
+<!--                                        <th style="width: auto">Numero serie</th>
+ -->                                       <th style="width: auto">Costo</th>
+                                       <th style="width: auto">Price</th>
+
+									   <th style="width: auto">Descripcion</th>
+
+
+                                       <th style="width: auto">Servicio</th>
+                                       <th style="width: auto">Categoria</th>
+                                       <th style="width: auto">Subcategoria</th>
+                                       <th style="width: auto">Almacen</th>
+											</tr>
+										</thead>
+										<tbody id="tablaProductosRow">
+										</tbody>
+									</table>
+							</div>
+					</div>
 				</div>
+				<!-- End área de listado -->
 			</div>
+	</div>
 </div>
 
-<!-- Modal Agregar Almacen -->
-<div class="modal fade" id="ProductoModal" tabindex="-1" aria-labelledby="ProductoModalLabel" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-         <div class="modal-header" style="padding: 10px !important;">
-            <button type="button" class="close" style="padding: .6rem 1rem !important;" data-bs-dismiss="modal" aria-label="Close">
-            <span  aria-hidden="true">&times;</span>
-            </button>  
-         </div>
-         <div class="modal-body">
-            <div class="row">
-               <div class="col-12 text-center">
-                  <span class="" id="ProductoModalLabel" style="font-weight: 600; font-size: 1.2rem;"> <i class="fas fa-box marginR"></i></i> Nuevo Producto:</span>
-               </div>
-            </div>
-            <form id="formSubCategorias" class="row g-3 needs-validation" novalidate>
-               <div class="row" style="width:  100% !important;">
-                  <input hidden type="text" class="form-control" id="IdProducto" aria-describedby="basic-addon3" autocomplete="off">
-                  <input hidden type="text" class="form-control" id="idStoreProducto" aria-describedby="basic-addon3" autocomplete="off">
-
-                  
-                  <div class="col-12 col-espace">
-                     <input name="nem" type="text" class="form-control" id="NomProducto"  placeholder="Nombre Producto..." autocomplete="off" required>
-                     <div class="invalid-feedback">
-                        Escriba un Nombre.
-                     </div>
-                  </div>
-
-                  <div class="col-12 col-espace">
-                     <input name="nem" type="text" class="form-control" id="NomEngProducto"  placeholder="Nombre Ingles Producto..." autocomplete="off" required>
-                     <div class="invalid-feedback">
-                        Escriba un Nombre Ingles.
-                     </div>
-                  </div>
-                  
-                  <div class="col-6 col-espace">
-                     <input name="nem" type="text" class="form-control" id="ModelProducto"  placeholder="Modelo Producto..." autocomplete="off" required>
-                     <div class="invalid-feedback">
-                        Escriba un modelo.
-                     </div>
-                  </div>
-
-                  <div class="col-6 col-espace">
-                     <input name="nem" type="text" class="form-control" id="SerieProducto"  placeholder="Serie Producto..." autocomplete="off" required>
-                     <div class="invalid-feedback">
-                        Escriba un numero de serie.
-                     </div>
-                  </div>
-
-                  
-                  <div class="col-6 col-espace">
-                     <input name="nem" type="text" class="form-control" id="CostProducto"  placeholder="Costo Producto..." autocomplete="off" required>
-                     <div class="invalid-feedback">
-                        Escriba un Costo.
-                     </div>
-                  </div>
-                  
-                  <div class="col-6 col-espace">
-                     <input name="nem" type="text" class="form-control" id="PriceProducto"  placeholder="Precio Producto..." autocomplete="off" required>
-                     <div class="invalid-feedback">
-                        Escriba un Precio.
-                     </div>
-                  </div>
-
-                  <div class="col-12 col-espace">
-                     <input name="nem" type="text" class="form-control" id="SkuProducto"  placeholder="SKU Producto..." autocomplete="off" required>
-                     <div class="invalid-feedback">
-                        Escriba un SKU.
-                     </div>
-                  </div>
-
-                  <div class="col-md-6 col-espace">
-                     <div class="input-group">
-                        <select class="custom-select" id="selectMonedaProducto" required>
-                           <option id='0'  value='0'>Seleccione tipo moneda...</option> 
-                           <option id='1'  value=''>MXN</option> 
-                           <option id='2'  value=''>USD</option> 
-
-                        </select>
-                        <div class="invalid-feedback">
-                           Seleccione un tipo moneda.
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col-md-6 col-espace">
-                  <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="1" id="checkProducto" checked>
-                  <label class="form-check-label" for="flexCheckDefault">
-                     Visible
-                  </label>
-                  </div>
-                  </div>
-
-
-
-
-
-                  <div class="col-md-6 col-espace">
-                     <div class="input-group">
-                        <select class="custom-select" id="selectRowCategorias" required>
-                        </select>
-                        <div class="invalid-feedback">
-                           Seleccione una Categoria.
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col-md-6 col-espace">
-                     <div class="input-group">
-                        <select class="custom-select" id="selectRowSubCategorias" required>
-                        </select>
-                        <div class="invalid-feedback">
-                           Seleccione una SubCategoria.
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col-md-6 col-espace">
-                     <div class="input-group">
-                        <select class="custom-select" id="selectRowService" required>
-                        </select>
-                        <div class="invalid-feedback">
-                           Seleccione un tipo servicio.
-                        </div>
-                     </div>
-                  </div>
-                  
-                  <div class="col-md-6 col-espace">
-                     <div class="input-group">
-                        <select class="custom-select" id="selectRowProovedores" required>
-                        </select>
-                        <div class="invalid-feedback">
-                           Seleccione un Proveedor.
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col-md-6 col-espace">
-                     <div class="input-group">
-                        <select class="custom-select" id="selectRowAlmacen" required>
-                        </select>
-                        <div class="invalid-feedback">
-                           Seleccione un Almacen.
-                        </div>
-                     </div>
-                  </div>
-
-
-                  <div class="col-12 col-espace">
-                     <textarea class="form-control" id="DesProducto" aria-label="With textarea" placeholder="Descripcion..."  autocomplete="off" required></textarea>
-                     <div class="invalid-feedback">
-                        Escriba una Descripcion.
-                     </div>
-                  </div>
-
-               </div>
-            </form>
-            <div>
-               <div class="modal-footer">
-                  <div class="col-12" style="padding: 0px 70px 0px 70px !important;">
-                     <button type="button"  class="btn btn-primary btn-lg btn-block" style="font-size: 1rem !important;" id="GuardarCategoria">Guardar Producto</button>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
 
 <!-- Modal Borrar -->
 <div class="modal fade" id="BorrarProductoModal" tabindex="-1" aria-labelledby="BorrarPerfilLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content">
-                <div class="modal-header ">
-                </div>
-                <div class="modal-body" style="padding: 0px !important;">
+				<div class="modal-dialog modal-dialog-centered modal-sm">
+					 <div class="modal-content">
+					 <div class="modal-header ">
+					 </div>
+					 <div class="modal-body" style="padding: 0px !important;">
 
 
-                <div class="row">
-                    <input hidden type="text" class="form-control" id="IdProductoBorrar" aria-describedby="basic-addon3">
-                    <div class="col-12 text-center">
-                        <span class="modal-title text-center" style="font-size: 1.2rem;" id="BorrarPerfilLabel">¿Seguro que desea borrarlo?</span>
-                    </div>
-                </div>
+					 <div class="row">
+						  <input hidden type="text" class="form-control" id="IdProductoBorrar" aria-describedby="basic-addon3">
+						  <div class="col-12 text-center">
+								<span class="modal-title text-center" style="font-size: 1.2rem;" id="BorrarPerfilLabel">¿Seguro que desea borrarlo?</span>
+						  </div>
+					 </div>
 
-                </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-danger" id="BorrarSubCategoria">Borrar</button>
-                    </div>
-                </div>
-            </div>
+					 </div>
+						  <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+								<button type="button" class="btn btn-danger" id="BorrarProduct">Borrar</button>
+						  </div>
+					 </div>
+				</div>
 		</div>
 
- <!-- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/bootstrap.bundle.min.js' ?>"></script> -->
 
- <!--  librerias para boostrap-->	
- <!-- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jquery-3.5.1.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jquery.dataTables.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.bootstrap4.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.responsive.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/responsive.bootstrap4.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.select.min.js' ?>"></script>
+ 	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/bootstrap.bundle.min.js' ?>"></script>
 
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.buttons.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jszip.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/pdfmake.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/vfs_fonts.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.html5.min.js' ?>"></script>
- <script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.print.min.js' ?>"></script> -->
+	<!--  librerias para boostrap-->	
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jquery-3.5.1.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jquery.dataTables.min.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.bootstrap4.min.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.responsive.min.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/responsive.bootstrap4.min.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.select.min.js' ?>"></script>
 
- 
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/dataTables.buttons.min.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/jszip.min.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/pdfmake.min.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/vfs_fonts.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.html5.min.js' ?>"></script>
+	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.print.min.js' ?>"></script>
+</div>
+
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
-<script src="<?=  PATH_VIEWS . 'Productos/Productos.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'productos/productos.js' ?>"></script>
+
+
+
+
 
 <?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>

@@ -41,13 +41,37 @@
 
 		public function GetProductos($request_params)
 		{
-	      $result = $this->model->GetProductos($request_params);
-		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+			$result = $this->model->GetProductos($request_params);
+			$i = 0;
+			while($row = $result->fetch_assoc()){
+				$rowdata[$i] = $row;
+				$i++;
+			}
+			if ($i>0){
+				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			} else {
+				$res =  '[]';	
+			}
+			echo $res;
+		  //echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
 		public function DeleteProducto($request_params)
 		{
 		  $result = $this->model->DeleteProducto($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
+		}
+
+		public function GetTipoMoneda($request_params)
+		{
+		  $result = $this->model->GetTipoMoneda($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
+		}
+
+		
+		public function GetAutoComplete($request_params)
+		{
+		  $result = $this->model->GetAutoComplete($request_params);	  
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
 		}
 
