@@ -38,7 +38,7 @@
 					<div class="row">
 						<div class="col-md-6 col-lg-6 col-xl-6 mb-2 form-floating">
 						<input id="txtPrice" type="text" class="form-control form-control-sm text-center number required" data-mesage="Debes Agregar el precio" >
-							<label for="txtPrice">Precio</label>
+							<label for="txtPrice">Costo subarrendo</label>
 						</div>
 						<div class="col-md-6 col-lg-6 col-xl-6 mb-2 form-floating">
 							<input id="txtQuantity" type="text" class="form-control form-control-sm text-center number required"  data-mesage="Debes agregar la cantidad de productos" >
@@ -91,9 +91,10 @@
 							<tr>
 								<th style="width:  80px">soppr</th>
 								<th style="width:  30px"></th>
-								<th style="width:  80px">SKU</th>
+								<th style="width:  120px">SKU</th>
 								<th style="width: 350px">Producto</th>
 								<th style="width:  60px">Cantidad</th>
+								<th style="width:  90px">precio</th>
 								<th style="width: 200px">Proveedor</th>
 								<th style="width:  90px">Fecha Inicio</th>
 								<th style="width:  90px">Fecha Fin</th>

@@ -145,6 +145,6 @@
 </div>
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
-<script src="<?=  PATH_VIEWS . 'proveedores/proveedores.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'Proveedores/Proveedores.js' ?>"></script>
 
 <?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>

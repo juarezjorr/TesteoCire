@@ -89,7 +89,7 @@ h4 {
 	padding: 0.5rem 0.5rem;
 }
 .form-floating > label {
-	padding: 0.8rem 1.5rem;
+	padding: 0.4rem 1rem;
 	opacity: 0.8;
 	color: $inputs-label;
 }
@@ -263,11 +263,11 @@ table {
 			}
 		}
 	}
+	.hide-support {
+		display: none;
+	}
 	td.sku {
 		text-align: center;
-		.hide-support {
-			display: none;
-		}
 	}
 	td.product-name {
 		text-align: left;
@@ -291,6 +291,9 @@ table {
 			border-radius: 5px;
 		}
 	}
+	td.price {
+		text-align: right;
+	}
 	td.serie-product {
 		text-align: center;
 	}
@@ -302,6 +305,11 @@ table {
 	td.store-name_s,
 	td.store-name_t {
 		text-align: center;
+	}
+	td.date {
+		text-align: center;
+		color: $setColor;
+		font-weight: 900;
 	}
 	td.comments {
 		width: 350px;

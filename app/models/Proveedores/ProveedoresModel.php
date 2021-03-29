@@ -33,7 +33,7 @@ class ProveedoresModel extends Model
 // Optiene los Usuaios existentes
 	public function GetProveedores()
 	{
-		$qry = "SELECT sup_id, sup_buseiness_name, sup_contact, sup_rfc, sup_email, sup_phone FROM ctt_suppliers where sup_status = 1;";
+		$qry = "SELECT sup_id, sup_business_name, sup_contact, sup_rfc, sup_email, sup_phone FROM ctt_suppliers where sup_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
