@@ -311,8 +311,10 @@ function fill_table() {
 }
 
 function btn_apply_appears() {
+   console.log('apli');
    let tabla = $('#tblProductForSubletting').DataTable();
    let rengs = tabla.rows().count();
+   console.log(rengs);
    if (rengs > 0) {
       $('.btn-apply').removeClass('hidden-field');
    } else {

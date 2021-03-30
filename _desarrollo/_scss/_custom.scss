@@ -112,6 +112,13 @@ h4 {
 		overflow: auto;
 		padding: 60px 10px 0 10px;
 	}
+
+	.mvst_list {
+		grid-column: 1 / span 2;
+		width: 100%;
+		overflow: auto;
+		padding: 60px 10px 0 10px;
+	}
 }
 
 .form-floating {
@@ -184,7 +191,7 @@ div.dataTables_wrapper div.btn-group button.btn-apply {
 	color: #ffffff;
 	border-radius: 8px;
 	&:hover {
-		background-color: $darkhover;
+		background-color: $dark-x;
 	}
 }
 div.dataTables_wrapper div.btn-group button.btn-excel,
@@ -196,7 +203,7 @@ div.dataTables_wrapper div.btn-group button.btn-apply {
 	width: auto;
 }
 div.dataTables_wrapper div.btn-group button.hidden-field {
-	visibility: hidden;
+	display: none;
 }
 
 div.dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -214,7 +221,7 @@ div.dataTables_wrapper .dataTables_paginate .paginate_button {
 		// background-color: $dark;
 		// color: #ffffff;
 		&:hover {
-			background-color: $darkhover;
+			background-color: $dark-x;
 			color: #ffffff;
 		}
 	}
@@ -243,25 +250,41 @@ div.dataTables_wrapper .dataTables_paginate .paginate_button {
 }
 
 table {
-	td.edit {
-		text-align: center;
+	td {
 		i {
-			font-size: 1em;
+			font-size: 1.3em;
 			margin: 1px 6px;
 			cursor: pointer;
 			&.kill {
 				color: $btn-red;
+				opacity: 1;
 				&:hover {
-					color: #ff0000;
+					color: $btn-red;
+					opacity: 0.5;
 				}
 			}
 			&.modif {
 				color: $dark;
+				opacity: 1;
 				&:hover {
-					color: #51a7f4;
+					color: $dark;
+					opacity: 0.5;
+				}
+			}
+			&.docum {
+				color: $btn-blue;
+				font-size: 1.5rem;
+				opacity: 1;
+				text-align: center;
+				&:hover {
+					color: $btn-blue;
+					opacity: 0.5;
 				}
 			}
 		}
+	}
+	td.edit {
+		text-align: center;
 	}
 	.hide-support {
 		display: none;
@@ -374,6 +397,89 @@ table {
 			}
 		}
 	}
+}
+
+// MODALES
+
+.overlay_background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(255, 255, 255, 0.4);
+	z-index: 100;
+	&.overlay_hide {
+		visibility: hidden;
+	}
+
+	.overlay_modal {
+		position: absolute;
+		top: 10%;
+		bottom: 5%;
+		left: 5%;
+		right: 5%;
+		background-color: #ffffff;
+		box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5);
+		border-radius: 10px;
+		padding: 30px;
+
+		.overlay_closer {
+			width: 100%;
+			height: 50px;
+			padding: 3px 0 0 0;
+			overflow: auto;
+			margin-bottom: 10px;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+
+			.title {
+				font-family: $font_secundary;
+				color: $dark;
+				font-size: 1.5rem;
+			}
+
+			.btn_close {
+				font-size: 1.1rem;
+				font-weight: 900;
+				border: 3px solid $dark;
+				border-radius: 30px;
+				color: $dark;
+				padding: 4px 10px;
+				margin-top: 4px;
+				display: inline-block;
+				cursor: pointer;
+				&:hover {
+					background-color: $dark;
+					color: $light;
+				}
+			}
+		}
+	}
+}
+
+//Estilos de Juan
+.card-body {
+	padding: 0.2rem 0.2rem !important;
+}
+
+.listContainer {
+	height: 200px !important;
+	overflow-y: scroll;
+}
+
+.list-group-item {
+	font-weight: 600 !important;
+	font-size: 0.65rem;
+	padding: 0.1rem 0.3rem !important;
+	color: rgb(55, 0, 255);
+}
+
+.list-group-item-Text {
+	font-size: 0.6rem !important;
+	font-weight: 200 !important;
+	color: black;
 }
 
 @media screen and (max-width: 780px) {
