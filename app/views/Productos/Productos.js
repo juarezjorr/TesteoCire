@@ -9,6 +9,11 @@ $(document).ready(function () {
 function inicial() {
     getProductosTable(); 
     cargaInicial();
+
+    
+
+
+
     //Open modal *
     $('#nuevoProducto').on('click', function(){    
         LimpiaModal();
@@ -17,6 +22,7 @@ function inicial() {
         getProveedores();
         getAlmacenes();
         $('#formSubCategorias').removeClass('was-validated');
+        NomProductoSelect();
     });
     //Guardar almacen *
     $('#GuardarCategoria').on('click', function(){   
@@ -67,6 +73,7 @@ function cargaInicial() {
    getDocumentos();
 
    $('#formSubCategorias').removeClass('was-validated');
+   NomProductoSelect();
 }
 //Valida los campos seleccionado *
 function validaFormulario() {
@@ -177,24 +184,24 @@ function SaveProducto() {
         var DesProducto = $('#DesProducto').val();
         var idStoreProducto = $('#idStoreProducto').val();
 
+        var esUnico = $('#esUnico').val();
+
+
         var idMoneda = $("#selectMonedaProducto option:selected").attr("id");
         var idCategoria = $("#selectRowCategorias option:selected").attr("id");
         var idSubCategoria = $("#selectRowSubCategorias option:selected").attr("id");
         var idTipeService = $("#selectRowService option:selected").attr("id");
         var idProveedor = $("#selectRowProovedores option:selected").attr("id");
         var idAlmacen = $("#selectRowAlmacen option:selected").attr("id");
-        var idDocumento = $("#selectRowAlmacen option:selected").attr("id");
-
-
-/*         console.log(addZeroNumber(idCategoria,2));
-        console.log(addZeroNumber(idSubCategoria,2));
-        console.log(addZeroNumber(ModelProducto,3)); */
-
-
-
+        var idDocumento = $("#selectRowDocument option:selected").attr("id");
 
         var visible = 0;
+        var rentSinAccesorios = 0;
+
         if( $('#checkProducto').prop('checked') ) {visible = 1;}
+        if( $('#checkRentAccesories').prop('checked') ) {rentSinAccesorios = 1;}
+
+        var idbehaviour = $('input[name="ventOrRent"]:checked').val();
 
            $.ajax({
             type: "POST",
@@ -215,16 +222,22 @@ function SaveProducto() {
                     idAlmacen : idAlmacen,
                     idStoreProducto : idStoreProducto, 
                     idDocumento : idDocumento,
-                    idCategoria : idCategoria
+                    idCategoria : idCategoria,
+                    rentSinAccesorios : rentSinAccesorios,
+                    idbehaviour : idbehaviour,
+                    esUnico : esUnico
              },
             url: location,
         success: function (respuesta) {
+            console.log(respuesta);
             if(respuesta = 1){
                 getProductosTable();
                 $('#ProductoModal').modal('hide');
-            }
+                LimpiaModal();
+                unDisable()
+            } 
         },
-        error: function (EX) {console.log(EX);}
+        error: function (jqXHR, textStatus, errorThrown) {console.log(jqXHR, textStatus, errorThrown);}
         }).done(function () {}); 
 }
 
@@ -241,7 +254,14 @@ function LimpiaModal() {
     $('#DesProducto').val("");
     $("#selectRowSubCategorias").html("");
     $("#selectMonedaProducto").val( "0" );
-    $( "#checkProducto" ).prop( "checked", true );
+    $("#checkProducto" ).prop( "checked", true );
+
+    $("#selectRowCategorias").val( "0" );
+    $("#selectRowSubCategorias").val( "0" );
+    $("#selectRowService").val( "0" );
+    $("#selectRowProovedores").val( "0" );
+    $("#selectRowAlmacen").val( "0" );
+    $("#selectRowDocument").val( "0" );
 }
 
 // Optiene las categorias *
@@ -255,7 +275,7 @@ function getCategorias(id) {
         success: function (respuesta) {
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function(row, index) {
-                renglon += '<option id='+row.cat_id+'  value="">'+row.cat_name+'</option> ';
+                renglon += '<option id='+row.cat_id+'  value="'+row.cat_id+'">'+row.cat_name+'</option> ';
             });
             $("#selectRowCategorias").append(renglon);
             if(id != ""){
@@ -308,7 +328,7 @@ function getServicios(id) {
         success: function (respuesta) {
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function(row, index) {
-                renglon += '<option id='+row.srv_id+'  value="">'+row.srv_name+'</option> ';
+                renglon += '<option id='+row.srv_id+'  value="'+row.srv_id+'">'+row.srv_name+'</option> ';
             });
             $("#selectRowService").append(renglon);
 
@@ -333,7 +353,7 @@ function getProveedores(id) {
         success: function (respuesta) {
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function(row, index) {
-                renglon += '<option id='+row.sup_id+'  value="">'+row.sup_buseiness_name+'</option> ';
+                renglon += '<option id='+row.sup_id+'  value="'+row.sup_id+'">'+row.sup_buseiness_name+'</option> ';
             });
             $("#selectRowProovedores").append(renglon);
 
@@ -358,7 +378,7 @@ function getAlmacenes(id) {
             dataType: 'JSON',
             url: location,
         success: function (respuesta) {
-            var renglon = "<option id='0'  value=''>Seleccione...</option> ";
+            var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function(row, index) {
                 renglon += '<option id='+row.str_id+'  value="">'+row.str_name+'</option> ';
             });
@@ -384,7 +404,7 @@ function getDocumentos(id) {
         success: function (respuesta) {
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function(row, index) {
-                renglon += '<option id='+row.doc_id+'  value="">'+row.doc_code+'-'+row.doc_name+'</option> ';
+                renglon += '<option id='+row.doc_id+'  value="'+row.doc_id+'">'+row.doc_code+'-'+row.doc_name+'</option> ';
             });
             $("#selectRowDocument").append(renglon);
             if(id != ""){
@@ -409,12 +429,19 @@ function getProductosTable() {
       dataType: 'JSON',
       url: location,
       _success: function (respuesta) {
-         var renglon = '';
+          console.log(respuesta);
          respuesta.forEach(function (row, index) {
+            var renglonSKU = '';
+            var arraySKU = row.extDocuments.split(",");
+
+            arraySKU.forEach(function(roww, index) {
+                renglonSKU += "<a href='#' onclick=skuByID('"+roww+"');>"+roww+"</a><br>";
+            });
+
             renglon =
                '<tr>' +    
                '<td class="text-center edit"> ' +
-                   '<button onclick="EditProducto(' + row.prd_id +','+ row.cat_id +','+ row.sbc_id +','+ row.srv_id +','+ row.str_id +','+ row.prd_coin_type +','+ row.sup_id +','+ row.prd_visibility +','+ row.stp_id +')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button>' +
+                   "<button onclick='getInfoComunByID("+row.prd_id+",1,"+row.extNum+","+row.prd_id+")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
                    '<button onclick="ConfirmDeletProducto(' + row.prd_id +')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>' +
                '</td>' +
 
@@ -430,9 +457,9 @@ function getProductosTable() {
                row.prd_english_name +
                '</td>' +
 
-               "<td >" +
+/*                "<td >" +
                row.prd_sku +
-               '</td>' +
+               '</td>' + */
 
                "<td >" +
                row.prd_model +
@@ -442,9 +469,9 @@ function getProductosTable() {
                row.prd_serial_number +
                '</td>' + */
 
-               "<td >" +
+/*                "<td >" +
                row.prd_cost +
-               '</td>' +
+               '</td>' + */
 
                "<td >" +
                row.prd_price +
@@ -467,8 +494,8 @@ function getProductosTable() {
                '</td>' +
 
                "<td >" +
-               row.str_name +
-               '</td>' +
+                  renglonSKU +
+               '</td>' + 
 
                +'</tr>';
             $('#tablaProductosRow').append(renglon);
@@ -549,6 +576,12 @@ function getProductosTable() {
                url: './app/assets/lib/dataTable/spanish.json',
             },
          });
+
+         $('.SKU').on('click', function(){    
+            UnSelectRowTable(); 
+        });
+
+
       },
       get success() {
          return this._success;
@@ -586,28 +619,342 @@ function getTipoMoneda(id) {
    });
 }
 
-
-
-/* $("#NomProducto").autocomplete({
-    source: function(request,response){
-        var location = 'productos/GetAutoComplete';                
-
-        $.ajax({
+function NomProductoSelect(id) {
+    $('#NomProductoSelect').html("");
+    var location = 'productos/GetAutoComplete';                
+    $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            data:{id:id},
             url: location,
-            type:"GET",
-            dataType:"json",
-            data:{
-                search: request.term
-            },                    
-            success:function(data){
-                response($.map(data, function (item) {
-                    return {
-                        label: item.nombre,
-                        value: item.id
-                    }
-                }))
-            }
-        })
-    },
+        success: function (respuesta) {
 
-}) */
+            console.log(respuesta);
+            var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
+            respuesta.forEach(function(row, index) {
+                renglon += '<option id='+row.nombre+'  value="'+row.nombre+'">'+row.nombre+'</option> ';
+            });
+            $("#NomProductoSelect").append(renglon);
+            if(id != undefined){
+                $("#NomProductoSelect option[value='"+id+"']").attr("selected", "selected");
+            }
+        },
+        error: function () {
+        }
+    }).done(function () {
+    });
+ }
+
+
+ $(document).ready(function() {
+    $('#NomProducto').on('keyup', function() {
+        var key = $(this).val();		
+        var dataString = 'key='+key;
+        var location = 'productos/GetAutoComplete';              
+	$.ajax({
+            type: "POST",
+            url: location,
+            dataType: 'JSON',
+            data: dataString,
+            success: function(respuesta) {
+                var renglon = "";
+                if(respuesta[0].prd_name != 0){
+                    respuesta.forEach(function(row, index) {
+                        renglon += '<div><a class="suggest-element" data="'+row.prd_name+'" id="'+row.prd_name+'">'+row.prd_name+'</a></div>';
+                    });
+                }
+                $('#suggestions').fadeIn(500).html(renglon);
+                $('.suggest-element').on('click', function(){
+                        var id = $(this).attr('id');
+                        $('#NomProducto').val(id);
+                        $('#suggestions').fadeOut(500);
+
+                        getInfoComun(id,1);
+                        return false;
+                });
+            }
+        });
+    });
+}); 
+
+
+function getInfoComun(nombreDocument,productoComun,cantidadSKU,idproducto) {
+    UnSelectRowTable(); 
+    unDisable();
+    enableExt();
+    if(idproducto != ""){
+        $('#IdProducto').val(idproducto);
+    }
+
+
+    $('#NomProductoSelect').html("");
+    var location = 'productos/getInfoComun';                
+    $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            data:{nombreDocument:nombreDocument},
+            url: location,
+        success: function (respuesta) {
+            console.log(respuesta);
+            setTimeout(() => {
+                $('#selectMonedaProducto option[value='+respuesta[0].prd_coin_type+']').prop('selected', true); 
+                getSubCategorias(respuesta[0].sbc_id,respuesta[0].cat_id);
+                getDocumentos(respuesta[0].doc_id)
+                $('#selectRowCategorias option[value='+respuesta[0].cat_id+']').prop('selected', true); 
+                $('#selectRowService option[value='+respuesta[0].srv_id+']').prop('selected', true); 
+                $('#selectRowProovedores option[value='+respuesta[0].sup_id+']').prop('selected', true); 
+            }, 500);
+
+            $('#NomProducto').val(nombreDocument);
+
+
+            $('#DesProducto').val(respuesta[0].prd_comments);
+            $('#NomEngProducto').val(respuesta[0].prd_english_name);
+            $('#ModelProducto').val(respuesta[0].prd_model);
+            $('#PriceProducto').val(respuesta[0].prd_price);
+            if(respuesta[0].prd_visibility == 1){
+                $("#checkProducto" ).prop( "checked", true );
+            }else{
+                $("#checkProducto" ).prop( "checked", false );
+            }
+
+            if(1 >= cantidadSKU){
+   
+               // $("#esUnico").val(1);     
+            }else{
+                //$("#esUnico").val(0);     
+                enableDisable();
+            }
+
+            if(productoComun == 1){
+
+            }else{
+            }
+        },
+        error: function () {
+        }
+    }).done(function () {
+    });
+ }
+
+
+ function getInfoComunByID(idDocument,productoComun,cantidadSKU,idproducto) {
+    UnSelectRowTable(); 
+    unDisable();
+    enableExt();
+    if(idproducto != ""){
+        $('#IdProducto').val(idproducto);
+    }
+    console.log(cantidadSKU);
+    if(1 >= cantidadSKU){  
+        var location = 'productos/getInfoComunByIDFull';                
+    }else{
+        var location = 'productos/getInfoComunByID';                
+    }
+
+
+    $('#NomProductoSelect').html("");
+    //var location = 'productos/getInfoComunByID';                
+    $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            data:{idDocument:idDocument},
+            url: location,
+        success: function (respuesta) {
+            console.log(respuesta);
+            setTimeout(() => {
+                $('#selectMonedaProducto option[value='+respuesta[0].prd_coin_type+']').prop('selected', true); 
+                getSubCategorias(respuesta[0].sbc_id,respuesta[0].cat_id);
+                getDocumentos(respuesta[0].doc_id)
+                $('#selectRowCategorias option[value='+respuesta[0].cat_id+']').prop('selected', true); 
+                $('#selectRowService option[value='+respuesta[0].srv_id+']').prop('selected', true); 
+                $('#selectRowProovedores option[value='+respuesta[0].sup_id+']').prop('selected', true); 
+            }, 500);
+
+            $('#NomProducto').val(respuesta[0].prd_name);
+            $('#DesProducto').val(respuesta[0].prd_comments);
+            $('#NomEngProducto').val(respuesta[0].prd_english_name);
+            $('#ModelProducto').val(respuesta[0].prd_model);
+            $('#PriceProducto').val(respuesta[0].prd_price);
+            if(respuesta[0].prd_visibility == 1){
+                $("#checkProducto" ).prop( "checked", true );
+            }else{
+                $("#checkProducto" ).prop( "checked", false );
+            }
+
+
+            if(productoComun == 1){
+                if(1 >= cantidadSKU){
+                    $("#esUnico").val(1);  
+                    
+                    getAlmacenes(respuesta[0].str_id)
+                    $('#SerieProducto').val(respuesta[0].ser_serial_number);
+                    $('#CostProducto').val(respuesta[0].ser_cost);
+
+                    if(respuesta[0].ser_lonely == 1){
+                        $("#checkRentAccesories" ).prop( "checked", true );
+                    }else{
+                        $("#checkRentAccesories" ).prop( "checked", false );
+                    }
+
+                    if(respuesta[0].ser_behaviour == "C"){
+                        $("#ventOrRent1" ).prop( "checked", true );
+                    }else{
+                        $("#ventOrRent2" ).prop( "checked", false );
+                    }
+
+
+                }else{
+                    $("#esUnico").val(0); 
+                    $("#selectRowAlmacen").val( "0" );
+                    $("#SerieProducto").val("");
+                    $("#CostProducto").val("");    
+                    
+                    disableExt();
+                }
+            }else{
+                enableDisable();
+            }
+        },
+        error: function () {
+        }
+    }).done(function () {
+    });
+ }
+
+function enableDisable() {
+    $( "#NomEngProducto" ).prop( "disabled", true );
+    $( "#selectMonedaProducto" ).prop( "disabled", true );
+    $( "#DesProducto" ).prop( "disabled", true );
+    $( "#ModelProducto" ).prop( "disabled", true );
+    $( "#PriceProducto" ).prop( "disabled", true );
+    $( "#checkProducto" ).prop( "disabled", true );
+    $( "#selectRowSubCategorias" ).prop( "disabled", true );
+    $( "#selectRowCategorias" ).prop( "disabled", true );
+    $( "#selectRowService" ).prop( "disabled", true );
+    $( "#selectRowProovedores" ).prop( "disabled", true );
+    $( "#selectRowDocument" ).prop( "disabled", true );
+}
+
+function unDisable() {
+
+    $( "#NomEngProducto" ).prop( "disabled", false );
+    $( "#selectMonedaProducto" ).prop( "disabled", false );
+    $( "#DesProducto" ).prop( "disabled", false );
+    $( "#ModelProducto" ).prop( "disabled", false );
+    $( "#PriceProducto" ).prop( "disabled", false );
+    $( "#checkProducto" ).prop( "disabled", false );
+    $( "#selectRowSubCategorias" ).prop( "disabled", false );
+    $( "#selectRowCategorias" ).prop( "disabled", false );
+    $( "#selectRowService" ).prop( "disabled", false );
+    $( "#selectRowProovedores" ).prop( "disabled", false );
+    $( "#selectRowDocument" ).prop( "disabled", false );
+}
+
+function enableExt() {
+    $( "#selectRowAlmacen" ).prop( "disabled", false );
+    $( "#SerieProducto" ).prop( "disabled", false );
+    $( "#CostProducto" ).prop( "disabled", false );
+    $( "#checkRentAccesories" ).prop( "disabled", false );
+
+    $( "#ventOrRent1" ).prop( "disabled", false );
+    $( "#ventOrRent2" ).prop( "disabled", false );
+}
+
+function disableExt() {
+    $( "#selectRowAlmacen" ).prop( "disabled", true );
+    $( "#SerieProducto" ).prop( "disabled", true );
+    $( "#CostProducto" ).prop( "disabled", true );
+    $( "#checkRentAccesories" ).prop( "disabled", true );
+
+    $( "#ventOrRent1" ).prop( "disabled", true );
+    $( "#ventOrRent2" ).prop( "disabled", true );
+}
+
+function skuByID(SKU) {
+    UnSelectRowTable(); 
+    unDisable();
+    enableExt();
+    
+    if(idproducto != ""){
+        $('#IdProducto').val(idproducto);
+    }
+    console.log(cantidadSKU);
+    if(1 >= cantidadSKU){  
+        var location = 'productos/getInfoComunByIDFull';                
+    }else{
+        var location = 'productos/getInfoComunByID';                
+    }
+
+
+    $('#NomProductoSelect').html("");
+    //var location = 'productos/getInfoComunByID';                
+    $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            data:{idDocument:idDocument},
+            url: location,
+        success: function (respuesta) {
+            console.log(respuesta);
+            setTimeout(() => {
+                $('#selectMonedaProducto option[value='+respuesta[0].prd_coin_type+']').prop('selected', true); 
+                getSubCategorias(respuesta[0].sbc_id,respuesta[0].cat_id);
+                getDocumentos(respuesta[0].doc_id)
+                $('#selectRowCategorias option[value='+respuesta[0].cat_id+']').prop('selected', true); 
+                $('#selectRowService option[value='+respuesta[0].srv_id+']').prop('selected', true); 
+                $('#selectRowProovedores option[value='+respuesta[0].sup_id+']').prop('selected', true); 
+            }, 500);
+
+            $('#NomProducto').val(respuesta[0].prd_name);
+            $('#DesProducto').val(respuesta[0].prd_comments);
+            $('#NomEngProducto').val(respuesta[0].prd_english_name);
+            $('#ModelProducto').val(respuesta[0].prd_model);
+            $('#PriceProducto').val(respuesta[0].prd_price);
+            if(respuesta[0].prd_visibility == 1){
+                $("#checkProducto" ).prop( "checked", true );
+            }else{
+                $("#checkProducto" ).prop( "checked", false );
+            }
+
+
+            if(productoComun == 1){
+                if(1 >= cantidadSKU){
+                    $("#esUnico").val(1);  
+                    
+                    getAlmacenes(respuesta[0].str_id)
+                    $('#SerieProducto').val(respuesta[0].ser_serial_number);
+                    $('#CostProducto').val(respuesta[0].ser_cost);
+
+                    if(respuesta[0].ser_lonely == 1){
+                        $("#checkRentAccesories" ).prop( "checked", true );
+                    }else{
+                        $("#checkRentAccesories" ).prop( "checked", false );
+                    }
+
+                    if(respuesta[0].ser_behaviour == "C"){
+                        $("#ventOrRent1" ).prop( "checked", true );
+                    }else{
+                        $("#ventOrRent2" ).prop( "checked", false );
+                    }
+
+
+                }else{
+                    $("#esUnico").val(0); 
+                    $("#selectRowAlmacen").val( "0" );
+                    $("#SerieProducto").val("");
+                    $("#CostProducto").val("");    
+                    
+                    disableExt();
+                }
+            }else{
+                enableDisable();
+            }
+        },
+        error: function () {
+        }
+    }).done(function () {
+    });
+
+}
+
+
