@@ -50,7 +50,7 @@
 			if ($i>0){
 				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
 			} else {
-				$res =  '[{"cat_id":"0"}]';	
+				$res =  '[{"sbc_id":"0"}]';	
 			}
 			echo $res;
 		  //echo json_encode($result,JSON_UNESCAPED_UNICODE);	

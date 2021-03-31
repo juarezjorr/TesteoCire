@@ -34,18 +34,7 @@ class ProveedoresModel extends Model
 	public function GetProveedores()
 	{
 		$qry = "SELECT sup_id, sup_business_name, sup_contact, sup_rfc, sup_email, sup_phone FROM ctt_suppliers where sup_status = 1;";
-		$result = $this->db->query($qry);
-		$lista = array();
-		while ($row = $result->fetch_row()){
-			$item = array("sup_id" =>$row[0],
-						"sup_buseiness_name" =>utf8_decode($row[1]),
-						"sup_contact"=>utf8_decode($row[2]),
-						"sup_rfc"=>$row[3],
-						"sup_email"=>$row[4],
-                        "sup_phone"=>$row[5]);
-			array_push($lista, $item);
-		}
-		return $lista;
+		return $this->db->query($qry);
 	}
 
     public function GetProveedor($params)
@@ -55,8 +44,8 @@ class ProveedoresModel extends Model
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("sup_id" =>$row[0],
-			"sup_buseiness_name" =>utf8_decode($row[1]),
-			"sup_contact"=>utf8_decode($row[2]),
+			"sup_buseiness_name" =>$row[1],
+			"sup_contact"=>$row[2],
 			"sup_rfc"=>$row[3],
 			"sup_email"=>$row[4],
 			"sup_phone"=>$row[5]);
