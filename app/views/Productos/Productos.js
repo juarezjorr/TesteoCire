@@ -1,5 +1,9 @@
 var table = null;
+var table2 = null;
+
 var positionRow = 0;
+var positionRowSKU = 0;
+
 
 $(document).ready(function () {
    verifica_usuario();
@@ -80,6 +84,19 @@ function inicial() {
          }
       }, 10);
    });
+
+   $('#SKUTable tbody').on('click', 'tr', function () {
+    positionRowSKU = table.page.info().page * table.page.info().length + $(this).index();
+
+    setTimeout(() => {
+       RenglonesSelection = table.rows({selected: true}).count();
+       if (RenglonesSelection == 0 || RenglonesSelection == 1) {
+          $('.btn-apply').css('visibility', 'hidden');
+       } else {
+          $('.btn-apply').css('visibility', 'visible');
+       }
+    }, 10);
+ });
 }
 
 function cargaInicial() {
@@ -162,6 +179,12 @@ function UnSelectRowTable() {
       table.rows().deselect();
    }, 10);
 }
+
+function UnSelectRowTableSku() {
+    setTimeout(() => {
+       table2.rows().deselect();
+    }, 10);
+ }
 
 //BORRAR  * *
 function DeletProducto() {
@@ -375,6 +398,7 @@ function getProveedores(id) {
             dataType: 'JSON',
             url: location,
         success: function (respuesta) {
+            console.log(respuesta);
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function(row, index) {
                 renglon += '<option id='+row.sup_id+'  value="'+row.sup_id+'">'+row.sup_buseiness_name+'</option> ';
@@ -405,6 +429,29 @@ function getAlmacenes(id) {
             $("#selectRowAlmacen").append(renglon);
             if(id != ""){
                 $("#selectRowAlmacen option[id='"+id+"']").attr("selected", "selected");
+            }
+        },
+        error: function () {
+        }
+    }).done(function () {
+    });
+}
+
+function getAlmacenesSku(id) {
+    $("#selectRowAlmacenSku").html("");
+    var location = 'almacenes/GetAlmacenes';                
+    $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            url: location,
+        success: function (respuesta) {
+            var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
+            respuesta.forEach(function(row, index) {
+                renglon += '<option id='+row.str_id+'  value="">'+row.str_name+'</option> ';
+            });
+            $("#selectRowAlmacenSku").append(renglon);
+            if(id != ""){
+                $("#selectRowAlmacenSku option[id='"+id+"']").attr("selected", "selected");
             }
         },
         error: function () {
@@ -449,12 +496,12 @@ function getProductosTable() {
       _success: function (respuesta) {
           console.log(respuesta);
          respuesta.forEach(function (row, index) {
-            var renglonSKU = '';
+/*             var renglonSKU = '';
             var arraySKU = row.extDocuments.split(",");
 
             arraySKU.forEach(function(roww, index) {
-                renglonSKU += "<a href='#' onclick=skuByID('"+roww+"');>"+roww+"</a><br>";
-            });
+                renglonSKU += "<a href='#' onclick=skuByID('"+row.extNum+"');>"+roww+"</a><br>";
+            }); */
 
             renglon =
                '<tr>' +
@@ -505,7 +552,7 @@ function getProductosTable() {
                '</td>' +
 
                "<td >" +
-                  renglonSKU +
+                    "<a href='#' onclick=skuByID('"+row.prd_id+"');>"+row.extNum+"</a><br>"; +
                '</td>' + 
 
                +'</tr>';
@@ -750,9 +797,9 @@ function getInfoComun(nombreDocument,productoComun,cantidadSKU,idproducto) {
     }
     console.log(cantidadSKU);
     if(1 >= cantidadSKU){  
-        var location = 'productos/getInfoComunByIDFull';                
+        var location = 'Productos/getInfoComunByIDFull';                
     }else{
-        var location = 'productos/getInfoComunByID';                
+        var location = 'Productos/getInfoComunByID';                
     }
 
 
@@ -874,90 +921,265 @@ function disableExt() {
     $( "#ventOrRent2" ).prop( "disabled", true );
 }
 
-function skuByID(SKU) {
-    UnSelectRowTable(); 
-    unDisable();
-    enableExt();
-
-    if(idproducto != ""){
-        $('#IdProducto').val(idproducto);
-    }
-    console.log(cantidadSKU);
-    if(1 >= cantidadSKU){  
-        var location = 'productos/getInfoComunByIDFull';                
-    }else{
-        var location = 'productos/getInfoComunByID';                
-    }
-
-
-    $('#NomProductoSelect').html("");
-    //var location = 'productos/getInfoComunByID';                
+function editBySku(idSerie) {
+    UnSelectRowTableSku();
+    $('#collapseExample').collapse('show')
+    var location = 'Productos/GetInfoSkuById';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
-            data:{idDocument:idDocument},
+            data:{id:idSerie},
             url: location,
         success: function (respuesta) {
+
             console.log(respuesta);
-            setTimeout(() => {
-                $('#selectMonedaProducto option[value='+respuesta[0].prd_coin_type+']').prop('selected', true); 
-                getSubCategorias(respuesta[0].sbc_id,respuesta[0].cat_id);
-                getDocumentos(respuesta[0].doc_id)
-                $('#selectRowCategorias option[value='+respuesta[0].cat_id+']').prop('selected', true); 
-                $('#selectRowService option[value='+respuesta[0].srv_id+']').prop('selected', true); 
-                $('#selectRowProovedores option[value='+respuesta[0].sup_id+']').prop('selected', true); 
-            }, 500);
+            $('#idSku').val(idSerie);
 
-            $('#NomProducto').val(respuesta[0].prd_name);
-            $('#DesProducto').val(respuesta[0].prd_comments);
-            $('#NomEngProducto').val(respuesta[0].prd_english_name);
-            $('#ModelProducto').val(respuesta[0].prd_model);
-            $('#PriceProducto').val(respuesta[0].prd_price);
-            if(respuesta[0].prd_visibility == 1){
-                $("#checkProducto" ).prop( "checked", true );
+            
+            $('#SerieSku').val(respuesta[0].ser_serial_number);
+            $('#CostSku').val(respuesta[0].ser_cost);
+
+            if(respuesta[0].ser_lonely == 1){
+                $("#checkRentAccesoriesSku" ).prop( "checked", true );
             }else{
-                $("#checkProducto" ).prop( "checked", false );
+                $("#checkRentAccesoriesSku" ).prop( "checked", false );
             }
 
-
-            if(productoComun == 1){
-                if(1 >= cantidadSKU){
-                    $("#esUnico").val(1);  
-                    
-                    getAlmacenes(respuesta[0].str_id)
-                    $('#SerieProducto').val(respuesta[0].ser_serial_number);
-                    $('#CostProducto').val(respuesta[0].ser_cost);
-
-                    if(respuesta[0].ser_lonely == 1){
-                        $("#checkRentAccesories" ).prop( "checked", true );
-                    }else{
-                        $("#checkRentAccesories" ).prop( "checked", false );
-                    }
-
-                    if(respuesta[0].ser_behaviour == "C"){
-                        $("#ventOrRent1" ).prop( "checked", true );
-                    }else{
-                        $("#ventOrRent2" ).prop( "checked", false );
-                    }
-
-
-                }else{
-                    $("#esUnico").val(0); 
-                    $("#selectRowAlmacen").val( "0" );
-                    $("#SerieProducto").val("");
-                    $("#CostProducto").val("");    
-                    
-                    disableExt();
-                }
+            if(respuesta[0].ser_behaviour == "C"){
+                $("#ventOrRentSku1" ).prop( "checked", true );
             }else{
-                enableDisable();
+                $("#ventOrRentSku2" ).prop( "checked", true );
             }
+
+            getAlmacenesSku(respuesta[0].str_id);
+
+
         },
         error: function () {
         }
     }).done(function () {
     });
+}
+
+function DeletSKU(idSku) {
+
+    var location = "Productos/DeleteSku";
+    //IdCategoria = $('#IdCategoriaBorrar').val();
+    $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            data: { 
+                idSku : idSku
+             },
+            url: location,
+        success: function (respuesta) {
+            table2.row(':eq('+positionRow+')').remove().draw();
+
+/*             if ((respuesta = 1)) {
+               var arrayObJ = IdCategoria.split(',');
+               if(arrayObJ.length == 1){
+                  table.row(':eq('+positionRow+')').remove().draw();
+               }else{
+                  table.rows({ selected: true }).remove().draw();
+               }
+               $('#BorrarCategoriaModal').modal('hide');
+            }
+            LimpiaModal(); */
+        },
+        error: function (EX) {console.log(EX);}
+        }).done(function () {});
+}
+
+
+
+function skuByID(idProduct) {
+    $('#collapseExample').collapse('hide')
+
+    $('#SKUTable').DataTable().destroy();
+    $('#tablaSKURow').html('');
+    var location = 'Productos/GetSkuById';                
+    $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            data:{id:idProduct},
+            url: location,
+        success: function (respuesta) {
+
+            $("#modalSKU").modal('show');
+
+
+            console.log(respuesta);
+
+            respuesta.forEach(function (row, index) {            
+                            renglon =
+                               '<tr>' +
+                               '<td class="text-center edit"> ' +
+                                   "<button onclick='editBySku("+row.ser_id+")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
+                                   '<button onclick="DeletSKU(' + row.ser_id +')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>' +
+                               '</td>' +
+
+                               "<td class='dtr-control text-center'>" +
+                               row.ser_sku +
+                               '</td>' +
+                               '<td >' +
+                               row.ser_serial_number +
+                               '</td>' +
+                               '<td >' +
+                               row.ser_cost +
+                               '</td>' +
+                               "<td >" +
+                               row.ser_date_registry +
+                               '</td>' +       
+                               "<td >" +
+                               row.ser_lonely_name +
+                               '</td>' +
+                               '<td >' +
+                               row.ser_behaviour_name +
+                               '</td>' +
+
+                
+                               +'</tr>';
+                            $('#tablaSKURow').append(renglon);
+                         });
+                
+                         let title = 'Productos';
+                         let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
+                
+                         table2 = $('#SKUTable').DataTable({
+                            order: [[1, 'asc']],
+                            select: {
+                               style: 'multi',
+                               info: false,
+                            },
+                            lengthMenu: [
+                               [10, 25, 50, 100, -1],
+                               ['10', '25', '50', 'Todo'],
+                            ],
+                            dom: 'Blfrtip',
+                            buttons: [
+                               {
+                                  extend: 'pdf',
+                                  footer: true,
+                                  title: title,
+                                  filename: filename,
+                                  //   className: 'btnDatableAdd',
+                                  text: '<button class="btn btn-pdf"><i class="fas fa-file-pdf"></i></button>',
+                               },
+                               {
+                                  extend: 'excel',
+                                  footer: true,
+                                  title: title,
+                                  filename: filename,
+                                  //   className: 'btnDatableAdd',
+                                  text: '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
+                               },
+                
+                               {
+                                  //Botón para imprimir
+                                  extend: 'print',
+                                  footer: true,
+                                  title: title,
+                                  filename: filename,
+                
+                                  //Aquí es donde generas el botón personalizado
+                                  text: '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
+                               },
+                               {
+                                  text: 'Borrar seleccionados',
+                                  className: 'btn-apply',
+                                  action: function () {
+                                     var selected = table2.rows({selected: true}).data();
+                                     var idSelected = '';
+                                     selected.each(function (index) {
+                                        idSelected += index[1] + ',';
+                                     });
+                                     idSelected = idSelected.slice(0, -1);
+                                     if (idSelected != '') {
+                                        ConfirmDeletProducto(idSelected);
+                                     }
+                                  },
+                               },
+                            ],
+                
+                            scrollY: 'calc(100vh - 260px)',
+                            scrollX: true,
+                            // scrollCollapse: true,
+                            paging: true,
+                            pagingType: 'simple_numbers',
+                            fixedHeader: true,
+                            language: {
+                               url: './app/assets/lib/dataTable/spanish.json',
+                            },
+                         });
+
+
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    }).done(function () {
+    });
 
 }
+
+function SaveSku() {
+    var location = "productos/SaveSku";
+
+    var idSku = $('#idSku').val();
+    var serieSku = $('#SerieSku').val();
+    var costSku = $('#CostSku').val();
+    var rentSinAccesorios = 0;
+    if( $('#checkRentAccesoriesSku').prop('checked') ) {rentSinAccesorios = 1;}
+    var idbehaviour = $('input[name="ventOrRentSku"]:checked').val();
+    var idAlmacenSku = $("#selectRowAlmacenSku option:selected").attr("id");
+
+
+       $.ajax({
+        type: "POST",
+        dataType: 'JSON',
+        data: { idSku : idSku,
+                serieSku : serieSku,
+                costSku : costSku,
+                rentSinAccesorios : rentSinAccesorios,
+                idbehaviour : idbehaviour,
+                idAlmacenSku : idAlmacenSku
+         },
+        url: location,
+    success: function (respuesta) {
+        console.log(respuesta);
+
+        if(respuesta != 0){
+            $('#collapseExample').collapse('hide');
+        } 
+
+         table2.row(':eq('+positionRow+')').remove().draw();
+         
+         if ((respuesta != 0)) {
+            var rowNode = table2.row.add( {
+               [0]:  '<button onclick="editBySku('+respuesta[0].ser_id+')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button><button onclick="DeletSKU('+respuesta[0].ser_id+')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
+               [1]:   respuesta[0].ser_sku,
+               [2]:   respuesta[0].ser_serial_number,
+               [3]:   respuesta[0].ser_cost,
+               [4]:   respuesta[0].ser_date_registry,
+               [5]:   respuesta[0].ser_lonely_name,
+               [6]:   respuesta[0].ser_behaviour_name
+
+            }).draw().node();
+            $( rowNode ).find('td').eq(0).addClass('edit');
+            $( rowNode ).find('td').eq(1).addClass('text-center');
+         }
+
+
+
+    },
+    error: function (jqXHR, textStatus, errorThrown) {console.log(jqXHR, textStatus, errorThrown);}
+    }).done(function () {}); 
+}
+
+
+
+
 
 

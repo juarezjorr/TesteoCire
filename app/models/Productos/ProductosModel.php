@@ -189,7 +189,7 @@ class ProductosModel extends Model
 
 			$string = "";
 			$Count = 0;
-			$qry = "SELECT ser_sku FROM ctt_series WHERE prd_id = ".$row[0].";";
+			$qry = "SELECT ser_sku FROM ctt_series WHERE ser_status=1 and prd_id = ".$row[0].";";
 			$resultt = $this->db->query($qry);
      		while ($roww = $resultt->fetch_row()){
 				$string .= $roww[0].",";
@@ -197,6 +197,9 @@ class ProductosModel extends Model
 			}
 			$string = rtrim($string, ",");
 
+			if($Count != 0){
+
+		
 			$item = array("prd_id" =>$row[0],
 			"prd_sku" =>$row[1],
 			"prd_name" =>$row[2],
@@ -219,10 +222,9 @@ class ProductosModel extends Model
 			"stp_id" =>$row[19],
 			"extDocuments" =>$string,
 		    "extNum" =>$Count);
-
-
-
+			
 			array_push($lista, $item);
+			}
 		}
 	
 		$lista = json_encode($lista,JSON_UNESCAPED_UNICODE);
@@ -410,7 +412,102 @@ class ProductosModel extends Model
 		return  $this->db->query($qry);
 	}
 
+	public function GetSkuById($params)
+	{
+		$qry = 'SELECT ser_id , ser_sku, ser_serial_number, ser_cost, ser_date_registry, 
+		IF(ser_lonely = 1, "SI", "NO") AS ser_lonely_name , ser_lonely,
+		IF(ser_behaviour = "C", "COMPRA", "RENTA") AS ser_behaviour_name, ser_behaviour 
+		FROM ctt_series WHERE ser_status = 1 and prd_id = '.$params['id'].';';
 
+		//print_r($qry);
+		$result = $this->db->query($qry);
+
+		$lista = array();
+		while ($row = $result->fetch_row()){
+			$item = array("ser_id" =>$row[0],
+						"ser_sku" =>$row[1],
+						"ser_serial_number" =>$row[2],
+                        "ser_cost" =>$row[3],
+						"ser_date_registry" =>$row[4],
+						"ser_lonely_name" =>$row[5],
+                        "ser_lonely" =>$row[6],
+						"ser_behaviour_name" =>$row[7],
+                        "ser_behaviour" =>$row[8]);
+			array_push($lista, $item);
+		}
+		return $lista;
+	}
+
+	public function GetInfoSkuById($params)
+	{
+		$qry = "SELECT ser.ser_id, ser.ser_sku, ser.ser_serial_number, ser.ser_cost, 
+		ser.ser_lonely, ser.ser_behaviour, storeP.str_id
+		FROM ctt_series AS ser
+		LEFT JOIN ctt_stores_products AS storeP ON storeP.ser_id = ser.ser_id
+		WHERE ser.ser_id = '".$params['id']."';";
+		return  $this->db->query($qry);
+	}
+
+	public function SaveSku($params)
+	{
+        $estatus = 0;
+        try {
+            $qry = "UPDATE ctt_series
+					SET ser_serial_number = '".$params['serieSku']."'
+					,ser_cost = ".$params['costSku']."
+					,ser_lonely = ".$params['rentSinAccesorios']."
+					,ser_behaviour = '".$params['idbehaviour']."'
+					WHERE ser_id =  (".$params['idSku'].");";
+            $this->db->query($qry);
+
+            $qry = "UPDATE ctt_stores_products
+					SET str_id = '".$params['idAlmacenSku']."'
+					WHERE ser_id =  (".$params['idSku'].");";
+            $this->db->query($qry);
+
+
+			$qry = 'SELECT ser_id , ser_sku, ser_serial_number, ser_cost, ser_date_registry, 
+			IF(ser_lonely = 1, "SI", "NO") AS ser_lonely_name , ser_lonely,
+			IF(ser_behaviour = "C", "COMPRA", "RENTA") AS ser_behaviour_name, ser_behaviour 
+			FROM ctt_series WHERE ser_status = 1 and ser_id = '.$params['idSku'].';';
+			$result = $this->db->query($qry);
+
+			$lista = array();
+			while ($row = $result->fetch_row()){
+				$item = array("ser_id" =>$row[0],
+							"ser_sku" =>$row[1],
+							"ser_serial_number" =>$row[2],
+							"ser_cost" =>$row[3],
+							"ser_date_registry" =>$row[4],
+							"ser_lonely_name" =>$row[5],
+							"ser_lonely" =>$row[6],
+							"ser_behaviour_name" =>$row[7],
+							"ser_behaviour" =>$row[8]);
+				array_push($lista, $item);
+			}
+
+        } catch (Exception $e) {
+            $lista = null;
+        }
+		return $lista;
+	}
+
+
+
+	public function DeleteSku($params)
+	{
+        $estatus = 0;
+        try {
+            $qry = "UPDATE ctt_series
+                    SET ser_status = 0
+                    WHERE ser_id in (".$params['idSku'].");";
+            $this->db->query($qry);
+            $estatus = 1;
+        } catch (Exception $e) {
+            $estatus = 0;
+        }
+		return $estatus;
+	}
 
 
 }

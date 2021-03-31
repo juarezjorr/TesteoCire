@@ -142,7 +142,39 @@
 			echo $res;
 		}
 
+		public function GetSkuById($request_params)
+		{
+		  $result = $this->model->GetSkuById($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);
+		}
 
+		public function GetInfoSkuById($request_params)
+		{
+		  $result = $this->model->GetInfoSkuById($request_params);	  
+		  $i = 0;
+		  while($row = $result->fetch_assoc()){
+			 $rowdata[$i] = $row;
+			$i++;
+			}
+			if ($i>0){
+				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			} else {
+				$res =  '[{"ser_id":"0"}]';	
+			}
+			echo $res;
+		}
+
+		public function SaveSku($request_params)
+		{
+		  $result = $this->model->SaveSku($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);
+		}
+
+		public function DeleteSku($request_params)
+		{
+		  $result = $this->model->DeleteSku($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);
+		}
 	
  }
 

@@ -118,7 +118,7 @@
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowAlmacen"  name="selectRowAlmacen"  class="form-select form-select-sm" autocomplete="off"  >
+									<select id="selectRowAlmacen"  name="selectRowAlmacen"  class=" form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowAlmacen" class="form-label">Almacen</label>
 								</div>
@@ -146,7 +146,7 @@
 								<div class="form-check">
 									<input class="form-check-input" type="checkbox" value="1" id="checkProducto" checked>
 									<label class="form-check-label" for="flexCheckDefault">
-										Visible
+									visible en lista de precio
 									</label>
 									</div>
 								</div>
@@ -261,6 +261,115 @@
 					 </div>
 				</div>
 		</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalSKU" tabindex="-1" aria-labelledby="modalSKUlLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSKULabel">SKU'S</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+	  <div class="collapse" id="collapseExample" style="margin-bottom: 1rem; !important">
+		<div class="card card-body">
+			<div class="row">
+
+			<input id="idSku" name="idSku" type="text" class="form-control form-control-sm" required hidden >
+
+			<div class="col-2">
+				<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+					<input id="SerieSku" name="SerieSku" type="text" class="form-control form-control-sm" required >
+					<label for="SerieSku">Numero de serie Producto</label>
+				</div>
+			</div>
+			<div class="col-2">
+				<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+					<input id="CostSku" name="CostSku" type="number" class="form-control form-control-sm" required >
+					<label for="CostSku">Costo</label>
+				</div>
+			</div>
+			<div class="col-2">
+				<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+					<select id="selectRowAlmacenSku"  name="selectRowAlmacenSku"  class="selectRowAlmacen form-select form-select-sm" autocomplete="off"  >
+					</select>
+					<label for="selectRowAlmacenSku" class="form-label">Almacen</label>
+				</div>
+			</div>
+
+			<div class="col-2">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="1" id="checkRentAccesoriesSku" checked>
+					<label class="form-check-label" for="flexCheckDefault">
+						Renta sin accesorios
+					</label>
+				</div>
+			</div>
+
+
+
+			<div class="col-2">
+				<div class="form-check">
+				<input class="form-check-input" type="radio" name="ventOrRentSku" value="C" id="ventOrRentSku1" checked>
+				<label class="form-check-label" for="flexRadioDefault1">
+					Producto para Compra
+				</label>
+				</div>
+				<div class="form-check">
+				<input class="form-check-input" type="radio" name="ventOrRentSku"  value="R" id="ventOrRentSku2" >
+				<label class="form-check-label" for="flexRadioDefault2">
+					Producto para Renta
+				</label>
+				</div>
+			</div>
+
+			<div class="col-2">
+			<button type="button"  class="btn btn-primary btn-sm btn-block" style="font-size: 1rem !important;" id="GuardarSKU" onclick="SaveSku()">Guardar</button>
+			</div>
+
+
+
+			</div>			
+  		</div>
+	</div>
+
+	  <div class="row">
+						<div class="col-12 col-md-12">	
+
+					<table id="SKUTable" class="display compact nowrap" style="width:100%">         
+						<thead>
+							<tr>
+								<th style="width: 30"></th>
+								<th style="width: 100">SKU</th>
+								<th style="width: auto">Numero Serie</th>
+								<th style="width: auto">Costo</th>
+								<th style="width: auto">Fecha Registro</th>
+								<th style="width: auto">Renta Sin Accesorio</th>
+								<th style="width: auto">Uso</th>
+
+							</tr>
+						</thead>
+						<tbody id="tablaSKURow">
+						</tbody>
+					</table>
+			</div>
+			</div>
+			</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
 
 
  	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/bootstrap.bundle.min.js' ?>"></script>
