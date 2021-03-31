@@ -401,7 +401,7 @@ function getProveedores(id) {
             console.log(respuesta);
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function(row, index) {
-                renglon += '<option id='+row.sup_id+'  value="'+row.sup_id+'">'+row.sup_buseiness_name+'</option> ';
+                renglon += '<option id='+row.sup_id+'  value="'+row.sup_id+'">'+row.sup_business_name+'</option> ';
             });
             $("#selectRowProovedores").append(renglon);
 

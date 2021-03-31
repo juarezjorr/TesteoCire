@@ -230,7 +230,7 @@ function getProveedoresTable() {
                row.sup_id +
                '</td>' +
                '<td>' +
-               row.sup_buseiness_name +
+               row.sup_business_name +
                '</td>' +
                '<td>' +
                row.sup_contact +
