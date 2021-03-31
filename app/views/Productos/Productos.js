@@ -29,11 +29,11 @@ function inicial() {
         NomProductoSelect();
     });
     //Guardar almacen *
-    $('#GuardarCategoria').on('click', function(){   
+/*     $('#GuardarCategoria').on('click', function(){   
         if(validaFormulario() == 1){
             SaveProducto();        
         }
-    });
+    }); */
     //borra almacen +
     $('#BorrarProduct').on('click', function(){    
         DeletProducto();
@@ -487,6 +487,11 @@ function getDocumentos(id) {
 function getProductosTable() {
    var location = 'Productos/GetProductos';
    $('#ProductosTable').DataTable().destroy();
+/* 
+   if (table != null) {
+      table.destroy();
+    }   */
+
    $('#tablaProductosRow').html('');
 
    $.ajax({
