@@ -179,7 +179,7 @@ function LimpiaModal() {
 
 // Optiene los categorias disponibles *
 function getCategorias(id) {
-    var location = 'categorias/GetCategorias';                
+    var location = 'Categorias/GetCategorias';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -214,9 +214,14 @@ function getSubCategoriasTable(idCategoria) {
        data:{idCategoria:idCategoria},
        url: location,
        _success: function (respuesta) {
+           console.log(respuesta);
           var renglon = '';
           respuesta.forEach(function (row, index) {
-             renglon =
+
+            if(row.sbc_id != 0){
+
+            
+                renglon =
                 '<tr>' +
                
                 '<td class="text-center edit"> ' +
@@ -242,6 +247,7 @@ function getSubCategoriasTable(idCategoria) {
  
                 
                 '</tr>';
+            }
              $('#tablaSubCategoriasRow').append(renglon);
           });
  

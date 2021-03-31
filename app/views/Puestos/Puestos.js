@@ -119,7 +119,7 @@ function DeletPuesto() {
 
 //Guardar Almacen **
 function SavePuesto() {
-        var location = "puestos/SavePuesto";
+        var location = "Puestos/SavePuesto";
         var IdPuesto = $('#IdPuesto').val();
         var NomPuesto = $('#NomPuesto').val();
         var DesPuesto = $('#DesPuesto').val();

@@ -211,8 +211,11 @@ function getProveedoresTable() {
       dataType: 'JSON',
       url: location,
       _success: function (respuesta) {
+         console.log(respuesta);
          var renglon = '';
          respuesta.forEach(function (row, index) {
+
+            if(row.sup_id != 0){
             renglon =
                '<tr>' +
                '<td class="text-center edit"> ' +
@@ -242,6 +245,7 @@ function getProveedoresTable() {
                row.sup_phone +
                '</td>' +
                '</tr>';
+            }
             $('#tablaProveedoresRow').append(renglon);
          });
 
