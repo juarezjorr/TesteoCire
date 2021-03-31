@@ -556,9 +556,10 @@ function getProductosTable() {
                row.sbc_name +
                '</td>' +
 
-               "<td >" +
-                    "<a href='#' onclick=skuByID('"+row.prd_id+"');>"+row.extNum+"</a><br>"; +
-               '</td>' + 
+               "<td class='quantity'>" +
+                        "<span onclick=skuByID("+row.prd_id+")>"+row.extNum+"</span>"+
+/*                     "<a href='#' onclick=skuByID('"+row.prd_id+"');>"+row.extNum+"</a><br>"; +
+ */               '</td>' + 
 
                +'</tr>';
             $('#tablaProductosRow').append(renglon);
@@ -998,6 +999,8 @@ function DeletSKU(idSku) {
 
 
 function skuByID(idProduct) {
+    UnSelectRowTable();
+
     $('#collapseExample').collapse('hide')
 
     $('#SKUTable').DataTable().destroy();
