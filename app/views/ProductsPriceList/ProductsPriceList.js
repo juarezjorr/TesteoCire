@@ -11,6 +11,7 @@ function inicial() {
    getProducts();
 }
 
+/** +++++  configura la table de productos */
 function setting_table() {
    let title = 'Lista de precios';
    let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
@@ -73,6 +74,7 @@ function setting_table() {
    });
 }
 
+/** +++++  Obtiene los productos de la base */
 function getProducts() {
    var pagina = 'ProductsPriceList/listProducts';
    var par = `[{"store":""}]`;
@@ -81,6 +83,7 @@ function getProducts() {
    fillField(pagina, par, tipo, selector);
 }
 
+/** +++++  coloca los productos en la tabla */
 function putProducts(dt) {
    let tabla = $('#tblPriceList').DataTable();
    getDocuments();
@@ -113,6 +116,7 @@ function putProducts(dt) {
       });
 }
 
+/** +++++  Obtiene los documentos asociados al producto */
 function getDocuments() {
    var pagina = 'ProductsPriceList/listDocuments';
    var par = `[{"store":""}]`;
@@ -121,12 +125,14 @@ function getDocuments() {
    fillField(pagina, par, tipo, selector);
 }
 
+/** +++++  Coloca la referencia de documentos a su respectivo producto */
 function putDocuments(dt) {
    $.each(dt, function (v, u) {
       $('#F' + u.prd_id).append(`<i class="fas fa-file docum" id="${u.doc_id}"></i>`);
    });
 }
 
+/** +++++  Obtiene los numeros de serie de cada producto */
 function getSeries(prdId, prdSku, prdName) {
    var pagina = 'ProductsPriceList/listSeries';
    var par = `[{"prdId":"${prdId}","prdSku":"${prdSku}","prdName":"${prdName}"}]`;
@@ -135,6 +141,7 @@ function getSeries(prdId, prdSku, prdName) {
    fillField(pagina, par, tipo, selector);
 }
 
+/** +++++  Abre el modal y coloca los seriales de cada producto */
 function putSeries(dt) {
    $('.overlay_background').removeClass('overlay_hide');
 
@@ -171,6 +178,7 @@ function putSeries(dt) {
    build_modal_table(dt);
 }
 
+/** +++++  Coloca los seriales en la tabla de seriales */
 function build_modal_table(dt) {
    let tabla = $('#tblSerialList').DataTable();
 
