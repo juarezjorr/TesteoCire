@@ -35,11 +35,20 @@
 			$result = $this->model->SaveProductos($request_params);	  
 		  }else{
 			$result = $this->model->ActualizaProducto($request_params);	  
-		  }
+		  } 
+		  $result=1;
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
-		public function GetProductos($request_params)
+ 		public function GetProductos($request_params)
+		{
+			echo $this->model->GetProductos($request_params);
+			
+	
+		  //echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		} 
+
+/* 		public function GetProductos($request_params)
 		{
 			$result = $this->model->GetProductos($request_params);
 			$i = 0;
@@ -54,7 +63,7 @@
 			}
 			echo $res;
 		  //echo json_encode($result,JSON_UNESCAPED_UNICODE);	
-		}
+		} */
 
 		public function DeleteProducto($request_params)
 		{
@@ -72,9 +81,69 @@
 		public function GetAutoComplete($request_params)
 		{
 		  $result = $this->model->GetAutoComplete($request_params);	  
-		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
+		  $i = 0;
+		  while($row = $result->fetch_assoc()){
+			 $rowdata[$i] = $row;
+			$i++;
+			}
+			if ($i>0){
+				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			} else {
+				$res =  '[{"prd_name":"0"}]';	
+			}
+			echo $res;
+		}
+
+		public function getInfoComun($request_params)
+		{
+		  $result = $this->model->getInfoComun($request_params);	  
+		  $i = 0;
+		  while($row = $result->fetch_assoc()){
+			 $rowdata[$i] = $row;
+			$i++;
+			}
+			if ($i>0){
+				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			} else {
+				$res =  '[{"prd_english_name":"0"}]';	
+			}
+			echo $res;
+		}
+
+		public function getInfoComunByID($request_params)
+		{
+		  $result = $this->model->getInfoComunByID($request_params);	  
+		  $i = 0;
+		  while($row = $result->fetch_assoc()){
+			 $rowdata[$i] = $row;
+			$i++;
+			}
+			if ($i>0){
+				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			} else {
+				$res =  '[{"prd_english_name":"0"}]';	
+			}
+			echo $res;
+		}
+		
+		public function getInfoComunByIDFull($request_params)
+		{
+		  $result = $this->model->getInfoComunByIDFull($request_params);	  
+		  $i = 0;
+		  while($row = $result->fetch_assoc()){
+			 $rowdata[$i] = $row;
+			$i++;
+			}
+			if ($i>0){
+				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			} else {
+				$res =  '[{"prd_english_name":"0"}]';	
+			}
+			echo $res;
 		}
 
 
-	  
-	}
+	
+ }
+
+

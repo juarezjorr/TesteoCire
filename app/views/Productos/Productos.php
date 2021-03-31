@@ -1,7 +1,14 @@
 <?php 
   	defined('BASEPATH') or exit('No se permite acceso directo'); 
-	  require ROOT . FOLDER_PATH . "/app/assets/header.php";	  
+	  require ROOT . FOLDER_PATH . "/app/assets/header.php";
+	  	  
 ?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ --><script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+
 <header>
 	<?php require ROOT . FOLDER_PATH . "/app/assets/menu.php"; ?>
 </header>
@@ -16,55 +23,46 @@
 
 							<div class="row" hidden>
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-								<input id="idStoreProducto" name="idStoreProducto" type="text" class="form-control form-control-sm" >
-
+									<input id="idStoreProducto" name="idStoreProducto" type="text" class="form-control form-control-sm" >
 									<input id="IdProducto" name="IdProducto" type="text" class="form-control form-control-sm" >
+									<input id="esUnico" name="esUnico" type="text" class="form-control form-control-sm" >
+
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="NomProducto" name="NomProducto" type="text" class="form-control form-control-sm" required >
+									<input id="NomProducto" name="NomProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required >
 									<label for="NomProducto">Nombre Producto</label>
+									<div id="suggestions"></div>
 								</div>
 							</div>
+
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="NomEngProducto" name="NomEngProducto" type="text" class="form-control form-control-sm" required >
+									<input id="NomEngProducto" name="NomEngProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required >
 									<label for="NomEngProducto">Nombre Ingles Producto</label>
 								</div>
 							</div>
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="ModelProducto" name="ModelProducto" type="text" class="form-control form-control-sm" maxlength="3" style="text-transform: uppercase" required >
+									<input id="ModelProducto" name="ModelProducto" type="text" class="form-control form-control-sm" autocomplete="off"  maxlength="3" style="text-transform: uppercase" required >
 									<label for="ModelProducto">Modelo Producto</label>
 								</div>
 							</div>
 
-<!--                      		<div class="row">
-								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="SerieProducto" name="SerieProducto" type="text" class="form-control form-control-sm" required >
-									<label for="SerieProducto">Numero de serie Producto</label>
-								</div>
-							</div> -->
+
 
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="CostProducto" name="CostProducto" type="text" class="form-control form-control-sm" required >
-									<label for="CostProducto">Costo Producto</label>
-								</div>
-							</div>
-
-                     		<div class="row">
-								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="PriceProducto" name="PriceProducto" type="text" class="form-control form-control-sm" required >
+									<input id="PriceProducto" name="PriceProducto" type="number" class="form-control form-control-sm" autocomplete="off"  required >
 									<label for="PriceProducto">Precio Producto</label>
 								</div>
 							</div>
 
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="DesProducto" name="DesProducto" type="text" class="form-control form-control-sm" required >
+									<input id="DesProducto" name="DesProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required >
 									<label for="DesProducto">Descripcion Producto</label>
 								</div>
 							</div>
@@ -72,7 +70,7 @@
 
                     		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectMonedaProducto"  name="selectMonedaProducto"  class="form-select form-select-sm" required>
+									<select id="selectMonedaProducto"  name="selectMonedaProducto"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectMonedaProducto" class="form-label">Tipo de moneda</label>
 								</div>
@@ -80,7 +78,7 @@
 
                    			<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowCategorias"  name="selectRowCategorias"  class="form-select form-select-sm" required>
+									<select id="selectRowCategorias"  name="selectRowCategorias"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowCategorias" class="form-label">Categoria</label>
 								</div>
@@ -88,7 +86,7 @@
 
                     		 <div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowSubCategorias"  name="selectRowSubCategorias"  class="form-select form-select-sm" required>
+									<select id="selectRowSubCategorias"  name="selectRowSubCategorias"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowSubCategorias" class="form-label">SubCategoria</label>
 								</div>
@@ -96,7 +94,7 @@
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowService"  name="selectRowService"  class="form-select form-select-sm" required>
+									<select id="selectRowService"  name="selectRowService"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowService" class="form-label">Tipo de servicio</label>
 								</div>
@@ -104,7 +102,7 @@
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowProovedores"  name="selectRowProovedores"  class="form-select form-select-sm" required>
+									<select id="selectRowProovedores"  name="selectRowProovedores"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowProovedores" class="form-label">Proveedor</label>
 								</div>
@@ -112,19 +110,76 @@
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowAlmacen"  name="selectRowAlmacen"  class="form-select form-select-sm" required>
+									<select id="selectRowDocument"  name="selectRowDocument"  class="form-select form-select-sm" >
+									</select>
+									<label for="selectRowDocument" class="form-label">Documento</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowAlmacen"  name="selectRowAlmacen"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowAlmacen" class="form-label">Almacen</label>
 								</div>
 							</div>
 
-<!-- 							<div class="row">
+
+							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowDocument"  name="selectRowDocument"  class="form-select form-select-sm" required>
-									</select>
-									<label for="selectRowDocument" class="form-label">Almacen</label>
+									<input id="SerieProducto" name="SerieProducto" type="text" class="form-control form-control-sm" required >
+									<label for="SerieProducto">Numero de serie Producto</label>
 								</div>
-							</div> -->
+							</div> 
+
+                     		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="CostProducto" name="CostProducto" type="number" class="form-control form-control-sm" autocomplete="off"  required >
+									<label for="CostProducto">Costo Producto</label>
+								</div>
+							</div>
+
+
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="1" id="checkProducto" checked>
+									<label class="form-check-label" for="flexCheckDefault">
+										Visible
+									</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="1" id="checkRentAccesories" checked>
+									<label class="form-check-label" for="flexCheckDefault">
+										Renta sin accesorios
+									</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="ventOrRent" value="C" id="ventOrRent1" checked>
+									<label class="form-check-label" for="flexRadioDefault1">
+										Producto para Compra
+									</label>
+									</div>
+									<div class="form-check">
+									<input class="form-check-input" type="radio" name="ventOrRent"  value="R" id="ventOrRent2" >
+									<label class="form-check-label" for="flexRadioDefault2">
+										Producto para Renta
+									</label>
+									</div>
+								</div>
+							</div>
+
 
 
 							<div class="row">
@@ -153,12 +208,13 @@
 													<th style="width: 30px">Id</th>
 													<th style="width: auto">Nombre</th>
                                        <th style="width: auto">Nombre ingles</th>
-                                       <th style="width: auto">SKU</th>
+                                      <!--  <th style="width: auto">SKU</th> -->
                                        <th style="width: auto">Model</th>
 
 <!--                                        <th style="width: auto">Numero serie</th>
- -->                                       <th style="width: auto">Costo</th>
-                                       <th style="width: auto">Price</th>
+ -->                                     
+<!--  										  <th style="width: auto">Costo</th>
+ -->                                       <th style="width: auto">Price</th>
 
 									   <th style="width: auto">Descripcion</th>
 
@@ -166,7 +222,7 @@
                                        <th style="width: auto">Servicio</th>
                                        <th style="width: auto">Categoria</th>
                                        <th style="width: auto">Subcategoria</th>
-                                       <th style="width: auto">Almacen</th>
+                                       <th style="width: auto">SKU'S</th>
 											</tr>
 										</thead>
 										<tbody id="tablaProductosRow">
@@ -224,6 +280,9 @@
 	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.html5.min.js' ?>"></script>
 	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/buttons.print.min.js' ?>"></script>
 </div>
+
+
+
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
 <script src="<?=  PATH_VIEWS . 'productos/productos.js' ?>"></script>
