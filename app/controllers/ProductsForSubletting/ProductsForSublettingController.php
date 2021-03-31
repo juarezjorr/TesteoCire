@@ -63,12 +63,19 @@ class ProductsForSublettingController extends Controller
 // Agrega los seriales de los productos para subarrendo
 	public function addSerie($request_params)
 	{
-		echo $request_params;
 		$params =  $this->session->get('user');
 		$result = $this->model->addSerie($request_params);
 		echo $result;
-		$res =  json_encode($result,JSON_UNESCAPED_UNICODE);	
 		
-		echo $res;
 	} 	
+
+
+// Agrega los productos subarrendados
+	public function addSubletting($request_params)
+	{
+		$params =  $this->session->get('user');
+		$result = $this->model->addSubletting($request_params);
+		echo $result;
+		
+	} 		
 }

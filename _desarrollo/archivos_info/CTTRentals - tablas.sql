@@ -151,7 +151,7 @@ COMMENT = 'Productos de la empresa.';
 DROP TABLE `cttapp_cire`.`ctt_series`;
 CREATE TABLE `cttapp_cire`.`ctt_series` (
 	`ser_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID de la serie',
-	`ser_sku`				VARCHAR(10) NULL 			 COMMENT 'SKU identificador del producto',
+	`ser_sku`				VARCHAR(14) NULL 			 COMMENT 'SKU identificador del producto',
 	`ser_serial_number`		VARCHAR(50)  NULL 			 COMMENT 'Numero de serie del producto',
 	`ser_cost`				DECIMAL(10,2)  NULL			 COMMENT 'Costo unitario del producto',
     `ser_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',

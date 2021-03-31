@@ -134,6 +134,6 @@
 <script src="<?=  PATH_ASSETS . 'lib/bs-custom-file-input.min.js' ?>"></script>
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
-<script src="<?=  PATH_VIEWS . 'documentos/documentos.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'Documentos/Documentos.js' ?>"></script>
 
 <?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>

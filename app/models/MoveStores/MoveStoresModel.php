@@ -76,7 +76,7 @@ class MoveStoresModel extends Model
 		$idStrSrc 		= $this->db->real_escape_string($param['str']);
 		$quantity 		= $this->db->real_escape_string($param['qty']);
 
-		$qry = "UPDATE ctt_stores_products SET stp_quantity = stp_quantity - $quantity WHERE str_id = $idStrSrc and  prd_id = $idPrd;";
+		$qry = "UPDATE ctt_stores_products SET stp_quantity = stp_quantity - $quantity WHERE str_id = $idStrSrc and  ser_id = $idPrd;";
 		return $this->db->query($qry);
 	}
 // Busca si existe asignado un almacen con este producto

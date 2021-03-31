@@ -59,7 +59,7 @@ function setting_table() {
          {
             // Boton aplicar cambios
             text: 'Aplicar movimientos',
-            className: 'btn-apply',
+            className: 'btn-apply hidden-field',
             action: function (e, dt, node, config) {
                read_exchange_table();
             },
@@ -130,7 +130,7 @@ function getExchanges() {
 function putTypeExchange(dt) {
    if (dt[0].ext_id != 0) {
       $.each(dt, function (v, u) {
-         let H = `<option value="${u.ext_id}" data-content="${u.ext_code}|${u.ext_type}|${u.ext_link}|${u.ext_code_a}|${u.ext_type_a}">${u.ext_description}</option>`;
+         let H = `<option value="${u.ext_id}" data-content="${u.ext_code}|${u.ext_type}|${u.ext_link}|${u.ext_code_a}|${u.ext_type_a}">${u.ext_code} - ${u.ext_description}</option>`;
          $('#txtTypeExchange').append(H);
       });
    }
@@ -182,7 +182,7 @@ function drawProducts(str) {
    if (pr[0][1].prd_id != 0) {
       $.each(pr, function (v, u) {
          if (str == u[1].str_id) {
-            let H = `<option value="${u[1].prd_id}" data-content="${u[1].prd_sku}|${u[1].stp_quantity}|${u[1].ser_serial_number}|${u[1].stp_id}">${u[1].ser_serial_number} - ${u[1].prd_name}</option>`;
+            let H = `<option value="${u[1].ser_id}" data-content="${u[1].prd_sku}|${u[1].stp_quantity}|${u[1].ser_serial_number}|${u[1].stp_id}">${u[1].ser_serial_number} - ${u[1].prd_name}</option>`;
             $('#txtProducts').append(H);
          }
       });
@@ -302,6 +302,7 @@ function fill_table(par) {
          comments: `<div>${par[0].comment}</div>`,
       })
       .draw();
+   btn_apply_appears();
 
    clean_selectors();
 
@@ -312,12 +313,24 @@ function fill_table(par) {
          let pid = $(this).parent().children('td.sku').children('span.hide-support').text().split('|')[4];
          update_array_products(pid, qty);
          tabla.row($(this).parent('tr')).remove().draw();
+         btn_apply_appears();
          clean_selectors();
       });
 }
+
+function btn_apply_appears() {
+   let tabla = $('#tblExchanges').DataTable();
+   let rengs = tabla.rows().count();
+   if (rengs > 0) {
+      $('.btn-apply').removeClass('hidden-field');
+   } else {
+      $('.btn-apply').addClass('hidden-field');
+   }
+}
+
 // Limpia los campos para uns nueva seleccion
 function clean_selectors() {
-   $('#txtTypeExchange').val(0);
+   // $('#txtTypeExchange').val(0);
    $('#txtStoreSource').val(0);
    $('#txtStoreTarget').val(0);
    $('#txtProducts').html('<option value="0" selected>Selecciona producto</option>');
@@ -329,37 +342,40 @@ function clean_selectors() {
 function update_array_products(id, cn) {
    $.each(pr, function (v, u) {
       //    console.log(u[1].prd_id);
-      if (u[1].prd_id == id) {
+      if (u[1].ser_id == id) {
          u[1].stp_quantity = u[1].stp_quantity - cn;
       }
    });
 }
 
 function read_exchange_table() {
-   $('#tblExchanges tr').each(function (v, u) {
-      let guid = $($(u).find('td')[0]).children('span.hide-support').text().split('|')[0];
-      let sku = $($(u).find('td')[0]).children('span.hide-support').text().split('|')[1];
-      let product = $($(u).find('td')[1]).text();
-      let quantity = $($(u).find('td')[2]).text();
-      let serie = $($(u).find('td')[3]).text();
-      let storeSource = $($(u).find('td')[5]).text();
-      let comments = $($(u).find('td')[8]).text();
-      let codeTypeExchangeSource = $($(u).find('td')[4]).text();
-      let idTypeExchangeSource = $($(u).find('td')[0]).children('span.hide-support').text().split('|')[2];
+   $('#tblExchanges tbody tr').each(function (v, u) {
+      let guid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
+      let sku = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[1];
+      let product = $($(u).find('td')[2]).text();
+      let quantity = $($(u).find('td')[3]).text();
+      let serie = $($(u).find('td')[4]).text();
+      let storeSource = $($(u).find('td')[6]).text();
+      let comments = $($(u).find('td')[7]).text();
+      let codeTypeExchangeSource = $($(u).find('td')[5]).text();
+      let idTypeExchangeSource = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[2];
       let storeTarget = $($(u).find('td')[7]).text();
-      let codeTypeExchangeTarget = $($(u).find('td')[6]).text();
-      let idTypeExchangeTarget = $($(u).find('td')[0]).children('span.hide-support').text().split('|')[3];
-      let productId = $($(u).find('td')[0]).children('span.hide-support').text().split('|')[4];
-      let storeIdSource = $($(u).find('td')[0]).children('span.hide-support').text().split('|')[5];
-      let storeIdTarget = $($(u).find('td')[0]).children('span.hide-support').text().split('|')[6];
-      if (codeTypeExchangeSource != '') {
-         build_data_structure(`${guid}|${sku}|${product}|${quantity}|${serie}|${storeSource}|${comments}|${codeTypeExchangeSource}|${idTypeExchangeSource}`);
+      let codeTypeExchangeTarget = $($(u).find('td')[7]).text();
+      let idTypeExchangeTarget = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[3];
+      let productId = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[4];
+      let storeIdSource = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[5];
+      let storeIdTarget = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[6];
 
-         build_update_store_data(`${productId}|${quantity}|${storeIdSource}|S`);
+      let exchstruc = `${guid}|${sku}|${product}|${quantity}|${serie}|${storeSource}|${comments}|${codeTypeExchangeSource}|${idTypeExchangeSource}`;
+      let exchupda = `${productId}|${quantity}|${storeIdSource}`;
+
+      if (codeTypeExchangeSource != '') {
+         build_data_structure(exchstruc);
+         build_update_store_data(`${exchupda}|S`);
       }
       if (codeTypeExchangeTarget != '') {
-         build_data_structure(`${guid}|${sku}|${product}|${quantity}|${serie}|${storeTarget}|${comments}|${codeTypeExchangeTarget}|${idTypeExchangeTarget}`);
-         build_update_store_data(`${productId}|${quantity}|${storeIdTarget}|T`);
+         build_data_structure(exchstruc);
+         build_update_store_data(`${exchupda}|T`);
       }
    });
 }
@@ -397,6 +413,7 @@ function build_update_store_data(pr) {
 
 /** Graba intercambio de almacenes */
 function save_exchange(pr) {
+   //   console.log(pr);
    var pagina = 'MoveStores/SaveExchange';
    var par = pr;
    var tipo = 'html';
@@ -405,7 +422,7 @@ function save_exchange(pr) {
 }
 
 function update_store(ap) {
-   //    console.log(ap);
+   // console.log(ap);
    var pagina = 'MoveStores/UpdateStores';
    var par = ap;
    var tipo = 'html';
@@ -416,7 +433,7 @@ function update_store(ap) {
 function exchange_result(dt) {}
 
 function updated_stores(dt) {
-   console.log(dt);
+   // console.log(dt);
    window.location = 'MoveStores';
 }
 

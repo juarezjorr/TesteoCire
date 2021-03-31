@@ -128,6 +128,6 @@
 </div>
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
-<script src="<?=  PATH_VIEWS . 'subcategorias/subcategorias.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'SubCategorias/SubCategorias.js' ?>"></script>
 
 <?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>
