@@ -268,4 +268,14 @@ CREATE TABLE `cttapp_cire`.`ctt_subletting` (
 PRIMARY KEY (`sub_id`))
 COMMENT='Tabla de situación de subarrendos';
 
+DROP TABLE `cttapp_cire`.`ctt_exchange_currency`;
+CREATE TABLE `cttapp_cire`.`ctt_exchange_currency` (
+  `exm_id` 					int(11) NOT NULL AUTO_INCREMENT,
+  `exm_name` 				VARCHAR(50) 				COMMENT 'Clave de la moneda',
+  `exm_descripcion` 		VARCHAR(100) 				COMMENT 'Descripción de la moneda',
+  `exm_status` 				INT(11) DEFAULT 1			COMMENT 'Estatus de la moneda 1-activo 0-inactivo',
+  PRIMARY KEY (`exm_id`)) 
+COMMENT='Tabla catalogo de monedas';
+
+
 

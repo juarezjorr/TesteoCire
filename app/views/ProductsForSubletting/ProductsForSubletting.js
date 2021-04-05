@@ -128,6 +128,13 @@ function get_products() {
 }
 /**  ++++   Coloca los productos en el listado del input */
 function put_Products(dt) {
+   var ps = $('#txtProducts').offset();
+
+   $('.list-group').css({top: ps.top + 60 + 'px'});
+   $('.list-group').slideUp('100', function () {
+      $('#listProducts').html('');
+   });
+
    $.each(dt, function (v, u) {
       let H = `<div class="list-item" id="P-${u.prd_id}" data_complement="${u.ser_id}|${u.prd_sku}|${u.ser_serial_number}|${u.ser_cost}|${u.prd_coin_type}">${u.prd_name}</div>`;
       $('#listProducts').append(H);
