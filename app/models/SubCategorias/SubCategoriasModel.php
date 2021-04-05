@@ -36,10 +36,10 @@ class SubCategoriasModel extends Model
 			$qryExt = "and u.cat_id = ".$request["idCategoria"];
 		}
 		$qry = "SELECT u.sbc_id, u.sbc_code, u.sbc_name, u.cat_id , e.cat_name
-                FROM ctt_subcategories AS U 
-                JOIN ctt_categories AS E
-                ON U.cat_id = E.cat_id
-                WHERE sbc_status = 1 and E.cat_status = 1 ".$qryExt.";";
+                FROM ctt_subcategories AS u 
+                JOIN ctt_categories AS e
+                ON u.cat_id = e.cat_id
+                WHERE sbc_status = 1 and e.cat_status = 1 ".$qryExt.";";
 		return $this->db->query($qry);
 	}
 
