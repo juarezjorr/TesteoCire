@@ -265,6 +265,8 @@ function SaveProducto() {
                 LimpiaModal();
                 EnableDisableComun(false)
             } 
+            $('#titulo').text('Nuevo Producto');
+
         },
         error: function (jqXHR, textStatus, errorThrown) {console.log(jqXHR, textStatus, errorThrown);}
         }).done(function () {}); 
@@ -290,6 +292,8 @@ function LimpiaModal() {
     $("#selectRowProovedores").val( "0" );
     $("#selectRowAlmacen").val( "0" );
     $("#selectRowDocument").val( "0" );
+    $('#titulo').text('Nuevo Producto');
+
 }
 
 // Optiene las categorias *
@@ -667,6 +671,9 @@ function getInfoComun(nombreDocument,productoComun,cantidadSKU,idproducto) {
             if(respuesta[0].prd_visibility == 1){$("#checkProducto" ).prop( "checked", true );
             }else{$("#checkProducto" ).prop( "checked", false );}
             if(1 >= cantidadSKU){}else{ EnableDisableComun(true);}
+
+            $('#titulo').text('Nuevo Producto');
+
         },
         error: function () {
         }
@@ -725,6 +732,8 @@ function getInfoComun(nombreDocument,productoComun,cantidadSKU,idproducto) {
                     EnableDisableExt(true);
                 }
             }else{EnableDisableComun(true);}
+            $('#titulo').text('Editar Producto');
+
         },
         error: function () {
         }
@@ -862,7 +871,17 @@ function skuByID(idProduct) {
                                url: './app/assets/lib/dataTable/spanish.json',
                             },
                          });
-            $("#modalSKU").modal('show');
+            //$("#modalSKU").modal('show');
+
+            $('.overlay_background').removeClass('overlay_hide');
+            $('.btn_close')
+            .unbind('click')
+            .on('click', function () {
+               $('#collapseExample').collapse('hide');
+
+               $('.overlay_background').addClass('overlay_hide');
+            });
+
         },
         error: function (jqXHR, textStatus, errorThrown) {console.log(jqXHR, textStatus, errorThrown);}
     }).done(function () {

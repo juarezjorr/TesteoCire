@@ -39,3 +39,7 @@
    width: 100%;
    float: left;
 }
+
+.form-floating>.form-select {
+    height: 65px !important;
+}
