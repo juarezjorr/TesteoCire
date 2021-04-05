@@ -25,7 +25,6 @@ class ProductosModel extends Model
 				if($countId == 0){
 					$qry = "INSERT INTO ctt_products(prd_name, 
 										prd_english_name, 
-										prd_model, 
 										prd_price,  
 										prd_coin_type, 
 										prd_visibility, 
@@ -36,7 +35,6 @@ class ProductosModel extends Model
 										srv_id) 
 								VALUES('".$params['NomProducto']."',
 									'".$params['NomEngProducto']."',
-									'".$params['ModelProducto']."',
 									".$params['PriceProducto'].",
 									".$params['idMoneda'].",
 									".$params['visible'].",
@@ -67,20 +65,28 @@ class ProductosModel extends Model
 				//ID de categoria dos digitos.
 				$categoria = str_pad($params['idCategoria'], 2, "0", STR_PAD_LEFT);
 		
-		
+				//SUBCATEGORIA dos digitos 
 				$qry = "SELECT sbc_code FROM ctt_subcategories WHERE sbc_id = ".$params['idSubCategoria'].";";
 				$result = $this->db->query($qry);
 				if ($row = $result->fetch_row()) {
 					$Subcategoria  = trim($row[0]);
 				}
-				//print_r($qry . "-");
 
-				//SUBCATEGORIA dos digitos 
 				$Subcategoria = str_pad($Subcategoria, 2, "0", STR_PAD_LEFT);
-		
+
 				//MODELO 3 DIGITOS
-				$model = str_pad($params['ModelProducto'], 3, "0", STR_PAD_LEFT);
+				$qry = "SELECT count(*) FROM ctt_products WHERE sbc_id =  ".$params['idSubCategoria'].";";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+					$consecutivoModel  = trim($row[0]);
+					$consecutivoModel = $consecutivoModel + 1;
+				}
 		
+				$model = str_pad($consecutivoModel, 3, "0", STR_PAD_LEFT);
+
+
+				
+				//NUMERO CONSECUTIVO DE PRODUCTO 4 DIGITOS 
 				$qry = "SELECT COUNT(ser_id) FROM  ctt_series WHERE prd_id = '".$idProducto."';";
 				$result = $this->db->query($qry);
 				if ($row = $result->fetch_row()) {
@@ -88,7 +94,6 @@ class ProductosModel extends Model
 					$consecutivo = $consecutivo + 1;
 				}
 		
-				//NUMERO CONSECUTIVO DE PRODUCTO 4 DIGITOS 
 				$consecutivo = str_pad($consecutivo, 4, "0", STR_PAD_LEFT);
 		
 				//NUMERO DE ACCESORIO 3 DIGITOS

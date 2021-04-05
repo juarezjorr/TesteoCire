@@ -79,7 +79,7 @@ function EditDocumento(id) {
              },
             url: location,
         success: function (respuesta) {
-            console.log(respuesta);
+            //console.log(respuesta);
             $('#NomDocumento').val(respuesta.doc_name);
             $('#IdDocumentNew').val(respuesta.doc_id);
             $('#ExtDocumento').val(respuesta.doc_type);
@@ -204,7 +204,9 @@ function VerDocumento(id) {
             var a = document.createElement('a');
             a.href= "data:application/octet-stream;base64,"+respuesta.doc_document;
             a.target = '_blank';
-            a.download = respuesta.doc_name + "."+ respuesta.doc_type.trim();
+            a.download = respuesta.doc_name;
+
+            //a.download = respuesta.doc_name + "."+ respuesta.doc_type.trim();
             a.click();
         },
         error: function (jqXHR, textStatus, errorThrown){

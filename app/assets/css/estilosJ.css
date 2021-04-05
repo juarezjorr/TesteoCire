@@ -26,9 +26,9 @@
    box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
    height: auto;
    position: absolute;
-   top: 45px;
+   top: 64px;
    z-index: 9999;
-   width: 206px;
+   width: 230px;
 }
 
 #suggestions .suggest-element {
