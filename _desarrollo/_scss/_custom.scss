@@ -106,11 +106,15 @@ h4 {
 		overflow: auto;
 		height: 100%;
 		padding: 0;
+		z-index: 10;
+		grid-column: 1 / span 1;
 	}
 	.mvst_table {
 		width: 100%;
 		overflow: auto;
 		padding: 60px 10px 0 10px;
+		z-index: 5;
+		grid-column: 2 / span 1;
 	}
 
 	.mvst_list {
@@ -118,6 +122,7 @@ h4 {
 		width: 100%;
 		overflow: auto;
 		padding: 60px 10px 0 10px;
+		z-index: 5;
 	}
 }
 
@@ -134,6 +139,26 @@ h4 {
 	textarea {
 		font-size: 1.1rem;
 		font-weight: 900;
+	}
+	.box-items-list {
+		width: 100%;
+		background-color: #ffffff;
+		border-radius: 6px;
+		padding: 8px 16px;
+		font-weight: 900;
+		font-size: 1.1em;
+		color: #212529;
+
+		i {
+			float: right;
+			font-size: 1.05rem;
+			color: #212529;
+		}
+	}
+
+	.fail {
+		border: 1px solid red;
+		color: red;
 	}
 }
 
@@ -364,13 +389,15 @@ table {
 .list-finder {
 	position: relative;
 	.list-group {
-		width: 100%;
-		height: 300px;
+		width: auto;
+		min-width: 300px;
+		max-height: 100px;
 		padding: 12px;
-		position: absolute;
+		position: fixed;
 		top: 53px;
 		left: 0px;
 		z-index: 10;
+
 		&.list-hide {
 			display: none;
 		}
@@ -378,7 +405,7 @@ table {
 			border-radius: 5px;
 			box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
 			width: 100%;
-			height: 100%;
+			max-height: 250px;
 			padding: 4px;
 			background-color: #ffffff;
 			overflow: auto;
@@ -393,6 +420,27 @@ table {
 				&:hover {
 					background-color: rgba(0, 0, 0, 0.3);
 					color: #ffffff;
+				}
+
+				.items-just {
+					display: inline-block;
+					float: right;
+					.editable {
+						border: 1px solid #dddddd;
+						border-radius: 4px;
+						padding: 1px 8px;
+						margin-left: 20px;
+						display: inline-block;
+					}
+					i {
+						float: right;
+						display: inline-block;
+						margin: 0 10px;
+						font-size: 1.4em;
+						&:hover {
+							opacity: 0.5;
+						}
+					}
 				}
 			}
 		}
@@ -481,6 +529,23 @@ table {
 	font-weight: 200 !important;
 	color: black;
 }
+#suggestions {
+	box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+	height: auto;
+	position: absolute;
+	top: 45px;
+	z-index: 9999;
+	width: 206px;
+}
+
+#suggestions .suggest-element {
+	background-color: #eeeeee;
+	border-top: 1px solid #d6d4d4;
+	cursor: pointer;
+	padding: 8px;
+	width: 100%;
+	float: left;
+}
 
 @media screen and (max-width: 780px) {
 	.container-fluid {
@@ -503,10 +568,15 @@ table {
 
 		.mvst_panel {
 			width: 100%;
+			height: auto;
 			padding: 0;
+			grid-column: 1 / span 1;
+			grid-row: 1 / span 1;
 		}
 		.mvst_table {
 			width: 100%;
+			grid-column: 1 / span 1;
+			grid-row: 2 / span 1;
 		}
 	}
 }
