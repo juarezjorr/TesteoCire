@@ -25,7 +25,6 @@ class ProductosModel extends Model
 				if($countId == 0){
 					$qry = "INSERT INTO ctt_products(prd_name, 
 										prd_english_name, 
-										prd_model, 
 										prd_price,  
 										prd_coin_type, 
 										prd_visibility, 
@@ -36,7 +35,6 @@ class ProductosModel extends Model
 										srv_id) 
 								VALUES('".$params['NomProducto']."',
 									'".$params['NomEngProducto']."',
-									'".$params['ModelProducto']."',
 									".$params['PriceProducto'].",
 									".$params['idMoneda'].",
 									".$params['visible'].",
@@ -67,20 +65,28 @@ class ProductosModel extends Model
 				//ID de categoria dos digitos.
 				$categoria = str_pad($params['idCategoria'], 2, "0", STR_PAD_LEFT);
 		
-		
+				//SUBCATEGORIA dos digitos 
 				$qry = "SELECT sbc_code FROM ctt_subcategories WHERE sbc_id = ".$params['idSubCategoria'].";";
 				$result = $this->db->query($qry);
 				if ($row = $result->fetch_row()) {
 					$Subcategoria  = trim($row[0]);
 				}
-				//print_r($qry . "-");
 
-				//SUBCATEGORIA dos digitos 
 				$Subcategoria = str_pad($Subcategoria, 2, "0", STR_PAD_LEFT);
-		
+
 				//MODELO 3 DIGITOS
-				$model = str_pad($params['ModelProducto'], 3, "0", STR_PAD_LEFT);
+				$qry = "SELECT count(*) FROM ctt_products WHERE sbc_id =  ".$params['idSubCategoria'].";";
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+					$consecutivoModel  = trim($row[0]);
+					$consecutivoModel = $consecutivoModel + 1;
+				}
 		
+				$model = str_pad($consecutivoModel, 3, "0", STR_PAD_LEFT);
+
+
+				
+				//NUMERO CONSECUTIVO DE PRODUCTO 4 DIGITOS 
 				$qry = "SELECT COUNT(ser_id) FROM  ctt_series WHERE prd_id = '".$idProducto."';";
 				$result = $this->db->query($qry);
 				if ($row = $result->fetch_row()) {
@@ -88,7 +94,6 @@ class ProductosModel extends Model
 					$consecutivo = $consecutivo + 1;
 				}
 		
-				//NUMERO CONSECUTIVO DE PRODUCTO 4 DIGITOS 
 				$consecutivo = str_pad($consecutivo, 4, "0", STR_PAD_LEFT);
 		
 				//NUMERO DE ACCESORIO 3 DIGITOS
@@ -172,13 +177,11 @@ class ProductosModel extends Model
 		$qry = "SELECT pro.prd_id, pro.prd_sku, pro.prd_name, pro.prd_english_name,
 		pro.prd_model, pro.prd_price,
 		pro.prd_coin_type, pro.prd_visibility,pro.prd_comments, pro.sbc_id, 
-		pro.sup_id, pro.srv_id, cat.cat_id, storeP.str_id 
-	   ,subcat.sbc_name , cat.cat_name , store.str_name , serv.srv_name , storeP.stp_id
+		pro.sup_id, pro.srv_id, cat.cat_id 
+	   ,subcat.sbc_name , cat.cat_name  , serv.srv_name 
 				FROM  ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_categories AS cat ON cat.cat_id = subcat.cat_id
-				LEFT JOIN ctt_store_product AS storeP ON storeP.prd_id = pro.prd_id
-				LEFT JOIN ctt_stores AS store ON store.str_id = storeP.str_id
 				LEFT JOIN ctt_services AS serv ON serv.srv_id = pro.srv_id
 				where pro.prd_status = 1;";
 
@@ -213,12 +216,9 @@ class ProductosModel extends Model
 			"sup_id" =>$row[10],
 			"srv_id" =>$row[11],
 			"cat_id" =>$row[12],
-			"str_id" =>$row[13],
-			"sbc_name" =>$row[14],
-			"cat_name" =>$row[15],
-			"str_name" =>$row[16],
-			"srv_name" =>$row[17],
-			"stp_id" =>$row[18],
+			"sbc_name" =>$row[13],
+			"cat_name" =>$row[14],
+			"srv_name" =>$row[15],
 			"extDocuments" =>$string,
 		    "extNum" =>$Count);
 			

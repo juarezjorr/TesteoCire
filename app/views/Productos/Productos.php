@@ -4,8 +4,7 @@
 	  	  
 ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
- --><script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
 
@@ -35,8 +34,11 @@
 									<input id="NomProducto" name="NomProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required >
 									<label for="NomProducto">Nombre Producto</label>
 									<div id="suggestions"></div>
+
 								</div>
 							</div>
+
+
 
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
@@ -44,12 +46,12 @@
 									<label for="NomEngProducto">Nombre Ingles Producto</label>
 								</div>
 							</div>
-                     		<div class="row">
+<!--                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="ModelProducto" name="ModelProducto" type="text" class="form-control form-control-sm" autocomplete="off"  maxlength="3" style="text-transform: uppercase" required >
 									<label for="ModelProducto">Modelo Producto</label>
 								</div>
-							</div>
+							</div> -->
 
 
 
@@ -264,107 +266,196 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modalSKU" tabindex="-1" aria-labelledby="modalSKUlLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="modalSKU" tabindex="-1" aria-labelledby="modalSKUlLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
+
       <div class="modal-header">
         <h5 class="modal-title" id="modalSKULabel">SKU'S</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
-	  <div class="collapse" id="collapseExample" style="margin-bottom: 1rem; !important">
-		<div class="card card-body">
-			<div class="row">
+		<div class="collapse" id="collapseExample" style="margin-bottom: 1rem; !important">
+			<div class="card card-body">
+				<div class="row">
 
-			<input id="idSku" name="idSku" type="text" class="form-control form-control-sm" required hidden >
+				<input id="idSku" name="idSku" type="text" class="form-control form-control-sm" required hidden >
 
-			<div class="col-2">
-				<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-					<input id="SerieSku" name="SerieSku" type="text" class="form-control form-control-sm" required >
-					<label for="SerieSku">Numero de serie Producto</label>
+				<div class="col-2">
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+						<input id="SerieSku" name="SerieSku" type="text" class="form-control form-control-sm" required >
+						<label for="SerieSku">Numero de serie Producto</label>
+					</div>
 				</div>
-			</div>
-			<div class="col-2">
-				<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-					<input id="CostSku" name="CostSku" type="number" class="form-control form-control-sm" required >
-					<label for="CostSku">Costo</label>
+				<div class="col-2">
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+						<input id="CostSku" name="CostSku" type="number" class="form-control form-control-sm" required >
+						<label for="CostSku">Costo</label>
+					</div>
 				</div>
-			</div>
-			<div class="col-2">
-				<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-					<select id="selectRowAlmacenSku"  name="selectRowAlmacenSku"  class="selectRowAlmacen form-select form-select-sm" autocomplete="off"  >
-					</select>
-					<label for="selectRowAlmacenSku" class="form-label">Almacen</label>
+				<div class="col-2">
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+						<select id="selectRowAlmacenSku"  name="selectRowAlmacenSku"  class="selectRowAlmacen form-select form-select-sm" autocomplete="off"  >
+						</select>
+						<label for="selectRowAlmacenSku" class="form-label">Almacen</label>
+					</div>
 				</div>
-			</div>
 
-			<div class="col-2">
-				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="1" id="checkRentAccesoriesSku" checked>
-					<label class="form-check-label" for="flexCheckDefault">
-						Renta sin accesorios
+				<div class="col-2">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="1" id="checkRentAccesoriesSku" checked>
+						<label class="form-check-label" for="flexCheckDefault">
+							Renta sin accesorios
+						</label>
+					</div>
+				</div>
+
+
+
+				<div class="col-2">
+					<div class="form-check">
+					<input class="form-check-input" type="radio" name="ventOrRentSku" value="C" id="ventOrRentSku1" checked>
+					<label class="form-check-label" for="flexRadioDefault1">
+						Producto para Compra
 					</label>
+					</div>
+					<div class="form-check">
+					<input class="form-check-input" type="radio" name="ventOrRentSku"  value="R" id="ventOrRentSku2" >
+					<label class="form-check-label" for="flexRadioDefault2">
+						Producto para Renta
+					</label>
+					</div>
 				</div>
-			</div>
 
-
-
-			<div class="col-2">
-				<div class="form-check">
-				<input class="form-check-input" type="radio" name="ventOrRentSku" value="C" id="ventOrRentSku1" checked>
-				<label class="form-check-label" for="flexRadioDefault1">
-					Producto para Compra
-				</label>
+				<div class="col-2">
+				<button type="button"  class="btn btn-primary btn-sm btn-block" style="font-size: 1rem !important;" id="GuardarSKU" onclick="SaveSku()">Guardar</button>
 				</div>
-				<div class="form-check">
-				<input class="form-check-input" type="radio" name="ventOrRentSku"  value="R" id="ventOrRentSku2" >
-				<label class="form-check-label" for="flexRadioDefault2">
-					Producto para Renta
-				</label>
-				</div>
+
+
+
+				</div>			
 			</div>
+		</div>
 
-			<div class="col-2">
-			<button type="button"  class="btn btn-primary btn-sm btn-block" style="font-size: 1rem !important;" id="GuardarSKU" onclick="SaveSku()">Guardar</button>
-			</div>
-
-
-
-			</div>			
-  		</div>
-	</div>
-
-	  <div class="row">
-						<div class="col-12 col-md-12">	
 
 					<table id="SKUTable" class="display compact nowrap" style="width:100%">         
 						<thead>
 							<tr>
 								<th style="width: 30"></th>
 								<th style="width: 100">SKU</th>
-								<th style="width: auto">Numero Serie</th>
-								<th style="width: auto">Costo</th>
-								<th style="width: auto">Fecha Registro</th>
-								<th style="width: auto">Renta Sin Accesorio</th>
-								<th style="width: auto">Uso</th>
+								<th style="width: 400">Numero Serie</th>
+								<th style="width: 300">Costo</th>
+								<th style="width: 100">Fecha Registro</th>
+								<th style="width: 100">Renta Sin Accesorio</th>
+								<th style="width: 100">Uso</th>
 
 							</tr>
 						</thead>
 						<tbody id="tablaSKURow">
 						</tbody>
 					</table>
-			</div>
-			</div>
-			</div>
+
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
+
+<!-- ************* -->
+<div class="overlay_background overlay_hide">
+        <div class="overlay_modal">
+            <div class="overlay_closer"><span class="title">SKU'S</span><span class="btn_close">Cerrar</span></div>
+            
+
+			<div class="collapse" id="collapseExample" style="margin-bottom: 1rem; !important">
+			<div class="card card-body" style="height: 100%;">
+			   <div class="row" style="height: 100% !important;">
+
+				<input id="idSku" name="idSku" type="text" class="form-control form-control-sm" required hidden >
+
+				<div class="col-2">
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating"  style="margin-bottom: .0rem!important;">
+						<input id="SerieSku" name="SerieSku" type="text" class="form-control form-control-sm" required >
+						<label for="SerieSku">Numero de serie Producto</label>
+					</div>
+				</div>
+				<div class="col-2" >
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating" style="margin-bottom: .0rem!important;">
+						<input id="CostSku" name="CostSku" type="number" class="form-control form-control-sm" required >
+						<label for="CostSku">Costo</label>
+					</div>
+				</div>
+				<div class="col-2" >
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating" style="margin-bottom: .0rem !important; height: 65px !important;">
+						<select id="selectRowAlmacenSku"  name="selectRowAlmacenSku"  class="selectRowAlmacen form-select form-select-sm" autocomplete="off"  >
+						</select>
+						<label for="selectRowAlmacenSku" class="form-label">Almacen</label>
+					</div>
+				</div>
+
+				<div class="col-2 align-middle" style="margin-bottom: .0rem!important; margin: 1.1rem 0rem;">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="1" id="checkRentAccesoriesSku" checked>
+						<label class="form-check-label" for="flexCheckDefault">
+							Renta sin accesorios
+						</label>
+					</div>
+				</div>
+
+
+
+				<div class="col-2 align-middle" style="margin-bottom: .0rem!important; margin: .4rem 0rem;">
+					<div class="form-check">
+					<input class="form-check-input" type="radio" name="ventOrRentSku" value="C" id="ventOrRentSku1" checked>
+					<label class="form-check-label" for="flexRadioDefault1">
+						Producto para Compra
+					</label>
+					</div>
+					<div class="form-check">
+					<input class="form-check-input" type="radio" name="ventOrRentSku"  value="R" id="ventOrRentSku2" >
+					<label class="form-check-label" for="flexRadioDefault2">
+						Producto para Renta
+					</label>
+					</div>
+				</div>
+
+				<div class="col-2" style="margin-bottom: .0rem !important; height: 100%; margin-top: .8rem">
+					<button type="button"  class="btn btn-primary btn-sm btn-block" style="font-size: 1rem !important;" id="GuardarSKU" onclick="SaveSku()">Guardar</button>
+				</div>
+
+
+
+				</div>			
+			</div>
+		</div>
+
+			<table id="SKUTable" class="display compact nowrap" >         
+						<thead>
+							<tr>
+								<th style="width: 30"></th>
+								<th style="width: 100">SKU</th>
+								<th style="width: 400">Numero Serie</th>
+								<th style="width: 300">Costo</th>
+								<th style="width: 100">Fecha Registro</th>
+								<th style="width: 100">Renta Sin Accesorio</th>
+								<th style="width: 100">Uso</th>
+
+							</tr>
+						</thead>
+						<tbody id="tablaSKURow">
+						</tbody>
+			</table>
+
+			
+        </div>
+    </div>
+
+<!-- ************* -->
 
 
 

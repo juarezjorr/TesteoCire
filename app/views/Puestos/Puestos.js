@@ -161,8 +161,6 @@ function LimpiaModal() {
     $('#titulo').text('Nuevo Puesto');
 }
 
-
-
 //obtiene la informacion de tabla Proveedores *
 function getPuestoTable() {
     var location = 'Puestos/GetPuestos';                

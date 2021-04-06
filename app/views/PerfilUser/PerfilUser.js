@@ -352,8 +352,6 @@ function getModulesList(ModUser, tipeModul) {
                   '<a href="#" class="list-group-item list-group-item-action" id="' +
                   row.mod_id +
                   '">' +
-                  row.mod_code +
-                  ' - ' +
                   row.mod_name +
                   '<br><span class="list-group-item-Text">' +
                   row.mod_description +
@@ -366,8 +364,6 @@ function getModulesList(ModUser, tipeModul) {
                   '<a href="#" class="list-group-item list-group-item-action" id="' +
                   row.mod_id +
                   '">' +
-                  row.mod_code +
-                  ' - ' +
                   row.mod_name +
                   '<br><span class="list-group-item-Text" >' +
                   row.mod_description +
