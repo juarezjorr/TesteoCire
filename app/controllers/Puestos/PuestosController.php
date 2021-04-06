@@ -1,6 +1,6 @@
 <?php
 	defined('BASEPATH') or exit('No se permite acceso directo');
-	require_once ROOT . FOLDER_PATH . '/app/models/puestos/puestosModel.php';
+	require_once ROOT . FOLDER_PATH . '/app/models/Puestos/PuestosModel.php';
 	require_once LIBS_ROUTE . 'Session.php';
 
 	class PuestosController extends Controller

@@ -13,11 +13,11 @@ class PuestosModel extends Model
 	{
         $estatus = 0;
 			try {
-				$qry = "INSERT INTO ctt_post (pos_name,pos_description,pos_status)
+				$qry = "INSERT INTO ctt_position (pos_name,pos_description,pos_status)
 						     VALUES('".$params['NomPuesto']."','".$params['DesPuesto']."',1)";
 
                 $this->db->query($qry);	
-				$qry = "SELECT MAX(pos_id) AS id FROM ctt_post;";
+				$qry = "SELECT MAX(pos_id) AS id FROM ctt_position;";
 				$result = $this->db->query($qry);
 				if ($row = $result->fetch_row()) {
 				    $lastid = trim($row[0]);
@@ -32,7 +32,7 @@ class PuestosModel extends Model
 // Optiene los Usuaios existentes
 	public function GetPuestos()
 	{
-		$qry = "SELECT pos_id, pos_name, pos_description FROM ctt_post WHERE pos_status = 1;";
+		$qry = "SELECT pos_id, pos_name, pos_description FROM ctt_position WHERE pos_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
@@ -46,7 +46,7 @@ class PuestosModel extends Model
 
     public function GetPuesto($params)
 	{
-		$qry = "SELECT pos_id, pos_name, pos_description FROM ctt_post WHERE pos_id = ".$params['id'].";";
+		$qry = "SELECT pos_id, pos_name, pos_description FROM ctt_position WHERE pos_id = ".$params['id'].";";
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("pos_id" =>$row[0],
@@ -61,7 +61,7 @@ class PuestosModel extends Model
 	{
         $estatus = 0;
 			try {
-				$qry = "UPDATE ctt_post 
+				$qry = "UPDATE ctt_position 
 				SET pos_name = '".$params['NomPuesto']."'
 				,pos_description = '".$params['DesPuesto']."'
 				WHERE  pos_id = ".$params['IdPuesto'].";";
@@ -79,7 +79,7 @@ class PuestosModel extends Model
 	{
         $estatus = 0;
         try {
-            $qry = "UPDATE ctt_post
+            $qry = "UPDATE ctt_position
                     SET pos_status = 0
                     WHERE pos_id in (".$params['IdPuesto'].");";
             $this->db->query($qry);
