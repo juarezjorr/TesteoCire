@@ -177,13 +177,11 @@ class ProductosModel extends Model
 		$qry = "SELECT pro.prd_id, pro.prd_sku, pro.prd_name, pro.prd_english_name,
 		pro.prd_model, pro.prd_price,
 		pro.prd_coin_type, pro.prd_visibility,pro.prd_comments, pro.sbc_id, 
-		pro.sup_id, pro.srv_id, cat.cat_id, storeP.str_id 
-	   ,subcat.sbc_name , cat.cat_name , store.str_name , serv.srv_name , storeP.stp_id
+		pro.sup_id, pro.srv_id, cat.cat_id 
+	   ,subcat.sbc_name , cat.cat_name  , serv.srv_name 
 				FROM  ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_categories AS cat ON cat.cat_id = subcat.cat_id
-				LEFT JOIN ctt_store_product AS storeP ON storeP.prd_id = pro.prd_id
-				LEFT JOIN ctt_stores AS store ON store.str_id = storeP.str_id
 				LEFT JOIN ctt_services AS serv ON serv.srv_id = pro.srv_id
 				where pro.prd_status = 1;";
 
@@ -218,12 +216,9 @@ class ProductosModel extends Model
 			"sup_id" =>$row[10],
 			"srv_id" =>$row[11],
 			"cat_id" =>$row[12],
-			"str_id" =>$row[13],
-			"sbc_name" =>$row[14],
-			"cat_name" =>$row[15],
-			"str_name" =>$row[16],
-			"srv_name" =>$row[17],
-			"stp_id" =>$row[18],
+			"sbc_name" =>$row[13],
+			"cat_name" =>$row[14],
+			"srv_name" =>$row[15],
 			"extDocuments" =>$string,
 		    "extNum" =>$Count);
 			
