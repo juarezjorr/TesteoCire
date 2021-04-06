@@ -20,18 +20,6 @@
 								</div>
 							</div>
 
-							<div class="row">
-								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="NomSubCategoria" name="NomSubCategoria" type="text" class="form-control form-control-sm" required >
-									<label for="NomSubCategoria">Nombre Subcategoria</label>
-								</div>
-							</div>
-                     <div class="row">
-								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="CodSubCategoria" name="CodSubCategoria" type="text" class="form-control form-control-sm" maxlength="2" style="text-transform: uppercase" required >
-									<label for="CodSubCategoria">Code Subcategoria</label>
-								</div>
-							</div>
 
                             <div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
@@ -40,6 +28,23 @@
 									<label for="selectTipoAlmacen" class="form-label">Categoria</label>
 								</div>
 							</div>
+
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="NomSubCategoria" name="NomSubCategoria" type="text" class="form-control form-control-sm" required >
+									<label for="NomSubCategoria">Nombre Subcategoria</label>
+								</div>
+							</div>
+
+                     		<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="CodSubCategoria" name="CodSubCategoria" type="text" class="form-control form-control-sm" maxlength="2" style="text-transform: uppercase" required >
+									<label for="CodSubCategoria">Code Subcategoria</label>
+								</div>
+							</div>
+
+
 
 							<div class="row">
 								<div class="col-6">
