@@ -346,12 +346,12 @@ function getModulesList(ModUser,tipeModul) {
             var renglon = "";
             if(tipeModul == "Asig"){
                 respuesta.forEach(function(row, index) {
-                    renglon ='<a href="#" class="list-group-item list-group-item-action" id="'+row.mod_id+'">'+row.mod_code+' - '+row.mod_name+'<br><span class="list-group-item-Text">'+row.mod_description+'</span></a>';
+                    renglon ='<a href="#" class="list-group-item list-group-item-action" id="'+row.mod_id+'">'+row.mod_name+'<br><span class="list-group-item-Text">'+row.mod_description+'</span></a>';
                     $("#listAsignado").append(renglon);
                 });
             }else{
                 respuesta.forEach(function(row, index) {
-                    renglon ='<a href="#" class="list-group-item list-group-item-action" id="'+row.mod_id+'">'+row.mod_code+' - '+row.mod_name+'<br><span class="list-group-item-Text" >'+row.mod_description+'</span></a>';
+                    renglon ='<a href="#" class="list-group-item list-group-item-action" id="'+row.mod_id+'">'+row.mod_name+'<br><span class="list-group-item-Text" >'+row.mod_description+'</span></a>';
                     $("#listDisponible").append(renglon);
                 });
             }
