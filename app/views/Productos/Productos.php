@@ -485,7 +485,7 @@
 
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
-<script src="<?=  PATH_VIEWS . 'productos/productos.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'Productos/Productos.js' ?>"></script>
 
 
 

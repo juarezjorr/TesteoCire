@@ -172,20 +172,17 @@ function putStores(dt) {
 // Almacena los registros de productos en un arreglo
 function putProducts(dt) {
    console.log(dt);
-   pr = dt;
+   $.each(dt, function (v, u) {
+      let H = `<div class="list-item" id="P-${u.ser_id}" data-store="${u.str_id}" data-content="${u.ser_id}|${u.ser_sku}|${u.ser_serial_number}|${u.prd_name}|${u.ser_cost}|${u.prd_coin_type}">
+         ${u.prd_sku} - ${u.prd_name}<div class="items-just"><div class="quantity editable" data-content="${u.stp_quantity}" contenteditable=true>${u.stp_quantity}</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
+      $('#listProducts').append(H);
+   });
 }
 // Dibuja los productos
 function drawProducts(str) {
-   $('#listProducts').html('');
-
-   $.each(pr, function (v, u) {
-      if (u.str_id == str) {
-         let H = `<div class="list-item" id="P-${u.prd_id}" data_complement="${u.ser_id}|${u.prd_sku}|${u.ser_serial_number}|${u.ser_cost}|${u.prd_coin_type}">
-         ${u.prd_sku} - 
-         ${u.prd_name}<div class="items-just"><div class="quantity editable" contenteditable=true>${u.stp_quantity}</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
-         $('#listProducts').append(H);
-      }
-   });
+   console.log(str);
+   $('.list-item').addClass('hide-items');
+   $(`.list-item[data-store^="${str}"]`).removeClass('hide-items');
 
    var ps = $('#boxProducts').offset();
    $('.list-group').css({top: ps.top + 30 + 'px', display: 'none'});
@@ -196,10 +193,8 @@ function drawProducts(str) {
       });
 
    $('.list-item .items-just i').on('click', function () {
-      let ls = $(this).parents('.list-item').attr('data_complement').split('|')[0];
-      let qt = $(this).parent().children('.quantity').text();
-      console.log(ls, qt);
-      exchange_apply(ls, qt);
+      let id = $(this).parents('.list-item');
+      exchange_apply(id);
    });
 }
 function xdrawProducts(str) {
@@ -220,7 +215,7 @@ function xdrawProducts(str) {
    });
 }
 // Valida los campos
-function validator() {
+function validator(prId) {
    let ky = 0;
    let msg = '';
 
@@ -236,6 +231,16 @@ function validator() {
       $('#txtStoreTarget').addClass('fail');
    }
 
+   let qtystk = prId.children().children('.quantity').attr('data-content');
+   let qtysel = prId.children().children('.quantity').text();
+   if (qtystk < qtysel) {
+      prId.children().children('.quantity').text(qtystk);
+   }
+   if (qtysel < 1) {
+      ky = 1;
+      msg += 'No tiene stock suficiente';
+   }
+
    $('.fail')
       .unbind('focus')
       .on('focus', function () {
@@ -244,16 +249,8 @@ function validator() {
    return ky;
 }
 // Aplica la seleccion para la tabla de movimientos
-function x_exchange_apply(prId, qt) {
-   if (validator() == 0) {
-      console.log(prId, qt);
-      let typeExchangeCodeSource = $('#txtTypeExchange option:selected').attr('data-content').split('|')[0];
-
-      console.log(typeExchangeCodeSource);
-   }
-}
-function exchange_apply() {
-   if (validator() == 0) {
+function exchange_apply(prId) {
+   if (validator(prId) == 0) {
       let typeExchangeCodeSource = $('#txtTypeExchange option:selected').attr('data-content').split('|')[0];
       let typeExchangeCodeTarget = $('#txtTypeExchange option:selected').attr('data-content').split('|')[3];
       let typeExchangeIdSource = $('#txtTypeExchange option:selected').val();
@@ -269,12 +266,12 @@ function exchange_apply() {
          storeNameTarget = '';
       }
 
-      let productId = $('#txtProducts option:selected').val();
-      let productSKU = $('#txtProducts option:selected').attr('data-content').split('|')[0];
-      let productName = $('#txtProducts option:selected').text().split(' - ')[1];
-      let productQuantity = $('#txtQuantity').val();
-      let productSerie = $('#txtProducts option:selected').attr('data-content').split('|')[2];
-      let storeProduct = $('#txtProducts option:selected').attr('data-content').split('|')[3];
+      let prod = prId.attr('data-content').split('|');
+      let productId = prod[0];
+      let productSKU = prod[1];
+      let productName = prod[3];
+      let productQuantity = prId.children().children('.quantity').text();
+      let productSerie = prod[2];
 
       let commnets = $('#txtComments').val();
       let project = '';
@@ -300,7 +297,6 @@ function exchange_apply() {
                "folguid"	:	"${guid}"
             }]
             `;
-
       fill_table(par);
    }
 }
@@ -330,7 +326,7 @@ function fill_table(par) {
       .draw();
    btn_apply_appears();
 
-   clean_selectors();
+   // clean_selectors();
 
    $('.edit')
       .unbind('click')
@@ -340,7 +336,6 @@ function fill_table(par) {
          update_array_products(pid, qty);
          tabla.row($(this).parent('tr')).remove().draw();
          btn_apply_appears();
-         clean_selectors();
       });
 }
 
@@ -366,12 +361,12 @@ function clean_selectors() {
 }
 /** Actualiza la cantidad de cada producto dentro del arreglo */
 function update_array_products(id, cn) {
-   $.each(pr, function (v, u) {
-      //    console.log(u[1].prd_id);
-      if (u[1].ser_id == id) {
-         u[1].stp_quantity = u[1].stp_quantity - cn;
-      }
-   });
+   let prId = $('#P-' + id);
+   let qtystk = prId.children().children('.quantity').text();
+   prId
+      .children()
+      .children('.quantity')
+      .text(qtystk - cn);
 }
 
 function read_exchange_table() {
@@ -382,26 +377,31 @@ function read_exchange_table() {
       let quantity = $($(u).find('td')[3]).text();
       let serie = $($(u).find('td')[4]).text();
       let storeSource = $($(u).find('td')[6]).text();
-      let comments = $($(u).find('td')[7]).text();
+      let comments = $($(u).find('td')[9]).text();
       let codeTypeExchangeSource = $($(u).find('td')[5]).text();
       let idTypeExchangeSource = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[2];
-      let storeTarget = $($(u).find('td')[7]).text();
+      let storeTarget = $($(u).find('td')[8]).text();
       let codeTypeExchangeTarget = $($(u).find('td')[7]).text();
       let idTypeExchangeTarget = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[3];
       let productId = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[4];
       let storeIdSource = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[5];
       let storeIdTarget = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[6];
 
-      let exchstruc = `${guid}|${sku}|${product}|${quantity}|${serie}|${storeSource}|${comments}|${codeTypeExchangeSource}|${idTypeExchangeSource}`;
-      let exchupda = `${productId}|${quantity}|${storeIdSource}`;
+      let exchstruc1 = `${guid}|${sku}|${product}|${quantity}|${serie}|${storeSource}|${comments}|${codeTypeExchangeSource}|${idTypeExchangeSource}`;
+      let exchstruc2 = `${guid}|${sku}|${product}|${quantity}|${serie}|${storeTarget}|${comments}|${codeTypeExchangeTarget}|${idTypeExchangeTarget}`;
+      let exchupda1 = `${productId}|${quantity}|${storeIdSource}`;
+      let exchupda2 = `${productId}|${quantity}|${storeIdTarget}`;
+
+      console.log(exchupda1);
+      console.log(exchupda2);
 
       if (codeTypeExchangeSource != '') {
-         build_data_structure(exchstruc);
-         build_update_store_data(`${exchupda}|S`);
+         build_data_structure(exchstruc1);
+         build_update_store_data(`${exchupda1}|S`);
       }
       if (codeTypeExchangeTarget != '') {
-         build_data_structure(exchstruc);
-         build_update_store_data(`${exchupda}|T`);
+         build_data_structure(exchstruc2);
+         build_update_store_data(`${exchupda2}|T`);
       }
    });
 }
@@ -434,6 +434,7 @@ function build_update_store_data(pr) {
                   "mov" :  "${el[3]}"
                }
             ]`;
+
    update_store(par);
 }
 
