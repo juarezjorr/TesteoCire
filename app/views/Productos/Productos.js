@@ -202,7 +202,7 @@ function addZeroNumber(number, length) {
 
 //Guardar Almacen **
 function SaveProducto() {
-        var location = "productos/SaveProductos";
+        var location = "Productos/SaveProductos";
 
         var IdProducto = $('#IdProducto').val();
         var NomProducto = $('#NomProducto').val();
@@ -349,7 +349,7 @@ function getSubCategorias(id, idCategoria) {
 // Optiene las Servicios *
 function getServicios(id) {
     $("#selectRowService").html("");
-    var location = 'servicios/GetServicios';                
+    var location = 'Servicios/GetServicios';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -372,7 +372,7 @@ function getServicios(id) {
 // Optiene las proveedores *
 function getProveedores(id) {
     $("#selectRowProovedores").html("");
-    var location = 'proveedores/GetProveedores';                
+    var location = 'Proveedores/GetProveedores';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -396,7 +396,7 @@ function getProveedores(id) {
 // Optiene las proveedores *
 function getAlmacenes(id) {
     $("#selectRowAlmacen").html("");
-    var location = 'almacenes/GetAlmacenes';                
+    var location = 'Almacenes/GetAlmacenes';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -419,7 +419,7 @@ function getAlmacenes(id) {
 
 function getAlmacenesSku(id) {
     $("#selectRowAlmacenSku").html("");
-    var location = 'almacenes/GetAlmacenes';                
+    var location = 'Almacenes/GetAlmacenes';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -443,7 +443,7 @@ function getAlmacenesSku(id) {
 // Optiene las documentos *
 function getDocumentos(id) {
     $("#selectRowDocument").html("");
-    var location = 'documentos/GetDocumentos';                
+    var location = 'Documentos/GetDocumentos';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -588,7 +588,7 @@ function getTipoMoneda(id) {
 
 function NomProductoSelect(id) {
     $('#NomProductoSelect').html("");
-    var location = 'productos/GetAutoComplete';                
+    var location = 'Productos/GetAutoComplete';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -613,7 +613,7 @@ function NomProductoSelect(id) {
     $('#NomProducto').on('keyup', function() {
         var key = $(this).val();		
         var dataString = 'key='+key;
-        var location = 'productos/GetAutoComplete';              
+        var location = 'Productos/GetAutoComplete';              
 	$.ajax({
             type: "POST",
             url: location,
@@ -647,7 +647,7 @@ function getInfoComun(nombreDocument,productoComun,cantidadSKU,idproducto) {
         $('#IdProducto').val(idproducto);
     }
     $('#NomProductoSelect').html("");
-    var location = 'productos/getInfoComun';                
+    var location = 'Productos/getInfoComun';                
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -889,7 +889,7 @@ function skuByID(idProduct) {
 }
 
 function SaveSku() {
-    var location = "productos/SaveSku";
+    var location = "Productos/SaveSku";
     var idSku = $('#idSku').val();
     var serieSku = $('#SerieSku').val();
     var costSku = $('#CostSku').val();
