@@ -11,7 +11,7 @@
 	<div class="contenido">
         <div class="row mvst_group">
         <div class="mb-3 mvst_list">
-        <h1>Movimiento entre almacenes</h1>
+        <h1>Lista de precios</h1>
             <table class="display compact nowrap"  id="tblPriceList">
                 <thead>
                     <tr>

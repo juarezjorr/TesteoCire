@@ -138,13 +138,13 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
 	`prd_english_name`		VARCHAR(100)  NULL 			 COMMENT 'Nombre del producto en ingles',
     `prd_model`				VARCHAR(50) NULL 			 COMMENT 'Modelo del producto',
     `prd_price`				DECIMAL(10,2)  NULL			 COMMENT 'Precio unitario del producto',
-	`prd_coin_type`			VARCHAR(30)  NULL 			 COMMENT 'Tipo de moneda',
 	`prd_visibility`		VARCHAR(1) NULL		 		 COMMENT 'Visibilidad del producto en cotización 1-visible, 0-no visible',
     `prd_comments`			VARCHAR(300) NULL	 		 COMMENT 'Observaciones',
     `prd_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
     `sbc_id` 				INT NULL 					 COMMENT 'ID de la subcategoría relacion ctt_subcategories',
     `sup_id` 				INT NULL 					 COMMENT 'ID de la proveedor relacion ctt_suppliers',
     `srv_id` 				INT NULL 					 COMMENT 'ID del tipo de servicio relacion ctt_services',
+	`exm_id` 				INT NULL 					 COMMENT 'ID del tipo de moneda relacion ctt_exchange_currency',
 PRIMARY KEY (`prd_id`))
 COMMENT = 'Productos de la empresa.';
 
@@ -256,7 +256,6 @@ DROP TABLE `cttapp_cire`.`ctt_subletting`;
 CREATE TABLE `cttapp_cire`.`ctt_subletting` (
   	`sub_id` 				INT(11) NOT NULL AUTO_INCREMENT COMMENT 'ID del subarrendo',
   	`sub_price` 			DECIMAL(10,2)  NULL	 DEFAULT 0   COMMENT 'precio de renta del producto por unidad',
-  	`sub_coin_type`			VARCHAR(30)  NULL 			 COMMENT 'Tipo de moneda',
 	`sub_quantity` 			INT(11) NULL   			 	 COMMENT 'Cantidad de piezas subarrendadas',
   	`sub_date_start` 		DATETIME NULL   			 COMMENT 'Fecha de inicio de periodo de subarrendo',
   	`sub_date_end` 			DATETIME NULL   			 COMMENT 'Fecha de término de periodo de subarrendo',
@@ -264,7 +263,7 @@ CREATE TABLE `cttapp_cire`.`ctt_subletting` (
   	`ser_id`				INT(11) NULL		 		 COMMENT 'Id del serial del producto relacion ctt_serial',
 	`sup_id`				INT(11) NULL		 		 COMMENT 'Id del proveedor relacion ctt_suppliers',
 	`prj_id`				INT(11) NULL		 		 COMMENT 'Id del proyecto ',
-	
+	`exm_id` 				INT NULL 					 COMMENT 'ID del tipo de moneda relacion ctt_exchange_currency',	
 PRIMARY KEY (`sub_id`))
 COMMENT='Tabla de situación de subarrendos';
 
@@ -274,7 +273,7 @@ CREATE TABLE `cttapp_cire`.`ctt_exchange_currency` (
   `exm_name` 				VARCHAR(50) 				COMMENT 'Clave de la moneda',
   `exm_descripcion` 		VARCHAR(100) 				COMMENT 'Descripción de la moneda',
   `exm_status` 				INT(11) DEFAULT 1			COMMENT 'Estatus de la moneda 1-activo 0-inactivo',
-  PRIMARY KEY (`exm_id`)) 
+PRIMARY KEY (`exm_id`)) 
 COMMENT='Tabla catalogo de monedas';
 
 
