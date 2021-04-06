@@ -81,7 +81,7 @@ function EditPerfil(id) {
     LimpiaModal();
     $('#titulo').text('Editar Perfil Usuario');
 
-    var location = "perfilUser/GetDataPerfil";
+    var location = "PerfilUser/GetDataPerfil";
     $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -116,7 +116,7 @@ function UnSelectRowTable() {
 }
 
 function DeletPerfil() {
-    var location = "perfilUser/DeletePerfil";
+    var location = "PerfilUser/DeletePerfil";
     var IdPerfil = $('#IdPerfilBorrrar').val();
     console.log(IdPerfil);
     $.ajax({
@@ -146,7 +146,7 @@ function DeletPerfil() {
 
 //Guardar perfil
 function SavePerfil() {
-        var location = "perfilUser/SavePerfil";
+        var location = "PerfilUser/SavePerfil";
         var NomPerfil = $('#NomPerfil').val();
         var DesPerfil = $('#DesPerfil').val();
         var CodPerfil = $('#CodPerfil').val();
@@ -207,7 +207,7 @@ function LimpiaModal() {
 
 
 function getPerfilesTable() {
-    var location = 'perfilUser/GetPerfiles';                
+    var location = 'PerfilUser/GetPerfiles';                
     $('#perfilesTable').DataTable().destroy();
     $("#tablaPerfilesRow").html('');
  
@@ -335,28 +335,10 @@ function getPerfilesTable() {
        },
     }).done(function () {});
  }
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //Optiene los modulos 
 function getModulesList(ModUser,tipeModul) {
-    var location = 'perfilUser/GetModules';
+    var location = 'PerfilUser/GetModules';
     $.ajax({
             type: "POST",
             dataType: 'JSON',
