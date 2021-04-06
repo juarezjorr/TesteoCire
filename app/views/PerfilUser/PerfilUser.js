@@ -54,9 +54,6 @@ $(document).ready(function () {
            }
        }, 10);
      });
-
-
-
 }
 
 
@@ -189,8 +186,7 @@ function SavePerfil() {
              }
         },
         error: function (EX) {console.log(EX);}
-        }).done(function () {});
-    
+        }).done(function () {});  
 }
 
 //Limpia datos en modal perfil
@@ -242,7 +238,6 @@ function getPerfilesTable() {
                 '<td>' +
                 row.prf_description +
                 '</td>' +
- 
                 
                 '</tr>';
              $('#tablaPerfilesRow').append(renglon);

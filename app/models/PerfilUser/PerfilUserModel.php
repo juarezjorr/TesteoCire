@@ -24,9 +24,9 @@ class PerfilUserModel extends Model
 		$lista = array();
 		while ($row = $result->fetch_row()){
 			$item = array("mod_id" =>$row[0],
-						"mod_code" =>$row[1],
-						"mod_name"=>$row[2],
-						"mod_description"=>$row[3]);
+						  "mod_code" =>$row[1],
+						  "mod_name"=>$row[2],
+						  "mod_description"=>$row[3]);
 			array_push($lista, $item);
 		}
 		//print_r($lista);
