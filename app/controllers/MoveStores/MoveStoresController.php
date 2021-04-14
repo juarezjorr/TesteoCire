@@ -35,7 +35,7 @@ class MoveStoresController extends Controller
 				$i++;
 			}
 			if ($i>0){
-				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);
 			} else {
 				$res =  '[{"ext_id":"0"}]';	
 			}
@@ -62,7 +62,6 @@ class MoveStoresController extends Controller
 			  $res =  '[{"str_id":"0"}]';	
 		  }
 		  echo $res;
-		
 	}
  // Lista los almacenes 
 	public function listProducts($request_params)

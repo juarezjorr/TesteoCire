@@ -141,10 +141,12 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
 	`prd_visibility`		VARCHAR(1) NULL		 		 COMMENT 'Visibilidad del producto en cotización 1-visible, 0-no visible',
     `prd_comments`			VARCHAR(300) NULL	 		 COMMENT 'Observaciones',
     `prd_status`			VARCHAR(1) NULL		 		 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
+	`prd_level` 			VARCHAR(1) DEFAULT 'P'		 COMMENT 'Nivel del producto  K=Kit, P=Producto',
     `sbc_id` 				INT NULL 					 COMMENT 'ID de la subcategoría relacion ctt_subcategories',
     `sup_id` 				INT NULL 					 COMMENT 'ID de la proveedor relacion ctt_suppliers',
     `srv_id` 				INT NULL 					 COMMENT 'ID del tipo de servicio relacion ctt_services',
 	`exm_id` 				INT NULL 					 COMMENT 'ID del tipo de moneda relacion ctt_exchange_currency',
+
 PRIMARY KEY (`prd_id`))
 COMMENT = 'Productos de la empresa.';
 
@@ -269,12 +271,27 @@ COMMENT='Tabla de situación de subarrendos';
 
 DROP TABLE `cttapp_cire`.`ctt_exchange_currency`;
 CREATE TABLE `cttapp_cire`.`ctt_exchange_currency` (
-  `exm_id` 					int(11) NOT NULL AUTO_INCREMENT,
+  `exm_id` 					int(11) NOT NULL AUTO_INCREMENT  COMMENT 'ID de la moneda',
   `exm_name` 				VARCHAR(50) 				COMMENT 'Clave de la moneda',
   `exm_descripcion` 		VARCHAR(100) 				COMMENT 'Descripción de la moneda',
   `exm_status` 				INT(11) DEFAULT 1			COMMENT 'Estatus de la moneda 1-activo 0-inactivo',
 PRIMARY KEY (`exm_id`)) 
 COMMENT='Tabla catalogo de monedas';
 
+DROP TABLE `cttapp_cire`.`ctt_areas`;
+CREATE TABLE `cttapp_cire`.`ctt_areas` (
+  `are_id` 					int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID del área',
+  `are_name` 				VARCHAR(50) 				COMMENT 'nombre del área',
+  `are_status` 				INT(11) DEFAULT 1			COMMENT 'Estatus del área 1-activo 0-inactivo',
+PRIMARY KEY (`are_id`)) 
+COMMENT='Áreas organizacionales de la empresa';
+
+DROP TABLE `cttapp_cire`.`ctt_products_packages`;
+CREATE TABLE `cttapp_cire`.`ctt_products_packages` (
+	`pck_id` 				INT NOT NULL AUTO_INCREMENT  COMMENT 'ID dela relaión paquete producto',
+	`prd_parent`			INT NULL		 			 COMMENT 'ID del producto padre',
+	`prd_id`				INT NULL					 COMMENT 'Id del producto hijo relaciòn ctt_products',
+PRIMARY KEY (`pck_id`))
+COMMENT = 'Tabla pivote que relaiona los productos a un paquete';
 
 
