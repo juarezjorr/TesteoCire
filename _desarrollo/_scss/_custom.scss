@@ -115,6 +115,19 @@ h4 {
 		padding: 60px 10px 0 10px;
 		z-index: 5;
 		grid-column: 2 / span 1;
+
+		.double-column {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-gap: 10px;
+
+			.left-side {
+				grid-column: 1 / span 1;
+			}
+			.right-side {
+				grid-column: 2 / span 1;
+			}
+		}
 	}
 
 	.mvst_list {
@@ -126,18 +139,31 @@ h4 {
 	}
 }
 
+.form-group {
+	.form_primary {
+		display: block;
+	}
+	.form_secundary {
+		display: none;
+	}
+}
+
 .form-floating {
 	& > .form-select {
-		height: calc(3rem + 5px);
+		height: calc(3rem + 0px);
 		padding: 1.05rem 0.75rem;
-		font-size: 1rem;
+		font-size: 0.8rem;
 		font-weight: 900;
 		padding-top: 1rem;
-		padding-bottom: 0.625rem;
+		padding-bottom: 0.3rem;
+
+		option {
+			font-size: 0.75rem;
+		}
 	}
 	input,
 	textarea {
-		font-size: 1.1rem;
+		font-size: 0.8rem;
 		font-weight: 900;
 	}
 	.box-items-list {
@@ -146,13 +172,17 @@ h4 {
 		border-radius: 6px;
 		padding: 8px 16px;
 		font-weight: 900;
-		font-size: 1.1em;
+		font-size: 0.8rem;
 		color: #212529;
 
 		i {
 			float: right;
 			font-size: 1.05rem;
 			color: #212529;
+			transition: all 0.3s ease;
+			&.rotate {
+				transform: rotate(180deg);
+			}
 		}
 	}
 
@@ -211,7 +241,7 @@ div.dataTables_wrapper div.btn-group button.btn-apply {
 	display: inline-block;
 	padding: 0.1rem 0.95rem;
 	font-weight: normal;
-	font-size: 1.1em;
+	font-size: 1em;
 	background-color: $dark;
 	color: #ffffff;
 	border-radius: 8px;
@@ -386,6 +416,10 @@ table {
 
 // Listador de elementos pertenecientes a un input
 
+.hide-items {
+	display: none;
+}
+
 .list-finder {
 	position: relative;
 	.list-group {
@@ -402,6 +436,7 @@ table {
 			display: none;
 		}
 		.list-items {
+			font-size: 0.75rem;
 			border-radius: 5px;
 			box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
 			width: 100%;
@@ -409,8 +444,10 @@ table {
 			padding: 4px;
 			background-color: #ffffff;
 			overflow: auto;
+
 			.list-item {
 				width: 100%;
+
 				padding: 6px;
 				cursor: pointer;
 				border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -577,6 +614,19 @@ table {
 			width: 100%;
 			grid-column: 1 / span 1;
 			grid-row: 2 / span 1;
+
+			.double-column {
+				display: grid;
+				grid-template-columns: 1fr;
+				grid-template-rows: 1fr 1fr;
+
+				.left-side {
+					grid-area: 1 / 1 /2 /2;
+				}
+				.right-side {
+					grid-area: 2 / 1 / 3 / 2;
+				}
+			}
 		}
 	}
 }
