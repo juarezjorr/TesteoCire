@@ -21,6 +21,20 @@ class ProductosModel extends Model
 		//print_r($countId);
 
         $estatus = 0;
+
+		//MODELO 3 DIGITOS
+		$qry = "SELECT count(*) FROM ctt_products WHERE sbc_id =  ".$params['idSubCategoria'].";";
+		$result = $this->db->query($qry);
+		if ($row = $result->fetch_row()) {
+			$consecutivoModel  = trim($row[0]);
+			$consecutivoModel = $consecutivoModel + 1;
+		}
+
+		$model = str_pad($consecutivoModel, 3, "0", STR_PAD_LEFT);
+
+
+
+
 			try {
 				if($countId == 0){
 					$qry = "INSERT INTO ctt_products(prd_name, 
@@ -32,7 +46,8 @@ class ProductosModel extends Model
 										prd_status, 
 										sbc_id, 
 										sup_id, 
-										srv_id) 
+										srv_id,
+										prd_model) 
 								VALUES('".$params['NomProducto']."',
 									'".$params['NomEngProducto']."',
 									".$params['PriceProducto'].",
@@ -42,7 +57,8 @@ class ProductosModel extends Model
 									1,
 									".$params['idSubCategoria'].",
 									".$params['idProveedor'].",
-									".$params['idTipeService']." )";
+									".$params['idTipeService'].",
+									'".$model."')";
 					$this->db->query($qry);	
 					//print_r($qry . "-");
 					$qry = "SELECT MAX(prd_id) AS id FROM ctt_products;";
@@ -74,15 +90,7 @@ class ProductosModel extends Model
 
 				$Subcategoria = str_pad($Subcategoria, 2, "0", STR_PAD_LEFT);
 
-				//MODELO 3 DIGITOS
-				$qry = "SELECT count(*) FROM ctt_products WHERE sbc_id =  ".$params['idSubCategoria'].";";
-				$result = $this->db->query($qry);
-				if ($row = $result->fetch_row()) {
-					$consecutivoModel  = trim($row[0]);
-					$consecutivoModel = $consecutivoModel + 1;
-				}
-		
-				$model = str_pad($consecutivoModel, 3, "0", STR_PAD_LEFT);
+
 
 
 				

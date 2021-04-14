@@ -3,9 +3,14 @@
 	  require ROOT . FOLDER_PATH . "/app/assets/header.php";
 	  	  
 ?>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<!--  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
+
+ <link rel="stylesheet" href="<?= PATH_ASSETS .	'css/select2.min.css' ?>" />
+ <script src="<?=  PATH_ASSETS . 'lib/select2.min.js' ?>"></script>
+ <script src="<?=  PATH_ASSETS . 'lib/popper.min.js' ?>"></script>
+
 
 
 <header>
