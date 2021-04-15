@@ -15,14 +15,14 @@
             <!-- Start Sector lateral izquierdo, zona de fomularios -->
             <div class="mb-3 mvst_panel">
                 <div class="form-group">
-                <a href="<?= FOLDER_PATH . '/StoreProductsList/GenerateReport' ?>">Reporte</a>
-                </div>
+                <button class="generate_button">Genera Reporte</button>
+                
             </div>
             <!-- End Sector lateral izquierdo, zona de fomularios -->
 
             <!-- Start Sector de contenido, zona de tablas y operaciones -->
             <div class="mb-3 mvst_table">
-            <?php !empty($report) ? require ROOT . PATH_VIEWS . 'StoreProductsList/rpt_StoreProducts.php' : '' ?>
+            
             </div>
             <!-- End Sector de contenido, zona de tablas y operaciones -->
 

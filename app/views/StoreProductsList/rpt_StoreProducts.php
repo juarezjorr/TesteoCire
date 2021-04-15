@@ -1,11 +1,11 @@
 <?php
 
-    require_once ROOT . PATH_ASSETS . 'lib/dompdf/autoload.inc.php';
+    require_once ROOT . PATH_ASSETS . 'vendor/autoload.php';
 
-
-    use Dompdf\Dompdf;
-    $dompdf = new Dompdf();
-    $dompdf->loadHtml('Reporte PDF');
-    $dompdf->setPaper('letter', 'landscape');
-    $dompdf->render();
-    $dompdf->stream();
+ob_clean();
+    $mpdf = new \Mpdf\Mpdf();
+    $mpdf->WriteHTML('<html><head><title>PDF</title></head><body><h1>Hello world!</h1></body></html>');
+    $mpdf->Output(
+        "reporte.pdf",
+        "I"
+    );
