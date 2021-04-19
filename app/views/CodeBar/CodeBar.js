@@ -499,7 +499,7 @@ function generateBarcode(selector,SKU){
 
        //console.log(selector, arraySku[1]);
 
-       $("#modalSku").append("<svg id='"+selector+"'></svg>");
+       $("#modalSku").append("<svg   id='"+selector+"'></svg  >");
            /*setTimeout(() => {
        }, 1500); */
        generateBarcode("#"+selector,arraySku[1]);
@@ -527,6 +527,7 @@ function generateBarcode(selector,SKU){
 function pdf_code(){
     var doc = new jsPDF();
     var elementHTML = $('#modalSku').html();
+    console.log(elementHTML);
     var specialElementHandlers = {
         '#elementH': function (element, renderer) {
             return true;

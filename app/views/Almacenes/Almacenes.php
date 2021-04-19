@@ -5,6 +5,14 @@
 <header>
 	<?php require ROOT . FOLDER_PATH . "/app/assets/menu.php"; ?>
 </header>
+<style>
+	
+.hiddenElement {
+	visibility: hidden !important;
+}
+</style>
+
+
 <div class="container-fluid">
 	<div class="contenido">
 		<div class="row mvst_group">
@@ -23,6 +31,15 @@
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="NomAlmacen" name="NomAlmacen" type="text" class="form-control form-control-sm" required>
 									<label for="NomAlmacen">Nombre almacen</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowEncargado"  name="selectRowEncargado"  class="form-select form-select-sm" required>
+
+									</select>
+									<label for="selectTipoAlmacen" class="form-label">Encargado de Almacen</label>
 								</div>
 							</div>
 
@@ -72,6 +89,8 @@
 													<th style="width: 30px"></th>
 													<th style="width: 20px">Id</th>
 													<th style="width: auto">Nombre</th>
+													<th style="width: auto">Encargado Almacen</th>
+													<th style="width: auto" hidden>Encargado Almacen</th>
 													<th style="width: 100px">Tipo</th>
 											</tr>
 										</thead>

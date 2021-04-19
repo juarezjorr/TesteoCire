@@ -13,8 +13,8 @@ class AlmacenesModel extends Model
 	{
         $estatus = 0;
 			try {
-                $qry = "INSERT INTO ctt_stores(str_name, str_type,str_status) 
-                VALUES ('".$params['NomAlmacen']."','".$params['tipoAlmacen']."',1)";
+                $qry = "INSERT INTO ctt_stores(str_name, str_type,str_status, emp_id) 
+                VALUES ('".$params['NomAlmacen']."','".$params['tipoAlmacen']."',1,'".$params['EncargadoAlmacen']."')";
                 $this->db->query($qry);	
 				$qry = "SELECT MAX(str_id) AS id FROM ctt_stores;";
 				$result = $this->db->query($qry);
@@ -30,13 +30,17 @@ class AlmacenesModel extends Model
 // Optiene los Usuaios existentes
 	public function GetAlmacenes()
 	{
-		$qry = "SELECT str_id, str_name, str_type FROM ctt_stores WHERE str_status = 1;";
+		$qry = "SELECT str_id, str_name, str_type, str.emp_id , emp_fullname  FROM ctt_stores AS str
+				LEFT JOIN ctt_employees AS emp ON emp.emp_id = str.emp_id
+				WHERE str.str_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
 			$item = array("str_id" =>$row[0],
-						"str_name" =>utf8_decode($row[1]),
-						"str_type"=>utf8_decode($row[2]));
+						"str_name" =>$row[1],
+						"str_type"=>$row[2],
+						"emp_id"=>$row[3],
+						"emp_fullname"=>$row[4]);
 			array_push($lista, $item);
 		}
 		return $lista;
@@ -44,12 +48,13 @@ class AlmacenesModel extends Model
 
     public function GetAlmacen($params)
 	{
-		$qry = "SELECT str_id, str_name, str_type FROM ctt_stores WHERE str_id = ".$params['id'].";";
+		$qry = "SELECT str_id, str_name, str_type, emp_id  FROM ctt_stores WHERE str_id = ".$params['id'].";";
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("str_id" =>$row[0],
-			"str_name" =>utf8_decode($row[1]),
-			"str_type"=>utf8_decode($row[2]));
+			"str_name" =>$row[1],
+			"str_type"=>$row[2],
+			"emp_id"=>$row[3]);
 		}
 		return $item;
 	}
@@ -62,6 +67,8 @@ class AlmacenesModel extends Model
                 $qry = " UPDATE ctt_stores
                 SET str_name = '".$params['NomAlmacen']."'
                 ,str_type ='".$params['tipoAlmacen']."'
+				,emp_id ='".$params['EncargadoAlmacen']."'
+
                 WHERE str_id = ".$params['IdAlmacen'].";";
 
 				$this->db->query($qry);	
@@ -86,6 +93,20 @@ class AlmacenesModel extends Model
             $estatus = 0;
         }
 		return $estatus;
+	}
+
+
+	public function GetEncargadosAlmacen()
+	{
+		$qry = "SELECT emp_id, emp_fullname FROM ctt_employees WHERE emp_status = 1;";
+		$result = $this->db->query($qry);
+		$lista = array();
+		while ($row = $result->fetch_row()){
+			$item = array("emp_id" =>$row[0],
+						  "emp_fullname" =>$row[1]);
+			array_push($lista, $item);
+		}
+		return $lista;
 	}
 
 

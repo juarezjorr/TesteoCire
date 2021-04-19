@@ -8,6 +8,7 @@ $(document).ready(function () {
 
 function inicial() {
    getAlmacenesTable();
+   getEncargadoAlmacen();
    //Open modal *
    $('#nuevoAlmacen').on('click', function () {
       LimpiaModal();
@@ -70,6 +71,7 @@ function EditAlmacen(id) {
          $('#IdAlmacen').val(respuesta.str_id);
          $('#NomAlmacen').val(respuesta.str_name);
          $('#selectTipoAlmacen').val(respuesta.str_type);
+         getEncargadoAlmacen(respuesta.emp_id); 
       },
       error: function (EX) {
          console.log(EX);
@@ -127,6 +129,10 @@ function SaveAlmacen() {
    var IdAlmacen = $('#IdAlmacen').val();
    var NomAlmacen = $('#NomAlmacen').val();
    var tipoAlmacen = $('#selectTipoAlmacen option:selected').attr('id');
+   var EncargadoAlmacen = $('#selectRowEncargado option:selected').attr('id');
+   var Encargado = $('#selectRowEncargado option:selected').text();
+
+
    $.ajax({
       type: 'POST',
       dataType: 'JSON',
@@ -134,6 +140,7 @@ function SaveAlmacen() {
          IdAlmacen: IdAlmacen,
          NomAlmacen: NomAlmacen,
          tipoAlmacen: tipoAlmacen,
+         EncargadoAlmacen: EncargadoAlmacen
       },
       url: location,
       success: function (respuesta) {
@@ -155,12 +162,15 @@ function SaveAlmacen() {
                      ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
                   [1]: respuesta,
                   [2]: NomAlmacen,
-                  [3]: tipoAlmacen,
+                  [3]: Encargado,
+                  [4]: EncargadoAlmacen,
+                  [5]: tipoAlmacen,
                })
                .draw()
                .node();
             $(rowNode).find('td').eq(0).addClass('edit');
             $(rowNode).find('td').eq(1).addClass('text-center');
+            $(rowNode).find('td').eq(4).attr("hidden",true);
             LimpiaModal();
          }
       },
@@ -176,6 +186,7 @@ function LimpiaModal() {
    $('#NomAlmacen').val('');
    $('#IdAlmacen').val('');
    $('#selectTipoAlmacen').val('0');
+   getEncargadoAlmacen();
    $('#formProveedor').removeClass('was-validated');
 }
 
@@ -207,6 +218,12 @@ function getAlmacenesTable() {
                '</td>' +
                '<td>' +
                row.str_name +
+               '</td>' +
+               '<td>' +
+               row.emp_fullname +
+               '</td>' +
+               '<td hidden>' +
+               row.emp_id +
                '</td>' +
                '<td>' +
                row.str_type +
@@ -293,6 +310,29 @@ function getAlmacenesTable() {
       },
       set success(value) {
          this._success = value;
+      },
+      error: function () {},
+   }).done(function () {});
+}
+
+// Optiene los categorias disponibles *
+function getEncargadoAlmacen(id) {
+   $('#selectRowEncargado').html("");
+   var location = 'Almacenes/GetEncargadosAlmacen';
+   $.ajax({
+      type: 'POST',
+      dataType: 'JSON',
+      data: {id: id},
+      url: location,
+      success: function (respuesta) {
+         var renglon = "<option id='0'  value=''>Seleccione un Encargado...</option> ";
+         respuesta.forEach(function (row, index) {
+            renglon += '<option id=' + row.emp_id + '  value="' + row.emp_id + '">' + row.emp_fullname + '</option> ';
+         });
+         $('#selectRowEncargado').append(renglon);
+         if (id != undefined) {
+            $("#selectRowEncargado option[value='" + id + "']").attr('selected', 'selected');
+         }
       },
       error: function () {},
    }).done(function () {});

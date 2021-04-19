@@ -51,6 +51,12 @@
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
 		}
 
+		public function GetEncargadosAlmacen($request_params)
+		{
+	      $result = $this->model->GetEncargadosAlmacen($request_params);
+		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		}
+
 
 	  
 	}
