@@ -32,7 +32,7 @@ class CategoriasModel extends Model
 	public function GetCategorias()
 	{
 		$qry = "SELECT ct.cat_id, ct.cat_name, ct.str_id, st.str_name,
-				(select count(*) from ctt_subcategories as sub where sub.cat_id = ct.cat_id) as cantidad
+				(select count(*) from ctt_subcategories as sub where sub.cat_id = ct.cat_id and sub.sbc_status = 1) as cantidad
 				FROM ctt_categories AS ct
 				LEFT JOIN ctt_stores AS st ON st.str_id = ct.str_id
 				WHERE ct.cat_status = 1;";
