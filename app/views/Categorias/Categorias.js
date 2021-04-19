@@ -179,6 +179,7 @@ function LimpiaModal() {
     $("#selectTipoAlmacen").val( "0" );
     $('#formCategoria').removeClass('was-validated');
     $('#titulo').text('Nuevo Catalago');
+    getAlmacenes();
 
 }
 
@@ -329,7 +330,7 @@ function getAlmacenes(id) {
       url: location,
       success: function (respuesta) {
          console.log(respuesta);
-         var renglon = "<option id='0'  value=''>Seleccione un Encargado...</option> ";
+         var renglon = "<option id='0'  value=''>Seleccione un Almacen...</option> ";
          respuesta.forEach(function (row, index) {
             renglon += '<option id=' + row.str_id + '  value="' + row.str_id + '">' + row.str_name + '</option> ';
          });
