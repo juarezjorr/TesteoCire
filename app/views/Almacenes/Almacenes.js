@@ -315,7 +315,7 @@ function getAlmacenesTable() {
    }).done(function () {});
 }
 
-// Optiene los categorias disponibles *
+// Optiene los usuarios disponibles para encargados *
 function getEncargadoAlmacen(id) {
    $('#selectRowEncargado').html("");
    var location = 'Almacenes/GetEncargadosAlmacen';

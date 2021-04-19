@@ -11,7 +11,7 @@
 				<!-- Start área de formularios -->
 				<div class="mb-3 mvst_panel">
 					<div class="form-group">
-						<h4 id="titulo">Nueva Categoria</h4>  
+						<h4 id="titulo">Nuevo Catalogo</h4>  
 						<form id="formCategoria" class="row g-3 needs-validation" novalidate>
 
 							<div class="row" hidden>
@@ -23,7 +23,16 @@
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="NomCategoria" name="NomCategoria" type="text" class="form-control form-control-sm" required >
-									<label for="NomCategoria">Nombre Categoria</label>
+									<label for="NomCategoria">Nombre Catalogo</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowAlmacen"  name="selectRowAlmacen"  class="form-select form-select-sm" required>
+
+									</select>
+									<label for="selectRowAlmacen" class="form-label">Almacen</label>
 								</div>
 							</div>
 
@@ -42,7 +51,7 @@
 
 				<!-- Start área de listado -->
 				<div class="mb-3 mvst_table">
-					<h1>Categorias</h1>
+					<h1>Catalagos</h1>
 
 					<div class="row">
 						<div class="col-12 col-md-12">		
@@ -52,6 +61,9 @@
 													<th style="width: 30px"></th>
 													<th style="width: 30px">Id</th>
 													<th style="width: auto">Nombre</th>
+													<th style="width: auto">Almacen</th>
+													<th style="width: auto" hidden>Id Almacenes</th>
+													<th style="width: auto" hidden>Cantidad Subcategorias</th>
 
 											</tr>
 										</thead>
@@ -91,6 +103,33 @@
 					 </div>
 				</div>
 		</div>
+
+
+<!-- Modal no se puede borrar -->
+<div class="modal fade" id="NoBorrarModal" tabindex="-1" aria-labelledby="BorrarPerfilLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-sm">
+					 <div class="modal-content">
+					 <div class="modal-header ">
+					 </div>
+					 <div class="modal-body" style="padding: 0px !important;">
+
+
+					 <div class="row">
+						  <input hidden type="text" class="form-control" id="IdCategoriaBorrar" aria-describedby="basic-addon3">
+						  <div class="col-12 text-center">
+								<span class="modal-title text-center" style="font-size: 1rem;" id="BorrarPerfilLabel">No se puede borrar este registro ya que contiene subcatogorias asociadas a el. </span>
+						  </div>
+					 </div>
+
+					 </div>
+						  <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+<!-- 								<button type="button" class="btn btn-danger" id="BorrarProveedor">Borrar</button>
+ -->						  </div>
+					 </div>
+				</div>
+		</div>
+
 
  	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/bootstrap.bundle.min.js' ?>"></script>
 

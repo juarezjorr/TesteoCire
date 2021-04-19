@@ -13,7 +13,8 @@ class CategoriasModel extends Model
 	{
         $estatus = 0;
 			try {
-                $qry = "INSERT INTO ctt_categories(cat_name, cat_status)VALUES ('".$params['NomCategoria']."',1)";
+                $qry = "INSERT INTO ctt_categories(cat_name, cat_status, str_id)
+				VALUES ('".$params['NomCategoria']."',1,'".$params['idAlmacen']."')";
                 $this->db->query($qry);	
 				$qry = "SELECT MAX(cat_id) AS id FROM ctt_categories;";
 				$result = $this->db->query($qry);
@@ -30,12 +31,19 @@ class CategoriasModel extends Model
 // Optiene los Usuaios existentes
 	public function GetCategorias()
 	{
-		$qry = "SELECT cat_id, cat_name FROM ctt_categories WHERE cat_status = 1;";
+		$qry = "SELECT ct.cat_id, ct.cat_name, ct.str_id, st.str_name,
+				(select count(*) from ctt_subcategories as sub where sub.cat_id = ct.cat_id) as cantidad
+				FROM ctt_categories AS ct
+				LEFT JOIN ctt_stores AS st ON st.str_id = ct.str_id
+				WHERE ct.cat_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
 			$item = array("cat_id" =>$row[0],
-						"cat_name" =>$row[1]);
+						"cat_name" =>$row[1],
+						"str_id" =>$row[2],
+						"str_name" =>$row[3],
+						"cantidad" =>$row[4]);
 			array_push($lista, $item);
 		}
 		//print_r($lista);
@@ -44,11 +52,12 @@ class CategoriasModel extends Model
 
     public function GetCategoria($params)
 	{
-		$qry = "SELECT cat_id, cat_name FROM ctt_categories WHERE cat_id = ".$params['id'].";";
+		$qry = "SELECT cat_id, cat_name, str_id FROM ctt_categories WHERE cat_id = ".$params['id'].";";
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("cat_id" =>$row[0],
-			"cat_name" =>$row[1]);
+			"cat_name" =>$row[1],
+			"str_id" =>$row[2]);
 		}
 		return $item;
 	}
@@ -59,7 +68,8 @@ class CategoriasModel extends Model
         $estatus = 0;
 			try {
                 $qry = "UPDATE ctt_categories
-                SET cat_name = '".$params['NomCategoria']."'
+                SET cat_name = '".$params['NomCategoria']."',
+				str_id = '".$params['idAlmacen']."'
                 WHERE cat_id = ".$params['IdCategoria'].";";
 
 				$this->db->query($qry);	
