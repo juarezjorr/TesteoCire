@@ -113,6 +113,6 @@
 </div>
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
-<script src="<?=  PATH_VIEWS . 'MoveStores/MoveStores.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'MoveStoresOut/MoveStoresOut.js' ?>"></script>
 
 <?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>

@@ -41,12 +41,21 @@ public function listPackages()
 
     
 // Listado de productos
-public function listProducts($params)
+public function listProducts()
+{
+    $qry = "SELECT prd_id, prd_sku, prd_name, prd_price, sbc_id 
+            FROM ctt_products 
+            WHERE prd_status = 1;";
+    return $this->db->query($qry);
+}
+
+// Listado de productos del paquete
+public function listProductsPack($params)
 {
     $prdId = $this->db->real_escape_string($params);
-    $qry = "SELECT pr.prd_id, pr.prd_sku, pr.prd_name, pr.prd_price 
+    $qry = "SELECT pr.prd_id, pr.prd_sku, pr.prd_name, pr.prd_price, pk.prd_parent  
             FROM ctt_products_packages AS pk
-            INNER JOIN ctt_products AS pr ON pr.prd_id = pk.prd_parent
+            INNER JOIN ctt_products AS pr ON pr.prd_id = pk.prd_id
             WHERE pk.prd_parent = $prdId AND prd_status =1;";
     return $this->db->query($qry);
 }
@@ -75,6 +84,75 @@ public function listProducts($params)
         ";
          $this->db->query($qry);
         $result = $this->db->insert_id;
-        return $result . '|' . $param['prdsku'];
+        return $result . '|' . $prd_sku . '|' . $prd_name . '|' . $prd_price;
     }
+
+
+// Registra el producto al paquete
+    public function SaveProduct($param)
+    {
+        $prd_id            = $this->db->real_escape_string($param['prdId']);
+        $prd_parent        = $this->db->real_escape_string($param['prdParent']);
+
+        $qry = "INSERT INTO ctt_products_packages ( prd_parent, prd_id ) 
+                VALUES ( '$prd_parent', '$prd_id');
+        ";
+
+        $this->db->query($qry);
+        $pckId = $this->db->insert_id;
+                
+        $qrr =  "SELECT pr.prd_id, pr.prd_sku, pr.prd_name, pr.prd_price, pk.prd_parent  
+                 FROM ctt_products_packages AS pk
+                 INNER JOIN ctt_products AS pr ON pr.prd_id = pk.prd_id
+                 WHERE pk.pck_id = $pckId;" ;
+        
+        $result = $this->db->query($qrr);
+        return $result;
+    }
+
+
+// Obtiene detalle de paquete
+    public function detailPack($param)
+    {
+        $prd_id            = $this->db->real_escape_string($param['prdId']);
+
+        $qry =  "SELECT pr.prd_id, pr.prd_sku, pr.prd_name, pr.prd_price, 
+                        pr.sbc_id, sb.cat_id
+                FROM ctt_products AS pr
+                INNER JOIN ctt_subcategories AS sb ON sb.sbc_id = pr.sbc_id 
+                WHERE prd_id = $prd_id" ;
+        
+        $result = $this->db->query($qry);
+        return $result;
+    }    
+
+// Borra el producto y paquete
+    public function deletePackages($param)
+    {
+        $prd_id            = $this->db->real_escape_string($param['prdId']);
+
+        $qry =  "DELETE FROM ctt_products WHERE prd_id = $prd_id" ;
+        
+        $this->db->query($qry);
+
+        $qrr =  "DELETE FROM ctt_products_packages WHERE prd_parent = $prd_id" ;
+        
+        $this->db->query($qrr);
+
+        return $prd_id;
+    }    
+
+
+// Borra el producto del paquete
+    public function deleteProduct($param)
+    {
+        $prd_id            = $this->db->real_escape_string($param['prdId']);
+        $prd_parent        = $this->db->real_escape_string($param['prdParent']);
+
+        $qry =  "DELETE FROM ctt_products_packages WHERE prd_parent = $prd_parent AND prd_id = $prd_id;" ;
+        
+        $this->db->query($qry);
+
+        return $prd_id;
+    }    
 }

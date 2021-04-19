@@ -24,7 +24,7 @@ class PackagesController extends Controller
         $this->render(__CLASS__, $params);
     }
 
-    // Lista las categorias
+// Lista las categorias
     public function listCategories()
     {
         $params =  $this->session->get('user');
@@ -96,12 +96,31 @@ class PackagesController extends Controller
         echo $res;
     }
 
-
+    
 // Lista los productos relacionados al paquete
-    public function listProducts($request_params)
+    public function listProducts()
     {
         $params =  $this->session->get('user');
-        $result = $this->model->listProducts($request_params['prdId']);
+        $result = $this->model->listProducts();
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"prd_id":""}]';	
+        }
+        echo $res;
+    }
+
+
+// Lista los productos relacionados al paquete
+    public function listProductsPack($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listProductsPack($request_params['prdId']);
         $i = 0;
         while($row = $result->fetch_assoc()){
             $rowdata[$i] = $row;
@@ -123,5 +142,53 @@ class PackagesController extends Controller
         $res = $result;
         echo $res;
     }	
+
+
+
+// Guarda producto del paquete
+    public function SaveProduct($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->SaveProduct($request_params);
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"prd_id":""}]';	
+        }
+        echo $res;
+    }	
+
+// Obtiene detalle del paquete
+    public function detailPack($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->detailPack($request_params);
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"prd_id":""}]';	
+        }
+        echo $res;
+    }
+
+
+// Obtiene detalle del paquete
+public function deleteProduct($request_params)
+{
+    $params =  $this->session->get('user');
+    $result = $this->model->deleteProduct($request_params);
+    $res = $result;
+    echo $res;
+}
 
 }

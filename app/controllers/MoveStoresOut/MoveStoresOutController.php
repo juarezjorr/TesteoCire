@@ -1,9 +1,9 @@
 <?php
     defined('BASEPATH') or exit('No se permite acceso directo');
-    require_once ROOT . FOLDER_PATH . '/app/models/MoveStores/MoveStoresModel.php';
+    require_once ROOT . FOLDER_PATH . '/app/models/MoveStoresOut/MoveStoresOutModel.php';
     require_once LIBS_ROUTE .'Session.php';
 
-class MoveStoresController extends Controller
+class MoveStoresOutController extends Controller
 {
 	private $session;
 	public $model;
@@ -11,7 +11,7 @@ class MoveStoresController extends Controller
 
 	public function __construct()
 	{
-		$this->model = new MoveStoresModel();
+		$this->model = new MoveStoresOutModel();
 		$this->session = new Session();
 		$this->session->init();
 		if($this->session->getStatus() === 1 || empty($this->session->get('user')))
