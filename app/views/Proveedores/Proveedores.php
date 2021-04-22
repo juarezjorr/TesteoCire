@@ -58,9 +58,9 @@
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowTipoDocumento"  name="selectRowTipoDocumento"  class="form-select form-select-sm" autocomplete="off" required >
+									<select id="selectRowTipoProveedor"  name="selectRowTipoProveedor"  class="form-select form-select-sm" autocomplete="off" required >
 									</select>
-									<label for="selectRowTipoDocumento" class="form-label">Tipo Proveedor</label>
+									<label for="selectRowTipoProveedor" class="form-label">Tipo Proveedor</label>
 								</div>
 							</div>
 
@@ -88,12 +88,16 @@
 										<thead>
 											<tr>
 													<th style="width: 30px"></th>
-													<th style="width: 20px">Id</th>
+													<th style="width: 20px" hidden>Id</th>
 													<th style="width: 300px">Nombre</th>
+													<th style="width: 100px" hidden>Tipo Proveedor Id</th>
+
+													<th style="width: 100px">Tipo Proveedor</th>
+
 													<th style="width: 100px">Contacto</th>
-                                       <th style="width: 100px">RFC</th>
-                                       <th style="width: 100px">Email</th>
-                                       <th style="width: 100px">Telefono</th>
+													<th style="width: 100px">RFC</th>
+													<th style="width: 100px">Email</th>
+													<th style="width: 100px">Telefono</th>
 
 											</tr>
 										</thead>

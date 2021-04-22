@@ -13,8 +13,8 @@ class ProveedoresModel extends Model
 	{
         $estatus = 0;
 			try {
-                $qry = "INSERT INTO ctt_suppliers (sup_buseiness_name, sup_contact, sup_rfc, sup_email, sup_phone,sup_status)
-                VALUES('".$params['NomProveedor']."','".$params['ContactoProveedor']."','".$params['RfcProveedor']."','".$params['EmailProveedor']."','".$params['PhoneProveedor']."',1);";
+                $qry = "INSERT INTO ctt_suppliers (sup_business_name, sup_contact, sup_rfc, sup_email, sup_phone,sup_status, sut_id)
+                VALUES('".$params['NomProveedor']."','".$params['ContactoProveedor']."','".$params['RfcProveedor']."','".$params['EmailProveedor']."','".$params['PhoneProveedor']."',1,'".$params['tipoProveedorId']."');";
                 $this->db->query($qry);	
 
 				$qry = "SELECT MAX(sup_id) AS id FROM ctt_suppliers;";
@@ -33,22 +33,26 @@ class ProveedoresModel extends Model
 // Optiene los Usuaios existentes
 	public function GetProveedores()
 	{
-		$qry = "SELECT sup_id, sup_business_name, sup_contact, sup_rfc, sup_email, sup_phone FROM ctt_suppliers where sup_status = 1;";
+		$qry = "SELECT sp.sup_id, sp.sup_business_name, sp.sup_contact, sp.sup_rfc, sp.sup_email, sp.sup_phone , sp.sut_id, ts.sut_name
+				FROM ctt_suppliers AS sp
+				LEFT JOIN ctt_suppliers_type AS ts on ts.sut_id = sp.sut_id
+				WHERE sp.sup_status = 1;";
 		return $this->db->query($qry);
 	}
 
     public function GetProveedor($params)
 	{
-		$qry = "SELECT sup_id, sup_buseiness_name, sup_contact, sup_rfc, sup_email, sup_phone FROM ctt_suppliers
+		$qry = "SELECT sup_id, sup_business_name, sup_contact, sup_rfc, sup_email, sup_phone, sut_id FROM ctt_suppliers
         WHERE sup_id =  ".$params['id'].";";
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("sup_id" =>$row[0],
-			"sup_buseiness_name" =>$row[1],
+			"sup_business_name" =>$row[1],
 			"sup_contact"=>$row[2],
 			"sup_rfc"=>$row[3],
 			"sup_email"=>$row[4],
-			"sup_phone"=>$row[5]);
+			"sup_phone"=>$row[5],
+			"sut_id"=>$row[6]);
 		}
 		return $item;
 	}
@@ -59,10 +63,11 @@ class ProveedoresModel extends Model
         $estatus = 0;
 			try {
                 $qry = " UPDATE ctt_suppliers
-                SET sup_buseiness_name = '".$params['NomProveedor']."'
+                SET sup_business_name = '".$params['NomProveedor']."'
                 ,sup_contact = '".$params['ContactoProveedor']."'
                 ,sup_rfc = '".$params['RfcProveedor']."' 
                 ,sup_email = '".$params['EmailProveedor']."'
+				,sut_id = '".$params['tipoProveedorId']."'
                 ,sup_phone = '".$params['PhoneProveedor']."'
                 WHERE Sup_id = ".$params['IdProveedor'].";";
 
@@ -89,6 +94,20 @@ class ProveedoresModel extends Model
         }
 		return $estatus;
 	}
+
+	public function GetTipoProveedores()
+	{
+		$qry = "SELECT sut_id,sut_name FROM ctt_suppliers_type WHERE sut_status = 1;";
+		$result = $this->db->query($qry);
+		$lista = array();
+		while ($row = $result->fetch_row()){
+			$item = array("sut_id" =>$row[0],
+						"sut_name" =>$row[1]);
+			array_push($lista, $item);
+		}
+		return $lista;
+	}
+
 
 
 }

@@ -61,6 +61,11 @@
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
 		}
 
+		public function GetTipoProveedores($request_params)
+		{
+		  $result = $this->model->GetTipoProveedores($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
+		}
 
 	  
 	}
