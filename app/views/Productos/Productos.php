@@ -51,7 +51,9 @@
 									<label for="NomEngProducto">Nombre Ingles Producto</label>
 								</div>
 							</div>
-<!--                      		<div class="row">
+
+
+<!--                      	<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="ModelProducto" name="ModelProducto" type="text" class="form-control form-control-sm" autocomplete="off"  maxlength="3" style="text-transform: uppercase" required >
 									<label for="ModelProducto">Modelo Producto</label>
@@ -87,7 +89,7 @@
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowCategorias"  name="selectRowCategorias"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
-									<label for="selectRowCategorias" class="form-label">Categoria</label>
+									<label for="selectRowCategorias" class="form-label">Catalago</label>
 								</div>
 							</div>
 
@@ -212,7 +214,7 @@
 										<thead>
 											<tr>
 													<th style="width: 30px"></th>
-													<th style="width: 30px">Id</th>
+													<th style="width: 30px" hidden >Id</th>
 													<th style="width: auto">Nombre</th>
                                        <th style="width: auto">Nombre ingles</th>
                                       <!--  <th style="width: auto">SKU</th> -->
@@ -227,7 +229,7 @@
 
 
                                        <th style="width: auto">Servicio</th>
-                                       <th style="width: auto">Categoria</th>
+                                       <th style="width: auto">Catalago</th>
                                        <th style="width: auto">Subcategoria</th>
                                        <th style="width: auto">SKU'S</th>
 											</tr>

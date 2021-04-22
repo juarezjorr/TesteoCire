@@ -56,6 +56,14 @@
 								</div>
 							</div>
 
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowTipoDocumento"  name="selectRowTipoDocumento"  class="form-select form-select-sm" autocomplete="off" required >
+									</select>
+									<label for="selectRowTipoDocumento" class="form-label">Tipo Proveedor</label>
+								</div>
+							</div>
+
 
 							<div class="row">
 								<div class="col-6">

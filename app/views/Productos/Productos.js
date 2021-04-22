@@ -485,7 +485,7 @@ function getProductosTable() {
                     row.prd_id +
                     ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>' +
                     '</td>' +
-                    "<td class='dtr-control text-center'>" +
+                    "<td class='dtr-control text-center' hidden>" +
                     row.prd_id +
                     '</td>' +
                     '<td >' +

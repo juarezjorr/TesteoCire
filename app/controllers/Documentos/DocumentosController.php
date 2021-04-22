@@ -58,6 +58,13 @@
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
 		}
 
+		
+		public function GetTypeDocumento($request_params)
+		{
+		  $result = $this->model->GetTypeDocumento($request_params);	
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);	
+		}
+
 
 	  
 	}

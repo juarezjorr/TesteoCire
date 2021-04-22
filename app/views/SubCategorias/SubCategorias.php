@@ -25,7 +25,7 @@
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowCategorias"  name="selectRowCategorias"  class="form-select form-select-sm" required>
 									</select>
-									<label for="selectTipoAlmacen" class="form-label">Categoria</label>
+									<label for="selectTipoAlmacen" class="form-label">Catalogos</label>
 								</div>
 							</div>
 
@@ -40,7 +40,7 @@
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="CodSubCategoria" name="CodSubCategoria" type="text" class="form-control form-control-sm" maxlength="2" style="text-transform: uppercase" required >
-									<label for="CodSubCategoria">Code Subcategoria</label>
+									<label for="CodSubCategoria">Codigo Subcategoria</label>
 								</div>
 							</div>
 
@@ -69,12 +69,10 @@
 										<thead>
 											<tr>
 													<th style="width: 30px"></th>
-													<th style="width: 20px">Id</th>
+													<th style="width: 20px" hidden>Id</th>
+													<th style="width: 20px">Codigo</th>
 													<th style="width: 300px">Nombre</th>
-                                       <th style="width: 20px">Code</th>
-													<th style="width: 300px">Categoria</th>
-
-
+													<th style="width: 300px">Catalagos</th>
 											</tr>
 										</thead>
 										<tbody id="tablaSubCategoriasRow">

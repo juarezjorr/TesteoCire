@@ -26,17 +26,19 @@ function inicial() {
 
     $('#LimpiarFormulario').on('click', function () {
       LimpiaModal();
+      getAlmacenes();
    });
 
     $('#CategoriasTable tbody').on('click', 'tr', function () {
       positionRow = (table.page.info().page * table.page.info().length) + $(this).index();
+      console.log(positionRow);
 
       setTimeout(() => {
          RenglonesSelection = table.rows({ selected: true }).count();
          if (RenglonesSelection == 0 || RenglonesSelection == 1) {
-             $(".btn-apply").css("visibility", "hidden");
+            $('.btn-apply').addClass('hidden-field');
          } else {
-             $(".btn-apply").css("visibility", "visible");
+            $('.btn-apply').removeClass('hidden-field');
          }
      }, 10);
    });
@@ -145,13 +147,19 @@ function SaveCategoria() {
              },
             url: location,
         success: function (respuesta) {
+           //console.log("este es el id:"+ respuesta);
             if(IdCategoria != ''){
-               table.row(':eq('+positionRow+')').remove().draw();
+               //console.log("llego a borrar");
+
+               //console.log(positionRow);
+               var table3= $('#CategoriasTable').DataTable();
+               table3.row(':eq('+positionRow+')').remove().draw();
             }
             if ((respuesta != 0)) {
                //getAlmacenesTable();
+               $('#IdCategoria').val(respuesta);
                var rowNode = table.row.add( {
-                  [0]:  '<button onclick="EditProveedores('+respuesta+')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button><button onclick="ConfirmDeletProveedor('+respuesta+',0)" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
+                  [0]:  '<button onclick="EditCategoria('+respuesta+')" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button><button onclick="ConfirmDeletProveedor('+respuesta+',0)" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
                   [1]:   respuesta,
                   [2]:   NomCategoria,
                   [3]:   NomAlmacen,
@@ -166,6 +174,8 @@ function SaveCategoria() {
 
 
               LimpiaModal();
+              getAlmacenes();
+
             }
         },
         error: function (EX) {console.log(EX);}
@@ -179,7 +189,6 @@ function LimpiaModal() {
     $("#selectTipoAlmacen").val( "0" );
     $('#formCategoria').removeClass('was-validated');
     $('#titulo').text('Nuevo Catalago');
-    getAlmacenes();
 
 }
 
@@ -281,7 +290,7 @@ function getCategoriasTable() {
                ,
                {
                   text: 'Borrar seleccionados',
-                  className: 'btn-apply',
+                  className: 'btn-apply hidden-field',
                   action: function () {
                      var selected = table.rows({ selected: true }).data();
                      var idSelected = '';
@@ -330,7 +339,7 @@ function getAlmacenes(id) {
       url: location,
       success: function (respuesta) {
          console.log(respuesta);
-         var renglon = "<option id='0'  value=''>Seleccione un Almacen...</option> ";
+         var renglon = "<option id='0'  value=''>Seleccione...</option> ";
          respuesta.forEach(function (row, index) {
             renglon += '<option id=' + row.str_id + '  value="' + row.str_id + '">' + row.str_name + '</option> ';
          });

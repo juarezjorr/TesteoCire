@@ -39,14 +39,14 @@
 									<select id="selectRowEncargado"  name="selectRowEncargado"  class="form-select form-select-sm" required>
 
 									</select>
-									<label for="selectTipoAlmacen" class="form-label">Encargado de Almacen</label>
+									<label for="selectTipoAlmacen" class="form-label">Responsable de Almacen</label>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectTipoAlmacen"  name="selectTipoAlmacen"  class="form-select form-select-sm" required>
-										<option id='' value="0" >Selecciona tipo de almacen</option>
+										<option id='' value="0" >Seleccione...</option>
 										<option id='estaticos'  value='estaticos'>Estatico</option> 
 										<option id='moviles'  value='moviles'>Movil</option> 
 									</select>
@@ -89,7 +89,7 @@
 													<th style="width: 30px"></th>
 													<th style="width: 20px">Id</th>
 													<th style="width: auto">Nombre</th>
-													<th style="width: auto">Encargado Almacen</th>
+													<th style="width: auto">Responsable Almacen</th>
 													<th style="width: auto" hidden>Encargado Almacen</th>
 													<th style="width: 100px">Tipo</th>
 											</tr>

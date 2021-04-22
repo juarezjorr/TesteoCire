@@ -17,6 +17,8 @@ public function SaveDocumento($request_params)
 		$Code = $request_params['CodDocumento'];
 		$nomebreDocumento = $request_params["NomDocumento"];
 		$conn = new mysqli(HOST, USER, PASSWORD);
+		$tipoDocumento = $request_params["tipoDocumento"];
+
 
 		$fileName = $_FILES['file']['name'];
 		$fileSize = $_FILES['file']['size'];
@@ -27,8 +29,8 @@ public function SaveDocumento($request_params)
 
 		$newFileName = $fileName;
 
-		$sql = "INSERT INTO ctt_documents(doc_code,doc_name,doc_size,doc_document, doc_content_type,doc_type)
-					VALUES ('$Code', '$newFileName',  $fileSize, '$file', '$fileType', '$fileExtension')";
+		$sql = "INSERT INTO ctt_documents(doc_code,doc_name,doc_size,doc_document, doc_content_type,doc_type, dot_id)
+					VALUES ('$Code', '$newFileName',  $fileSize, '$file', '$fileType', '$fileExtension', '$tipoDocumento')";
 
 		$this->db->query($sql);
 		$qry = "SELECT MAX(doc_id) AS id FROM ctt_documents;";
@@ -47,14 +49,18 @@ public function SaveDocumento($request_params)
 // Optiene los Usuaios existentes
 	public function GetDocumentos()
 	{
-		$qry = "SELECT doc_id, doc_code, doc_name, doc_type FROM ctt_documents ";
+		$qry = "SELECT doc.doc_id, doc.doc_code, doc.doc_name, doc.doc_type, doc.dot_id, td.dot_name 
+				FROM ctt_documents as doc
+				LEFT JOIN ctt_documents_type AS td ON td.dot_id = doc.dot_id";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
 			$item = array("doc_id" =>$row[0],
 						"doc_code" =>$row[1],
 						"doc_name" =>$row[2],
-						"doc_type" =>$row[3]);
+						"doc_type" =>$row[3],
+						"dot_id" =>$row[4],
+						"dot_name" =>$row[5]);
 			array_push($lista, $item);
 		}
 		return $lista;
@@ -62,15 +68,29 @@ public function SaveDocumento($request_params)
 
     public function GetDocumento($params)
 	{
-		$qry = "SELECT doc_id, doc_code, doc_name,doc_type FROM ctt_documents WHERE doc_id = ".$params['id'].";";
+		$qry = "SELECT doc_id, doc_code, doc_name,doc_type, dot_id FROM ctt_documents WHERE doc_id = ".$params['id'].";";
 		$result = $this->db->query($qry);
 		if($row = $result->fetch_row()){
 			$item = array("doc_id" =>$row[0],
 			"doc_code" =>$row[1],
 			"doc_name" =>$row[2],
-			"doc_type" =>$row[3]);
+			"doc_type" =>$row[3],
+			"dot_id" =>$row[4]);
 		}
 		return $item;
+	}
+
+	public function GetTypeDocumento($params)
+	{
+		$qry = "SELECT dot_id, dot_name FROM ctt_documents_type WHERE dot_status = 1;";
+		$result = $this->db->query($qry);
+		$lista = array();
+		while ($row = $result->fetch_row()){
+			$item = array("dot_id" =>$row[0],
+			"dot_name" =>$row[1]);
+			array_push($lista, $item);
+		}
+		return $lista;
 	}
 
 
@@ -81,6 +101,7 @@ public function SaveDocumento($request_params)
 		       if(isset($_FILES['file']['name'])){
 					$Code = $request_params['CodDocumento'];
 					$nomebreDocumento = $request_params["NomDocumento"];
+
 					$conn = new mysqli(HOST, USER, PASSWORD);
 			
 					$fileName = $_FILES['file']['name'];
@@ -95,6 +116,7 @@ public function SaveDocumento($request_params)
 					$qry = "UPDATE ctt_documents
 					SET doc_code = '".$request_params['CodDocumento']."'
 					,doc_name = '".$request_params['NomDocumento']."'
+					,dot_id = '".$request_params['tipoDocumento']."'
 					,doc_size = $fileSize
 					,doc_type = '$fileExtension'
 					,doc_content_type =  '$fileType'
@@ -108,6 +130,7 @@ public function SaveDocumento($request_params)
 
 					$qry = "UPDATE ctt_documents
 					SET doc_code = '".$request_params['CodDocumento']."'
+					,dot_id = '".$request_params['tipoDocumento']."'
 					,doc_name = '".$request_params['NomDocumento']."'
 					WHERE doc_id = ".$request_params['idDocumento'].";";
 					$this->db->query($qry);
