@@ -37,9 +37,9 @@ function inicial() {
       setTimeout(() => {
          RenglonesSelection = table.rows({selected: true}).count();
          if (RenglonesSelection == 0 || RenglonesSelection == 1) {
-            $('.btn-apply').css('visibility', 'hidden');
+            $('.btn-apply').addClass('hidden-field');
          } else {
-            $('.btn-apply').css('visibility', 'visible');
+            $('.btn-apply').removeClass('hidden-field');
          }
       }, 10);
    });
@@ -317,7 +317,7 @@ function getProveedoresTable() {
                },
                {
                   text: 'Borrar seleccionados',
-                  className: 'btn-apply',
+                  className: 'btn-apply hidden-field',
                   action: function () {
                      var selected = table.rows({selected: true}).data();
                      var idSelected = '';

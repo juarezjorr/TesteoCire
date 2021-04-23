@@ -47,32 +47,26 @@
 
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="NomEngProducto" name="NomEngProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required >
+									<input id="NomEngProducto" name="NomEngProducto" type="text" class="form-control form-control-sm" autocomplete="off"   >
 									<label for="NomEngProducto">Nombre Ingles Producto</label>
 								</div>
 							</div>
 
 
-<!--                      	<div class="row">
-								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="ModelProducto" name="ModelProducto" type="text" class="form-control form-control-sm" autocomplete="off"  maxlength="3" style="text-transform: uppercase" required >
-									<label for="ModelProducto">Modelo Producto</label>
-								</div>
-							</div> -->
 
 
 
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="PriceProducto" name="PriceProducto" type="number" class="form-control form-control-sm" autocomplete="off"  required >
+									<input id="PriceProducto" name="PriceProducto" type="number" class="form-control form-control-sm" autocomplete="off"   >
 									<label for="PriceProducto">Precio Producto</label>
 								</div>
 							</div>
 
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="DesProducto" name="DesProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required >
-									<label for="DesProducto">Descripcion Producto</label>
+									<input id="DesProducto" name="DesProducto" type="text" class="form-control form-control-sm" autocomplete="off"   >
+									<label for="DesProducto">Descripcion Segun proveedor</label>
 								</div>
 							</div>
 
@@ -125,7 +119,7 @@
 								</div>
 							</div>
 
-							<div class="row">
+<!-- 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowAlmacen"  name="selectRowAlmacen"  class=" form-select form-select-sm" autocomplete="off"  >
 									</select>
@@ -146,7 +140,7 @@
 									<input id="CostProducto" name="CostProducto" type="number" class="form-control form-control-sm" autocomplete="off"  required >
 									<label for="CostProducto">Costo Producto</label>
 								</div>
-							</div>
+							</div> -->
 
 
 
@@ -161,7 +155,7 @@
 								</div>
 							</div>
 
-							<div class="row">
+							<div class="row" >
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 								<div class="form-check">
 									<input class="form-check-input" type="checkbox" value="1" id="checkRentAccesories" checked>
@@ -215,23 +209,25 @@
 											<tr>
 													<th style="width: 30px"></th>
 													<th style="width: 30px" hidden >Id</th>
+													<th style="width: auto">SKU</th>
+
 													<th style="width: auto">Nombre</th>
-                                       <th style="width: auto">Nombre ingles</th>
-                                      <!--  <th style="width: auto">SKU</th> -->
-                                       <th style="width: auto">Model</th>
+													<th style="width: auto">Nombre ingles</th>
+													<!--  <th style="width: auto">SKU</th> -->
+<!-- 													<th style="width: auto">Model</th>
+ -->
+				<!--                                        <th style="width: auto">Numero serie</th>
+				-->                                     
+				<!--  										  <th style="width: auto">Costo</th>
+				-->                                 <th style="width: auto">Price</th>
 
-<!--                                        <th style="width: auto">Numero serie</th>
- -->                                     
-<!--  										  <th style="width: auto">Costo</th>
- -->                                       <th style="width: auto">Price</th>
-
-									   <th style="width: auto">Descripcion</th>
+													<th style="width: auto">Descripcion Segun Proveedor</th>
 
 
-                                       <th style="width: auto">Servicio</th>
-                                       <th style="width: auto">Catalago</th>
-                                       <th style="width: auto">Subcategoria</th>
-                                       <th style="width: auto">SKU'S</th>
+													<th style="width: auto">Servicio</th>
+													<th style="width: auto">Catalago</th>
+													<th style="width: auto">Subcategoria</th>
+													<th style="width: auto">Existencias</th>
 											</tr>
 										</thead>
 										<tbody id="tablaProductosRow">
@@ -444,7 +440,7 @@
 			<table id="SKUTable" class="display compact nowrap" >         
 						<thead>
 							<tr>
-								<th style="width: 30"></th>
+								<th style="width: 30" hidden></th>
 								<th style="width: 100">SKU</th>
 								<th style="width: 400">Numero Serie</th>
 								<th style="width: 300">Costo</th>

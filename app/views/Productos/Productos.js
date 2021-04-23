@@ -20,7 +20,7 @@ function inicial() {
         getServicios(0);
         getProveedores();
         getAlmacenes();
-        $('#formSubCategorias').removeClass('was-validated');
+        $('#fformProducto').removeClass('was-validated');
         NomProductoSelect();
     });
 
@@ -35,7 +35,7 @@ function inicial() {
         getServicios(0);
         getProveedores();
         getAlmacenes();
-        $('#formSubCategorias').removeClass('was-validated');
+        $('#formProducto').removeClass('was-validated');
         EnableDisableComun(false);
         EnableDisableExt(false);
     });
@@ -56,9 +56,9 @@ function inicial() {
         setTimeout(() => {
             RenglonesSelection = table.rows({selected: true}).count();
             if (RenglonesSelection == 0 || RenglonesSelection == 1) {
-                $('.btn-apply').css('visibility', 'hidden');
+                $('.btn-apply').addClass('hidden-field');
             } else {
-                $('.btn-apply').css('visibility', 'visible');
+               $('.btn-apply').removeClass('hidden-field');
             }
         }, 10);
     });
@@ -262,7 +262,9 @@ function SaveProducto() {
         url: location,
         success: function (respuesta) {
             console.log(respuesta);
-            if ((respuesta = 1)) {
+            if (respuesta == 0) {
+                console.log("no se pudo borrar");
+            }else{
                 getProductosTable();
                 $('#ProductoModal').modal('hide');
                 LimpiaModal();
@@ -297,6 +299,8 @@ function LimpiaModal() {
     $('#selectRowAlmacen').val('0');
     $('#selectRowDocument').val('0');
     $('#titulo').text('Nuevo Producto');
+    $('#checkRentAccesories').prop('checked', true);
+    $('#ventOrRent1').prop('checked', true);
 }
 
 // Optiene las categorias *
@@ -488,15 +492,19 @@ function getProductosTable() {
                     "<td class='dtr-control text-center' hidden>" +
                     row.prd_id +
                     '</td>' +
+
+
+                    "<td class='dtr-control text-center'>" +
+                    row.prd_sku +
+                    '</td>' +
+
                     '<td >' +
                     row.prd_name +
                     '</td>' +
                     '<td >' +
                     row.prd_english_name +
                     '</td>' +
-                    '<td >' +
-                    row.prd_model +
-                    '</td>' +
+
                     '<td >' +
                     row.prd_price +
                     '</td>' +
@@ -562,7 +570,7 @@ function getProductosTable() {
                     },
                     {
                         text: 'Borrar seleccionados',
-                        className: 'btn-apply',
+                        className: 'btn-apply hidden-field',
                         action: function () {
                             var selected = table.rows({selected: true}).data();
                             var idSelected = '';
@@ -765,15 +773,16 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
                     getAlmacenes(respuesta[0].str_id);
                     $('#SerieProducto').val(respuesta[0].ser_serial_number);
                     $('#CostProducto').val(respuesta[0].ser_cost);
-                    if (respuesta[0].ser_lonely == 1) {
+                    if (respuesta[0].prd_lonely == 1) {
                         $('#checkRentAccesories').prop('checked', true);
                     } else {
                         $('#checkRentAccesories').prop('checked', false);
                     }
-                    if (respuesta[0].ser_behaviour == 'C') {
+                    if (respuesta[0].prd_behaviour == 'C') {
                         $('#ventOrRent1').prop('checked', true);
+
                     } else {
-                        $('#ventOrRent2').prop('checked', false);
+                        $('#ventOrRent2').prop('checked', true);
                     }
                 } else {
                     $('#esUnico').val(0);
@@ -804,12 +813,12 @@ function editBySku(idSerie) {
             $('#idSku').val(idSerie);
             $('#SerieSku').val(respuesta[0].ser_serial_number);
             $('#CostSku').val(respuesta[0].ser_cost);
-            if (respuesta[0].ser_lonely == 1) {
+            if (respuesta[0].prd_lonely == 1) {
                 $('#checkRentAccesoriesSku').prop('checked', true);
             } else {
                 $('#checkRentAccesoriesSku').prop('checked', false);
             }
-            if (respuesta[0].ser_behaviour == 'C') {
+            if (respuesta[0].prd_behaviour == 'C') {
                 $('#ventOrRentSku1').prop('checked', true);
             } else {
                 $('#ventOrRentSku2').prop('checked', true);
@@ -856,7 +865,7 @@ function skuByID(idProduct) {
             respuesta.forEach(function (row, index) {
                 renglon =
                     '<tr>' +
-                    '<td class="text-center edit"> ' +
+                    '<td class="text-center edit" hidden> ' +
                     "<button onclick='editBySku(" +
                     row.ser_id +
                     ")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
@@ -925,7 +934,7 @@ function skuByID(idProduct) {
                         filename: filename,
                         text: '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
                     },
-                    {
+/*                     {
                         text: 'Borrar seleccionados',
                         className: 'btn-apply',
                         action: function () {
@@ -939,7 +948,7 @@ function skuByID(idProduct) {
                                 ConfirmDeletProducto(idSelected);
                             }
                         },
-                    },
+                    }, */
                 ],
                 scrollY: 'calc(100vh - 260px)',
                 scrollX: true,
@@ -1038,7 +1047,7 @@ function EnableDisableExt(estatus) {
     $('#selectRowAlmacen').prop('disabled', estatus);
     $('#SerieProducto').prop('disabled', estatus);
     $('#CostProducto').prop('disabled', estatus);
-    $('#checkRentAccesories').prop('disabled', estatus);
-    $('#ventOrRent1').prop('disabled', estatus);
-    $('#ventOrRent2').prop('disabled', estatus);
+    //$('#checkRentAccesories').prop('disabled', estatus);
+    //$('#ventOrRent1').prop('disabled', estatus);
+    //$('#ventOrRent2').prop('disabled', estatus);
 }
