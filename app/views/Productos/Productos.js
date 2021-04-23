@@ -13,6 +13,13 @@ function inicial() {
     getProductosTable();
     cargaInicial();
 
+    $("body").click(function () {
+        //console.log("hols");
+        $('#suggestions').fadeOut(500);
+
+    });
+
+
     //Open modal *
     $('#nuevoProducto').on('click', function () {
         LimpiaModal();
