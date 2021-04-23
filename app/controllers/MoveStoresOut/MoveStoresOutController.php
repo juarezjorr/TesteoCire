@@ -63,7 +63,7 @@ class MoveStoresOutController extends Controller
 		  }
 		  echo $res;
 	}
- // Lista los almacenes 
+// Lista los productos
 	public function listProducts($request_params)
 	{
 		$params =  $this->session->get('user');
@@ -81,7 +81,7 @@ class MoveStoresOutController extends Controller
 		echo $res;
 	} 
 
-// Lista los almacenes 
+// Lista los movimientos 
 	public function listExchanges($request_params)
 	{
 		$params =  $this->session->get('user');

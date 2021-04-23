@@ -107,6 +107,12 @@ function formato_numero(numero, decimales, separador_decimal, separador_miles) {
     return numero;
 }
 
+/** Genera el folio de los movimientos */
+function getFolio() {
+    let fl = moment(Date()).format('YYMMDDHHmmss');
+    return fl;
+}
+
 /* ---- ----  IMPORTA LOS SCRIPTS NECESARIOS ----- ------ */
 
 function importarScript(nombre) {

@@ -8,7 +8,7 @@ class MoveStoresOutModel extends Model
     {
       parent::__construct();
     }
-// Listado de Tipos de mivimiento
+// Listado de Tipos de movimiento
 	public function listExchange()
 	{
 		$qry = "SELECT ex1.ext_id, ex1.ext_code, ex1.ext_type, ex1.ext_description, ex1.ext_link,
@@ -59,7 +59,7 @@ class MoveStoresOutModel extends Model
 		$exc_employee_name	= $this->db->real_escape_string($employee_data[2]);
 		$ext_code			= $this->db->real_escape_string($param['cod']);
 		$ext_id				= $this->db->real_escape_string($param['idx']);
-		$exc_guid			= $this->db->real_escape_string($param['gui']);
+		$exc_guid			= $this->db->real_escape_string($param['fol']);
 
 		$qry = "INSERT INTO ctt_stores_exchange
 				(exc_guid, exc_sku_product, exc_product_name, exc_quantity, exc_serie_product, exc_store, exc_comments, exc_proyect, exc_employee_name, ext_code, ext_id)
