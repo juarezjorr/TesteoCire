@@ -59,10 +59,9 @@ function setting_table() {
             {
                 // Boton aplicar cambios
                 text: 'Aplicar movimientos',
-                className: 'btn-apply ',
-                action: function () {
+                className: 'btn-apply hidden-field',
+                action: function (e, dt, node, config) {
                     print_Code();
-                    
                 },
             },
         ],
@@ -83,15 +82,15 @@ function setting_table() {
             {data: 'editable', class: 'edit'},
             {data: 'prod_sku', class: 'sku'},
             {data: 'prodname', class: 'product-name'},
-            {data: 'prodcant', class: 'quantity'}
-            
+            {data: 'prodcant', class: 'quantity'},
+
         ],
     });
 }
 
 // Solicita los tipos de movimiento
 function getExchange() {
-    var pagina = 'MoveStores/listExchange';
+    var pagina = 'MoveStoresOut/listExchange';
     var par = '[{"parm":""}]';
     var tipo = 'json';
     var selector = putTypeExchange;
@@ -99,7 +98,7 @@ function getExchange() {
 }
 // Solicita el listado de almacenes
 function getStores() {
-    var pagina = 'MoveStores/listStores';
+    var pagina = 'MoveStoresOut/listStores';
     var par = '[{"parm":""}]';
     var tipo = 'json';
     var selector = putStores;
@@ -107,7 +106,7 @@ function getStores() {
 }
 // Solicita los productos de un almacen seleccionado
 function getProducts() {
-    var pagina = 'MoveStores/listProducts';
+    var pagina = 'MoveStoresOut/listProducts';
     var par = `[{"store":""}]`;
     var tipo = 'json';
     var selector = putProducts;
@@ -115,7 +114,7 @@ function getProducts() {
 }
 // Solicita los movimientos acurridos
 function getExchanges() {
-    var pagina = 'MoveStores/listExchanges';
+    var pagina = 'MoveStoresOut/listExchanges';
     var par = `[{"guid":"${guid}"}]`;
     var tipo = 'json';
     var selector = putExchanges;
@@ -167,17 +166,14 @@ function putStores(dt) {
 }
 // Almacena los registros de productos en un arreglo
 function putProducts(dt) {
-    console.log(dt);
     $.each(dt, function (v, u) {
-       let H = `<div class="list-item" id="P-${u.ser_id}" data-store="${u.str_id}" data-content="${u.ser_id}|${u.ser_sku}|${u.ser_serial_number}|${u.prd_name}|${u.ser_cost}|${u.prd_coin_type}">
-		 ${u.prd_sku} - ${u.prd_name}<div class="items-just"><div class="quantity editable" data-content="${u.stp_quantity}" contenteditable=true>1</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
-       
-       $('#listProducts').append(H);
+        let H = `<div class="list-item" id="P-${u.ser_id}" data-store="${u.str_id}" data-content="${u.ser_id}|${u.ser_sku}|${u.ser_serial_number}|${u.prd_name}|${u.ser_cost}|${u.prd_coin_type}">
+         ${u.ser_sku} - ${u.prd_name}<div class="items-just"><div class="quantity editable" data-content="${u.stp_quantity}" contenteditable=true>${u.stp_quantity}</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
+        $('#listProducts').append(H);
     });
 }
 // Dibuja los productos
 function drawProducts(str) {
-    console.log(str);
     $('.list-item').addClass('hide-items');
     $(`.list-item[data-store^="${str}"]`).removeClass('hide-items');
 
@@ -218,7 +214,7 @@ function validator(prId) {
     let ky = 0;
     let msg = '';
 
-/*     if ($('#txtTypeExchange').val() == 0) {
+   /* if ($('#txtTypeExchange').val() == 0) {
         ky = 1;
         msg += 'Debes seleccionar un tipo de movimiento';
         $('#txtTypeExchange').addClass('fail');
@@ -228,7 +224,7 @@ function validator(prId) {
         ky = 1;
         msg += 'Debes seleccionar un almacen destino';
         $('#txtStoreTarget').addClass('fail');
-    } */
+    }*/
 
     let qtystk = prId.children().children('.quantity').attr('data-content');
     let qtysel = prId.children().children('.quantity').text();
@@ -244,7 +240,7 @@ function validator(prId) {
         .unbind('focus')
         .on('focus', function () {
             $(this).removeClass('fail');
-        }); 
+        });
     return ky;
 }
 // Aplica la seleccion para la tabla de movimientos
@@ -277,24 +273,26 @@ function exchange_apply(prId) {
 
         update_array_products(productId, productQuantity);
         let par = `
-			[{
-			   "support"    :  "${guid}|${productSKU}|${typeExchangeIdSource}|${typeExchangeIdTarget}|${productId}|${storeIdSource}|${storeIdTarget}",
-			   "prodsku"	: 	"${productSKU}",
-			   "prodnme"	:	"${productName}",
-			   "prodqty"	:	"48878789",
-			   "prodser"	:	"${productSerie}",
-			   "excodsr"	:	"${typeExchangeCodeSource}",
-			   "stnmesr"	:	"${storeNameSource}",
-			   "excodtg"	:	"${typeExchangeCodeTarget}",
-			   "stnmetg"	:	"${storeNameTarget}",
-			   "project"	:	"${project}",
-			   "excidsr"	:	"${typeExchangeIdSource}",
-			   "excidtg"	:	"${typeExchangeIdTarget}",
-			   "stoidsr"	:	"${storeIdSource}",
-			   "stoidtg"	:	"${storeIdTarget}",
-			   "folguid"	:	"${guid}"
-			}]
-			`;
+            [{
+               "support"    :  "${guid}|${productSKU}|${typeExchangeIdSource}|${typeExchangeIdTarget}|${productId}|${storeIdSource}|${storeIdTarget}",
+               "prodsku"	: 	"${productSKU}",
+               "prodnme"	:	"${productName}",
+               "prodqty"	:	"${productQuantity}",
+               "prodser"	:	"${productSerie}",
+               "excodsr"	:	"${typeExchangeCodeSource}",
+               "stnmesr"	:	"${storeNameSource}",
+               "excodtg"	:	"${typeExchangeCodeTarget}",
+               "stnmetg"	:	"${storeNameTarget}",
+               "comment"	:	"${commnets}",
+               "project"	:	"${project}",
+               "excidsr"	:	"${typeExchangeIdSource}",
+               "excidtg"	:	"${typeExchangeIdTarget}",
+               "stoidsr"	:	"${storeIdSource}",
+               "stoidtg"	:	"${storeIdTarget}",
+               "folguid"	:	"${guid}"
+            }]
+            `;
+        //console.log(par);
         fill_table(par);
     }
 }
@@ -406,31 +404,31 @@ function read_exchange_table() {
 function build_data_structure(pr) {
     let el = pr.split('|');
     let par = `[
-			   {
-				  "gui" :  "${el[0]}",
-				  "sku" :  "${el[1]}",
-				  "pnm" :  "${el[2]}",
-				  "qty" :  "${el[3]}",
-				  "ser" :  "${el[4]}",
-				  "str" :  "${el[5]}",
-				  "com" :  "${el[6]}",
-				  "cod" :  "${el[7]}",
-				  "idx" :  "${el[8]}",
-				  "prj" :  ""
-			   }
-			]`;
+               {
+                  "gui" :  "${el[0]}",
+                  "sku" :  "${el[1]}",
+                  "pnm" :  "${el[2]}",
+                  "qty" :  "${el[3]}",
+                  "ser" :  "${el[4]}",
+                  "str" :  "${el[5]}",
+                  "com" :  "${el[6]}",
+                  "cod" :  "${el[7]}",
+                  "idx" :  "${el[8]}",
+                  "prj" :  ""
+               }
+            ]`;
     save_exchange(par);
 }
 function build_update_store_data(pr) {
     let el = pr.split('|');
     let par = `[
-			   {
-				  "prd" :  "${el[0]}",
-				  "qty" :  "${el[1]}",
-				  "str" :  "${el[2]}",
-				  "mov" :  "${el[3]}"
-			   }
-			]`;
+               {
+                  "prd" :  "${el[0]}",
+                  "qty" :  "${el[1]}",
+                  "str" :  "${el[2]}",
+                  "mov" :  "${el[3]}"
+               }
+            ]`;
 
     update_store(par);
 }
@@ -438,7 +436,7 @@ function build_update_store_data(pr) {
 /** Graba intercambio de almacenes */
 function save_exchange(pr) {
     //   console.log(pr);
-    var pagina = 'MoveStores/SaveExchange';
+    var pagina = 'MoveStoresOut/SaveExchange';
     var par = pr;
     var tipo = 'html';
     var selector = exchange_result;
@@ -447,7 +445,7 @@ function save_exchange(pr) {
 
 function update_store(ap) {
     // console.log(ap);
-    var pagina = 'MoveStores/UpdateStores';
+    var pagina = 'MoveStoresOut/UpdateStores';
     var par = ap;
     var tipo = 'html';
     var selector = updated_stores;
@@ -458,7 +456,7 @@ function exchange_result(dt) {}
 
 function updated_stores(dt) {
     // console.log(dt);
-    window.location = 'MoveStores';
+    window.location = 'MoveStoresOut';
 }
 
 /* Generación del GUID  */
