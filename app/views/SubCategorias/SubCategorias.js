@@ -160,14 +160,16 @@ function SaveSubCategoria() {
                      respuesta +
                      ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
                   [1]: respuesta,
-                  [2]: NomSubCategoria,
-                  [3]: CodSubCategoria,
+                  [2]: CodSubCategoria,
+                  [3]: NomSubCategoria,
                   [4]: nomCategoria,
                })
                .draw()
                .node();
             $(rowNode).find('td').eq(0).addClass('edit');
-            $(rowNode).find('td').eq(1).addClass('text-center');
+            //$(rowNode).find('td').eq(1).addClass('text-center');
+            $(rowNode).find('td').eq(1).attr("hidden",true);
+
             LimpiaModal();
          }
       },
@@ -197,7 +199,7 @@ function getCategorias(id) {
       data: {id: id},
       url: location,
       success: function (respuesta) {
-         var renglon = "<option id='0'  value=''>Seleccione una categoria...</option> ";
+         var renglon = "<option id='0'  value=''>Seleccione un Catalago...</option> ";
          respuesta.forEach(function (row, index) {
             renglon += '<option id=' + row.cat_id + '  value="' + row.cat_id + '">' + row.cat_name + '</option> ';
          });
@@ -237,18 +239,25 @@ function getSubCategoriasTable(idCategoria) {
                   row.sbc_id +
                   ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>' +
                   '</td>' +
-                  "<td class='dtr-control text-center'>" +
+                  "<td class='dtr-control text-center' hidden>" +
                   row.sbc_id +
                   '</td>' +
-                  '<td>' +
-                  row.sbc_name +
-                  '</td>' +
+
+
                   '<td>' +
                   row.sbc_code +
                   '</td>' +
+
+
+                  '<td>' +
+                  row.sbc_name +
+                  '</td>' +
+
+
                   '<td>' +
                   row.cat_name +
                   '</td>' +
+
                   '</tr>';
             }
             $('#tablaSubCategoriasRow').append(renglon);

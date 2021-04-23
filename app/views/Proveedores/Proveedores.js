@@ -8,6 +8,7 @@ $(document).ready(function () {
 
 function inicial() {
    getProveedoresTable();
+   getTipoProveedor();
    //Open modal *
    $('#nuevoProveedor').on('click', function () {
       LimpiaModal();
@@ -27,6 +28,7 @@ function inicial() {
 
    $('#LimpiarFormulario').on('click', function () {
       LimpiaModal();
+      getTipoProveedor();
    });
 
    $('#ProveedoresTable tbody').on('click', 'tr', function () {
@@ -35,9 +37,9 @@ function inicial() {
       setTimeout(() => {
          RenglonesSelection = table.rows({selected: true}).count();
          if (RenglonesSelection == 0 || RenglonesSelection == 1) {
-            $('.btn-apply').css('visibility', 'hidden');
+            $('.btn-apply').addClass('hidden-field');
          } else {
-            $('.btn-apply').css('visibility', 'visible');
+            $('.btn-apply').removeClass('hidden-field');
          }
       }, 10);
    });
@@ -78,7 +80,9 @@ function EditProveedores(id) {
          $('#EmailProveedor').val(respuesta.sup_email);
          $('#PhoneProveedor').val(respuesta.sup_phone);
 
-         $('#ProveedorModal').modal('show');
+         getTipoProveedor(respuesta.sut_id);
+
+         //$('#ProveedorModal').modal('show');
       },
       error: function (EX) {
          console.log(EX);
@@ -139,6 +143,10 @@ function SaveProveedores() {
    var EmailProveedor = $('#EmailProveedor').val();
    var PhoneProveedor = $('#PhoneProveedor').val();
 
+
+   var tipoProveedorId = $('#selectRowTipoProveedor option:selected').attr('id');
+   var tipoProveedorName = $('#selectRowTipoProveedor option:selected').text();
+
    $.ajax({
       type: 'POST',
       dataType: 'JSON',
@@ -149,6 +157,7 @@ function SaveProveedores() {
          RfcProveedor: RfcProveedor,
          EmailProveedor: EmailProveedor,
          PhoneProveedor: PhoneProveedor,
+         tipoProveedorId: tipoProveedorId
       },
       url: location,
       success: function (respuesta) {
@@ -170,16 +179,22 @@ function SaveProveedores() {
                      ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
                   [1]: respuesta,
                   [2]: NomProveedor,
-                  [3]: ContactoProveedor,
-                  [4]: RfcProveedor,
-                  [5]: EmailProveedor,
-                  [6]: PhoneProveedor,
+                  [3]: tipoProveedorId,
+                  [4]: tipoProveedorName,
+                  [5]: ContactoProveedor,
+                  [6]: RfcProveedor,
+                  [7]: EmailProveedor,
+                  [8]: PhoneProveedor,
                })
                .draw()
                .node();
             $(rowNode).find('td').eq(0).addClass('edit');
             $(rowNode).find('td').eq(1).addClass('text-center');
+            $(rowNode).find('td').eq(1).attr("hidden",true);
+            $(rowNode).find('td').eq(3).attr("hidden",true);
+
             LimpiaModal();
+            getTipoProveedor();
          }
       },
       error: function (EX) {
@@ -226,12 +241,21 @@ function getProveedoresTable() {
                row.sup_id +
                ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>' +
                '</td>' +
-               "<td class='dtr-control text-center'>" +
+               "<td class='dtr-control text-center' hidden>" +
                row.sup_id +
                '</td>' +
                '<td>' +
                row.sup_business_name +
                '</td>' +
+
+               '<td hidden> ' +
+               row.sut_id +
+               '</td>' +
+
+               '<td>' +
+               row.sut_name +
+               '</td>' +
+
                '<td>' +
                row.sup_contact +
                '</td>' +
@@ -293,7 +317,7 @@ function getProveedoresTable() {
                },
                {
                   text: 'Borrar seleccionados',
-                  className: 'btn-apply',
+                  className: 'btn-apply hidden-field',
                   action: function () {
                      var selected = table.rows({selected: true}).data();
                      var idSelected = '';
@@ -327,6 +351,30 @@ function getProveedoresTable() {
       },
       set success(value) {
          this._success = value;
+      },
+      error: function () {},
+   }).done(function () {});
+}
+
+
+// Optiene los usuarios disponibles para encargados *
+function getTipoProveedor(id) {
+   $('#selectRowTipoProveedor').html("");
+   var location = 'Proveedores/GetTipoProveedores';
+   $.ajax({
+      type: 'POST',
+      dataType: 'JSON',
+      data: {id: id},
+      url: location,
+      success: function (respuesta) {
+         var renglon = "<option id='0'  value=''>Seleccione...</option> ";
+         respuesta.forEach(function (row, index) {
+            renglon += '<option id=' + row.sut_id + '  value="' + row.sut_id + '">' + row.sut_name + '</option> ';
+         });
+         $('#selectRowTipoProveedor').append(renglon);
+         if (id != undefined) {
+            $("#selectRowTipoProveedor option[value='" + id + "']").attr('selected', 'selected');
+         }
       },
       error: function () {},
    }).done(function () {});

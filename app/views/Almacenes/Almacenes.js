@@ -34,9 +34,9 @@ function inicial() {
       setTimeout(() => {
          RenglonesSelection = table.rows({selected: true}).count();
          if (RenglonesSelection == 0 || RenglonesSelection == 1) {
-            $('.btn-apply').css('visibility', 'hidden');
+            $('.btn-apply').addClass('hidden-field');
          } else {
-            $('.btn-apply').css('visibility', 'visible');
+            $('.btn-apply').removeClass('hidden-field');
          }
       }, 10);
    });
@@ -325,7 +325,7 @@ function getEncargadoAlmacen(id) {
       data: {id: id},
       url: location,
       success: function (respuesta) {
-         var renglon = "<option id='0'  value=''>Seleccione un Encargado...</option> ";
+         var renglon = "<option id='0'  value=''>Seleccione...</option> ";
          respuesta.forEach(function (row, index) {
             renglon += '<option id=' + row.emp_id + '  value="' + row.emp_id + '">' + row.emp_fullname + '</option> ';
          });

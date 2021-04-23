@@ -5,7 +5,6 @@
 
 <header>
 	<?php require ROOT . FOLDER_PATH . "/app/assets/menu.php"; ?>
-
 </header>
 <div class="container-fluid">
 	<div class="contenido">
@@ -71,7 +70,6 @@
 							<label for="txtComments">Comentarios</label>
 						</div>
 					</div> -->
-
 					<!-- <div class="row">
 						<div class="col-md-12 mb-5">
 							<button type="button" class="btn btn-sm btn-primary disabled" id="btn_exchange">Agregar</button>
@@ -82,21 +80,21 @@
 
 
 			<div class="mb-3 mvst_table">
-				<h1>Movimiento entre almacenes</h1>
-<!-- 				<svg id="barcode"></svg>
- -->
-
-
-
-				<table class="display compact nowrap"  id="tblExchanges" style="width:100%">
+				<h1>Codigo de Barras</h1>
+				<table class="display compact nowrap"  id="tblExchanges"  style="width:100%">
 					<thead>
 						<tr>
 							<th style="width:  80px">soppr</th>
 							<th style="width:  30px"></th>
 							<th style="width:  80px">SKU</th>
-							<th style="width: auto">Producto</th>
-							<th style="width:  auto">Cantidad</th>
-
+							<th style="width: 350px">Producto</th>
+							<th style="width:  60px">Cantidad</th>
+<!-- 							<th style="width: 100px">No. Serie</th>
+							<th style="width:  50px">Tipo Origen</th>
+							<th style="width: 150px">Almacen Origen</th>
+							<th style="width:  50px">Tipo Destino</th>
+							<th style="width: 150px">Almacen Destino</th>
+							<th style="width: 350px">Nota</th> -->
 						</tr>
 					</thead>
 					<tbody>	
@@ -113,6 +111,8 @@
 
 	</div>
 </div>
+
+
 
 <div class="modal fade" tabindex="-1" id="ejemplo1">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -134,18 +134,10 @@
   </div>
 </div>
 
-
-
-
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.3/dist/JsBarcode.all.min.js"></script>
 
-<script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
 
+<script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
 <script src="<?=  PATH_VIEWS . 'CodeBar/CodeBar.js' ?>"></script>
 
 <?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>

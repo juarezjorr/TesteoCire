@@ -39,9 +39,17 @@
 								</div>
 							</div>
 
-                     <div class="row">
+							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="CodDocumento" name="CodDocumento" type="text" class="form-control form-control-sm" maxlength="4" style="text-transform: uppercase" required >
+									<select id="selectRowTipoDocumento"  name="selectRowTipoDocumento"  class="form-select form-select-sm" autocomplete="off" required >
+									</select>
+									<label for="selectRowTipoDocumento" class="form-label">Tipo Documento</label>
+								</div>
+							</div>
+
+                    		 <div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<input id="CodDocumento" name="CodDocumento" type="text" class="form-control form-control-sm" maxlength="4" style="text-transform: uppercase" >
 									<label for="CodDocumento">Code Documento</label>
 								</div>
 							</div>
@@ -69,11 +77,14 @@
 										<thead>
 											<tr>
 													<th style="width: 30px"></th>
-													<th style="width: 20px">Id</th>
+													<th style="width: 20px" hidden>Id</th>
 													<th style="width: 300px">Nombre</th>
-                                       <th style="width: 100px">Codigo</th>
-                                       <th style="width: 100px">Tipo</th>
+													<th style="width: 100px" hidden>id Tipo Documento</th>
 
+													<th style="width: 100px">Tipo Documento</th>
+
+													<th style="width: 100px">Codigo</th>
+													<th style="width: 100px">Tipo</th>
 											</tr>
 										</thead>
 										<tbody id="tablaDocumentosRow">
@@ -112,6 +123,32 @@
 					 </div>
 				</div>
 		</div>
+
+
+<!-- Modal Borrar -->
+<div class="modal fade" id="filtroDocumentoModal" tabindex="-1" aria-labelledby="BorrarPerfilLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-sm">
+					 <div class="modal-content">
+					 <div class="modal-header ">
+					 </div>
+					 <div class="modal-body" style="padding: 0px !important;">
+
+
+					 <div class="row">
+						  <input hidden type="text" class="form-control" id="IdDocumentoBorrar" aria-describedby="basic-addon3">
+						  <div class="col-12 text-center">
+								<span class="modal-title text-center" style="font-size: 1rem;" >Solo se aceptan archivos con extencion JPG,PNG,PDF</span>
+						  </div>
+					 </div>
+
+					 </div>
+						  <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+						  </div>
+					 </div>
+				</div>
+		</div>
+
 
  	<script src="<?=  PATH_ASSETS . 'lib/Datatable_J/Js/bootstrap.bundle.min.js' ?>"></script>
 

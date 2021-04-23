@@ -11,8 +11,10 @@ class ProductosModel extends Model
 //Guarda prodducto 
 	public function SaveProductos($params)
 	{
+		$estatus = 0;
 
-				//INSERTA PRODUCTO (VALIDAR QUE EXISTE)
+
+	    //INSERTA PRODUCTO (VALIDAR QUE EXISTE)
 		$qry = "SELECT count(prd_id) AS id FROM ctt_products WHERE prd_name = '".$params['NomProducto']."';";
 		$result = $this->db->query($qry);
 		if ($row = $result->fetch_row()) {
@@ -20,7 +22,23 @@ class ProductosModel extends Model
 		}
 		//print_r($countId);
 
-        $estatus = 0;
+
+
+/************************* Generar SKU *******************************/
+
+		$SKU = "";
+		//ID de categoria dos digitos.
+		$categoria = str_pad($params['idCategoria'], 2, "0", STR_PAD_LEFT);
+
+		//SUBCATEGORIA dos digitos 
+		$qry = "SELECT sbc_code FROM ctt_subcategories WHERE sbc_id = ".$params['idSubCategoria'].";";
+		$result = $this->db->query($qry);
+		if ($row = $result->fetch_row()) {
+			$Subcategoria  = trim($row[0]);
+		}
+
+		$Subcategoria = str_pad($Subcategoria, 2, "0", STR_PAD_LEFT);
+
 
 		//MODELO 3 DIGITOS
 		$qry = "SELECT count(*) FROM ctt_products WHERE sbc_id =  ".$params['idSubCategoria'].";";
@@ -33,7 +51,24 @@ class ProductosModel extends Model
 		$model = str_pad($consecutivoModel, 3, "0", STR_PAD_LEFT);
 
 
+		
+/* 		//NUMERO CONSECUTIVO DE PRODUCTO 4 DIGITOS 
+		$qry = "SELECT COUNT(ser_id) FROM  ctt_series WHERE prd_id = '".$idProducto."';";
+		$result = $this->db->query($qry);
+		if ($row = $result->fetch_row()) {
+			$consecutivo  = trim($row[0]);
+			$consecutivo = $consecutivo + 1;
+		}
 
+		$consecutivo = str_pad($consecutivo, 4, "0", STR_PAD_LEFT);
+
+		//NUMERO DE ACCESORIO 3 DIGITOS
+		$accesorio = "000"; */
+
+		$SKU = $categoria.$Subcategoria.$model;
+		$SKU = strtoupper($SKU);
+
+		$idProducto = 0;
 
 			try {
 				if($countId == 0){
@@ -47,7 +82,10 @@ class ProductosModel extends Model
 										sbc_id, 
 										sup_id, 
 										srv_id,
-										prd_model) 
+										prd_model,
+										prd_sku,
+										prd_lonely,
+										prd_behaviour) 
 								VALUES('".$params['NomProducto']."',
 									'".$params['NomEngProducto']."',
 									".$params['PriceProducto'].",
@@ -58,7 +96,15 @@ class ProductosModel extends Model
 									".$params['idSubCategoria'].",
 									".$params['idProveedor'].",
 									".$params['idTipeService'].",
-									'".$model."')";
+									'".$model."',
+									'".$SKU."',
+									'".$params['rentSinAccesorios']."',
+									'".$params['idbehaviour']."')";
+
+
+					//print_r($qry);
+					//exit();
+
 					$this->db->query($qry);	
 					//print_r($qry . "-");
 					$qry = "SELECT MAX(prd_id) AS id FROM ctt_products;";
@@ -66,7 +112,20 @@ class ProductosModel extends Model
 					if ($row = $result->fetch_row()) {
 						$idProducto = trim($row[0]);
 					}
+
+					//inserta la relacion de documento con producto
+
+					$qry = "INSERT INTO ctt_products_documents (prd_id, doc_id)
+					VALUES(".$idProducto .",".$params['idDocumento'].")";
+					$this->db->query($qry);	
+
+					$estatus = $idProducto;
 				}else{
+					$estatus = 0;
+				}
+				
+/* 				
+				else{
 					$qry = "SELECT prd_id AS id FROM ctt_products WHERE prd_name = '".$params['NomProducto']."' limit 1;";
 					$result = $this->db->query($qry);
 					if ($row = $result->fetch_row()) {
@@ -74,50 +133,19 @@ class ProductosModel extends Model
 					}
 					//print_r($qry . "-");
 
-				}
-
-				/**********************************************/
-				$SKU = "";
-				//ID de categoria dos digitos.
-				$categoria = str_pad($params['idCategoria'], 2, "0", STR_PAD_LEFT);
-		
-				//SUBCATEGORIA dos digitos 
-				$qry = "SELECT sbc_code FROM ctt_subcategories WHERE sbc_id = ".$params['idSubCategoria'].";";
-				$result = $this->db->query($qry);
-				if ($row = $result->fetch_row()) {
-					$Subcategoria  = trim($row[0]);
-				}
-
-				$Subcategoria = str_pad($Subcategoria, 2, "0", STR_PAD_LEFT);
-
-
-
-
-				
-				//NUMERO CONSECUTIVO DE PRODUCTO 4 DIGITOS 
-				$qry = "SELECT COUNT(ser_id) FROM  ctt_series WHERE prd_id = '".$idProducto."';";
-				$result = $this->db->query($qry);
-				if ($row = $result->fetch_row()) {
-					$consecutivo  = trim($row[0]);
-					$consecutivo = $consecutivo + 1;
-				}
-		
-				$consecutivo = str_pad($consecutivo, 4, "0", STR_PAD_LEFT);
-		
-				//NUMERO DE ACCESORIO 3 DIGITOS
-				$accesorio = "000";
-		
-				$SKU = $categoria.$Subcategoria.$model.$consecutivo.$accesorio;
-				$SKU = strtoupper($SKU);
+				} */
 
 				/**********************************************/
 
 
-				$qry = "INSERT INTO ctt_products_documents (prd_id, doc_id)
-				VALUES(".$idProducto .",".$params['idDocumento'].")";
-				$this->db->query($qry);	
+				/**********************************************/
 
-				$qry = " INSERT INTO ctt_series (
+
+
+
+				/**********esto ya no va, porque ya no registrara series de productos **********/
+
+/* 				$qry = " INSERT INTO ctt_series (
 					ser_sku, 
 					ser_serial_number, 
 					ser_cost, 
@@ -136,25 +164,23 @@ class ProductosModel extends Model
 						   '".$params['idbehaviour']."',
 						   ". $idProducto.")";
 
-				$this->db->query($qry);	
+				$this->db->query($qry);	 */
 				//print_r($qry . "-");
 
 
-				$qry = "SELECT MAX(ser_id) AS id FROM ctt_series;";
+/* 				$qry = "SELECT MAX(ser_id) AS id FROM ctt_series;";
 				$result = $this->db->query($qry);
 				if ($row = $result->fetch_row()) {
 				    $idSeries = trim($row[0]);
 				}
-				//print_r($qry . "-");
 
 
 				$qry = "INSERT INTO ctt_stores_products (stp_quantity, str_id, ser_id)
 						VALUES('1',".$params['idAlmacen'].",$idSeries)";
-				$result = $this->db->query($qry);
+				$result = $this->db->query($qry); */
 
-				//print_r($qry . "-");
 
-				$estatus = $idProducto;
+
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -198,40 +224,33 @@ class ProductosModel extends Model
 		$lista = array();
 		while ($row = $result->fetch_row()){
 
-			$string = "";
-			$Count = 0;
-			$qry = "SELECT ser_sku FROM ctt_series WHERE ser_status=1 and prd_id = ".$row[0].";";
-			$resultt = $this->db->query($qry);
-     		while ($roww = $resultt->fetch_row()){
-				$string .= $roww[0].",";
-				$Count++;
-			}
-			$string = rtrim($string, ",");
-
-			if($Count != 0){
-
-		
-			$item = array("prd_id" =>$row[0],
-			"prd_sku" =>$row[1],
-			"prd_name" =>$row[2],
-			"prd_english_name" =>$row[3],
-			"prd_model" =>$row[4],
-			"prd_price" =>$row[5],
-			"prd_coin_type" =>$row[6],
-			"prd_visibility" =>$row[7],
-			"prd_comments" =>$row[8],
-			"sbc_id" =>$row[9],
-			"sup_id" =>$row[10],
-			"srv_id" =>$row[11],
-			"cat_id" =>$row[12],
-			"sbc_name" =>$row[13],
-			"cat_name" =>$row[14],
-			"srv_name" =>$row[15],
-			"extDocuments" =>$string,
-		    "extNum" =>$Count);
+			    $Count = 0;
+				$qry = "SELECT ser_sku FROM ctt_series WHERE ser_status=1 and prd_id = ".$row[0].";";
+				$resultt = $this->db->query($qry);
+				while ($roww = $resultt->fetch_row()){
+					$Count++;
+				}
 			
-			array_push($lista, $item);
-			}
+				$item = array("prd_id" =>$row[0],
+				"prd_sku" =>substr($row[1], -7, 4)."-".substr($row[1], -3),
+				"prd_name" =>$row[2],
+				"prd_english_name" =>$row[3],
+				"prd_model" =>$row[4],
+				"prd_price" =>$row[5],
+				"prd_coin_type" =>$row[6],
+				"prd_visibility" =>$row[7],
+				"prd_comments" =>$row[8],
+				"sbc_id" =>$row[9],
+				"sup_id" =>$row[10],
+				"srv_id" =>$row[11],
+				"cat_id" =>$row[12],
+				"sbc_name" =>$row[13],
+				"cat_name" =>$row[14],
+				"srv_name" =>$row[15],
+				"extNum" => $Count);
+				
+				array_push($lista, $item);
+			
 		}
 	
 		$lista = json_encode($lista,JSON_UNESCAPED_UNICODE);
@@ -300,8 +319,14 @@ class ProductosModel extends Model
 						WHERE prd_id =   ".$params['IdProducto'].";";
 				$this->db->query($qry);	
 
+
+				$qry = "UPDATE ctt_products_documents
+				SET doc_id ='".$params['idDocumento']."' 
+				WHERE prd_id = ".$params['IdProducto'].";";
+				$this->db->query($qry);	
+
 				//SI ES SOLO UNO ACTULIZA LO SIGUIENTE
-				if($params['esUnico'] == 1){
+/* 				if($params['esUnico'] == 1){
 
 					$qry = "SELECT ser_id AS id FROM ctt_series WHERE prd_id = ".$params['IdProducto'].";";
 					$result = $this->db->query($qry);
@@ -329,7 +354,7 @@ class ProductosModel extends Model
 					SET doc_id ='".$params['idDocumento']."' 
 					WHERE prd_id = ".$params['IdProducto'].";";
 					$this->db->query($qry);	
-				}
+				} */
 
 
 
@@ -384,7 +409,7 @@ class ProductosModel extends Model
 	{
 		$qry = "SELECT pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
 				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, pro.sup_id, 
-				pro.srv_id, subcat.cat_id, productD.doc_id
+				pro.srv_id, subcat.cat_id, productD.doc_id, pro.prd_lonely, pro.prd_behaviour
 				FROM ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id
@@ -396,7 +421,7 @@ class ProductosModel extends Model
 	{
 		$qry = "SELECT pro.prd_name, pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
 				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, pro.sup_id, 
-				pro.srv_id, subcat.cat_id, productD.doc_id
+				pro.srv_id, subcat.cat_id, productD.doc_id, pro.prd_lonely, pro.prd_behaviour
 				FROM ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id
@@ -409,7 +434,7 @@ class ProductosModel extends Model
 		$qry = "SELECT pro.prd_id, pro.prd_name, pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
 				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, pro.sup_id, 
 				pro.srv_id, subcat.cat_id, productD.doc_id, ser.ser_serial_number , ser.ser_cost,
-				ser.ser_lonely, ser.ser_behaviour, sProduct.str_id
+				ser.ser_lonely, ser.ser_behaviour, sProduct.str_id , pro.prd_lonely, pro.prd_behaviour
 				FROM ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id
