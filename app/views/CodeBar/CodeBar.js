@@ -58,7 +58,7 @@ function setting_table() {
             },
             {
                 // Boton aplicar cambios
-                text: 'Aplicar movimientos',
+                text: 'Generar codigos de barras',
                 className: 'btn-apply hidden-field',
                 action: function (e, dt, node, config) {
                     print_Code();

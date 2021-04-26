@@ -124,11 +124,11 @@
       <div class="modal-body" style="height: 500px !important;" id="modalSku">
 <!--           <svg id="barcode"></svg> 
  -->      </div>
- <button onclick="pdf_code()">Click me</button>
-
+<!--  <button onclick="pdf_code()">Click me</button>
+ -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Imprimir</button>
       </div> 
     </div>
   </div>
