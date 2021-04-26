@@ -1,9 +1,11 @@
 var seccion = '';
-const guid = uuidv4();
+///const folio = uuidv4();
+let folio;
 let = pr = [];
 let = link = '';
 
 $(document).ready(function () {
+    folio = getFolio();
     verifica_usuario();
     inicial();
 });
@@ -19,7 +21,7 @@ function inicial() {
 }
 
 function setting_table() {
-    let title = 'Movimiento de Almacenes';
+    let title = 'Salidas de Almacen';
     let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
 
     $('#tblExchanges').DataTable({
@@ -120,7 +122,7 @@ function getProducts() {
 // Solicita los movimientos acurridos
 function getExchanges() {
     var pagina = 'MoveStoresOut/listExchanges';
-    var par = `[{"guid":"${guid}"}]`;
+    var par = `[{"folio":"${folio}"}]`;
     var tipo = 'json';
     var selector = putExchanges;
     fillField(pagina, par, tipo, selector);
@@ -279,7 +281,7 @@ function exchange_apply(prId) {
         update_array_products(productId, productQuantity);
         let par = `
             [{
-               "support"    :  "${guid}|${productSKU}|${typeExchangeIdSource}|${typeExchangeIdTarget}|${productId}|${storeIdSource}|${storeIdTarget}",
+               "support"    :  "${folio}|${productSKU}|${typeExchangeIdSource}|${typeExchangeIdTarget}|${productId}|${storeIdSource}|${storeIdTarget}",
                "prodsku"	: 	"${productSKU}",
                "prodnme"	:	"${productName}",
                "prodqty"	:	"${productQuantity}",
@@ -294,7 +296,7 @@ function exchange_apply(prId) {
                "excidtg"	:	"${typeExchangeIdTarget}",
                "stoidsr"	:	"${storeIdSource}",
                "stoidtg"	:	"${storeIdTarget}",
-               "folguid"	:	"${guid}"
+               "dtfolio"	:	"${folio}"
             }]
             `;
         console.log(par);
@@ -371,7 +373,7 @@ function update_array_products(id, cn) {
 
 function read_exchange_table() {
     $('#tblExchanges tbody tr').each(function (v, u) {
-        let guid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
+        let folio = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
         let sku = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[1];
         let product = $($(u).find('td')[2]).text();
         let quantity = $($(u).find('td')[3]).text();
@@ -387,8 +389,8 @@ function read_exchange_table() {
         let storeIdSource = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[5];
         let storeIdTarget = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[6];
 
-        let exchstruc1 = `${guid}|${sku}|${product}|${quantity}|${serie}|${storeSource}|${comments}|${codeTypeExchangeSource}|${idTypeExchangeSource}`;
-        let exchstruc2 = `${guid}|${sku}|${product}|${quantity}|${serie}|${storeTarget}|${comments}|${codeTypeExchangeTarget}|${idTypeExchangeTarget}`;
+        let exchstruc1 = `${folio}|${sku}|${product}|${quantity}|${serie}|${storeSource}|${comments}|${codeTypeExchangeSource}|${idTypeExchangeSource}`;
+        let exchstruc2 = `${folio}|${sku}|${product}|${quantity}|${serie}|${storeTarget}|${comments}|${codeTypeExchangeTarget}|${idTypeExchangeTarget}`;
         let exchupda1 = `${productId}|${quantity}|${storeIdSource}`;
         let exchupda2 = `${productId}|${quantity}|${storeIdTarget}`;
 
@@ -410,7 +412,7 @@ function build_data_structure(pr) {
     let el = pr.split('|');
     let par = `[
                {
-                  "gui" :  "${el[0]}",
+                  "fol" :  "${el[0]}",
                   "sku" :  "${el[1]}",
                   "pnm" :  "${el[2]}",
                   "qty" :  "${el[3]}",
@@ -461,10 +463,15 @@ function exchange_result(dt) {}
 
 function updated_stores(dt) {
     // console.log(dt);
-    window.location = 'MoveStoresOut';
+
+    $('.resFolio').text(folio);
+    $('#MoveFolioModal').modal('show');
+    $('#btnHideModal').on('click', function () {
+        window.location = 'MoveStoresOut';
+    });
 }
 
-/* Generación del GUID  */
+/* Generación del folio  */
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = (Math.random() * 16) | 0,
