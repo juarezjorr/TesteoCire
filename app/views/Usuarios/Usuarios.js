@@ -12,6 +12,12 @@ $(document).ready(function () {
     getPuestos();
     getUserReport();
 
+    //$('.collapse').collapse("toggle");
+    //$('.collapse').collapse("hide");
+
+
+
+
     //Modal - lista - Permisos *
     $('#listDisponible').on('click', 'a', function(){    
         $(this).appendTo('#listAsignado');
@@ -57,10 +63,10 @@ $(document).ready(function () {
         setTimeout(() => {
            RenglonesSelection = table.rows({ selected: true }).count();
            if (RenglonesSelection == 0 || RenglonesSelection == 1) {
-               $(".btn-apply").css("visibility", "hidden");
-           } else {
-               $(".btn-apply").css("visibility", "visible");
-           }
+                $('.btn-apply').addClass('hidden-field');
+            } else {
+                $('.btn-apply').removeClass('hidden-field');
+            }
        }, 10);
      });
 }
@@ -153,7 +159,12 @@ function EditUsuario(id,idPerfil) {
 
             $('#NomUsuario').val(respuesta.emp_fullname);
             $('#UserNameUsuario').val(respuesta.usr_username);
+
             $('#PassUsuario').val(respuesta.usr_password);
+            $("#PassUsuarioRow").attr("hidden",true);
+
+
+
             $('#AreaEmpUsuario').val(respuesta.emp_area);
             $('#NumEmpUsuario').val(respuesta.emp_number);
 
@@ -227,12 +238,12 @@ function SaveUsuario() {
         var fechaRegistro = fechaAcceso;
 
         var IdUsuario = $('#IdUsuario').val();
-        var NomUsuario = $('#NomUsuario').val();
-        var UserNameUsuario = $('#UserNameUsuario').val();
-        var PassUsuario = $('#PassUsuario').val();
-        var AreaEmpUsuario = $('#AreaEmpUsuario').val();
-        var NumEmpUsuario = $('#NumEmpUsuario').val();     
-        var EmpIdUsuario = $('#EmpIdUsuario').val();  
+        var NomUsuario = $('#NomUsuario').val().trim();
+        var UserNameUsuario = $('#UserNameUsuario').val().trim();
+        var PassUsuario = $('#PassUsuario').val().trim();
+        var AreaEmpUsuario = $('#AreaEmpUsuario').val().trim();
+        var NumEmpUsuario = $('#NumEmpUsuario').val().trim();     
+        var EmpIdUsuario = $('#EmpIdUsuario').val().trim();  
     
 
         var idPerfil = $("#selectPerfilUsuario option:selected").attr("id");
@@ -291,6 +302,7 @@ function SaveUsuario() {
                 getPuestos();
                 getUserReport();
                 }
+
             },
             error: function (EX) {console.log(EX);}
             }).done(function () {});    
@@ -310,6 +322,11 @@ function LimpiaModal() {
     $('#listAsignado').html("");
     $('#formUsuario').removeClass('was-validated');
     $('#titulo').text('Nuevo Usuarios');
+    $("#PassUsuarioRow").attr("hidden",false);
+    getPerfilesUsuario();
+    $('.collapse').collapse("hide");
+
+
 }
 
 //Limpia en formulario datos de perfil *
@@ -422,7 +439,7 @@ function getUsuariosTable() {
                ,
                {
                   text: 'Borrar seleccionados',
-                  className: 'btn-apply',
+                  className: 'btn-apply hidden-field',
                   action: function () {
                      var selected = table.rows({ selected: true }).data();
                      var idSelected = '';
