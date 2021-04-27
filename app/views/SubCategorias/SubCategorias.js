@@ -163,6 +163,8 @@ function SaveSubCategoria() {
                   [2]: CodSubCategoria,
                   [3]: NomSubCategoria,
                   [4]: nomCategoria,
+                  [5]: padLeadingZeros(idCategoria,2) ,
+
                })
                .draw()
                .node();
