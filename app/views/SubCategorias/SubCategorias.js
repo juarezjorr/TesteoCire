@@ -131,7 +131,7 @@ function SaveSubCategoria() {
    var location = 'SubCategorias/SaveSubCategoria';
    var IdSubCategoria = $('#IdSubCategoria').val();
    var NomSubCategoria = $('#NomSubCategoria').val();
-   var CodSubCategoria = $('#CodSubCategoria').val();
+   var CodSubCategoria = $('#CodSubCategoria').val().toUpperCase();
    var idCategoria = $('#selectRowCategorias option:selected').attr('id');
    var nomCategoria = $('#selectRowCategorias option:selected').text();
 
