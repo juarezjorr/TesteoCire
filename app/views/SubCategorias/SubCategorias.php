@@ -73,6 +73,8 @@
 													<th style="width: 20px">Codigo</th>
 													<th style="width: 300px">Nombre</th>
 													<th style="width: 300px">Catalagos</th>
+													<th style="width: 300px">Codigo Catalogo</th>
+
 											</tr>
 										</thead>
 										<tbody id="tablaSubCategoriasRow">

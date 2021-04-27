@@ -68,6 +68,9 @@ class UsuariosModel extends Model
         $estatus = 0;
 			try {
 
+				$pass = password_hash($this->db->real_escape_string($params['PassUsuario']), PASSWORD_DEFAULT);
+
+
 				//Inserta Usuario-Empleado
 				$qry = "insert into ctt_employees(emp_number, emp_fullname, emp_area, emp_status, pos_id, emp_report_to) 
 				values(".$params['NumEmpUsuario'].",'".$params['NomUsuario']."', '".$params['AreaEmpUsuario']."',1,".$params['idPuesto'].",".$params['idUserReport'].");";
@@ -82,7 +85,7 @@ class UsuariosModel extends Model
 
 				//Inserta Usuario
 				$qry = "insert into ctt_users (usr_username, usr_password, usr_dt_registry, emp_id, prf_id,usr_status) 
-				      values('".$params['UserNameUsuario']."','".$params['PassUsuario']."',NOW(),".$lastid.", ".$params['idPerfil'].",1 ) ;";
+				      values('".$params['UserNameUsuario']."','".$pass."',NOW(),".$lastid.", ".$params['idPerfil'].",1 ) ;";
 				$this->db->query($qry);
 
 				//optiene id de Usuario insertado

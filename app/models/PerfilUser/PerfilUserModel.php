@@ -72,7 +72,7 @@ class PerfilUserModel extends Model
 			try {
 				//Inserta perfil
 				$qry = "insert into ctt_profiles ( prf_code, prf_name, prf_description, prf_mod_start,prf_status) 
-						values('".$params['CodPerfil']."','".$params['NomPerfil']."','".$params['DesPerfil']."', 'menu',1);";
+						values('".$params['CodPerfil']."','".$params['NomPerfil']."','".$params['DesPerfil']."', 'Start',1);";
 				$this->db->query($qry);
 
 				//optiene id de perfil insertado

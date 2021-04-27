@@ -37,7 +37,7 @@
 								</div>
 							</div>
 
-                    		 <div class="row">
+                    		 <div class="row" id="PassUsuarioRow">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="PassUsuario" name="PassUsuario" type="text" class="form-control form-control-sm"  autocomplete="off" required >
 									<label for="PassUsuario">Password </label>
@@ -61,19 +61,21 @@
 							</div>
 
 							<div class="row">
-									<div class="col-md-12 col-espace">
+									<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 										<div class="input-group">
-											<select class="custom-select" id="selectPerfilUsuario" required>
+											<select class="form-select form-select-sm" id="selectPerfilUsuario" name="selectPerfilUsuario" required>
 											</select>
+
 											<div class="input-group-append">
-											<button id="modulesUserPerfil" class="btn btn-primary btn-Edit-Perfil" type="button" data-bs-toggle="collapse" data-bs-target="#modulesUserColapse" aria-expanded="false" aria-controls="modulesUserColapse">Editar</button>
+												<button id="modulesUserPerfil" class="btn btn-primary btn-Edit-Perfil" type="button" data-bs-toggle="collapse" data-target="#modulesUserColapse" data-bs-target="#modulesUserColapse" aria-expanded="false" aria-controls="modulesUserColapse">Editar</button>
 											</div>
-											<div class="invalid-feedback">
-											Seleccione un perfil.
-											</div>
-										</div>
+<!-- 											<label for="selectPerfilUsuario" class="form-label">Seleccione un perfil.</label>
+ -->										</div>
 									</div>
-									<div class="col-md-12 ">
+							</div>
+
+							<div class="row">
+									<div class="col-md-12 col-lg-12 col-xl-12 form-floating">
 										<div class="collapse" id="modulesUserColapse">
 											<div class="card card-body" style="padding: .4rem !important;">
 											<div class="row">
@@ -108,7 +110,10 @@
 											</div>
 										</div>
 									</div>
+
 							</div>
+
+
 
 
                             <div class="row">

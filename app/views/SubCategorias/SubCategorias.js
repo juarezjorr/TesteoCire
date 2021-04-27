@@ -131,7 +131,7 @@ function SaveSubCategoria() {
    var location = 'SubCategorias/SaveSubCategoria';
    var IdSubCategoria = $('#IdSubCategoria').val();
    var NomSubCategoria = $('#NomSubCategoria').val();
-   var CodSubCategoria = $('#CodSubCategoria').val();
+   var CodSubCategoria = $('#CodSubCategoria').val().toUpperCase();
    var idCategoria = $('#selectRowCategorias option:selected').attr('id');
    var nomCategoria = $('#selectRowCategorias option:selected').text();
 
@@ -163,6 +163,8 @@ function SaveSubCategoria() {
                   [2]: CodSubCategoria,
                   [3]: NomSubCategoria,
                   [4]: nomCategoria,
+                  [5]: padLeadingZeros(idCategoria,2) ,
+
                })
                .draw()
                .node();
@@ -258,6 +260,11 @@ function getSubCategoriasTable(idCategoria) {
                   row.cat_name +
                   '</td>' +
 
+                  
+                  '<td>' +
+                  padLeadingZeros(row.cat_id,2)   +
+                  '</td>' +
+
                   '</tr>';
             }
             $('#tablaSubCategoriasRow').append(renglon);
@@ -346,4 +353,10 @@ function getSubCategoriasTable(idCategoria) {
          console.log(jqXHR, textStatus, errorThrown);
       },
    }).done(function () {});
+}
+
+function padLeadingZeros(num, size) {
+   var s = num+"";
+   while (s.length < size) s = "0" + s;
+   return s;
 }

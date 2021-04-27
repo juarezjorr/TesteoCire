@@ -9,6 +9,10 @@ $(document).ready(function () {
 });
 
 function inicial() {
+    $("#listProducts").mouseleave(function() {
+            $('.list-group').slideToggle('slow');
+    });
+
     getExchange();
     getStores();
     getProducts();
@@ -34,7 +38,7 @@ function setting_table() {
                 filename: filename,
 
                 //Aquí es donde generas el botón personalizado
-                text: '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
+                text: '<button class="btn btn-excel" hidden><i class="fas fa-file-excel"></i></button>',
             },
             {
                 //Botón para PDF
@@ -44,7 +48,7 @@ function setting_table() {
                 filename: filename,
 
                 //Aquí es donde generas el botón personalizado
-                text: '<button class="btn btn-pdf"><i class="fas fa-file-pdf"></i></button>',
+                text: '<button class="btn btn-pdf" hidden><i class="fas fa-file-pdf"></i></button>',
             },
             {
                 //Botón para imprimir
@@ -54,7 +58,7 @@ function setting_table() {
                 filename: filename,
 
                 //Aquí es donde generas el botón personalizado
-                text: '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
+                text: '<button class="btn btn-print" hidden><i class="fas fa-print"></i></button>',
             },
             {
                 // Boton aplicar cambios
@@ -82,7 +86,7 @@ function setting_table() {
             {data: 'editable', class: 'edit'},
             {data: 'prod_sku', class: 'sku'},
             {data: 'prodname', class: 'product-name'},
-            {data: 'prodcant', class: 'quantity'},
+    
 
         ],
     });
@@ -168,7 +172,7 @@ function putStores(dt) {
 function putProducts(dt) {
     $.each(dt, function (v, u) {
         let H = `<div class="list-item" id="P-${u.ser_id}" data-store="${u.str_id}" data-content="${u.ser_id}|${u.ser_sku}|${u.ser_serial_number}|${u.prd_name}|${u.ser_cost}|${u.prd_coin_type}">
-         ${u.ser_sku} - ${u.prd_name}<div class="items-just"><div class="quantity editable" data-content="${u.stp_quantity}" contenteditable=true>${u.stp_quantity}</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
+         ${u.ser_sku} - ${u.prd_name}<div class="items-just"><div class="quantity editable" data-content="1" contenteditable=true hidden>1</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
         $('#listProducts').append(H);
     });
 }
@@ -327,8 +331,11 @@ function fill_table(par) {
     $('.edit')
         .unbind('click')
         .on('click', function () {
-            let qty = parseInt($(this).parent().children('td.quantity').text()) * -1;
+            let qty = parseInt($(this).parent().children('td.quantity').text()) ;
             let pid = $(this).parent().children('td.sku').children('span.hide-support').text().split('|')[4];
+            console.log(qty);
+            console.log(pid);
+
             update_array_products(pid, qty);
             tabla.row($(this).parent('tr')).remove().draw();
             btn_apply_appears();
@@ -361,7 +368,7 @@ function update_array_products(id, cn) {
     let qtystk = prId.children().children('.quantity').text();
     prId.children()
         .children('.quantity')
-        .text(qtystk - cn);
+        .text(1);
 }
 
 function read_exchange_table() {
@@ -469,21 +476,59 @@ function uuidv4() {
 }
 
 function generateBarcode(selector,SKU){
+
+    var medidas = $('#selectTipoMedida option:selected').attr('id');
+    var largo = 0;
+    var alto = 0;
+    var texto = 0;
+
+    switch(medidas) {
+        case '1':
+            largo = .39;
+            alto = 40;
+            texto = 5;
+          break;
+        case '2':
+            largo = .62;
+            alto = 60;
+            texto = 6;
+          break;
+        case '3':
+            largo = .85;
+            alto = 84;
+            texto = 7;
+          break;
+        case '4':
+            largo = 1.05;
+            alto = 104;
+            texto = 10;
+          break;
+        case '5':
+            largo = 2.1;
+            alto = 208;
+            texto = 12;
+          break;
+        default:
+          // code block
+      }
+
+
     JsBarcode(selector, SKU, {
         format: "CODE128",
-        lineColor: "#0aa",
-        width: .5,
-        height: 40,
+        lineColor: "#000000",
+        width: largo,
+        height: alto,
         displayValue: SKU,
-        fontSize : 10 
+        fontSize: texto,
+        textMargin: 2,
+        margin: 10
       });
   }
 
 
-  function print_Code(){
+function print_Code(){
     $("#modalSku").html("");
-
-    $('#ejemplo1').modal('show');
+    //$('#modalCodigoBarra').modal('show');
     let tabla = $('#tblExchanges').DataTable();
 
     var selected = tabla.data();
@@ -493,50 +538,28 @@ function generateBarcode(selector,SKU){
     selected.each(function (index) {
        var arraySku =  index.supports.split("|");
        idSelected += arraySku[1] + ',';
+       console.log(arraySku[1]);
        var selector = "barcode"+contador;
-
-       //console.log(selector, arraySku[1]);
-
-       $("#modalSku").append("<svg   id='"+selector+"'></svg  >");
-           /*setTimeout(() => {
-       }, 1500); */
+       $("#modalSku").append("<svg  id='"+selector+"'></svg  >");
        generateBarcode("#"+selector,arraySku[1]);
        contador++;
 
     });
-
-/*     setTimeout(() => {
-        generateBarcode();
-    }, 3000);
- */
-    //generateBarcode();
-
     idSelected = idSelected.slice(0, -1);
-    /*if (idSelected != '') {
-       ConfirmDeletProducto(idSelected);
-    } */
-
-   // console.log(idSelected);
-    //generateBarcode();
-
+    PrintCodeBar();
 }
 
+function PrintCodeBar() {
+    var data = $("#modalSku").html();
+    var source = '<html><head><title></title>'+'<link rel="stylesheet" href="css/mycss.css" type="text/css" />'+
+    '<script type="text/javascript">setTimeout(() => {window.close();}, 1000);</script>'+'</head><body  >'+data+'</body></html>';
 
-function pdf_code(){
-    var doc = new jsPDF();
-    var elementHTML = $('#modalSku').html();
-    console.log(elementHTML);
-    var specialElementHandlers = {
-        '#elementH': function (element, renderer) {
-            return true;
-        }
-    };
-    doc.fromHTML(elementHTML, 15, 15, {
-        'width': 170,
-        'elementHandlers': specialElementHandlers
-    });
-
-    // Save the PDF
-    doc.save('sample-document.pdf');
-
+    Pagelink = "about:blank";
+    var pwa = window.open(Pagelink, "_new");
+    pwa.document.open();
+    pwa.document.write(source);
+    pwa.print();
+    pwa.document.close();
+    //$('#modalCodigoBarra').modal('hide');
 }
+
