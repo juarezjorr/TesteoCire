@@ -49,6 +49,21 @@
 						</div>
 					</div>
 
+					<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectTipoMedida"  name="selectTipoMedida"  class="form-select form-select-sm" required>
+<!-- 										<option id='' value="0" >Seleccione...</option>
+ -->								    <option id='1'  value='' >0.4</option> 
+										<option id='2'  value='' >0.6</option> 
+										<option id='3'  value='' >0.8</option> 
+										<option id='4'  value='' >1</option> 
+										<option id='5'  value='' >2</option> 
+
+									</select>
+									<label for="selectTipoMedida" class="form-label">Tamaño Codigos de Barras</label>
+								</div>
+							</div>
+
 
 					<!-- <div class="row">
 						<div class="col-md-7 col-lg-7 col-xl-7 mb-2 form-floating">
@@ -88,8 +103,8 @@
 							<th style="width:  30px"></th>
 							<th style="width:  80px">SKU</th>
 							<th style="width: 350px">Producto</th>
-							<th style="width:  60px">Cantidad</th>
-<!-- 							<th style="width: 100px">No. Serie</th>
+<!-- 							<th style="width:  60px">Cantidad</th>
+ --><!-- 							<th style="width: 100px">No. Serie</th>
 							<th style="width:  50px">Tipo Origen</th>
 							<th style="width: 150px">Almacen Origen</th>
 							<th style="width:  50px">Tipo Destino</th>
@@ -114,7 +129,7 @@
 
 
 
-<div class="modal fade" tabindex="-1" id="ejemplo1">
+<div class="modal fade" tabindex="-1" id="modalCodigoBarra">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
@@ -128,7 +143,7 @@
  -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Imprimir</button>
+        <button type="button" class="btn btn-primary" onclick="PrintCodeBar()">Imprimir</button>
       </div> 
     </div>
   </div>

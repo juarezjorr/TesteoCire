@@ -258,6 +258,11 @@ function getSubCategoriasTable(idCategoria) {
                   row.cat_name +
                   '</td>' +
 
+                  
+                  '<td>' +
+                  padLeadingZeros(row.cat_id,2)   +
+                  '</td>' +
+
                   '</tr>';
             }
             $('#tablaSubCategoriasRow').append(renglon);
@@ -346,4 +351,10 @@ function getSubCategoriasTable(idCategoria) {
          console.log(jqXHR, textStatus, errorThrown);
       },
    }).done(function () {});
+}
+
+function padLeadingZeros(num, size) {
+   var s = num+"";
+   while (s.length < size) s = "0" + s;
+   return s;
 }
