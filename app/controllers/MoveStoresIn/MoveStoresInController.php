@@ -61,4 +61,87 @@ class MoveStoresInController extends Controller
             echo $res;
     }    
 
+// Lista los productos
+    public function listProducts($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listProducts();
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"prd_id":"0"}]';	
+        }
+        echo $res;
+    } 
+
+
+// Lista los proveedores
+    public function listSuppliers($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listSuppliers();
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"sup_id":"0"}]';	
+        }
+        echo $res;
+    } 
+
+// Lista los Facturas
+    public function listInvoice($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listInvoice();
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"doc_id":"0"}]';	
+        }
+        echo $res;
+    } 
+// Lista los Monedas
+    public function listCoins($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listCoins();
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"cin_id":"0"}]';	
+        }
+        echo $res;
+    } 
+
+
+// Registra los movimientos entre almacenes
+    public function SaveExchange($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->SaveExchange($request_params, $params);
+        $res = $result;
+        echo $res;
+    } 
+
+
 }

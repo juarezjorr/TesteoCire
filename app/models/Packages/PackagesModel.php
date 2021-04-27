@@ -73,14 +73,13 @@ public function listProductsPack($params)
         $prd_status	        = $this->db->real_escape_string($param['prdStatus']);
         $prd_level          = $this->db->real_escape_string($param['prdLevel']);
         $sbc_id             = $this->db->real_escape_string($param['sbcId']);
-        $sup_id             = $this->db->real_escape_string($param['supId']);
         $srv_id             = $this->db->real_escape_string($param['srvId']);
-        $exm_id             = $this->db->real_escape_string($param['exmId']);
+        $cin_id             = $this->db->real_escape_string($param['exmId']);
 
         $qry = "INSERT INTO ctt_products (
-            prd_sku, prd_name, prd_model, prd_price, prd_coin_type, prd_visibility, prd_comments, prd_status, prd_level, sbc_id, sup_id, srv_id, exm_id
+            prd_sku, prd_name, prd_model, prd_price, prd_visibility, prd_comments, prd_status, prd_level, sbc_id, srv_id, cin_id
         ) VALUES (
-        '$prd_sku', '$prd_name', '$prd_model', '$prd_price', '$prd_coin_type', '$prd_visibility', '$prd_comments', '$prd_status', '$prd_level', '$sbc_id', '$sup_id', '$srv_id', '$exm_id');
+        '$prd_sku', '$prd_name', '$prd_model', '$prd_price', '$prd_visibility', '$prd_comments', '$prd_status', '$prd_level', '$sbc_id', '$srv_id', '$cin_id');
         ";
          $this->db->query($qry);
         $result = $this->db->insert_id;

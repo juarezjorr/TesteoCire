@@ -29,8 +29,10 @@ public function SaveDocumento($request_params)
 
 		$newFileName = $fileName;
 
-		$sql = "INSERT INTO ctt_documents(doc_code,doc_name,doc_size,doc_document, doc_content_type,doc_type, dot_id)
-					VALUES ('$Code', '$newFileName',  $fileSize, '$file', '$fileType', '$fileExtension', '$tipoDocumento')";
+		$sql = "INSERT INTO ctt_documents(
+					doc_code, doc_name, doc_size, doc_document, doc_content_type, doc_type, dot_id)
+				VALUES (
+					'$Code', '$newFileName', $fileSize, '$file', '$fileType', '$fileExtension', '$tipoDocumento')";
 
 		$this->db->query($sql);
 		$qry = "SELECT MAX(doc_id) AS id FROM ctt_documents;";

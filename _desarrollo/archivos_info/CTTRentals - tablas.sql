@@ -64,6 +64,20 @@ PRIMARY KEY (`cin_id`))
 COMMENT='Tabla catalogo de monedas';
 
 
+DROP TABLE `cttapp_cire`.`ctt_documents`;
+CREATE TABLE `cttapp_cire`.`ctt_documents` (
+    `doc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del documento',
+    `doc_code`              VARCHAR(100) NULL               COMMENT 'Código del documento',
+    `doc_name`              VARCHAR(100) NULL               COMMENT 'Nombre del documento',
+    `doc_type`              VARCHAR(10) NULL                COMMENT 'Extension del docuemnto',
+    `doc_size`              INT NULL                        COMMENT 'Tamaño del documento',
+    `doc_content_type`      VARCHAR(100) NULL               COMMENT 'Tipo del contenido del documento',
+    `doc_document`          BLOB NULL                       COMMENT 'Contenido del documento',
+    `dot_id`                INT NULL                        COMMENT 'Id del tipo de documento relacion ctt_documents_type',
+PRIMARY KEY (`doc_id`))
+COMMENT = 'Documentos de productos';
+
+
 DROP TABLE `cttapp_cire`.`ctt_documents_type`;
 CREATE TABLE `cttapp_cire`.`ctt_documents_type` (
     `dot_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del tipo de documento',
@@ -73,18 +87,6 @@ CREATE TABLE `cttapp_cire`.`ctt_documents_type` (
 PRIMARY KEY (`dot_id`))
 COMMENT = 'Tipos de documentos de productos';
 
-
-DROP TABLE `cttapp_cire`.`ctt_documents`;
-CREATE TABLE `cttapp_cire`.`ctt_documents` (
-    `doc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del documento',
-    `doc_code`              VARCHAR(100) NULL               COMMENT 'Código del documento',
-    `doc_name`              VARCHAR(100) NULL               COMMENT 'Nombre del documento',
-    `doc_size`              INT NULL                        COMMENT 'Tamaño del documento',
-    `doc_content_type`      VARCHAR(100) NULL               COMMENT 'Tipo del contenido del documento',
-    `doc_document`          BLOB NULL                       COMMENT 'Contenido del documento',
-    `dot_id`                INT NULL                        COMMENT 'Id del tipo de documento relacion ctt_documents_type',
-PRIMARY KEY (`doc_id`))
-COMMENT = 'Documentos de productos';
 
 
 DROP TABLE `cttapp_cire`.`ctt_employees`;
@@ -152,6 +154,7 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
     `prd_level`             VARCHAR(1) DEFAULT 'P'          COMMENT 'Nivel del producto  K=Kit, P=Producto',
     `sbc_id`                INT NULL                        COMMENT 'Id de la subcategoría relacion ctt_subcategories',
     `srv_id`                INT NULL                        COMMENT 'Id del tipo de servicio relacion ctt_services',
+    `cin_id`                INT NULL                        COMMENT 'Id del tipo de moneda relacion ctt_coins',
 PRIMARY KEY (`prd_id`))
 COMMENT = 'Productos de la empresa.';
 
@@ -240,6 +243,7 @@ CREATE TABLE `cttapp_cire`.`ctt_stores` (
     `str_name`              VARCHAR(100) NULL               COMMENT 'Nombre del almacén',
     `str_status`            VARCHAR(1) NULL                 COMMENT 'Estatus del almacen 1-Activo, 0-Inactivo',
     `str_type`              VARCHAR(100) NULL               COMMENT 'Tipo de almacén',
+    `emp_id`                INT NULL                        COMMENT 'Id del empleado relacion ctt_employees',
 PRIMARY KEY (`str_id`))
 COMMENT = 'Listado de almacenes.';
 
@@ -316,7 +320,6 @@ CREATE TABLE `cttapp_cire`.`ctt_suppliers` (
     `sup_rfc`               VARCHAR(15)  NULL               COMMENT 'Registro Federal de Contribuyentes',
     `sup_email`             VARCHAR(100)  NULL              COMMENT 'Correo electrónico',
     `sup_phone`             VARCHAR(100)  NULL              COMMENT 'Número telefónico',
-    `sup_behaviour`         VARCHAR(1) NULL                 COMMENT 'Comportamiento del proveedor N-Nacional, I-Internacional, R-Renta',
     `sup_status`            VARCHAR(1) NULL                 COMMENT 'Estatus del proveedor 1-Activo, 0-Inactivo',
     `sut_id`                INT NULL                        COMMENT 'Id del tipo de proveedor relación ctt_suppliers_type',
 PRIMARY KEY (`sup_id`))

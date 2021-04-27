@@ -195,21 +195,23 @@ function drawProducts(str) {
 
 // Llena la tabla de paquetes
 function putPackages(dt) {
-    let tabla = $('#tblPackages').DataTable();
-    $.each(dt, function (v, u) {
-        tabla.row
-            .add({
-                editable: `<i class="fas fa-pen choice pack modif" id="E-${u.prd_id}"></i>
+    if (dt[0].prd_id != '0') {
+        let tabla = $('#tblPackages').DataTable();
+        $.each(dt, function (v, u) {
+            tabla.row
+                .add({
+                    editable: `<i class="fas fa-pen choice pack modif" id="E-${u.prd_id}"></i>
                            <i class="fas fa-times-circle choice pack kill" id="D-${u.prd_id}"></i>`,
-                pack_sku: `<span class="hide-support" id="SKU-${u.prd_sku}">${u.prd_id}</span>${u.prd_sku}`,
-                packname: u.prd_name,
-                packpric: u.prd_price,
-            })
-            .draw();
+                    pack_sku: `<span class="hide-support" id="SKU-${u.prd_sku}">${u.prd_id}</span>${u.prd_sku}`,
+                    packname: u.prd_name,
+                    packpric: u.prd_price,
+                })
+                .draw();
 
-        $(`#SKU-${u.prd_sku}`).parent().parent().attr('id', u.prd_id).addClass('indicator');
-    });
-    action_selected_packages();
+            $(`#SKU-${u.prd_sku}`).parent().parent().attr('id', u.prd_id).addClass('indicator');
+        });
+        action_selected_packages();
+    }
 }
 // Llena el selector de subcategorias
 function selSubcategoryPack(id) {
@@ -271,21 +273,21 @@ function packages_apply(subcat) {
 
         sbccnt = 0;
 
-        console.log(` 
-    prdsku:         ${prdsku}
-    prdName:        ${prdName}
-    prdModel:       ${prdModel}
-    prdPrice:       ${prdPrice}
-    prdCoinType:    ${prdCoinType}
-    prdVisibility:  ${prdVisibility}
-    prdComments:    ${prdComments}
-    prdStatus:      ${prdStatus}
-    prdLevel:       ${prdLevel}
-    sbcId:          ${sbcId}
-    supId:          ${supId}
-    srvId:          ${srvId}
-    exmId:          ${exmId}
-        `);
+        //     console.log(`
+        // prdsku:         ${prdsku}
+        // prdName:        ${prdName}
+        // prdModel:       ${prdModel}
+        // prdPrice:       ${prdPrice}
+        // prdCoinType:    ${prdCoinType}
+        // prdVisibility:  ${prdVisibility}
+        // prdComments:    ${prdComments}
+        // prdStatus:      ${prdStatus}
+        // prdLevel:       ${prdLevel}
+        // sbcId:          ${sbcId}
+        // supId:          ${supId}
+        // srvId:          ${srvId}
+        // exmId:          ${exmId}
+        //     `);
 
         let par = `[{
         "prdsku"        : "${prdsku}",
@@ -319,11 +321,11 @@ function packages_edit() {
     let prdName = $('#txtPackageName').val();
     let prdPrice = $('#txtPackagePrice').val();
 
-    console.log(` 
-    prdId:          ${prdId}
-    prdName:        ${prdName}
-    prdPrice:       ${prdPrice}
-        `);
+    // console.log(`
+    // prdId:          ${prdId}
+    // prdName:        ${prdName}
+    // prdPrice:       ${prdPrice}
+    //     `);
 
     active_params();
 
@@ -366,7 +368,6 @@ function fill_table_packs(par) {
 
     pr = JSON.parse(par);
 
-    console.log(par);
     var pagina = 'Packages/savePack';
     var par = par;
     var tipo = 'html';
@@ -375,7 +376,6 @@ function fill_table_packs(par) {
 }
 
 function putNewPackage(dt) {
-    console.log(dt);
     let id = dt.split('|')[0];
     let sku = dt.split('|')[1];
     let name = dt.split('|')[2];
@@ -397,7 +397,9 @@ function putNewPackage(dt) {
     action_selected_packages();
 
     tabla.on('select', function (e, dt, type, i) {
-        console.log(tabla.row(i).data().pack_sku);
+        $('#txtCategoryProduct').val(0);
+        $('#txtSubcategoryProduct').val(0);
+        $('#txtIdPackages').val(0);
     });
 }
 
@@ -421,6 +423,7 @@ function action_selected_packages() {
                 $('#txtIdPackages').val(0);
                 $('.form_secundary').slideUp('slow', function () {
                     $('.form_primary').slideDown('slow');
+                    active_params();
                 });
                 $('#tblProducts').DataTable().rows().remove().draw();
             }
@@ -429,9 +432,9 @@ function action_selected_packages() {
     $('.choice')
         .unbind('click')
         .on('click', function () {
-            let edt = $(this).attr('class').indexOf('kill');
+            let edt = $(this).attr('class').indexOf('modif');
             let prdId = $(this).attr('id').substring(2, 100);
-            if (edt < 0) {
+            if (edt >= 0) {
                 var pagina = 'Packages/detailPack';
                 var par = `[{"prdId":"${prdId}"}]`;
                 var tipo = 'json';
@@ -444,17 +447,17 @@ function action_selected_packages() {
 }
 
 function action_selected_products() {
-    $('.choice')
+    $('#tblProducts .choice')
         .unbind('click')
         .on('click', function () {
             let edt = $(this).attr('class').indexOf('kill');
+            // console.log(edt);
             let prdId = $(this).attr('id');
             confirm_delet_product(prdId);
         });
 }
 
 function put_detailPack(dt) {
-    console.log(dt);
     let chc = dt[0].prd_id;
     setTimeout(() => {
         $('#tblPackages').DataTable().rows().deselect();
@@ -486,7 +489,6 @@ function select_products(prdId) {
 }
 
 function putProductsPack(dt) {
-    console.log(dt);
     let tabla = $('#tblProducts').DataTable();
     tabla.rows().remove().draw();
     if (dt[0].prd_id != '') {
@@ -511,8 +513,6 @@ function product_apply(prId) {
     let productName = prod[3];
     let productParent = $('#txtIdPackages').val();
 
-    console.log(productParent, productId);
-
     var pagina = 'Packages/SaveProduct';
     var par = `[{"prdId":"${productId}","prdParent":"${productParent}"}]`;
     var tipo = 'json';
@@ -521,7 +521,6 @@ function product_apply(prId) {
 }
 
 function putNewProductsPack(dt) {
-    console.log(dt);
     let tabla = $('#tblProducts').DataTable();
     tabla.row
         .add({
@@ -564,8 +563,6 @@ function confirm_delet_product(id) {
         let tabla = $('#tblProducts').DataTable();
         $('#delProdModal').modal('hide');
 
-        console.log(Id, prdId, prdParent);
-
         let prdRow = $(`#${Id}`).parents('tr');
 
         tabla.row(prdRow).remove().draw();
@@ -579,8 +576,6 @@ function confirm_delet_product(id) {
 }
 
 function putDelPackages(dt) {
-    console.log(dt);
-
     $('#delPackModal').modal('hide');
 }
 
@@ -606,6 +601,4 @@ function validator_part01() {
     } else {
         $('#btn_packages').addClass('disabled');
     }
-
-    console.log(msg);
 }
