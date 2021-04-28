@@ -161,7 +161,7 @@ function EditUsuario(id,idPerfil) {
             $('#UserNameUsuario').val(respuesta.usr_username);
 
             $('#PassUsuario').val(respuesta.usr_password);
-            $("#PassUsuarioRow").attr("hidden",true);
+           // $("#PassUsuarioRow").attr("hidden",true);
 
 
 

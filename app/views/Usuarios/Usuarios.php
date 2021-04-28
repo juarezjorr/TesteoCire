@@ -32,14 +32,14 @@
 
                     		 <div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="UserNameUsuario" name="UserNameUsuario" type="text" class="form-control form-control-sm"  autocomplete="off" required >
+									<input id="UserNameUsuario" name="tuti" type="text" class="form-control form-control-sm"  autocomplete="off" required >
 									<label for="UserNameUsuario">UserName</label>
 								</div>
 							</div>
 
                     		 <div class="row" id="PassUsuarioRow">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="PassUsuario" name="PassUsuario" type="text" class="form-control form-control-sm"  autocomplete="off" required >
+									<input id="PassUsuario" name="Pato" type="text" class="form-control form-control-sm"  autocomplete="off" required >
 									<label for="PassUsuario">Password </label>
 								</div>
 							</div>

@@ -113,10 +113,25 @@ class UsuariosModel extends Model
 	{
         $estatus = 0;
 			try {
+				$qry = "SELECT usr_password FROM ctt_users WHERE usr_id = ".$params['IdUsuario'].";";
+
+				$result = $this->db->query($qry);
+				if ($row = $result->fetch_row()) {
+					$pass = trim($row[0]);
+				}
+
+				$password = "";
+
+				if($pass == $params['PassUsuario']){
+					$password = $params['PassUsuario'];
+				}else{
+					$password = password_hash($this->db->real_escape_string($params['PassUsuario']), PASSWORD_DEFAULT);
+				}
+
 				//Actualiza Usuario
 				$qry = "UPDATE ctt_users 
 						SET usr_username = '".$params['UserNameUsuario']."'
-						,usr_password = '".$params['PassUsuario']."'
+						,usr_password = '".$password."'
 						,usr_dt_change_pwd = now()
 						,prf_id = '".$params['idPerfil']."'
 						WHERE usr_id =".$params['IdUsuario'].";";
