@@ -1,5 +1,6 @@
 let prdItem, prdSupr;
 let cnttot, cntcur;
+let folio;
 
 $(document).ready(function () {
     verifica_usuario();
@@ -7,6 +8,7 @@ $(document).ready(function () {
 });
 
 function inicial() {
+    folio = getFolio();
     setting_datepicket($('#txtStartDate'));
     setting_datepicket($('#txtEndDate'));
     setting_table();
@@ -236,9 +238,8 @@ function put_coins(dt) {
         validator();
     });
 }
-
+/**  ++++   Coloca los almacenes en el listado del input */
 function put_stores(dt) {
-    console.log(dt);
     $.each(dt, function (v, u) {
         let H = `<option value="${u.str_id}">${u.str_name}</option>`;
         $('#txtStoreSource').append(H);
@@ -290,15 +291,18 @@ function subletting_apply() {
                "prodsku"  :  "${sku}",
                "produid"  :  "${productId}",
                "prprice"  :  "${price}",
-               "supplid"  :  "${supplierId}"
+               "supplid"  :  "${supplierId}",
+               "cointyp"  :  "${coinType}",
+               "storeid"  :  "${storeId}",
+               "storenm"  :  "${storeName}"
             }]`;
         get_serialid(par_ser);
-        //console.log(`Serie \n serieId: ${serieId} \n costo: ${price} \n productId: ${productId}`);
     } else {
         fill_table();
     }
 }
 
+/* ++++  Agrega el producto a la tabla   +++++++ */
 function get_serialid(par) {
     var pagina = 'ProductsForSubletting/addSerie';
     var par = par;
@@ -307,12 +311,9 @@ function get_serialid(par) {
     fillField(pagina, par, tipo, selector);
 }
 
+/* ++++  Obtiene el serial del producto agregado  +++++++ */
 function put_serialid(dt) {
-    let serienumber = $('#txtIdProducts').val().split('|')[3];
-    let storeId = $('#txtStoreSource').val();
-    let storeName = $('#txtStoreSource option:selected').text();
-    prdSupr = `${dt}|R001|${storeId}|${storeName}`;
-    console.log(prdSupr);
+    prdSupr = dt;
     fill_table();
 }
 
@@ -355,6 +356,7 @@ function fill_table() {
         });
 }
 
+/* ++++  Muestra y oculta el boton de aplicar movimiento  +++++++ */
 function btn_apply_appears() {
     let tabla = $('#tblProductForSubletting').DataTable();
     let rengs = tabla.rows().count();
@@ -369,12 +371,12 @@ function btn_apply_appears() {
 function clean_selectors() {
     $('#txtProducts').val('');
     $('#txtIdProducts').val(0);
-    setting_datepicket($('#txtStartDate'));
-    setting_datepicket($('#txtEndDate'));
+    // setting_datepicket($('#txtStartDate'));
+    // setting_datepicket($('#txtEndDate'));
     $('#txtPrice').val('');
     $('#txtQuantity').val('');
-    $('#txtSupplier').val(0);
-    $('#txtCoinType').val(0);
+    // $('#txtSupplier').val(0);
+    // $('#txtCoinType').val(0);
 }
 
 //  Lee el contenido de la tabla y construye la estructura para guardar los datoos
@@ -397,15 +399,14 @@ function read_ProductForSubletting_table() {
         let prd_name = $($(u).find('td')[2]).text();
 
         let chainText = `${sub_price}|${sub_coin_type}|${sub_quantity}|${sub_date_start}|${sub_date_end}|${sub_comments}|${ser_id}|${sup_id}|${ser_sku}|${prd_name}|${ser_serial}|${str_id}|${str_name}`;
-        console.log(chainText);
         build_data_structure(chainText);
     });
 }
 
+/* ++++  Construye la estructura guardar el movimiento  +++++++ */
 function build_data_structure(pr) {
     let el = pr.split('|');
 
-    let folio = getFolio();
     let par = `
     [{
         "prc" :  "${el[0]}",
@@ -430,6 +431,7 @@ function build_data_structure(pr) {
     save_subletting(par);
 }
 
+/* ++++  Guarda el movimiento y el producto en subarrendo y actualiza el stock de almacen  +++++++ */
 function save_subletting(par) {
     cntcur++;
 
@@ -440,10 +442,14 @@ function save_subletting(par) {
     fillField(pagina, par, tipo, selector);
 }
 
+/* ++++  Termina el proceso y refresca la interfase  +++++++ */
 function put_subletting(dt) {
-    console.log(dt);
     if (cntcur >= cnttot) {
-        window.location = 'ProductsForSubletting';
+        $('.resFolio').text(folio);
+        $('#MoveFolioModal').modal('show');
+        $('#btnHideModal').on('click', function () {
+            window.location = 'ProductsForSubletting';
+        });
     }
 }
 
