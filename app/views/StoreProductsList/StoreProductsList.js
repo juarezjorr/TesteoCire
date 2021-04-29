@@ -1,65 +1,57 @@
 var seccion = '';
-const guid = uuidv4();
+///const folio = uuidv4();
+let folio;
 let = pr = [];
 let = link = '';
 
 $(document).ready(function () {
-    importarScript('https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js');
+    // importarScript('https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js');
+
+    folio = getFolio();
     verifica_usuario();
     inicial();
 });
 
 function inicial() {
-    getExchange();
     getStores();
     getProducts();
     setting_table();
-    $('#btn_exchange').on('click', function () {
-        exchange_apply();
-    });
+    // $('.generate_button').on('click', function () {
+    //     build_report();
+    // });
+
+    // $('#btn_exchange').on('click', function () {
+    //     exchange_apply();
+    // });
 }
 
+// function build_report() {
+//     let par = `[{
+
+//     "par1":"par1"
+
+
+//     }]`;
+
+    
+// }
+
+// function putListProducts(dt) {
+
+// }
+
 function setting_table() {
-    let title = 'Impresión de Provisional de Productos';
-    let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
+    let title = 'Salidas de Almacen';
+    // let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
 
     $('#tblExchanges').DataTable({
         order: [[0, 'desc']],
         dom: 'Blfrtip',
         buttons: [
-            {
-                //Botón para Excel
-                extend: 'excel',
-                footer: true,
-                title: title,
-                filename: filename,
-
-                //Aquí es donde generas el botón personalizado
-                text: '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
-            },
-            {
-                //Botón para PDF
-                extend: 'pdf',
-                footer: true,
-                title: title,
-                filename: filename,
-
-                //Aquí es donde generas el botón personalizado
-                text: '<button class="btn btn-pdf"><i class="fas fa-file-pdf"></i></button>',
-            },
-            {
-                //Botón para imprimir
-                extend: 'print',
-                footer: true,
-                title: title,
-                filename: filename,
-
-                //Aquí es donde generas el botón personalizado
-                text: '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
-            },
+           
             {
                 // Boton aplicar cambios
-                text: 'Aplicar movimientos',
+                text: 'Imprimir reporte',
                 className: 'btn-apply hidden-field',
                 action: function (e, dt, node, config) {
                     read_exchange_table();
@@ -74,35 +66,26 @@ function setting_table() {
         scrollX: true,
         fixedHeader: true,
         columns: [
-            {
-                data: 'supports',
-                class: 'support',
-                visible: false,
-                searchable: false,
-            },
+            
             {data: 'editable', class: 'edit'},
             {data: 'prod_sku', class: 'sku'},
             {data: 'prodname', class: 'product-name'},
-            {data: 'prodcant', class: 'quantity'},
             {data: 'prodseri', class: 'serie-product'},
-            {data: 'codexcsc', class: 'code-type_s'},
-            {data: 'stnamesc', class: 'store-name_s'},
-            {data: 'codexctg', class: 'code-type_t'},
-            {data: 'stnametg', class: 'store-name_t'},
             {data: 'comments', class: 'comments'},
+            
+            
         ],
     });
 }
 
 // Solicita los tipos de movimiento
 function getExchange() {
-    var pagina = 'StoreProductsList/listExchange'; //(URL)pega la ruta del controller
-    var par = '[{"parm":""}]'; //array de params en JSON que envias
-    var tipo = 'json'; //tipo de recepción, si es en html seria un string lo que recibe
-    var selector = putTypeExchange;   //función propia de este archivo donde recibe los valores
-    fillField(pagina, par, tipo, selector); //manda los prametros 
+    var pagina = 'StoreProductsList/listExchange';
+    var par = '[{"parm":""}]';
+    var tipo = 'json';
+    var selector = putTypeExchange;
+    fillField(pagina, par, tipo, selector);
 }
-
 // Solicita el listado de almacenes
 function getStores() {
     var pagina = 'StoreProductsList/listStores';
@@ -111,7 +94,6 @@ function getStores() {
     var selector = putStores;
     fillField(pagina, par, tipo, selector);
 }
-
 // Solicita los productos de un almacen seleccionado
 function getProducts() {
     var pagina = 'StoreProductsList/listProducts';
@@ -120,33 +102,40 @@ function getProducts() {
     var selector = putProducts;
     fillField(pagina, par, tipo, selector);
 }
-
-
+// Solicita los movimientos acurridos
+// function getExchanges() {
+//     var pagina = 'MoveStoresOut/listExchanges';
+//     var par = `[{"folio":"${folio}"}]`;
+//     var tipo = 'json';
+//     var selector = putExchanges;
+//     fillField(pagina, par, tipo, selector);
+// }
 /*  LLENA LOS DATOS DE LOS ELEMENTOS */
 // Dibuja los tipos de movimiento
-function putTypeExchange(dt) { //data set es array json
-    if (dt[0].ext_id != 0) {
-        $.each(dt, function (v, u) {
-            let H = `<option value="${u.ext_id}" data-content="${u.ext_code}|${u.ext_type}|${u.ext_link}|${u.ext_code_a}|${u.ext_type_a}">${u.ext_code} - ${u.ext_description}</option>`;
-            $('#txtTypeExchange').append(H);
-        });
-    }
-    $('#txtTypeExchange').on('change', function () {
-        let id = $(this).val();
-        link = $(`#txtTypeExchange option[value="${id}"]`).attr('data-content').split('|')[2];
 
-        if (link == 'null') {
-            $('#txtStoreTarget').parent().css({display: 'none'});
-            var ps = $('#boxProducts').offset();
-            $('.list-group').css({top: ps.top + 30 + 'px', display: 'none'});
-        } else {
-            $('#txtStoreTarget').parent().css({display: 'block'});
-            var ps = $('#boxProducts').offset();
-            $('.list-group').css({top: ps.top + 30 + 'px', display: 'none'});
-        }
-        $('#txtStoreTarget').val(0);
-    });
-}   
+// function putTypeExchange(dt) {
+//     if (dt[0].ext_id != 0) {
+//         $.each(dt, function (v, u) {
+//             let H = `<option value="${u.ext_id}" data-content="${u.ext_code}|${u.ext_type}|${u.ext_link}|${u.ext_code_a}|${u.ext_type_a}">${u.ext_code} - ${u.ext_description}</option>`;
+//             $('#txtTypeExchange').append(H);
+//         });
+//     }
+//     $('#txtTypeExchange').on('change', function () {
+//         let id = $(this).val();
+//         link = $(`#txtTypeExchange option[value="${id}"]`).attr('data-content').split('|')[2];
+
+//         if (link == 'null') {
+//             $('#txtStoreTarget').parent().css({display: 'none'});
+//             var ps = $('#boxProducts').offset();
+//             $('.list-group').css({top: ps.top + 30 + 'px', display: 'none'});
+//         } else {
+//             $('#txtStoreTarget').parent().css({display: 'block'});
+//             var ps = $('#boxProducts').offset();
+//             $('.list-group').css({top: ps.top + 30 + 'px', display: 'none'});
+//         }
+//         $('#txtStoreTarget').val(0);
+//     });
+// }
 
 // Dibuja los almacenes
 function putStores(dt) {
@@ -154,24 +143,25 @@ function putStores(dt) {
         $.each(dt, function (v, u) {
             let H = `<option value="${u.str_id}">${u.str_name}</option>`;
             $('#txtStoreSource').append(H);
-            $('#txtStoreTarget').append(H);
+            // $('#txtStoreTarget').append(H);
         });
     }
 
     $('#txtStoreSource').on('change', function () {
         let id = $(this).val();
-        $(`#txtStoreTarget option`).css({display: 'block'});
-        $(`#txtStoreTarget option[value="${id}"]`).css({display: 'none'});
+        // $(`#txtStoreTarget option`).css({display: 'block'});
+        // $(`#txtStoreTarget option[value="${id}"]`).css({display: 'none'});
 
         drawProducts(id);
     });
 }
 
+
 // Almacena los registros de productos en un arreglo
 function putProducts(dt) {
     $.each(dt, function (v, u) {
         let H = `<div class="list-item" id="P-${u.ser_id}" data-store="${u.str_id}" data-content="${u.ser_id}|${u.ser_sku}|${u.ser_serial_number}|${u.prd_name}|${u.ser_cost}|${u.prd_coin_type}">
-         ${u.ser_sku} - ${u.prd_name}<div class="items-just"><div class="quantity editable" data-content="${u.stp_quantity}" contenteditable=true>${u.stp_quantity}</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
+         ${u.ser_sku} - ${u.prd_name}<div class="items-just"><i class="fas fa-arrow-circle-right"></i></div></div>`;
         $('#listProducts').append(H);
     });
 }
@@ -191,11 +181,13 @@ function drawProducts(str) {
             $('.box-items-list i').toggleClass('rotate');
         });
 
-    $('.list-item .items-just i').on('click', function () {
+    $('.list-item .items-just i').unbind('click')
+    .on('click', function () {
         let id = $(this).parents('.list-item');
         exchange_apply(id);
     });
 }
+
 function xdrawProducts(str) {
     $('#txtProducts').html('<option value="0" selected>Selecciona producto</option>');
     if (pr[0][1].prd_id != 0) {
@@ -213,23 +205,22 @@ function xdrawProducts(str) {
         $('#txtQuantity').val(cant);
     });
 }
-
 // Valida los campos
 function validator(prId) {
     let ky = 0;
-    let msg = '';
+    // let msg = '';
 
-    if ($('#txtTypeExchange').val() == 0) {
-        ky = 1;
-        msg += 'Debes seleccionar un tipo de movimiento';
-        $('#txtTypeExchange').addClass('fail');
-    }
+    // if ($('#txtTypeExchange').val() == 0) {
+    //     ky = 1;
+    //     msg += 'Debes seleccionar un tipo de movimiento';
+    //     $('#txtTypeExchange').addClass('fail');
+    // }
 
-    if ($('#txtStoreTarget').val() == 0 && link != '' && link != 'null') {
-        ky = 1;
-        msg += 'Debes seleccionar un almacen destino';
-        $('#txtStoreTarget').addClass('fail');
-    }
+    // if ($('#txtStoreTarget').val() == 0 && link != '' && link != 'null') {
+    //     ky = 1;
+    //     msg += 'Debes seleccionar un almacen destino';
+    //     $('#txtStoreTarget').addClass('fail');
+    // }
 
     let qtystk = prId.children().children('.quantity').attr('data-content');
     let qtysel = prId.children().children('.quantity').text();
@@ -248,59 +239,43 @@ function validator(prId) {
         });
     return ky;
 }
-
 // Aplica la seleccion para la tabla de movimientos
 function exchange_apply(prId) {
-    if (validator(prId) == 0) {
-        let typeExchangeCodeSource = $('#txtTypeExchange option:selected').attr('data-content').split('|')[0];
-        let typeExchangeCodeTarget = $('#txtTypeExchange option:selected').attr('data-content').split('|')[3];
-        let typeExchangeIdSource = $('#txtTypeExchange option:selected').val();
-        let typeExchangeIdTarget = $('#txtTypeExchange option:selected').attr('data-content').split('|')[2];
+    
+        // let typeExchangeCodeSource = $('#txtTypeExchange option:selected').attr('data-content').split('|')[0];
+        // let typeExchangeCodeTarget = $('#txtTypeExchange option:selected').attr('data-content').split('|')[3];
+        // let typeExchangeIdSource = $('#txtTypeExchange option:selected').val();
+        // let typeExchangeIdTarget = $('#txtTypeExchange option:selected').attr('data-content').split('|')[2];
 
-        let storeNameSource = $('#txtStoreSource option:selected').text();
-        let storeNameTarget = $('#txtStoreTarget option:selected').text();
-        let storeIdSource = $('#txtStoreSource option:selected').val();
-        let storeIdTarget = $('#txtStoreTarget option:selected').val();
-
-        if (link == 'null' || link == '') {
-            typeExchangeCodeTarget = '';
-            storeNameTarget = '';
-        }
+        let storeName = $('#txtStoreSource option:selected').text();
+        let storeId = $('#txtStoreSource option:selected').val();
+        
+        // if (link == 'null' || link == '') {
+        //     typeExchangeCodeTarget = '';
+        //     storeNameTarget = '';
+        // }
 
         let prod = prId.attr('data-content').split('|');
         let productId = prod[0];
         let productSKU = prod[1];
         let productName = prod[3];
-        let productQuantity = prId.children().children('.quantity').text();
         let productSerie = prod[2];
 
         let commnets = $('#txtComments').val();
-        let project = '';
 
-        update_array_products(productId, productQuantity);
+        update_array_products(productId);
         let par = `
-            [{
-               "support"    :  "${guid}|${productSKU}|${typeExchangeIdSource}|${typeExchangeIdTarget}|${productId}|${storeIdSource}|${storeIdTarget}",
+            [{  
+               "support"	: 	"${productSKU}",
                "prodsku"	: 	"${productSKU}",
                "prodnme"	:	"${productName}",
-               "prodqty"	:	"${productQuantity}",
                "prodser"	:	"${productSerie}",
-               "excodsr"	:	"${typeExchangeCodeSource}",
-               "stnmesr"	:	"${storeNameSource}",
-               "excodtg"	:	"${typeExchangeCodeTarget}",
-               "stnmetg"	:	"${storeNameTarget}",
-               "comment"	:	"${commnets}",
-               "project"	:	"${project}",
-               "excidsr"	:	"${typeExchangeIdSource}",
-               "excidtg"	:	"${typeExchangeIdTarget}",
-               "stoidsr"	:	"${storeIdSource}",
-               "stoidtg"	:	"${storeIdTarget}",
-               "folguid"	:	"${guid}"
+               "comment"	:	"${commnets}"
             }]
             `;
         console.log(par);
         fill_table(par);
-    }
+    
 }
 
 // Llena la tabla de movimientos
@@ -313,17 +288,12 @@ function fill_table(par) {
 
     tabla.row
         .add({
-            supports: par[0].support,
             editable: '<i class="fas fa-times-circle kill"></i>',
             prod_sku: `<span class="hide-support">${par[0].support}</span>${par[0].prodsku}`,
             prodname: par[0].prodnme,
-            prodcant: `<span>${par[0].prodqty}</span>`,
             prodseri: par[0].prodser,
-            codexcsc: par[0].excodsr,
-            stnamesc: par[0].stnmesr,
-            codexctg: par[0].excodtg,
-            stnametg: par[0].stnmetg,
-            comments: `<div>${par[0].comment}</div>`,
+            comments: `<div>${par[0].comment}</div>`
+            
         })
         .draw();
     btn_apply_appears();
@@ -355,7 +325,7 @@ function btn_apply_appears() {
 function clean_selectors() {
     // $('#txtTypeExchange').val(0);
     $('#txtStoreSource').val(0);
-    $('#txtStoreTarget').val(0);
+    // $('#txtStoreTarget').val(0);
     $('#txtProducts').html('<option value="0" selected>Selecciona producto</option>');
     $('#txtQuantity').val('');
     $('#txtQuantityStored').html('&nbsp;');
@@ -371,8 +341,21 @@ function update_array_products(id, cn) {
 }
 
 function read_exchange_table() {
-    $('#tblExchanges tbody tr').each(function (v, u) {
-        let guid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
+
+    $('#tblExchanges tbody tr').each(function (v, u) { //lee todo el tbody y tr, y lee como hijo td, lo que este de cada celda
+
+
+            // cadena = valor1|valor2|valor3|valor4
+            // variable[0] = valor1
+            // variable[1] = valor2
+            // variable[2] = valor3
+            // variable[3] = valor4 
+
+            // vari = cadena.split('|')[1]
+            // vari = valor2
+
+
+
         let sku = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[1];
         let product = $($(u).find('td')[2]).text();
         let quantity = $($(u).find('td')[3]).text();
@@ -388,8 +371,8 @@ function read_exchange_table() {
         let storeIdSource = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[5];
         let storeIdTarget = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[6];
 
-        let exchstruc1 = `${guid}|${sku}|${product}|${quantity}|${serie}|${storeSource}|${comments}|${codeTypeExchangeSource}|${idTypeExchangeSource}`;
-        let exchstruc2 = `${guid}|${sku}|${product}|${quantity}|${serie}|${storeTarget}|${comments}|${codeTypeExchangeTarget}|${idTypeExchangeTarget}`;
+        let exchstruc1 = `${folio}|${sku}|${product}|${quantity}|${serie}|${storeSource}|${comments}|${codeTypeExchangeSource}|${idTypeExchangeSource}`;
+        let exchstruc2 = `${folio}|${sku}|${product}|${quantity}|${serie}|${storeTarget}|${comments}|${codeTypeExchangeTarget}|${idTypeExchangeTarget}`;
         let exchupda1 = `${productId}|${quantity}|${storeIdSource}`;
         let exchupda2 = `${productId}|${quantity}|${storeIdTarget}`;
 
@@ -411,7 +394,7 @@ function build_data_structure(pr) {
     let el = pr.split('|');
     let par = `[
                {
-                  "gui" :  "${el[0]}",
+                  "fol" :  "${el[0]}",
                   "sku" :  "${el[1]}",
                   "pnm" :  "${el[2]}",
                   "qty" :  "${el[3]}",
@@ -440,36 +423,41 @@ function build_update_store_data(pr) {
 }
 
 /** Graba intercambio de almacenes */
-function save_exchange(pr) {
-    //   console.log(pr);
-    var pagina = 'StoreProductsList/SaveExchange';
-    var par = pr;
-    var tipo = 'html';
-    var selector = exchange_result;
-    fillField(pagina, par, tipo, selector);
-}
+// function save_exchange(pr) {
+//     //   console.log(pr);
+//     var pagina = 'MoveStoresOut/SaveExchange';
+//     var par = pr;
+//     var tipo = 'html';
+//     var selector = exchange_result;
+//     fillField(pagina, par, tipo, selector);
+// }
 
-function update_store(ap) {
-    // console.log(ap);
-    var pagina = 'StoreProductsList/UpdateStores';
-    var par = ap;
-    var tipo = 'html';
-    var selector = updated_stores;
-    fillField(pagina, par, tipo, selector);
-}
+// function update_store(ap) {
+//     // console.log(ap);
+//     var pagina = 'MoveStoresOut/UpdateStores';
+//     var par = ap;
+//     var tipo = 'html';
+//     var selector = updated_stores;
+//     fillField(pagina, par, tipo, selector);
+// }
 
-function exchange_result(dt) {}
+// function exchange_result(dt) {}
 
-function updated_stores(dt) {
-    // console.log(dt);
-    window.location = 'StoreProductsList';
-}
+// function updated_stores(dt) {
+//     // console.log(dt);
 
-/* Generación del GUID  */
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = (Math.random() * 16) | 0,
-            v = c == 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
-}
+//     $('.resFolio').text(folio);
+//     $('#MoveFolioModal').modal('show');
+//     $('#btnHideModal').on('click', function () {
+//         window.location = 'MoveStoresOut';
+//     });
+// }
+
+// /* Generación del folio  */
+// function uuidv4() {
+//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+//         var r = (Math.random() * 16) | 0,
+//             v = c == 'x' ? r : (r & 0x3) | 0x8;
+//         return v.toString(16);
+//     });
+// }
