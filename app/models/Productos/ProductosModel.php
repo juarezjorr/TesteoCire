@@ -80,12 +80,11 @@ class ProductosModel extends Model
 										prd_comments, 
 										prd_status, 
 										sbc_id, 
-										sup_id, 
 										srv_id,
 										prd_model,
 										prd_sku,
-										prd_lonely,
-										prd_behaviour) 
+										prd_lonely
+										) 
 								VALUES('".$params['NomProducto']."',
 									'".$params['NomEngProducto']."',
 									".$params['PriceProducto'].",
@@ -94,12 +93,11 @@ class ProductosModel extends Model
 									'".$params['DesProducto']."',
 									1,
 									".$params['idSubCategoria'].",
-									".$params['idProveedor'].",
+						
 									".$params['idTipeService'].",
 									'".$model."',
 									'".$SKU."',
-									'".$params['rentSinAccesorios']."',
-									'".$params['idbehaviour']."')";
+									'".$params['rentSinAccesorios']."')";
 
 
 					//print_r($qry);
@@ -115,9 +113,9 @@ class ProductosModel extends Model
 
 					//inserta la relacion de documento con producto
 
-					$qry = "INSERT INTO ctt_products_documents (prd_id, doc_id)
+/* 					$qry = "INSERT INTO ctt_products_documents (prd_id, doc_id)
 					VALUES(".$idProducto .",".$params['idDocumento'].")";
-					$this->db->query($qry);	
+					$this->db->query($qry);	 */
 
 					$estatus = $idProducto;
 				}else{
@@ -211,7 +209,7 @@ class ProductosModel extends Model
 		$qry = "SELECT pro.prd_id, pro.prd_sku, pro.prd_name, pro.prd_english_name,
 		pro.prd_model, pro.prd_price,
 		pro.prd_coin_type, pro.prd_visibility,pro.prd_comments, pro.sbc_id, 
-		pro.sup_id, pro.srv_id, cat.cat_id 
+		 cat.cat_id 
 	   ,subcat.sbc_name , cat.cat_name  , serv.srv_name 
 				FROM  ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
@@ -241,12 +239,10 @@ class ProductosModel extends Model
 				"prd_visibility" =>$row[7],
 				"prd_comments" =>$row[8],
 				"sbc_id" =>$row[9],
-				"sup_id" =>$row[10],
-				"srv_id" =>$row[11],
-				"cat_id" =>$row[12],
-				"sbc_name" =>$row[13],
-				"cat_name" =>$row[14],
-				"srv_name" =>$row[15],
+				"cat_id" =>$row[10],
+				"sbc_name" =>$row[11],
+				"cat_name" =>$row[12],
+				"srv_name" =>$row[13],
 				"extNum" => $Count);
 				
 				array_push($lista, $item);
@@ -308,22 +304,21 @@ class ProductosModel extends Model
 						SET 
 						prd_name = '".$params['NomProducto']."'
 						,prd_english_name = '".$params['NomEngProducto']."'
-						,prd_model = '".$params['ModelProducto']."'
 						,prd_price = '".$params['PriceProducto']."' 
+						,prd_lonely = '".$params['rentSinAccesorios']."' 
 						,prd_coin_type = '".$params['idMoneda']."'
 						,prd_visibility = '".$params['visible']."'
 						,prd_comments = '".$params['DesProducto']."'
 						,sbc_id = '".$params['idSubCategoria']."'
-						,sup_id = '".$params['idProveedor']."'
 						,srv_id =  '".$params['idTipeService']."'
 						WHERE prd_id =   ".$params['IdProducto'].";";
 				$this->db->query($qry);	
 
 
-				$qry = "UPDATE ctt_products_documents
+/* 				$qry = "UPDATE ctt_products_documents
 				SET doc_id ='".$params['idDocumento']."' 
 				WHERE prd_id = ".$params['IdProducto'].";";
-				$this->db->query($qry);	
+				$this->db->query($qry);	 */
 
 				//SI ES SOLO UNO ACTULIZA LO SIGUIENTE
 /* 				if($params['esUnico'] == 1){
@@ -408,8 +403,8 @@ class ProductosModel extends Model
 	public function getInfoComun($params)
 	{
 		$qry = "SELECT pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
-				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, pro.sup_id, 
-				pro.srv_id, subcat.cat_id, productD.doc_id, pro.prd_lonely, pro.prd_behaviour
+				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, 
+				pro.srv_id, subcat.cat_id, pro.prd_lonely
 				FROM ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id
@@ -420,8 +415,8 @@ class ProductosModel extends Model
 	public function getInfoComunByID($params)
 	{
 		$qry = "SELECT pro.prd_name, pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
-				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, pro.sup_id, 
-				pro.srv_id, subcat.cat_id, productD.doc_id, pro.prd_lonely, pro.prd_behaviour
+				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, 
+				pro.srv_id, subcat.cat_id, pro.prd_lonely
 				FROM ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id
@@ -432,9 +427,9 @@ class ProductosModel extends Model
 	public function getInfoComunByIDFull($params)
 	{
 		$qry = "SELECT pro.prd_id, pro.prd_name, pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
-				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, pro.sup_id, 
-				pro.srv_id, subcat.cat_id, productD.doc_id, ser.ser_serial_number , ser.ser_cost,
-				ser.ser_lonely, ser.ser_behaviour, sProduct.str_id , pro.prd_lonely, pro.prd_behaviour
+				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, 
+				pro.srv_id, subcat.cat_id, ser.ser_serial_number , ser.ser_cost,
+				ser.ser_lonely, sProduct.str_id , pro.prd_lonely
 				FROM ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id

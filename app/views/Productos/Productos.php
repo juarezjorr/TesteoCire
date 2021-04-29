@@ -103,21 +103,21 @@
 								</div>
 							</div>
 
-							<div class="row">
+<!-- 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowProovedores"  name="selectRowProovedores"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowProovedores" class="form-label">Proveedor</label>
 								</div>
-							</div>
+							</div> -->
 
-							<div class="row">
+<!-- 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowDocument"  name="selectRowDocument"  class="form-select form-select-sm" >
 									</select>
 									<label for="selectRowDocument" class="form-label">Documento</label>
 								</div>
-							</div>
+							</div> -->
 
 <!-- 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
@@ -166,7 +166,7 @@
 								</div>
 							</div>
 
-							<div class="row">
+<!-- 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 								<div class="form-check">
 									<input class="form-check-input" type="radio" name="ventOrRent" value="C" id="ventOrRent1" checked>
@@ -181,7 +181,7 @@
 									</label>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
 
 

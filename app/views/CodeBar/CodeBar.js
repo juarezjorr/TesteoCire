@@ -10,7 +10,7 @@ $(document).ready(function () {
 
 function inicial() {
     $("#listProducts").mouseleave(function() {
-            $('.list-group').slideToggle('slow');
+       $('.list-group').slideToggle(80);
     });
 
     getExchange();
@@ -187,7 +187,7 @@ function drawProducts(str) {
     $('#boxProducts')
         .unbind('click')
         .on('click', function () {
-            $('.list-group').slideToggle('slow');
+            $('.list-group').slideToggle(100);
             $('.box-items-list i').toggleClass('rotate');
         });
 

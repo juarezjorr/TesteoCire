@@ -25,7 +25,7 @@ function inicial() {
         LimpiaModal();
         getCategorias();
         getServicios(0);
-        getProveedores();
+        //getProveedores();
         getAlmacenes();
         $('#fformProducto').removeClass('was-validated');
         NomProductoSelect();
@@ -40,7 +40,7 @@ function inicial() {
         LimpiaModal();
         getCategorias();
         getServicios(0);
-        getProveedores();
+        //getProveedores();
         getAlmacenes();
         $('#formProducto').removeClass('was-validated');
         EnableDisableComun(false);
@@ -88,10 +88,10 @@ function cargaInicial() {
     LimpiaModal();
     getCategorias();
     getServicios(0);
-    getProveedores();
+    //getProveedores();
     getAlmacenes();
     getTipoMoneda();
-    getDocumentos();
+    //getDocumentos();
     $('#formSubCategorias').removeClass('was-validated');
     NomProductoSelect();
 }
@@ -134,7 +134,7 @@ function EditProducto(id, idCategoria, idSubCategoria, idServicio, idAlmacen, id
 
             getCategorias(idCategoria);
             getSubCategorias(idSubCategoria, idCategoria);
-            getProveedores(idProveedor);
+            //getProveedores(idProveedor);
             getServicios(idServicio);
             getAlmacenes(idAlmacen);
             $("#selectMonedaProducto option[id='" + idTipoMoneda + "']").attr('selected', 'selected');
@@ -226,9 +226,9 @@ function SaveProducto() {
     var idCategoria = $('#selectRowCategorias option:selected').attr('id');
     var idSubCategoria = $('#selectRowSubCategorias option:selected').attr('id');
     var idTipeService = $('#selectRowService option:selected').attr('id');
-    var idProveedor = $('#selectRowProovedores option:selected').attr('id');
+    //var idProveedor = $('#selectRowProovedores option:selected').attr('id');
     var idAlmacen = $('#selectRowAlmacen option:selected').attr('id');
-    var idDocumento = $('#selectRowDocument option:selected').attr('id');
+    //var idDocumento = $('#selectRowDocument option:selected').attr('id');
 
     var visible = 0;
     var rentSinAccesorios = 0;
@@ -240,7 +240,7 @@ function SaveProducto() {
         rentSinAccesorios = 1;
     }
 
-    var idbehaviour = $('input[name="ventOrRent"]:checked').val();
+    //var idbehaviour = $('input[name="ventOrRent"]:checked').val();
 
     $.ajax({
         type: 'POST',
@@ -255,15 +255,12 @@ function SaveProducto() {
             DesProducto: DesProducto,
             idSubCategoria: idSubCategoria,
             idTipeService: idTipeService,
-            idProveedor: idProveedor,
             idMoneda: idMoneda,
             visible: visible,
             idAlmacen: idAlmacen,
             idStoreProducto: idStoreProducto,
-            idDocumento: idDocumento,
             idCategoria: idCategoria,
             rentSinAccesorios: rentSinAccesorios,
-            idbehaviour: idbehaviour,
             esUnico: esUnico,
         },
         url: location,
@@ -382,7 +379,7 @@ function getServicios(id) {
 }
 
 // Optiene las proveedores *
-function getProveedores(id) {
+/* function getProveedores(id) {
     $('#selectRowProovedores').html('');
     var location = 'Proveedores/GetProveedores';
     $.ajax({
@@ -403,7 +400,7 @@ function getProveedores(id) {
         },
         error: function () {},
     }).done(function () {});
-}
+} */
 
 // Optiene las proveedores *
 function getAlmacenes(id) {
@@ -449,7 +446,7 @@ function getAlmacenesSku(id) {
 }
 
 // Optiene las documentos *
-function getDocumentos(id) {
+/* function getDocumentos(id) {
     $('#selectRowDocument').html('');
     var location = 'Documentos/GetDocumentos';
     $.ajax({
@@ -468,7 +465,7 @@ function getDocumentos(id) {
         },
         error: function () {},
     }).done(function () {});
-}
+} */
 
 function getProductosTable() {
     var location = 'Productos/GetProductos';
@@ -709,7 +706,7 @@ function getInfoComun(nombreDocument, productoComun, cantidadSKU, idproducto) {
             setTimeout(() => {
                 $('#selectMonedaProducto option[value=' + respuesta[0].prd_coin_type + ']').prop('selected', true);
                 getSubCategorias(respuesta[0].sbc_id, respuesta[0].cat_id);
-                getDocumentos(respuesta[0].doc_id);
+               // getDocumentos(respuesta[0].doc_id);
                 $('#selectRowCategorias option[value=' + respuesta[0].cat_id + ']').prop('selected', true);
                 $('#selectRowService option[value=' + respuesta[0].srv_id + ']').prop('selected', true);
                 $('#selectRowProovedores option[value=' + respuesta[0].sup_id + ']').prop('selected', true);
@@ -758,7 +755,7 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
             setTimeout(() => {
                 $('#selectMonedaProducto option[value=' + respuesta[0].prd_coin_type + ']').prop('selected', true);
                 getSubCategorias(respuesta[0].sbc_id, respuesta[0].cat_id);
-                getDocumentos(respuesta[0].doc_id);
+                //getDocumentos(respuesta[0].doc_id);
                 $('#selectRowCategorias option[value=' + respuesta[0].cat_id + ']').prop('selected', true);
                 $('#selectRowService option[value=' + respuesta[0].srv_id + ']').prop('selected', true);
                 $('#selectRowProovedores option[value=' + respuesta[0].sup_id + ']').prop('selected', true);
