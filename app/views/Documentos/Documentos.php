@@ -50,7 +50,7 @@
                     		 <div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="CodDocumento" name="CodDocumento" type="text" class="form-control form-control-sm" maxlength="10" style="text-transform: uppercase" >
-									<label for="CodDocumento">Code Documento</label>
+									<label for="CodDocumento">Codigo Documento</label>
 								</div>
 							</div>
 
