@@ -166,6 +166,17 @@
 								</div>
 							</div>
 
+							<div class="row" >
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="1" id="checkIsAccesorie" >
+									<label class="form-check-label" for="flexCheckDefault">
+										Es accesorio
+									</label>
+									</div>
+								</div>
+							</div>
+
 <!-- 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 								<div class="form-check">

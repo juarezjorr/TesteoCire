@@ -83,7 +83,8 @@ class ProductosModel extends Model
 										srv_id,
 										prd_model,
 										prd_sku,
-										prd_lonely
+										prd_lonely,
+										prd_level
 										) 
 								VALUES('".$params['NomProducto']."',
 									'".$params['NomEngProducto']."',
@@ -97,7 +98,8 @@ class ProductosModel extends Model
 									".$params['idTipeService'].",
 									'".$model."',
 									'".$SKU."',
-									'".$params['rentSinAccesorios']."')";
+									'".$params['rentSinAccesorios']."',
+									'".$params['IsAccesorio']."')";
 
 
 					//print_r($qry);
@@ -210,7 +212,7 @@ class ProductosModel extends Model
 		pro.prd_model, pro.prd_price,
 		pro.prd_coin_type, pro.prd_visibility,pro.prd_comments, pro.sbc_id, 
 		 cat.cat_id 
-	   ,subcat.sbc_name , cat.cat_name  , serv.srv_name 
+	   ,subcat.sbc_name , cat.cat_name  , serv.srv_name, pro.prd_level
 				FROM  ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_categories AS cat ON cat.cat_id = subcat.cat_id
@@ -243,8 +245,8 @@ class ProductosModel extends Model
 				"sbc_name" =>$row[11],
 				"cat_name" =>$row[12],
 				"srv_name" =>$row[13],
+				"prd_level" =>$row[14],
 				"extNum" => $Count);
-				
 				array_push($lista, $item);
 			
 		}
@@ -311,6 +313,7 @@ class ProductosModel extends Model
 						,prd_comments = '".$params['DesProducto']."'
 						,sbc_id = '".$params['idSubCategoria']."'
 						,srv_id =  '".$params['idTipeService']."'
+						,prd_level = '".$params['IsAccesorio']."'
 						WHERE prd_id =   ".$params['IdProducto'].";";
 				$this->db->query($qry);	
 
@@ -416,7 +419,7 @@ class ProductosModel extends Model
 	{
 		$qry = "SELECT pro.prd_name, pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
 				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, 
-				pro.srv_id, subcat.cat_id, pro.prd_lonely
+				pro.srv_id, subcat.cat_id, pro.prd_lonely, pro.prd_level
 				FROM ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id
@@ -429,7 +432,7 @@ class ProductosModel extends Model
 		$qry = "SELECT pro.prd_id, pro.prd_name, pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
 				pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, 
 				pro.srv_id, subcat.cat_id, ser.ser_serial_number , ser.ser_cost,
-				ser.ser_lonely, sProduct.str_id , pro.prd_lonely
+				ser.ser_lonely, sProduct.str_id , pro.prd_lonely, pro.prd_level
 				FROM ctt_products AS pro
 				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
 				LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id

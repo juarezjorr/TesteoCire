@@ -51,9 +51,7 @@ public function SaveDocumento($request_params)
 // Optiene los Usuaios existentes
 	public function GetDocumentos()
 	{
-		$qry = "SELECT doc.doc_id, doc.doc_code, doc.doc_name, doc.doc_type, doc.dot_id, td.dot_name 
-				FROM ctt_documents as doc
-				LEFT JOIN ctt_documents_type AS td ON td.dot_id = doc.dot_id";
+		$qry = "SELECT doc.doc_id, doc.doc_code, doc.doc_name, doc.doc_type, doc.dot_id, td.dot_name FROM ctt_documents as doc LEFT JOIN ctt_documents_type AS td ON td.dot_id = doc.dot_id";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
