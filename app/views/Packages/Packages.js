@@ -410,14 +410,16 @@ function action_selected_packages() {
             let selected = $(this).parent().attr('class').indexOf('selected');
             if (selected < 0) {
                 let prdId = $(this).parent().attr('id');
+                console.log(prdId);
                 select_products(prdId);
+
                 $('#txtCategoryProduct').val(0);
                 $('#txtSubcategoryProduct').val(0);
-                $('#txtIdPackages').val(prdId);
 
                 drawProducts(0);
                 $('.form_primary').slideUp('slow', function () {
                     $('.form_secundary').slideDown('slow');
+                    $('#txtIdPackages').val(prdId);
                 });
             } else {
                 $('#txtIdPackages').val(0);
@@ -512,6 +514,8 @@ function product_apply(prId) {
     let productSKU = prod[1];
     let productName = prod[3];
     let productParent = $('#txtIdPackages').val();
+
+    console.log(productParent);
 
     var pagina = 'Packages/SaveProduct';
     var par = `[{"prdId":"${productId}","prdParent":"${productParent}"}]`;

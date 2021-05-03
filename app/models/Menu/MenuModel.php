@@ -20,7 +20,7 @@ class MenuModel extends Model
 				FROM ctt_menu AS mn
 				INNER JOIN ctt_modules AS mo ON mo.mod_id = mn.mod_id
 				INNER JOIN ctt_users_modules AS um ON um.mod_id = mo.mod_id
-				WHERE um.usr_id  = $userId;
+				WHERE um.usr_id  = $userId ORDER BY mn.mnu_order ASC;
 		";
 
 		return $this->db->query($qry);

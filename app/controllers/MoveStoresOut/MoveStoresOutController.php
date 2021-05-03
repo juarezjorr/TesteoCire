@@ -100,15 +100,22 @@ class MoveStoresOutController extends Controller
 		echo $res;
 	} 
 
+// Obtiene el folio del movimiento
+	public function NextExchange($request_params)
+	{
+		$params =  $this->session->get('user');
+		$result = $this->model->NextExchange();
+		$res = $result;
+        echo $res;
+	} 
 // Registra los movimientos entre almacenes
 	public function SaveExchange($request_params)
 	{
 		$params =  $this->session->get('user');
 		$result = $this->model->SaveExchange($request_params, $params);
 		$res = $result;
-        echo $res;
+		echo $res;
 	} 
-
 
 // Actualiza la situacion del almacen
 	public function UpdateStores($request_params)

@@ -6,7 +6,7 @@ CREATE TABLE `cttapp_cire`.`ctt_accesories` (
     `acr_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del accesorio',
     `acr_parent`            INT NOT NULL                    COMMENT 'Id del producto padre',
     `acr_status`            VARCHAR(1) NOT NULL             COMMENT 'Estatus del accesorio D-Disponible, N-No disponible',
-    `ser_id`                INT NOT NULL                    COMMENT 'Id del producto relaciòn ctt_series',
+    `prd_id`                INT NOT NULL                    COMMENT 'Id del producto relaciòn ctt_products',
 PRIMARY KEY (`acr_id`))
 COMMENT = 'Productos o accesorios dependientes de otros productos';
 
@@ -62,6 +62,16 @@ CREATE TABLE `cttapp_cire`.`ctt_coins` (
     `cin_status`            INT DEFAULT 1                   COMMENT 'Estatus de la moneda 1-activo 0-inactivo',
 PRIMARY KEY (`cin_id`)) 
 COMMENT='Tabla catalogo de monedas';
+
+
+
+DROP TABLE `cttapp_cire`.`ctt_counter_exchange`;
+CREATE TABLE `cttapp_cire`.`ctt_counter_exchange` (
+    `con_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del contador',
+    `con_date`              DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del movimiento',
+    `con_status`            INT DEFAULT 1                   COMMENT 'Estatus del folio 1-activo 0-inactivo',
+PRIMARY KEY (`con_id`)) 
+COMMENT='Tabla generador de folios';
 
 
 DROP TABLE `cttapp_cire`.`ctt_documents`;
@@ -152,6 +162,7 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
     `prd_comments`          VARCHAR(300) NULL               COMMENT 'Observaciones',
     `prd_status`            VARCHAR(1) NULL                 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
     `prd_level`             VARCHAR(1) DEFAULT 'P'          COMMENT 'Nivel del producto  K=Kit, P=Producto',
+    `prd_lonely`            VARCHAR(1)                      COMMENT 'Se puede rentar sin accesosrios 1-si, 0-no',
     `sbc_id`                INT NULL                        COMMENT 'Id de la subcategoría relacion ctt_subcategories',
     `srv_id`                INT NULL                        COMMENT 'Id del tipo de servicio relacion ctt_services',
     `cin_id`                INT NULL                        COMMENT 'Id del tipo de moneda relacion ctt_coins',
@@ -215,7 +226,6 @@ CREATE TABLE `cttapp_cire`.`ctt_series` (
     `ser_stage`             VARCHAR(5) NULL                 COMMENT 'Etapa dentro del proceso',
     `ser_date_registry`     DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
     `ser_date_down`         DATETIME NULL                   COMMENT 'Fecha de baja del producto',
-    `ser_lonely`            VARCHAR(1) NULL                 COMMENT 'Se puede rentar sin accesosrios 1-si, 0-no',
     `ser_behaviour`         VARCHAR(1) NOT NULL             COMMENT 'Comportamiento del producto C-Compra, R-Renta',
     `prd_id`                INT NULL                        COMMENT 'Id del producto relacion ctt_productos',
     `sup_id`                INT NULL                        COMMENT 'Id de la proveedor relacion ctt_suppliers',
@@ -253,7 +263,6 @@ DROP TABLE `cttapp_cire`.`ctt_stores_exchange`;
 CREATE TABLE `cttapp_cire`.`ctt_stores_exchange` (
     `exc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del movimiento',
     `exc_date`              DATETIME NULL DEFAULT CURRENT_TIMESTAMP  COMMENT 'Fecha de registro del movimiento',
-    `exc_guid`              VARCHAR(200) NOT NULL           COMMENT 'folio - codigo del movimiento',
     `exc_sku_product`       VARCHAR(100) NOT NULL           COMMENT 'SKU del producto',
     `exc_product_name`      VARCHAR(200) NOT NULL           COMMENT 'Nombre del producto',
     `exc_quantity`          INT NULL                        COMMENT 'Cantidad de piezas',
@@ -263,6 +272,7 @@ CREATE TABLE `cttapp_cire`.`ctt_stores_exchange` (
     `exc_proyect`           VARCHAR(100) NOT NULL           COMMENT 'Nombre del proyecto',
     `exc_employee_name`     VARCHAR(100) NOT NULL           COMMENT 'Nombre del empleado',
     `ext_code`              VARCHAR(100) NOT NULL           COMMENT 'Còdigo del tipo de movimiento',
+    `con_id`                INT NULL                        COMMENT 'Id del folio relación ctt_counter_exchange',
     `ext_id`                INT NULL                        COMMENT 'Id del tipo de movimiento relación ctt_type_exchange',
     `cin_id`                INT NULL                        COMMENT 'Id del tipo de moneda relación ctt_coins',
 PRIMARY KEY (`exc_id`))

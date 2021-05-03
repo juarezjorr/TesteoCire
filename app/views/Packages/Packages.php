@@ -23,7 +23,7 @@
                                 <input id="txtPackageName" type="text" class="form-control form-control-sm" >
                                 <label for="txtPackageName">Nombre del packete</label>
                             </div>
-                            <input type="hidden" id="txtIdPackages" name="txtIdPackages">
+                           
                         </div>
 
                         <div class="row">
@@ -51,6 +51,7 @@
                                 </select>
                                 <label for="txtSubcategoryPack" class="form-label">Subcategoia</label>
                             </div>
+                          
                         </div>
 
                         
@@ -66,6 +67,7 @@
                     <div class="form_secundary">
                         <h4>Seleccion de productos</h4>
                         <div class="row">
+                            <input type="hidden" id="txtIdPackages" name="txtIdPackages"><br>
                             <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
                                 <select id="txtCategoryProduct" class="form-select form-select-sm required">
                                     <option value="0" data-content="||||" selected>Selecciona una categoría</option>
@@ -110,8 +112,8 @@
                                 <tr>
                                     <th style="width:  30px"></th>
                                     <th style="width:  80px">SKU</th>
-                                    <th style="width: auto">Nombre</th>
-                                    <th style="width: 90px">Precio</th>
+                                    <th style="width:  auto">Nombre</th>
+                                    <th style="width:  90px">Precio</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -124,8 +126,8 @@
                                 <tr>
                                     <th style="width:  30px"></th>
                                     <th style="width:  80px">SKU</th>
-                                    <th style="width: auto">Producto</th>
-                                    <th style="width: 90px">Precio</th>
+                                    <th style="width:  auto">Producto</th>
+                                    <th style="width:  90px">Precio</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

@@ -101,5 +101,14 @@ class StoreProductsListController extends Controller
 		echo $res;
 	} 
 
+// Imprime la lista de productos
+	public function printList($request_params)
+	{
+		$params =  $this->session->get('user');
+		require_once ROOT . PATH_VIEWS . 'rpt_StoreProducts.php';
+		
+
+	} 
+
 	
 }
