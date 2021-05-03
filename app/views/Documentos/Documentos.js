@@ -147,7 +147,7 @@ function SaveDocumento() {
     var idDocumentos = $('#IdDocumentNew').val();
     var NomDocumento = $('#NomDocumento').val();
     var ExtDocumento = $('#ExtDocumento').val();
-    var CodDocumento = $('#CodDocumento').val();
+    var CodDocumento = $('#CodDocumento').val().trim().toUpperCase();
 
     var tipoDocumento = $('#selectRowTipoDocumento option:selected').attr('id');
     var tipoDocumentoText = $('#selectRowTipoDocumento option:selected').text();
@@ -255,6 +255,7 @@ function getDocumentosTable() {
       dataType: 'JSON',
       url: location,
       _success: function (respuesta) {
+         console.log(respuesta);
          var renglon = '';
          respuesta.forEach(function (row, index) {
             renglon =
@@ -370,7 +371,7 @@ function getDocumentosTable() {
             language: {
                url: './app/assets/lib/dataTable/spanish.json',
             },
-         });
+         }); 
       },
       get success() {
          return this._success;

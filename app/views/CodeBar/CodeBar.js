@@ -552,13 +552,16 @@ function print_Code(){
 function PrintCodeBar() {
     var data = $("#modalSku").html();
     var source = '<html><head><title></title>'+'<link rel="stylesheet" href="css/mycss.css" type="text/css" />'+
-    '<script type="text/javascript">setTimeout(() => {window.close();}, 1000);</script>'+'</head><body  >'+data+'</body></html>';
+    '<script type="text/javascript">'+
+    //'setTimeout(() => {window.print();window.close();}, 1000);'+
+    'setTimeout(() => {window.close();}, 1000);'+
+    '</script>'+'</head><body onload="window.print();" >'+data+'</body></html>';
 
     Pagelink = "about:blank";
     var pwa = window.open(Pagelink, "_new");
     pwa.document.open();
     pwa.document.write(source);
-    pwa.print();
+    //pwa.print();
     pwa.document.close();
     //$('#modalCodigoBarra').modal('hide');
 }

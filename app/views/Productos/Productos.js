@@ -232,12 +232,17 @@ function SaveProducto() {
 
     var visible = 0;
     var rentSinAccesorios = 0;
+    var IsAccesorio = "P";
+
 
     if ($('#checkProducto').prop('checked')) {
         visible = 1;
     }
     if ($('#checkRentAccesories').prop('checked')) {
         rentSinAccesorios = 1;
+    }
+    if ($('#checkIsAccesorie').prop('checked')) {
+        IsAccesorio = "A";
     }
 
     //var idbehaviour = $('input[name="ventOrRent"]:checked').val();
@@ -262,6 +267,7 @@ function SaveProducto() {
             idCategoria: idCategoria,
             rentSinAccesorios: rentSinAccesorios,
             esUnico: esUnico,
+            IsAccesorio: IsAccesorio
         },
         url: location,
         success: function (respuesta) {
@@ -305,6 +311,8 @@ function LimpiaModal() {
     $('#titulo').text('Nuevo Producto');
     $('#checkRentAccesories').prop('checked', true);
     $('#ventOrRent1').prop('checked', true);
+    $('#checkIsAccesorie').prop('checked', false);
+
 }
 
 // Optiene las categorias *
@@ -379,30 +387,6 @@ function getServicios(id) {
 }
 
 // Optiene las proveedores *
-/* function getProveedores(id) {
-    $('#selectRowProovedores').html('');
-    var location = 'Proveedores/GetProveedores';
-    $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        url: location,
-        success: function (respuesta) {
-            //console.log(respuesta);
-            var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
-            respuesta.forEach(function (row, index) {
-                renglon += '<option id=' + row.sup_id + '  value="' + row.sup_id + '">' + row.sup_business_name + '</option> ';
-            });
-            $('#selectRowProovedores').append(renglon);
-
-            if (id != '') {
-                $("#selectRowProovedores option[id='" + id + "']").attr('selected', 'selected');
-            }
-        },
-        error: function () {},
-    }).done(function () {});
-} */
-
-// Optiene las proveedores *
 function getAlmacenes(id) {
     $('#selectRowAlmacen').html('');
     var location = 'Almacenes/GetAlmacenes';
@@ -444,28 +428,6 @@ function getAlmacenesSku(id) {
         error: function () {},
     }).done(function () {});
 }
-
-// Optiene las documentos *
-/* function getDocumentos(id) {
-    $('#selectRowDocument').html('');
-    var location = 'Documentos/GetDocumentos';
-    $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        url: location,
-        success: function (respuesta) {
-            var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
-            respuesta.forEach(function (row, index) {
-                renglon += '<option id=' + row.doc_id + '  value="' + row.doc_id + '">' + row.doc_code + '-' + row.doc_name + '</option> ';
-            });
-            $('#selectRowDocument').append(renglon);
-            if (id != '') {
-                $("#selectRowDocument option[id='" + id + "']").attr('selected', 'selected');
-            }
-        },
-        error: function () {},
-    }).done(function () {});
-} */
 
 function getProductosTable() {
     var location = 'Productos/GetProductos';
@@ -721,6 +683,12 @@ function getInfoComun(nombreDocument, productoComun, cantidadSKU, idproducto) {
             } else {
                 $('#checkProducto').prop('checked', false);
             }
+
+            
+
+
+
+
             if (1 >= cantidadSKU) {
             } else {
                 EnableDisableComun(true);
@@ -732,6 +700,8 @@ function getInfoComun(nombreDocument, productoComun, cantidadSKU, idproducto) {
     }).done(function () {});
 }
 
+
+//EDITA EL PRODUCTO BUENO
 function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
     UnSelectRowTable();
     EnableDisableComun(false);
@@ -769,6 +739,12 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
                 $('#checkProducto').prop('checked', true);
             } else {
                 $('#checkProducto').prop('checked', false);
+            }
+
+            if (respuesta[0].prd_level == "A") {
+                $('#checkIsAccesorie').prop('checked', true);
+            } else {
+                $('#checkIsAccesorie').prop('checked', false);
             }
 
             if (productoComun == 1) {
