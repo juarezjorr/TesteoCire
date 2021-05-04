@@ -153,11 +153,12 @@
 													<th style="width: auto">Nombre</th>
 													<th style="width: auto">Nombre ingles</th>
 									                <th style="width: auto">Price</th>
-													<th style="width: auto">Descripcion Segun Proveedor</th>
+													<th style="width: auto">Existencias</th>
 													<th style="width: auto">Servicio</th>
 													<th style="width: auto">Catalago</th>
 													<th style="width: auto">Subcategoria</th>
-													<th style="width: auto">Existencias</th>
+													<th style="width: auto">Descripcion Segun Proveedor</th>
+
 											</tr>
 										</thead>
 										<tbody id="tablaProductosRow">

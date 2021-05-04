@@ -71,6 +71,14 @@ public function listProductsPack($params)
     return $this->db->query($qry);
 }
 
+// Listado de accesorios
+public function listAccesorios($params)
+{
+    $prdId = $this->db->real_escape_string($params);
+    $qry = "SELECT prd_id, prd_name FROM ctt_products WHERE prd_level = 'A';";
+    return $this->db->query($qry);
+}
+
 // Registra el paquete o kit en la tabla de productos
     public function savePack($param)
     {

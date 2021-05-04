@@ -28,6 +28,7 @@ function setting_table() {
 
     $('#tblExchanges').DataTable({
         order: [[0, 'desc']],
+        pageLength: 1000,
         dom: 'Blfrtip',
         buttons: [
             {
@@ -554,7 +555,7 @@ function PrintCodeBar() {
     var source = '<html><head><title></title>'+'<link rel="stylesheet" href="css/mycss.css" type="text/css" />'+
     '<script type="text/javascript">'+
     //'setTimeout(() => {window.print();window.close();}, 1000);'+
-    'setTimeout(() => {window.close();}, 1000);'+
+    'setTimeout(() => {window.close();}, 3000);'+
     '</script>'+'</head><body onload="window.print();" >'+data+'</body></html>';
 
     Pagelink = "about:blank";

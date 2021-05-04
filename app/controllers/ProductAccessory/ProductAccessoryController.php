@@ -153,6 +153,25 @@ public function listProductsById()
         echo $res;
     }
 
+    
+// Lista los productos relacionados al paquete
+public function listAccesorios($request_params)
+{
+    $params =  $this->session->get('user');
+    $result = $this->model->listProductsPack($request_params['prdId']);
+    $i = 0;
+    while($row = $result->fetch_assoc()){
+        $rowdata[$i] = $row;
+        $i++;
+    }
+    if ($i>0){
+        $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+    } else {
+        $res =  '[{"prd_id":""}]';	
+    }
+    echo $res;
+}
+
 // Guarda el paquete
     public function savePack($request_params)
     {

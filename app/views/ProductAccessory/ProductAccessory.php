@@ -37,6 +37,25 @@
                             </div>
                         </div>
 
+
+                        <div class="hidden-field">
+
+                        <h4>Seleccion de productos</h4>
+
+                        <div class="row list-finder hidden-field">
+                            <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+                                <div class="box-items-list" id="boxProducts">Productos
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </div>
+                            <div class="list-group list-hide">
+                                <div class="list-items" id="listProducts"></div>
+                            </div>
+                            
+                        </div>
+                        </div>
+
+
                         
 <!--                         <div class="row">
                             <div class="col-md-12 mb-5">
@@ -47,7 +66,7 @@
 
                     </div>
 
-                    <div class="form_secundary">
+<!--                     <div class="form_secundary">
                         <h4>Seleccion de productos</h4>
                         <div class="row">
                             <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
@@ -64,10 +83,10 @@
                                 </select>
                                 <label for="txtSubcategoryProduct" class="form-label">Subcategoia</label>
                             </div>
-                        </div>
+                        </div> -->
 
 
-                        <div class="row list-finder">
+<!--                         <div class="row list-finder">
                             <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
                                 <div class="box-items-list" id="boxProducts">Productos
                                     <i class="fas fa-angle-down"></i>
@@ -77,7 +96,7 @@
                                 <div class="list-items" id="listProducts"></div>
                             </div>
                             
-                        </div>
+                        </div> -->
                         
                     </div>
                 </div>
@@ -93,12 +112,14 @@
                             <thead>
                                 <tr>
                                     <th style="width:  80px">SKU</th>
+                                    <th style="width: auto">id</th>
                                     <th style="width: auto">Nombre</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
                     </div>
+
                     <div class="right-side">
                         <h3>Accesorios</h3>
                         <table class="display compact nowrap"  id="tblProducts" style="width:100%">
