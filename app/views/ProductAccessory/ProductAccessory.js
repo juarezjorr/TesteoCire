@@ -63,6 +63,7 @@ function setting_table_product() {
             {data: 'packname', class: 'sel product-name'},
         ],
     });
+
 }
 
 // Configura la tabla de productos
@@ -122,7 +123,8 @@ function getSubcategory() {
 } */
 // Solicita los paquetes
 function getProducts(sbc_id) {
-    var pagina = 'ProductAccessory/listProducts';
+    console.log("id subcategoria:"+ sbc_id);
+    var pagina = 'ProductAccessory/listProductsById';
     var par = '[{"sbc_id":"'+sbc_id+'"}]';
     var tipo = 'json';
     var selector = putProducts;
@@ -199,6 +201,8 @@ function drawProducts(str) {
 function putProducts(dt) {
     if (dt[0].prd_id != '0') {
         let tabla = $('#tblPackages').DataTable();
+        tabla.clear().draw();
+
         $.each(dt, function (v, u) {
             tabla.row
                 .add({
@@ -374,7 +378,7 @@ function active_params() {
 }
 
 function build_sku_product(sbcId) {
-    var pagina = 'Packages/lastIdSubcategory';
+    var pagina = 'ProductAccessory/lastIdSubcategory';
     var par = `[{"sbcId":"${sbcId}"}]`;
     var tipo = 'json';
     var selector = putIdSubcategory;
@@ -426,41 +430,25 @@ function fill_table_packs(par) {
     });
 } */
 
+
+
+//***************************************** */
+//****************AQUI***************** */
+//***************************************** */
+
 function action_selected_packages() {
-
-
-
-    //alert("al fin");
-
-
 
     $('.indicator td')
         .unbind('click')
         .on('click', function () {
                 let prdId = $(this).parent().attr('id');
+
+                console.log("se seleccione un producto");
                 console.log(prdId);
                // var prdId = $(this).parent();
                 select_products(prdId);
      });
-/* 
-    $('.choice')
-        .unbind('click')
-        .on('click', function () {
 
-            console.log("dio clik");
-
-            let edt = $(this).attr('class').indexOf('modif');
-            let prdId = $(this).attr('id').substring(2, 100);
-            if (edt >= 0) {
-                var pagina = 'Packages/detailPack';
-                var par = `[{"prdId":"${prdId}"}]`;
-                var tipo = 'json';
-                var selector = put_detailPack;
-                fillField(pagina, par, tipo, selector);
-            } else {
-                confirm_delet_packages(prdId);
-            } 
-        }); */
 }
 
 function action_selected_products() {
@@ -498,7 +486,7 @@ function put_detailPack(dt) {
 }
 
 function select_products(prdId) {
-    var pagina = 'Packages/listProductsPack';
+    var pagina = 'ProductAccessory/listProductsPack';
     var par = `[{"prdId":"${prdId}"}]`;
     var tipo = 'json';
     var selector = putProductsPack;
@@ -506,7 +494,7 @@ function select_products(prdId) {
 }
 
 function load_Accesories(prdId) {
-    var pagina = 'Packages/listAccesorios';
+    var pagina = 'ProductAccessory/listAccesorios';
     var par = `[{"prdId":"${prdId}"}]`;
     var tipo = 'json';
     var selector = putAccesorios;
@@ -559,7 +547,7 @@ function product_apply(prId) {
     let productName = prod[3];
     let productParent = $('#txtIdPackages').val();
 
-    var pagina = 'Packages/SaveProduct';
+    var pagina = 'ProductAccessory/SaveProduct';
     var par = `[{"prdId":"${productId}","prdParent":"${productParent}"}]`;
     var tipo = 'json';
     var selector = putNewProductsPack;
@@ -590,7 +578,7 @@ function confirm_delet_packages(id) {
         let row = $('#' + prdId);
         tabla.row(row).remove().draw();
 
-        var pagina = 'Packages/deletePackages';
+        var pagina = 'ProductAccessory/deletePackages';
         var par = `[{"prdId":"${prdId}"}]`;
         var tipo = 'json';
         var selector = putDelPackages;
@@ -613,7 +601,7 @@ function confirm_delet_product(id) {
 
         tabla.row(prdRow).remove().draw();
 
-        var pagina = 'Packages/deleteProduct';
+        var pagina = 'ProductAccessory/deleteProduct';
         var par = `[{"prdId":"${prdId}","prdParent":"${prdParent}"}]`;
         var tipo = 'json';
         var selector = putDelPackages;
