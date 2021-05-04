@@ -4,10 +4,12 @@ body {
     padding: 100px;
 }
 .cornisa {
+    overflow: hidden;
     .box-logo {
         float: left;
         width: 50%;
         height: 200px;
+
         .logo {
             width: 300px;
             height: 150px;
@@ -50,4 +52,70 @@ body {
             background-image: url("../img/icon-email.png");
         }
     }
+}
+
+.concepts {
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 20px;
+
+    .table {
+        width: 50%;
+        float: left;
+
+        .concept {
+            width: 150px;
+            text-align: right;
+            padding: 5px 5px;
+            border-bottom: 1px dotted #999999;
+            color: #666666;
+        }
+        .data {
+            width: 400px;
+            font-weight: 700;
+            text-align: left;
+            padding: 5px 0;
+            border-bottom: 1px dotted #999999;
+        }
+    }
+    .datecreate  {
+        float: right;
+        width: 50%;
+        text-align: right;
+    }
+
+}
+
+.listing  {
+    width: 100%;
+    padding: 20px 0;
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+        thead  {
+            tr  {
+                th {
+                    padding: 6px ;
+                    border-top: 3px solid #000000;
+                    border-bottom: 3px solid #000000;
+                }
+            }
+        }
+        tbody  {
+            tr  {
+                td  {
+                    border-bottom: 1px dotted #999999;
+                    padding: 12px;
+                }
+                &:last-child > td {
+                    border-bottom: 3px solid #000000;
+                }
+            }
+        }
+    }
+}
+
+.comments  {
+    padding: 20px 0;
 }

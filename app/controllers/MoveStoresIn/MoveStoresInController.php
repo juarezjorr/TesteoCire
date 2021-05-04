@@ -133,6 +133,14 @@ class MoveStoresInController extends Controller
         echo $res;
     } 
 
+// Obtiene el folio del movimiento
+	public function NextExchange($request_params)
+	{
+		$params =  $this->session->get('user');
+		$result = $this->model->NextExchange();
+		$res = $result;
+        echo $res;
+	} 
 
 // Registra los movimientos entre almacenes
     public function SaveExchange($request_params)

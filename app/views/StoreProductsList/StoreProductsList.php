@@ -45,6 +45,42 @@
 
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+                            <input id="txtStartDate" type="text" class="form-control form-control-sm" placeholder="Fecha Salida">
+                            <label for="txtStartDate" >Fecha Salida</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+                            <input id="txtProjectNum" type="text" class="form-control form-control-sm"  data-mesage="Debes agregar el numero de proyecto" >
+                            <label for="txtProjectNum">No. proyecto</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+                            <input id="txtProjectName" type="text" class="form-control form-control-sm"  data-mesage="Debes agregar el nombre del proyecto" >
+                            <label for="txtProjectName">Proyecto</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+                            <input id="txtVersion" type="text" class="form-control form-control-sm"  data-mesage="Debes agregar la version del producto" >
+                            <label for="txtVersion">Versión Doc.</label>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+                            <input id="txtFreelance" type="text" class="form-control form-control-sm"  data-mesage="Debes agregar el nombre del freelance" >
+                            <label for="txtFreelance">Freelance</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
                             <textarea class="form-control form-control-sm" id="txtComments" style="height: 120px" rows="3"></textarea>
                             <label for="txtComments">Notas</label>
                         </div>
@@ -54,55 +90,22 @@
             </div>
 
 
-            <div class="mb-3 mvst_table">
+            <div class="mb-3 mvst_table" style="text-align:left">
 
-                <h1>Productos de almacenén</h1>
-
-				<div class="row">
-
-                    <div class="col-md-3 col-lg-3 col-xl-3 mb-2 form-floating">
-                        <input id="numProyect" type="number" class="form-control form-control-sm text-center number required" >
-                        <label for="numProyect">No. Proyecto</label>
-                    </div>
-
-                    <div class="col-md-4 col-lg-4 col-xl-4 mb-2 form-floating">
-                        <input id="nameProyect" type="text" class="form-control form-control-sm text-center number required"  >
-                        <label for="nameProyect">Nombre Proyecto</label>
-                    </div>
-
-                    <div class="col-md-2 col-lg-2 col-xl-2 mb-2 form-floating">
-                        <input id="departureDate" type="date" class="form-control form-control-sm text-center number required"  >
-                        <label for="departureDate">Fecha Salida</label>
-                    </div>
-
-                    <div class="col-md-2 col-lg-2 col-xl-2 mb-2 form-floating">
-                        <input id="versionDoc" type="text" class="form-control form-control-sm text-center number required"  >
-                        <label for="versionDoc">Versión Doc.</label>
-                    </div>
-
-                    <div class="col-md-3 col-lg-3 col-xl-3 mb-2 form-floating">
-                        <input id="nameFreelance" type="text" class="form-control form-control-sm text-center number required"  >
-                        <label for="nameFreelance">Nombre Freelance</label>
-                    </div>
-
-                </div>
+                <h1>Productos de almacén</h1>
 
                 <table class="display compact nowrap"  id="tblExchanges">
 				
                     <thead>
                         <tr>
-                            <th style="width:  80px"></th>
+                            <th style="width:  30px"></th>
                             <th style="width:  80px">SKU</th>
                             <th style="width: 350px">Nombre</th>
                             <th style="width:  60px">No. Serie</th>
-                            <th style="width: 100px">Notas</th>
-                          
+                            <th style="width: 300px">Notas</th>
                         </tr>
                     </thead>
-                    <tbody>	
-
-                    </tbody>
-    
+                    <tbody></tbody>
                 </table>
             </div>
 

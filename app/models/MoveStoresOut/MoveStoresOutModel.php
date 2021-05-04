@@ -44,10 +44,19 @@ class MoveStoresOutModel extends Model
 	}
 
 
+// Registra los movimientos entre almacenes
+	public function NextExchange()
+	{
+		$qry = "INSERT INTO ctt_counter_exchange (con_status) VALUES ('1');	";
+		$this->db->query($qry);
+		return $this->db->insert_id;
+	}
 
 // Registra los movimientos entre almacenes
 	public function SaveExchange($param, $user)
 	{
+
+
 		$employee_data = explode("|",$user);
 		$exc_sku_product 	= $this->db->real_escape_string($param['sku']);
 		$exc_product_name 	= $this->db->real_escape_string($param['pnm']);
@@ -59,14 +68,15 @@ class MoveStoresOutModel extends Model
 		$exc_employee_name	= $this->db->real_escape_string($employee_data[2]);
 		$ext_code			= $this->db->real_escape_string($param['cod']);
 		$ext_id				= $this->db->real_escape_string($param['idx']);
-		$exc_guid			= $this->db->real_escape_string($param['fol']);
+		$folio				= $this->db->real_escape_string($param['fol']);
 
 		$qry = "INSERT INTO ctt_stores_exchange
-				(exc_guid, exc_sku_product, exc_product_name, exc_quantity, exc_serie_product, exc_store, exc_comments, exc_proyect, exc_employee_name, ext_code, ext_id)
+				(exc_sku_product, exc_product_name, exc_quantity, exc_serie_product, exc_store, exc_comments, exc_proyect, exc_employee_name, ext_code, ext_id, con_id)
 				VALUES
-				('$exc_guid', '$exc_sku_product', '$exc_product_name', $exc_quantity, '$exc_serie_product', '$exc_store', '$exc_comments', '$exc_proyect', '$exc_employee_name', '$ext_code', $ext_id);
+				('$exc_sku_product', '$exc_product_name', $exc_quantity, '$exc_serie_product', '$exc_store', '$exc_comments', '$exc_proyect', '$exc_employee_name', '$ext_code', $ext_id, $folio);
 				";
-		return $this->db->query($qry);
+		$this->db->query($qry);
+		return $folio;
 	}
 
 // Registra los movimientos entre almacenes origen

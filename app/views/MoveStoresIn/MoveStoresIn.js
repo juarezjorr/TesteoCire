@@ -5,7 +5,7 @@ let = pr = [];
 let = link = '';
 
 $(document).ready(function () {
-    folio = getFolio();
+    // folio = getFolio();
     verifica_usuario();
     inicial();
 });
@@ -430,46 +430,60 @@ function update_array_products(id, sr) {
 }
 
 function read_exchange_table() {
-    $('#tblExchanges tbody tr').each(function (v, u) {
-        // let folio = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
-        let seriesku = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[3];
-        let prodname = $($(u).find('td')[2]).text();
-        let quantity = $($(u).find('td')[3]).text();
-        let serienum = $($(u).find('td')[5]).text();
-        let storname = $($(u).find('td')[7]).text();
-        let comments = $($(u).find('td')[8]).text();
-        let codeexch = $($(u).find('td')[6]).text();
-        let sericost = $($(u).find('td')[4]).text();
-        let typeexch = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[1];
-        let producid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
-        let storesid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[2];
-        let sericoin = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[4];
-        let suppliid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[5];
-        let docinvoi = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[6];
+    if (folio == undefined) {
+        var pagina = 'MoveStoresIn/NextExchange';
+        var par = '[{"par":""}]';
+        var tipo = 'html';
+        var selector = putNextExchangeNumber;
+        fillField(pagina, par, tipo, selector);
+    } else {
+        $('#tblExchanges tbody tr').each(function (v, u) {
+            // let folio = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
+            let seriesku = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[3];
+            let prodname = $($(u).find('td')[2]).text();
+            let quantity = $($(u).find('td')[3]).text();
+            let serienum = $($(u).find('td')[5]).text();
+            let storname = $($(u).find('td')[7]).text();
+            let comments = $($(u).find('td')[8]).text();
+            let codeexch = $($(u).find('td')[6]).text();
+            let sericost = $($(u).find('td')[4]).text();
+            let typeexch = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[1];
+            let producid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
+            let storesid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[2];
+            let sericoin = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[4];
+            let suppliid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[5];
+            let docinvoi = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[6];
 
-        let truk = `${folio}|${seriesku}|${prodname}|${quantity}|${serienum}|${storname}|${comments}|${codeexch}|${typeexch}|${producid}|${storesid}|${sericost}|${sericoin}|${suppliid}|${docinvoi}`;
+            let truk = `${folio}|${seriesku}|${prodname}|${quantity}|${serienum}|${storname}|${comments}|${codeexch}|${typeexch}|${producid}|${storesid}|${sericost}|${sericoin}|${suppliid}|${docinvoi}`;
 
-        /**
-         *  0 - fol    folio          mov exc_guid
-         *  1 - sku    seriesku       mov exc_sku_product      ser ser_sku
-         *  2 - pnm    prodname       mov exc_product_name
-         *  3 - qty    quantity       mov exc_quantity                                   str stp_quantity
-         *  4 - ser    serienum       mov exc_serie_product    ser ser_serial_number
-         *  5 - str    storname       mov exc_store
-         *  6 - com    comments       mov exc_comments
-         *  7 - cod    codeexch       mov ext_code
-         *  8 - idx    typeexch       mov ext_id
-         *  9 - prd    producid                                ser prd_id                                    doc prd_id
-         * 10 - sti    storesid                                                          str str_id
-         * 11 - cos    sericost                                ser ser_cost
-         * 12 - cin    sericoin       mov cin_id               ser cin_id
-         * 13 - sup    suppliid                                ser sup_id
-         * 14 - doc    docinvoi                                                                              doc doc_id
-         */
+            /**
+             *  0 - fol    folio          mov exc_guid
+             *  1 - sku    seriesku       mov exc_sku_product      ser ser_sku
+             *  2 - pnm    prodname       mov exc_product_name
+             *  3 - qty    quantity       mov exc_quantity                                   str stp_quantity
+             *  4 - ser    serienum       mov exc_serie_product    ser ser_serial_number
+             *  5 - str    storname       mov exc_store
+             *  6 - com    comments       mov exc_comments
+             *  7 - cod    codeexch       mov ext_code
+             *  8 - idx    typeexch       mov ext_id
+             *  9 - prd    producid                                ser prd_id                                    doc prd_id
+             * 10 - sti    storesid                                                          str str_id
+             * 11 - cos    sericost                                ser ser_cost
+             * 12 - cin    sericoin       mov cin_id               ser cin_id
+             * 13 - sup    suppliid                                ser sup_id
+             * 14 - doc    docinvoi                                                                              doc doc_id
+             */
 
-        console.log(truk);
-        build_data_structure(truk);
-    });
+            console.log(truk);
+            build_data_structure(truk);
+        });
+    }
+}
+
+function putNextExchangeNumber(dt) {
+    console.log(dt);
+    folio = dt;
+    read_exchange_table();
 }
 
 function build_data_structure(pr) {
@@ -529,7 +543,7 @@ function update_store(ap) {
 }
 
 function exchange_result(dt) {
-    $('.resFolio').text(folio);
+    $('.resFolio').text(refil(folio, 7));
     $('#MoveFolioModal').modal('show');
     $('#btnHideModal').on('click', function () {
         window.location = 'MoveStoresIn';
@@ -539,7 +553,7 @@ function exchange_result(dt) {
 function updated_stores(dt) {
     // console.log(dt);
 
-    $('.resFolio').text(folio);
+    $('.resFolio').text(refil(folio, 7));
     $('#MoveFolioModal').modal('show');
     $('#btnHideModal').on('click', function () {
         window.location = 'MoveStoresIn';
