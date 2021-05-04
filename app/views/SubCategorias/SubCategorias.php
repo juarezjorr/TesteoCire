@@ -72,8 +72,8 @@
 													<th style="width: 20px" hidden>Id</th>
 													<th style="width: 20px">Codigo</th>
 													<th style="width: 300px">Nombre</th>
-													<th style="width: 300px">Catalagos</th>
-													<th style="width: 300px">Codigo Catalogo</th>
+													<th style="width: 300px">Catálogos</th>
+													<th style="width: 300px">Codigo Catálogo</th>
 
 											</tr>
 										</thead>

@@ -201,7 +201,7 @@ function getCategorias(id) {
       data: {id: id},
       url: location,
       success: function (respuesta) {
-         var renglon = "<option id='0'  value=''>Seleccione un Catalago...</option> ";
+         var renglon = "<option id='0'  value=''>Seleccione...</option> ";
          respuesta.forEach(function (row, index) {
             renglon += '<option id=' + row.cat_id + '  value="' + row.cat_id + '">' + row.cat_name + '</option> ';
          });

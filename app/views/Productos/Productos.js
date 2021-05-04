@@ -474,9 +474,17 @@ function getProductosTable() {
                     '<td >' +
                     row.prd_price +
                     '</td>' +
-                    '<td >' +
-                    row.prd_comments +
+
+
+                    "<td class='quantity'>" +
+                    '<span onclick=skuByID(' +
+                    row.prd_id +
+                    ')>' +
+                    row.extNum +
+                    '</span>' +
                     '</td>' +
+
+
                     '<td >' +
                     row.srv_name +
                     '</td>' +
@@ -486,13 +494,15 @@ function getProductosTable() {
                     '<td >' +
                     row.sbc_name +
                     '</td>' +
-                    "<td class='quantity'>" +
-                    '<span onclick=skuByID(' +
-                    row.prd_id +
-                    ')>' +
-                    row.extNum +
-                    '</span>' +
+
+
+
+                    '<td >' +
+                    row.prd_comments +
                     '</td>' +
+
+
+
                     +'</tr>';
                 $('#tablaProductosRow').append(renglon);
             });

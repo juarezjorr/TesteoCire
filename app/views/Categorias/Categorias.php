@@ -23,7 +23,7 @@
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="NomCategoria" name="NomCategoria" type="text" class="form-control form-control-sm" required >
-									<label for="NomCategoria">Nombre Catalogo</label>
+									<label for="NomCategoria">Nombre Catálogo</label>
 								</div>
 							</div>
 
@@ -51,7 +51,7 @@
 
 				<!-- Start área de listado -->
 				<div class="mb-3 mvst_table">
-					<h1>Catalagos</h1>
+					<h1>Catálogos</h1>
 
 					<div class="row">
 						<div class="col-12 col-md-12">		
