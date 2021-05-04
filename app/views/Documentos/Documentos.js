@@ -233,9 +233,9 @@ function VerDocumento(id) {
             var a = document.createElement('a');
             a.href= "data:application/octet-stream;base64,"+respuesta.doc_document;
             a.target = '_blank';
-            a.download = respuesta.doc_name;
+           // a.download = respuesta.doc_name;
 
-            //a.download = respuesta.doc_name + "."+ respuesta.doc_type.trim();
+            a.download = respuesta.doc_name + "."+ respuesta.doc_type.trim();
             a.click();
         },
         error: function (jqXHR, textStatus, errorThrown){
