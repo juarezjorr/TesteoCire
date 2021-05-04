@@ -879,9 +879,7 @@ function skuByID(idProduct) {
                     '<td >' +
                     row.ser_date_registry +
                     '</td>' +
-                    '<td >' +
-                    row.ser_lonely_name +
-                    '</td>' +
+
                     '<td >' +
                     row.ser_behaviour_name +
                     '</td>' +

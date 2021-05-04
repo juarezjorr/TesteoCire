@@ -445,7 +445,6 @@ class ProductosModel extends Model
 	public function GetSkuById($params)
 	{
 		$qry = 'SELECT ser_id , ser_sku, ser_serial_number, ser_cost, ser_date_registry, 
-		IF(ser_lonely = 1, "SI", "NO") AS ser_lonely_name , ser_lonely,
 		IF(ser_behaviour = "C", "COMPRA", "RENTA") AS ser_behaviour_name, ser_behaviour 
 		FROM ctt_series WHERE ser_status = 1 and prd_id = '.$params['id'].';';
 
@@ -459,10 +458,8 @@ class ProductosModel extends Model
 						"ser_serial_number" =>$row[2],
                         "ser_cost" =>$row[3],
 						"ser_date_registry" =>$row[4],
-						"ser_lonely_name" =>$row[5],
-                        "ser_lonely" =>$row[6],
-						"ser_behaviour_name" =>$row[7],
-                        "ser_behaviour" =>$row[8]);
+						"ser_behaviour_name" =>$row[5],
+                        "ser_behaviour" =>$row[6]);
 			array_push($lista, $item);
 		}
 		return $lista;

@@ -274,7 +274,6 @@
 								<th style="width: 400">Numero Serie</th>
 								<th style="width: 300">Costo</th>
 								<th style="width: 100">Fecha Registro</th>
-								<th style="width: 100">Renta Sin Accesorio</th>
 								<th style="width: 100">Uso</th>
 
 							</tr>
