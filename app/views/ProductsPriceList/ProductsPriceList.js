@@ -108,7 +108,7 @@ function putProducts(dt) {
     });
 
     $('.fa-eye')
-        .bind('click')
+        .unbind('click')
         .on('click', function () {
             let prodId = $(this).attr('id');
             let prdSku = $(this).attr('data-content').split('|')[0];

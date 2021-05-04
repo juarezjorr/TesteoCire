@@ -117,7 +117,6 @@
     </div>
 </div>
 
-
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
 <script src="<?=  PATH_VIEWS . 'StoreProductsList/StoreProductsList.js' ?>"></script>
 
