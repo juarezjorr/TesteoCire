@@ -321,19 +321,27 @@ function packages_edit() {
     let prdName = $('#txtPackageName').val();
     let prdPrice = $('#txtPackagePrice').val();
 
-    // console.log(`
-    // prdId:          ${prdId}
-    // prdName:        ${prdName}
-    // prdPrice:       ${prdPrice}
-    //     `);
+    let par = `
+        [{
+            "prdId"    : "${prdId}",
+            "prdName"  : "${prdName}",
+            "prdPrice" : "${prdPrice}"
+        }]
+    `;
+
+    $(`#tblPackages_wrapper #${prdId} .product-name`).html(prdName);
+    $(`#tblPackages_wrapper #${prdId} .price`).html(prdPrice);
 
     active_params();
 
-    // var pagina = 'Packages/lastIdSubcategory';
-    // var par = `[{"sbcId":"${sbcId}"}]`;
-    // var tipo = 'json';
-    // var selector = putIdSubcategory;
-    // fillField(pagina, par, tipo, selector);
+    let pagina = 'Packages/updatePackage';
+    let tipo = 'html';
+    let selector = putPackageEdit;
+    fillField(pagina, par, tipo, selector);
+}
+
+function putPackageEdit(dt) {
+    // console.log(dt);
 }
 
 function active_params() {
@@ -410,7 +418,6 @@ function action_selected_packages() {
             let selected = $(this).parent().attr('class').indexOf('selected');
             if (selected < 0) {
                 let prdId = $(this).parent().attr('id');
-                console.log(prdId);
                 select_products(prdId);
 
                 $('#txtCategoryProduct').val(0);

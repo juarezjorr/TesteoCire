@@ -104,7 +104,7 @@ public function NextExchange()
                     ser_sku, ser_serial_number, ser_cost, ser_status, ser_situation, ser_stage, 
                     ser_behaviour, prd_id, sup_id, cin_id
                 ) VALUES (
-                    '$exc_sku_product', '$exc_serie_product', '$ser_cost', '$ser_status', '$ser_situation', '$ser_stage', '$ser_lonely', '$ser_behaviour', '$prd_id', '$sup_id', '$cin_id');";
+                    '$exc_sku_product', '$exc_serie_product', '$ser_cost', '$ser_status', '$ser_situation', '$ser_stage', '$ser_behaviour', '$prd_id', '$sup_id', '$cin_id');";
 
         $this->db->query($qry1);
         $serId = $this->db->insert_id;
@@ -124,7 +124,7 @@ public function NextExchange()
 		$qry4 = "INSERT INTO ctt_products_documents (prd_id, doc_id) VALUES ($prd_id, $doc_id);";
         $this->db->query($qry4);
 
-        return $exc_guid ;
+        return $con_id ;
 
     }
 

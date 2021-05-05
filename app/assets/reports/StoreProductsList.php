@@ -4,120 +4,91 @@
 
 
 
-function getTemplate(){
+function getTemplate($getFile){
    
+    $numProject = '';
+    $nameProject = '';
+    $version = '';
+    $freelance = '';
+    $date = '';
+
+    $dato = explode('@', $getFile);
+    //  var_dump(  $dato1 );
+  
+          foreach ($dato as $dt){
+              echo $dt . '<br>';
+              $el = explode('|', $dt);
+
+              $numProject = $el[1];
+              $nameProject = $el[2];
+              $version = $el[4];
+              $freelance = $el[5];
+              $date = $el[3];
+  
+          }
 
     $template = '
 
-    <body>
-
-        <div class="cornisa">
-            <div class="box-logo">
-                <div class="logo">
-                    <img class="img-logo" src="../../assets/img/logo-blanco.jpg" style="height:150px; width:auto;">
+        <section class="secc-inicial">
+                <div class="concepts">
+                    <div class="table">
+                        <table>
+                            <tr>
+                                <td class="concept">Num. proyecto:</td>
+                                <td class="data">'. $numProject .'</td>
+                            </tr>
+                            <tr>
+                                <td class="concept">Proyecto:</td>
+                                <td class="data">'. $nameProject .'</td>
+                            </tr>
+                            <tr>
+                                <td class="concept">Version:</td>
+                                <td class="data">'. $version .'</td>
+                            </tr>
+                            <tr>
+                                <td class="concept">Freelance:</td>
+                                <td class="data">'. $freelance .'</td>
+                            </tr>
+                        </table>
                 </div>
-            </div>
-            <div class="address">
-                <table>
-                    <tr>
-                        <td class="addData">55 5676-1113<br />55 5676-1483</td>
-                        <td class="addIcon addColor01"></td>
-                    </tr>
-                    <tr>
-                        <td class="addData">Av Guadalupe I. Ramírez 763,<br />Tepepan Xochimilco, 16020, CDMX</td>
-                        <td class="addIcon addColor02"></td>
-                    </tr>
-                    <tr>
-                        <td class="addData">ventas@cttrentals.com<br />contacto@cttretnals.com<br />cotizaciones@cttrentals.com</td>
-                        <td class="addIcon addColor03"></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+                <div class="datecreate">
+                    '.$date.'
+                </div>
+                </div>
 
-        <div class="concepts">
-            <div class="table">
+                <div class="listing">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>SERIE</th>
+                                <th>NOTAS</th>
+                            </tr>
+                        </thead>
+                        <TBody>';
+
+                        $sof = 0;
+
+                        foreach ($dato as $dt){
+                            $el = explode('|', $dt);
+                                $template .= '
+                                <tr>
+                                    <td style="width: 90px">'.$el[6].'</td>
+                                    <td style="width: 380px">'.$el[7].'</td>
+                                    <td style="width: 90px">'.$el[8].'</td>
+                                    <td>'.$el[9].'</td>
+                                </tr>';
+                        }
 
                 
-                <table>
-                    <tr>
-                        <td class="concept">Num. proyecto:</td>
-                        <td class="data">12345</td>
-                    </tr>
-                    <tr>
-                        <td class="concept">Proyecto:</td>
-                        <td class="data">Proyecto</td>
-                    </tr>
-                    <tr>
-                        <td class="concept">Version:</td>
-                        <td class="data">5.3</td>
-                    </tr>
-                    <tr>
-                        <td class="concept">Freelance:</td>
-                        <td class="data">Jorge Juarez Rangel</td>
-                    </tr>
-                </table>
-        </div>
-        <div class="datecreate">
-            3 de mayo de 2021
-        </div>
-        </div>
+                            $template .= '
+                        </TBody>
+                    </table>
+                </div>
 
-        <div class="listing">
-            <table>
-                <thead>
-                    <tr>
-                        <th>SKU</th>
-                        <th>DESCRIPCIÓN</th>
-                        <th>SERIE</th>
-                        <th>ALMACEN</th>
-                    </tr>
-                </thead>
-                <TBody>
-                    <tr>
-                        <td>010A008003</td>
-                        <td>ARRI ALEXA MINI 16:9/4:3/ ARRI RAW/ OPEN GATE</td>
-                        <td>20883</td>
-                        <td>ILUMINACION</td>
-                    </tr>
-                    <tr>
-                        <td>010A008004</td>
-                        <td>ARRI ALEXA MINI 16:9/4:3/ ARRI RAW/ OPEN GATE</td>
-                        <td>20884</td>
-                        <td>ILUMNINACION</td>
-                    </tr>
-                    <tr>
-                        <td>010A008004</td>
-                        <td>ARRI ALEXA MINI 16:9/4:3/ ARRI RAW/ OPEN GATE</td>
-                        <td>20884</td>
-                        <td>ILUMNINACION</td>
-                    </tr>
-                    <tr>
-                        <td>010A008004</td>
-                        <td>ARRI ALEXA MINI 16:9/4:3/ ARRI RAW/ OPEN GATE</td>
-                        <td>20884</td>
-                        <td>ILUMNINACION</td>
-                    </tr>
-                    <tr>
-                        <td>010A008004</td>
-                        <td>ARRI ALEXA MINI 16:9/4:3/ ARRI RAW/ OPEN GATE</td>
-                        <td>20884</td>
-                        <td>ILUMNINACION</td>
-                    </tr>
-                    <tr>
-                        <td>010A008004</td>
-                        <td>ARRI ALEXA MINI 16:9/4:3/ ARRI RAW/ OPEN GATE</td>
-                        <td>20884</td>
-                        <td>ILUMNINACION</td>
-                    </tr>
-                </TBody>
-            </table>
-        </div>
-
-        <div class="comments">
-            Aqui van los comentarios
-        </div>
-    </body>';
+        </section>
+';
 
     return $template;
 }

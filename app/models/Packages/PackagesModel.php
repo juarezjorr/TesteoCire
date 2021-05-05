@@ -154,4 +154,17 @@ public function listProductsPack($params)
 
         return $prd_id;
     }    
+
+// Borra el producto del paquete
+    public function updatePackage($param)
+    {
+        $prd_id             = $this->db->real_escape_string($param['prdId']);
+        $prd_name           = $this->db->real_escape_string($param['prdName']);
+        $prd_price          = $this->db->real_escape_string($param['prdPrice']);
+
+        $qry =  "UPDATE ctt_products SET prd_name = '$prd_name', prd_price = '$prd_price' WHERE prd_id = '$prd_id';" ;
+        
+        return $this->db->query($qry);
+
+    }        
 }

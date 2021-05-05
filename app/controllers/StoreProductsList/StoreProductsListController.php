@@ -106,13 +106,21 @@ class StoreProductsListController extends Controller
     public function saveList($request_params)
     {
         $params = $this->session->get('user');
-        $cadena = $request_params['cadena'];
+        $par = $request_params['par'];
+
+        // $gp = explode("@",$request_params['par']);
+
+        // foreach ($gp as $el){
+        //     echo $el . '<br>';
+        // }
+        
 
         $dir = ROOT . PATH_ASSETS . 'filesupport/listProducts.txt';
 
-         $fileJson = fopen( $dir ,"w") or die("problema al escribir el archivo ");
-         fwrite($fileJson, $cadena);
-         fclose($fileJson);
+        $fileJson = fopen( $dir ,"w") or die("problema al escribir el archivo ");
+        fwrite($fileJson, $par);
+        fclose($fileJson);
+
     } 
 
 }

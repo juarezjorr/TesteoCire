@@ -219,9 +219,6 @@ function fill_table(par) {
     $('.edit')
         .unbind('click')
         .on('click', function () {
-            let qty = parseInt($(this).parent().children('td.quantity').text()) * -1;
-            let pid = $(this).parent().children('td.sku').children('span.hide-support').text().split('|')[4];
-            update_array_products(pid, qty);
             tabla.row($(this).parent('tr')).remove().draw();
             btn_apply_appears();
         });
@@ -268,8 +265,7 @@ function read_exchange_table() {
 }
 
 function build_data_structure(pr) {
-    pa = `[{"cadena":"${pr}"}]`;
-
+    let pa = `[{"par":"${pr}"}]`;
     var pagina = 'StoreProductsList/saveList';
     var par = pa;
     var tipo = 'html';
@@ -278,7 +274,5 @@ function build_data_structure(pr) {
 }
 
 function putSaveList(dt) {
-    console.log(dt);
-
     window.open('app/views/StoreProductsList/rpt_StoreProducts.php', '_blank');
 }

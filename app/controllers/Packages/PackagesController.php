@@ -183,12 +183,24 @@ class PackagesController extends Controller
 
 
 // Obtiene detalle del paquete
-public function deleteProduct($request_params)
-{
-    $params =  $this->session->get('user');
-    $result = $this->model->deleteProduct($request_params);
-    $res = $result;
-    echo $res;
-}
+    public function deleteProduct($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->deleteProduct($request_params);
+        $res = $result;
+        echo $res;
+    }
+
+
+
+    
+// Actualiza los datos del paquete
+    public function updatePackage($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->updatePackage($request_params);
+        $res = $result;
+        echo $res;
+    }
 
 }
