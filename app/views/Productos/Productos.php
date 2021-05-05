@@ -266,7 +266,7 @@
 			</div>
 		</div>
 
-			<table id="SKUTable" class="display compact nowrap" >         
+			<table id="SKUTable" class="display compact nowrap"  style="width:100%">         
 						<thead>
 							<tr>
 								<th style="width: 30" hidden></th>

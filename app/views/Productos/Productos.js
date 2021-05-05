@@ -347,8 +347,9 @@ function getSubCategorias(id, idCategoria) {
         data: {id: id, idCategoria: idCategoria},
         url: location,
         success: function (respuesta) {
+            console.log(respuesta);
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
-            if (respuesta[0].cat_id != 0) {
+            if (respuesta[0].sbc_id != 0) {
                 respuesta.forEach(function (row, index) {
                     renglon += '<option id=' + row.sbc_id + '  value="">' + row.sbc_name + '</option> ';
                 });
@@ -477,9 +478,7 @@ function getProductosTable() {
 
 
                     "<td class='quantity'>" +
-                    '<span onclick=skuByID(' +
-                    row.prd_id +
-                    ')>' +
+                    '<span onclick=skuByID('+row.prd_id +','+row.extNum+')>' +
                     row.extNum +
                     '</span>' +
                     '</td>' +
@@ -840,7 +839,12 @@ function DeletSKU(idSku) {
     }).done(function () {});
 }
 
-function skuByID(idProduct) {
+function skuByID(idProduct,cantidad) {
+    if (cantidad != 0){
+
+
+   
+    
     UnSelectRowTable();
     $('#collapseExample').collapse('hide');
     $('#SKUTable').DataTable().destroy();
@@ -922,21 +926,7 @@ function skuByID(idProduct) {
                         filename: filename,
                         text: '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
                     },
-/*                     {
-                        text: 'Borrar seleccionados',
-                        className: 'btn-apply',
-                        action: function () {
-                            var selected = table2.rows({selected: true}).data();
-                            var idSelected = '';
-                            selected.each(function (index) {
-                                idSelected += index[1] + ',';
-                            });
-                            idSelected = idSelected.slice(0, -1);
-                            if (idSelected != '') {
-                                ConfirmDeletProducto(idSelected);
-                            }
-                        },
-                    }, */
+
                 ],
                 scrollY: 'calc(100vh - 260px)',
                 scrollX: true,
@@ -962,6 +952,9 @@ function skuByID(idProduct) {
             console.log(jqXHR, textStatus, errorThrown);
         },
     }).done(function () {});
+
+}
+
 }
 
 function SaveSku() {
