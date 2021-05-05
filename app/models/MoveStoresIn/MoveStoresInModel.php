@@ -34,7 +34,7 @@ class MoveStoresInModel extends Model
 // Listado de proveedores
     public function listSuppliers()
     {
-        $qry = "  SELECT * FROM ctt_suppliers WHERE sup_status = 1 AND sut_id IN (3);";
+        $qry = "  SELECT * FROM ctt_suppliers WHERE sup_status = 1 AND sut_id NOT IN (3);";
         return $this->db->query($qry);
     }
 
@@ -96,12 +96,13 @@ public function NextExchange()
         $ser_status         = '1';
         $ser_situation      = 'D';
         $ser_stage          = 'D';
-        $ser_lonely         = '1';
+        // $ser_lonely         = '1';
         $ser_behaviour      = 'C';
 
         
 		$qry1 = "INSERT INTO ctt_series (
-                    ser_sku, ser_serial_number, ser_cost, ser_status, ser_situation, ser_stage, ser_lonely, ser_behaviour, prd_id, sup_id, cin_id
+                    ser_sku, ser_serial_number, ser_cost, ser_status, ser_situation, ser_stage, 
+                    ser_behaviour, prd_id, sup_id, cin_id
                 ) VALUES (
                     '$exc_sku_product', '$exc_serie_product', '$ser_cost', '$ser_status', '$ser_situation', '$ser_stage', '$ser_lonely', '$ser_behaviour', '$prd_id', '$sup_id', '$cin_id');";
 

@@ -261,42 +261,24 @@ function read_exchange_table() {
         let serinum = $($(u).find('td')[3]).text();
         let comment = $($(u).find('td')[4]).text();
 
-        chain += `${stornam}|${projnum}|${projnam}|${datestr}|${version}|${freelnc}|${prodsku}|${prodnam}|${serinum}|${comment}&`;
+        chain += `${stornam}|${projnum}|${projnam}|${datestr}|${version}|${freelnc}|${prodsku}|${prodnam}|${serinum}|${comment}@`;
     });
     chain = chain.substring(0, chain.length - 1);
     build_data_structure(chain);
 }
 
 function build_data_structure(pr) {
-    let grp = pr.split('&');
+    pa = `[{"cadena":"${pr}"}]`;
 
-    let par = '[';
-    for (var i = 0; i < grp.length; i++) {
-        let el = grp[i].split('|');
-        par += `
-        {
-            "str" :  "${el[0]}",
-            "pyn" :  "${el[1]}",
-            "pyo" :  "${el[2]}",
-            "dat" :  "${el[3]}",
-            "ver" :  "${el[4]}",
-            "fre" :  "${el[5]}",
-            "sku" :  "${el[6]}",
-            "pnm" :  "${el[7]}",
-            "ser" :  "${el[8]}",
-            "com" :  "${el[9]}"
-        },`;
-    }
-    par = par.substring(0, par.length - 1);
-    par += ']';
-    // par = JSON.parse(par);
-
-    var pagina = 'StoreProductsList/printList';
+    var pagina = 'StoreProductsList/saveList';
+    var par = pa;
     var tipo = 'html';
-    var selector = putPrintList;
+    var selector = putSaveList;
     fillField(pagina, par, tipo, selector);
 }
 
-function putPrintList(dt) {
+function putSaveList(dt) {
     console.log(dt);
+
+    window.open('app/views/StoreProductsList/rpt_StoreProducts.php', '_blank');
 }
