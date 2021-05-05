@@ -596,7 +596,7 @@ function getTipoMoneda(id) {
         success: function (respuesta) {
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function (row, index) {
-                renglon += '<option id=' + row.ext_id + '  value="' + row.ext_id + '">' + row.ext_name + '</option> ';
+                renglon += '<option id=' + row.cin_id + '  value="' + row.cin_id + '">' + row.cin_name + '</option> ';
             });
             $('#selectMonedaProducto').append(renglon);
             if (id != undefined) {

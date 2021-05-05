@@ -384,14 +384,13 @@ class ProductosModel extends Model
 
 	public function GetTipoMoneda()
 	{
-		$qry = "SELECT ext_id, ext_name, ext_descripcion FROM ctt_exchange_currency WHERE ext_status = 1
-		;";
+		$qry = "SELECT cin_id,cin_code, cin_name FROM ctt_coins WHERE cin_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
-			$item = array("ext_id" =>$row[0],
-						"ext_name" =>$row[1],
-                        "ext_descripcion" =>$row[2]);
+			$item = array("cin_id" =>$row[0],
+						"cin_code" =>$row[1],
+                        "cin_name" =>$row[2]);
 			array_push($lista, $item);
 		}
 		return $lista;
