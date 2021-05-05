@@ -37,11 +37,13 @@
                             </div>
                         </div>
 
-                        <h4>Seleccion de productos</h4>
 
-                        <div class="row list-finder">
+                        <div id="selectAccesorios" style="visibility: hidden;">
+                        <h4>Seleccion de Accesorios</h4>
+
+                        <div class="row list-finder"  >
                             <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-                                <div class="box-items-list" id="boxProducts">Productos
+                                <div class="box-items-list" id="boxProducts">Accesorios
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </div>
@@ -49,6 +51,7 @@
                                 <div class="list-items" id="listProducts"></div>
                             </div>
                             
+                        </div>
                         </div>
 
 
@@ -104,8 +107,7 @@
                                 <tr>
                                     <th style="width:  30px"></th>
                                     <th style="width:  80px">SKU</th>
-                                    <th style="width: auto">Producto</th>
-                                    <th style="width: 90px">Precio</th>
+                                    <th style="width: auto">Accesorio</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

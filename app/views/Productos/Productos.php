@@ -152,12 +152,12 @@
 													<th style="width: auto">SKU</th>
 													<th style="width: auto">Nombre</th>
 													<th style="width: auto">Nombre ingles</th>
-									                <th style="width: auto">Price</th>
+									                <th style="width: auto">Precio</th>
 													<th style="width: auto">Existencias</th>
 													<th style="width: auto">Servicio</th>
-													<th style="width: auto">Catalago</th>
+													<th style="width: auto">Catálogo</th>
 													<th style="width: auto">Subcategoria</th>
-													<th style="width: auto">Descripcion Segun Proveedor</th>
+													<th style="width: auto">Descripción Segun Proveedor</th>
 
 											</tr>
 										</thead>
@@ -266,7 +266,7 @@
 			</div>
 		</div>
 
-			<table id="SKUTable" class="display compact nowrap" >         
+			<table id="SKUTable" class="display compact nowrap"  style="width:100%">         
 						<thead>
 							<tr>
 								<th style="width: 30" hidden></th>

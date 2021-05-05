@@ -50,9 +50,9 @@ public function listProducts()
 }
 
 // Listado de productos
-public function listProductsById($params)
+public function listProductsById($sbc_id)
 {
-    $sbc_id = $this->db->real_escape_string($param['sbc_id']);
+    //$sbc_id = $this->db->real_escape_string($param['sbc_id']);
     
     $qry = "SELECT prd_id, prd_sku, prd_name, prd_price, sbc_id 
             FROM ctt_products 
@@ -71,12 +71,51 @@ public function listProductsPack($params)
     return $this->db->query($qry);
 }
 
-// Listado de accesorios
-public function listAccesorios($params)
+// Listado de accesorios por id
+public function getAccesoriesById($params)
 {
-    $prdId = $this->db->real_escape_string($params);
-    $qry = "SELECT prd_id, prd_name FROM ctt_products WHERE prd_level = 'A';";
+    $prdId = $this->db->real_escape_string($params['prdId']);
+            $qry = "SELECT prd.prd_id , prd.prd_sku, prd_name FROM ctt_accesories as acc
+            INNER JOIN ctt_products AS prd on prd.prd_id = acc.prd_id
+            WHERE acc.acr_parent = ".$prdId." and acc.acr_status = 1;";
     return $this->db->query($qry);
+}
+
+// Listado de accesorios
+public function listAccesorios()
+{
+    //$prdId = $this->db->real_escape_string($params);
+    $qry = "SELECT prd_id, prd_name, prd_sku FROM ctt_products WHERE prd_level = 'A';";
+    return $this->db->query($qry);
+}
+
+
+// Registra el paquete o kit en la tabla de productos
+public function saveAccesorioByProducto($param)
+{
+    $prd_id                     = $this->db->real_escape_string($param['prdId']);
+    $prd_parent_id              = $this->db->real_escape_string($param['parentId']);
+
+    $countId = 1;
+
+    //validamos que no exista previamente
+    $qry = "SELECT COUNT(*) FROM ctt_accesories WHERE prd_id = ".$prd_id ." AND acr_parent = ". $prd_parent_id."";
+    $result = $this->db->query($qry);
+    if ($row = $result->fetch_row()) {
+        $countId = trim($row[0]);
+    }
+
+    if($countId == 0){
+        $qry = "INSERT INTO ctt_accesories(acr_parent,acr_status,prd_id)
+        VALUES ($prd_parent_id,1,$prd_id)";
+
+
+        $this->db->query($qry);
+        $result = $this->db->insert_id;
+    }else{
+        $result = 0;
+    }
+    return $result ;
 }
 
 // Registra el paquete o kit en la tabla de productos
@@ -143,7 +182,7 @@ public function listAccesorios($params)
         $result = $this->db->query($qry);
         return $result;
     }    
-
+/* 
 // Borra el producto y paquete
     public function deletePackages($param)
     {
@@ -158,7 +197,7 @@ public function listAccesorios($params)
         $this->db->query($qrr);
 
         return $prd_id;
-    }    
+    }     */
 
 
 // Borra el producto del paquete
@@ -167,7 +206,9 @@ public function listAccesorios($params)
         $prd_id            = $this->db->real_escape_string($param['prdId']);
         $prd_parent        = $this->db->real_escape_string($param['prdParent']);
 
-        $qry =  "DELETE FROM ctt_products_packages WHERE prd_parent = $prd_parent AND prd_id = $prd_id;" ;
+        $qry =  "DELETE FROM ctt_accesories WHERE acr_parent = $prd_parent AND prd_id = $prd_id;" ;
+/*         print_r($qry );
+        exit(); */
         
         $this->db->query($qry);
 

@@ -206,7 +206,59 @@ class ProductosModel extends Model
 	} */
 
 
+
 	public function GetProductos()
+	{
+		$qry = "SELECT 
+		p.prd_id, p.prd_sku, p.prd_name, p.prd_english_name,p.prd_model,p.prd_price, p.prd_coin_type ,p.prd_visibility, p.prd_comments,p.sbc_id, sc.cat_id, sc.sbc_name,  ct.cat_name, 
+		sv.srv_name, p.prd_level, ifnull(sum(sp.stp_quantity),0) AS quantity 
+	FROM  ctt_products AS p
+	INNER JOIN ctt_subcategories 	AS sc ON sc.sbc_id = p.sbc_id 	AND sc.sbc_status = 1
+	INNER JOIN ctt_categories 		AS ct ON ct.cat_id = sc.cat_id 	AND ct.cat_status = 1
+	INNER JOIN ctt_services 		AS sv ON sv.srv_id = p.srv_id 	AND sv.srv_status = 1
+	LEFT JOIN ctt_series 			AS sr ON sr.prd_id = p.prd_id
+	LEFT JOIN ctt_stores_products 	AS sp ON sp.ser_id = sr.ser_id
+	WHERE prd_status = 1 
+	GROUP BY 	p.prd_id, p.prd_sku, p.prd_name, ct.cat_name, sc.sbc_name, sv.srv_name, 
+	p.prd_price, p.prd_coin_type, p.prd_english_name;";
+
+		$result = $this->db->query($qry);
+
+		$lista = array();
+		while ($row = $result->fetch_row()){
+
+/* 			    $Count = 0;
+				$qry = "SELECT ser_sku FROM ctt_series WHERE ser_status=1 and prd_id = ".$row[0].";";
+				$resultt = $this->db->query($qry);
+				while ($roww = $resultt->fetch_row()){
+					$Count++;
+				} */
+			
+				$item = array("prd_id" =>$row[0],
+				"prd_sku" =>substr($row[1], -7, 4)."-".substr($row[1], -3),
+				"prd_name" =>$row[2],
+				"prd_english_name" =>$row[3],
+				"prd_model" =>$row[4],
+				"prd_price" =>$row[5],
+				"prd_coin_type" =>$row[6],
+				"prd_visibility" =>$row[7],
+				"prd_comments" =>$row[8],
+				"sbc_id" =>$row[9],
+				"cat_id" =>$row[10],
+				"sbc_name" =>$row[11],
+				"cat_name" =>$row[12],
+				"srv_name" =>$row[13],
+				"prd_level" =>$row[14],
+				"extNum" => $row[15]);
+				array_push($lista, $item);
+			
+		}
+	
+		$lista = json_encode($lista,JSON_UNESCAPED_UNICODE);
+		return $lista;
+	}
+
+/* 	public function GetProductos()
 	{
 		$qry = "SELECT pro.prd_id, pro.prd_sku, pro.prd_name, pro.prd_english_name,
 		pro.prd_model, pro.prd_price,
@@ -253,49 +305,9 @@ class ProductosModel extends Model
 	
 		$lista = json_encode($lista,JSON_UNESCAPED_UNICODE);
 		return $lista;
-	}
+	} */
 
-   /*  public function GetProducto($params)
-	{
-		$prd_id = $params['id'];
-		$qry = "SELECT pro.prd_id,pro.prd_sku, pro.prd_name, pro.prd_english_name, pro.prd_model
-					,pro.prd_cost, pro.prd_price, pro.prd_coin_type, pro.prd_visibility
-					,pro.prd_comments, pro.sbc_id, pro.sup_id, pro.srv_id, cat.cat_id, storeP.str_id 
-					,subcat.sbc_name , cat.cat_name , store.str_name , serv.srv_name , storeP.stp_id
-					FROM  ctt_products AS pro
-					INNER JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
-					INNER JOIN ctt_categories AS cat ON cat.cat_id = subcat.cat_id
-					INNER JOIN ctt_store_product AS storeP ON storeP.prd_id = pro.prd_id
-					INNER JOIN ctt_stores AS store ON store.str_id = storeP.str_id
-					INNER JOIN ctt_services AS serv ON serv.srv_id = pro.srv_id
-					where pro.prd_status = 1 and pro.prd_id = $prd_id;";
 
-		$result = $this->db->query($qry);
-		if($row = $result->fetch_row()){
-			$item = array("prd_id" =>$row[0],
-						"prd_sku" =>$row[1],
-                        "prd_name" =>$row[2],
-                        "prd_english_name" =>$row[3],
-                        "prd_model" =>$row[4],
-						"prd_cost" =>$row[5],
-						"prd_price" =>$row[6],
-						"prd_coin_type" =>$row[7],
-						"prd_visibility" =>$row[8],
-						"prd_comments" =>$row[9],
-						"sbc_id" =>$row[10],
-						"sup_id" =>$row[11],
-						"srv_id" =>$row[12],
-						"cat_id" =>$row[13],
-						"str_id" =>$row[14],
-						"sbc_name" =>$row[15],
-						"cat_name" =>$row[16],
-						"str_name" =>$row[17],
-						"srv_name" =>$row[18],
-						"stp_id" =>$row[19]);
-		}
-		return $item;
-	}
- */
     public function ActualizaProducto($params)
 	{
         $estatus = 0;
@@ -384,14 +396,13 @@ class ProductosModel extends Model
 
 	public function GetTipoMoneda()
 	{
-		$qry = "SELECT ext_id, ext_name, ext_descripcion FROM ctt_exchange_currency WHERE ext_status = 1
-		;";
+		$qry = "SELECT cin_id,cin_code, cin_name FROM ctt_coins WHERE cin_status = 1;";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
-			$item = array("ext_id" =>$row[0],
-						"ext_name" =>$row[1],
-                        "ext_descripcion" =>$row[2]);
+			$item = array("cin_id" =>$row[0],
+						"cin_code" =>$row[1],
+                        "cin_name" =>$row[2]);
 			array_push($lista, $item);
 		}
 		return $lista;
