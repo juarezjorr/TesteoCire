@@ -117,10 +117,10 @@ class ProductAccessoryController extends Controller
 
         
 // Lista los productos relacionados al paquete
-public function listProductsById()
+public function listProductsById($request_params)
 {
     $params =  $this->session->get('user');
-    $result = $this->model->listProducts();
+    $result = $this->model->listProductsById($request_params['sbc_id']);
     $i = 0;
     while($row = $result->fetch_assoc()){
         $rowdata[$i] = $row;
@@ -129,7 +129,7 @@ public function listProductsById()
     if ($i>0){
         $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
     } else {
-        $res =  '[{"prd_id":""}]';	
+        $res =  '[{"prd_id":"0"}]';	
     }
     echo $res;
 }
@@ -158,7 +158,25 @@ public function listProductsById()
 public function listAccesorios($request_params)
 {
     $params =  $this->session->get('user');
-    $result = $this->model->listProductsPack($request_params['prdId']);
+    $result = $this->model->listAccesorios();
+    $i = 0;
+    while($row = $result->fetch_assoc()){
+        $rowdata[$i] = $row;
+        $i++;
+    }
+    if ($i>0){
+        $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+    } else {
+        $res =  '[{"prd_id":""}]';	
+    }
+    echo $res;
+}
+
+// Lista de accesorios por id
+public function getAccesoriesById($request_params)
+{
+    $params =  $this->session->get('user');
+    $result = $this->model->getAccesoriesById($request_params);
     $i = 0;
     while($row = $result->fetch_assoc()){
         $rowdata[$i] = $row;
@@ -177,6 +195,14 @@ public function listAccesorios($request_params)
     {
         $params =  $this->session->get('user');
         $result = $this->model->savePack($request_params);
+        $res = $result;
+        echo $res;
+    }	
+
+    public function saveAccesorioByProducto($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->saveAccesorioByProducto($request_params);
         $res = $result;
         echo $res;
     }	
