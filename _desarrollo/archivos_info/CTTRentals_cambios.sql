@@ -1,6 +1,7 @@
--- 2 de Abril 2021
+-- 5 de Mayo 2021
 
  
+
 -- Inserta en la tabla ctt_menu
 TRUNCATE TABLE ctt_menu;
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (0,'Inventarios','Seccion de inventarios',1,1);
@@ -51,10 +52,9 @@ INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('pr
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('packgs','Paquetes','Modulo de paquetes','Packages');
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('stlstpr','Lista de productos de almacen','Modulo que lista los productos de un almacen','StoreProductsList');
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('mvalme','Entradas de almacenes','Modulo de entradas de productos alalmacen','MoveStoresIn');
-INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('movimt','Movimientos','Modulo de movimientos','#');
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('codbar','Codigo de barras','Modulo de codigo de barras','CodeBar');
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('oper','Operación','Modulo deoperacion','H');
- 
+
 
 
  
@@ -85,7 +85,3 @@ INSERT INTO ctt_users_modules (usr_id,mod_id) values (1,21);
 INSERT INTO ctt_users_modules (usr_id,mod_id) values (1,23);
 INSERT INTO ctt_users_modules (usr_id,mod_id) values (1,24);
 
-
-
-ALTER TABLE `cttapp_cire`.`ctt_accessories` 
-CHANGE COLUMN `ser_id` `prd_id` INT(11) NOT NULL COMMENT 'Id del producto relaciòn ctt_products' ;
