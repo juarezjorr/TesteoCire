@@ -56,7 +56,7 @@ public function listProductsById($sbc_id)
     
     $qry = "SELECT prd_id, prd_sku, prd_name, prd_price, sbc_id 
             FROM ctt_products 
-            WHERE prd_status = 1 and sbc_id = $sbc_id ;";
+            WHERE prd_status = 1 and sbc_id = $sbc_id and  prd_level <> 'A' ;";
     return $this->db->query($qry);
 }
 
@@ -85,7 +85,7 @@ public function getAccesoriesById($params)
 public function listAccesorios()
 {
     //$prdId = $this->db->real_escape_string($params);
-    $qry = "SELECT prd_id, prd_name, prd_sku FROM ctt_products WHERE prd_level = 'A';";
+    $qry = "SELECT prd_id, prd_name, prd_sku FROM ctt_products WHERE prd_level = 'A' AND prd_sku = '';";
     return $this->db->query($qry);
 }
 
@@ -95,6 +95,7 @@ public function saveAccesorioByProducto($param)
 {
     $prd_id                     = $this->db->real_escape_string($param['prdId']);
     $prd_parent_id              = $this->db->real_escape_string($param['parentId']);
+    $prd_parent_Sku             = $this->db->real_escape_string($param['skuPrdPadre']);
 
     $countId = 1;
 
@@ -106,11 +107,17 @@ public function saveAccesorioByProducto($param)
     }
 
     if($countId == 0){
+
+        $qry = "UPDATE ctt_products SET prd_sku = '".$prd_parent_Sku."' WHERE prd_id = ".$prd_id."";
+        $this->db->query($qry);
+
+/*         print_r($qry);
+        exit(); */
+
         $qry = "INSERT INTO ctt_accesories(acr_parent,acr_status,prd_id)
         VALUES ($prd_parent_id,1,$prd_id)";
-
-
         $this->db->query($qry);
+
         $result = $this->db->insert_id;
     }else{
         $result = 0;
@@ -209,8 +216,12 @@ public function saveAccesorioByProducto($param)
         $qry =  "DELETE FROM ctt_accesories WHERE acr_parent = $prd_parent AND prd_id = $prd_id;" ;
 /*         print_r($qry );
         exit(); */
-        
         $this->db->query($qry);
+
+
+        $qry = "UPDATE ctt_products SET prd_sku = '' WHERE prd_id = ".$prd_id."";
+        $this->db->query($qry);
+        
 
         return $prd_id;
     }    

@@ -29,10 +29,22 @@
 								</div>
 							</div>
 
+							<div class="row" >
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="1" id="checkIsAccesorie" >
+									<label class="form-check-label" for="flexCheckDefault">
+										Es accesorio
+									</label>
+									</div>
+								</div>
+							</div>
+
+
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="NomProducto" name="NomProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required >
-									<label for="NomProducto">Nombre Producto</label>
+									<label for="NomProducto">Nombre </label>
 									<div id="suggestions"></div>
 
 								</div>
@@ -41,14 +53,14 @@
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="NomEngProducto" name="NomEngProducto" type="text" class="form-control form-control-sm" autocomplete="off"   >
-									<label for="NomEngProducto">Nombre Ingles Producto</label>
+									<label for="NomEngProducto">Nombre Ingles </label>
 								</div>
 							</div>
 
                      		<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<input id="PriceProducto" name="PriceProducto" type="number" class="form-control form-control-sm" autocomplete="off"   >
-									<label for="PriceProducto">Precio Producto</label>
+									<label for="PriceProducto">Precio </label>
 								</div>
 							</div>
 
@@ -68,15 +80,15 @@
 								</div>
 							</div>
 
-                   			<div class="row">
+                   			<div class="row" id="hiddenCatalago">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<select id="selectRowCategorias"  name="selectRowCategorias"  class="form-select form-select-sm" autocomplete="off"  >
+									<select id="selectRowCategorias"  name="selectRowCategorias"  class="form-select form-select-sm" autocomplete="off" >
 									</select>
 									<label for="selectRowCategorias" class="form-label">Catalago</label>
 								</div>
 							</div>
 
-                    		 <div class="row">
+                    		 <div class="row" id="hiddenSubcategoria">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowSubCategorias"  name="selectRowSubCategorias"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
@@ -114,16 +126,7 @@
 								</div>
 							</div>
 
-							<div class="row" >
-								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="1" id="checkIsAccesorie" >
-									<label class="form-check-label" for="flexCheckDefault">
-										Es accesorio
-									</label>
-									</div>
-								</div>
-							</div>
+
 
 							<div class="row">
 								<div class="col-6">

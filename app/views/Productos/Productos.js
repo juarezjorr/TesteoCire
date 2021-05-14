@@ -13,6 +13,18 @@ function inicial() {
     getProductosTable();
     cargaInicial();
 
+    $('#checkIsAccesorie').change(function () {
+        if ($('#checkIsAccesorie').prop('checked')) {
+            $('#hiddenCatalago').attr("hidden",true);
+            $('#hiddenSubcategoria').attr("hidden",true);
+            //$('#titulo').text('Nuevo Accesorio');
+        }else{
+            //$('#titulo').text('Nuevo Producto');
+            $('#hiddenCatalago').attr("hidden",false);
+            $('#hiddenSubcategoria').attr("hidden",false);
+        }
+    });
+
     $("body").click(function () {
         //console.log("hols");
         $('#suggestions').fadeOut(500);
@@ -223,8 +235,7 @@ function SaveProducto() {
     var esUnico = $('#esUnico').val();
 
     var idMoneda = $('#selectMonedaProducto option:selected').attr('id');
-    var idCategoria = $('#selectRowCategorias option:selected').attr('id');
-    var idSubCategoria = $('#selectRowSubCategorias option:selected').attr('id');
+
     var idTipeService = $('#selectRowService option:selected').attr('id');
     //var idProveedor = $('#selectRowProovedores option:selected').attr('id');
     var idAlmacen = $('#selectRowAlmacen option:selected').attr('id');
@@ -233,6 +244,9 @@ function SaveProducto() {
     var visible = 0;
     var rentSinAccesorios = 0;
     var IsAccesorio = "P";
+
+    var idCategoria = "";
+    var idSubCategoria = "";
 
 
     if ($('#checkProducto').prop('checked')) {
@@ -243,6 +257,11 @@ function SaveProducto() {
     }
     if ($('#checkIsAccesorie').prop('checked')) {
         IsAccesorio = "A";
+        idCategoria = "";
+        idSubCategoria = "";
+    }else{
+        idCategoria = $('#selectRowCategorias option:selected').attr('id');
+        idSubCategoria = $('#selectRowSubCategorias option:selected').attr('id');
     }
 
     //var idbehaviour = $('input[name="ventOrRent"]:checked').val();
@@ -312,6 +331,8 @@ function LimpiaModal() {
     $('#checkRentAccesories').prop('checked', true);
     $('#ventOrRent1').prop('checked', true);
     $('#checkIsAccesorie').prop('checked', false);
+    $('#hiddenCatalago').attr("hidden",false);
+    $('#hiddenSubcategoria').attr("hidden",false);
 
 }
 
@@ -752,8 +773,18 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
 
             if (respuesta[0].prd_level == "A") {
                 $('#checkIsAccesorie').prop('checked', true);
+
+                $('#hiddenCatalago').attr("hidden",true);
+                $('#hiddenSubcategoria').attr("hidden",true);
+                $('#titulo').text('Nuevo Accesorio');
+
+
+
             } else {
                 $('#checkIsAccesorie').prop('checked', false);
+
+                $('#hiddenCatalago').attr("hidden",false);
+                $('#hiddenSubcategoria').attr("hidden",false);
             }
 
             if (productoComun == 1) {

@@ -27,29 +27,45 @@ class ProductosModel extends Model
 /************************* Generar SKU *******************************/
 
 		$SKU = "";
-		//ID de categoria dos digitos.
-		$categoria = str_pad($params['idCategoria'], 2, "0", STR_PAD_LEFT);
+		$model = "";
 
-		//SUBCATEGORIA dos digitos 
-		$qry = "SELECT sbc_code FROM ctt_subcategories WHERE sbc_id = ".$params['idSubCategoria'].";";
-		$result = $this->db->query($qry);
-		if ($row = $result->fetch_row()) {
-			$Subcategoria  = trim($row[0]);
+		$subcategoria = 0;
+
+    	if($params['IsAccesorio']=="A"){
+		}else{
+
+
+			//ID de categoria dos digitos.
+			$categoria = str_pad($params['idCategoria'], 2, "0", STR_PAD_LEFT);
+
+			//SUBCATEGORIA dos digitos 
+			$qry = "SELECT sbc_code FROM ctt_subcategories WHERE sbc_id = ".$params['idSubCategoria'].";";
+			$result = $this->db->query($qry);
+			if ($row = $result->fetch_row()) {
+				$Subcategoria  = trim($row[0]);
+			}
+
+			$Subcategoria = str_pad($Subcategoria, 2, "0", STR_PAD_LEFT);
+
+
+			//MODELO 3 DIGITOS
+			$qry = "SELECT count(*) FROM ctt_products WHERE sbc_id =  ".$params['idSubCategoria'].";";
+			$result = $this->db->query($qry);
+			if ($row = $result->fetch_row()) {
+				$consecutivoModel  = trim($row[0]);
+				$consecutivoModel = $consecutivoModel + 1;
+			}
+
+			$model = str_pad($consecutivoModel, 3, "0", STR_PAD_LEFT);
+
+			$SKU = $categoria.$Subcategoria.$model;
+			$SKU = strtoupper($SKU);
+
+
+			$subcategoria = $params['idSubCategoria'];
 		}
 
-		$Subcategoria = str_pad($Subcategoria, 2, "0", STR_PAD_LEFT);
-
-
-		//MODELO 3 DIGITOS
-		$qry = "SELECT count(*) FROM ctt_products WHERE sbc_id =  ".$params['idSubCategoria'].";";
-		$result = $this->db->query($qry);
-		if ($row = $result->fetch_row()) {
-			$consecutivoModel  = trim($row[0]);
-			$consecutivoModel = $consecutivoModel + 1;
-		}
-
-		$model = str_pad($consecutivoModel, 3, "0", STR_PAD_LEFT);
-
+		$idProducto = 0;
 
 		
 /* 		//NUMERO CONSECUTIVO DE PRODUCTO 4 DIGITOS 
@@ -65,10 +81,11 @@ class ProductosModel extends Model
 		//NUMERO DE ACCESORIO 3 DIGITOS
 		$accesorio = "000"; */
 
-		$SKU = $categoria.$Subcategoria.$model;
-		$SKU = strtoupper($SKU);
 
-		$idProducto = 0;
+
+
+
+
 
 			try {
 				if($countId == 0){
@@ -93,7 +110,7 @@ class ProductosModel extends Model
 									".$params['visible'].",
 									'".$params['DesProducto']."',
 									1,
-									".$params['idSubCategoria'].",
+									".$subcategoria.",
 						
 									".$params['idTipeService'].",
 									'".$model."',
@@ -108,6 +125,7 @@ class ProductosModel extends Model
 					$this->db->query($qry);	
 					//print_r($qry . "-");
 					$qry = "SELECT MAX(prd_id) AS id FROM ctt_products;";
+
 					$result = $this->db->query($qry);
 					if ($row = $result->fetch_row()) {
 						$idProducto = trim($row[0]);
@@ -182,6 +200,7 @@ class ProductosModel extends Model
 
 
 			} catch (Exception $e) {
+
 				$estatus = 0;
 			}
 		return $estatus;
