@@ -1,6 +1,7 @@
 let subcategos;
 let products;
 var productoSelectId = 0;
+var productoSelectSKU = "";
 var accesorioExist = 0;
 
 $(document).ready(function () {
@@ -41,7 +42,7 @@ function setting_table_product() {
         fixedHeader: true,
         columns: [
             {data: 'pack_sku', class: 'sel sku'},
-            {data: 'id', class: 'sel id'},
+            {data: 'id', class: 'sel id hidden'},
             {data: 'packname', class: 'sel product-name'},
         ],
     });
@@ -135,12 +136,21 @@ function putSubCategory(dt) {
 
 function putAccesorios(dt) {
     $('#listProducts').html("");
+    if (dt[0].prd_id != "0") {
     $.each(dt, function (v, u) {
+/*         let H = `<div class="list-item" id="${u.prd_id}-${u.prd_sku}-${u.prd_name}" data-subcateg="${u.prd_name}" >
+ */
         let H = `<div class="list-item" id="${u.prd_id}-${u.prd_sku}-${u.prd_name}" data-subcateg="${u.prd_name}" >
+        ${u.prd_name}<div class="items-just"><i class="fas fa-arrow-circle-right"></i></div>
+              </div>`;
+/*         let H = `<div class="list-item" id="${u.prd_id}-${u.prd_sku}-${u.prd_name}" data-subcateg="${u.prd_name}" >
                     ${u.prd_sku} - ${u.prd_name}<div class="items-just"><i class="fas fa-arrow-circle-right"></i></div>
-                </div>`;
+                </div>`; */
         $('#listProducts').append(H);
     });
+   }
+
+
     drawProducts(); 
 } 
 
@@ -165,6 +175,9 @@ function drawProducts() {
         .unbind('click')
         .on('click', function () {
             let id = $(this).parents('.list-item');
+            console.log("se dio"+id);
+            console.log( $(this).val());
+
             //console.log( $(this).parents('.list-item').attr('id'));
             console.log("se dio click em el circulo");
             product_apply(id);
@@ -182,15 +195,19 @@ function putProducts(dt) {
         tabla.clear().draw(); //BORRA LOS REGISTROS EXISTENTES
 
         $.each(dt, function (v, u) {
-            tabla.row
+            var rowNode = tabla.row
                 .add({
                     pack_sku: `<span class="hide-support" id="SKU-${u.prd_id}">${u.prd_id}</span>${u.prd_sku}`,
-                    id: u.prd_id,
+                    id: u.prd_id+'-'+u.prd_sku,
                     packname: u.prd_name,
                 })
-                .draw();
+                
+                .draw()
+                .node();
+                $(rowNode).find('td').eq(1).attr("hidden",true);
 
-            $(`#SKU-${u.prd_id}`).parent().parent().attr('id', u.prd_id).addClass('indicator');
+
+            $(`#SKU-${u.prd_id}`).parent().parent().attr('id', u.prd_id+'-'+u.prd_sku).addClass('indicator');
         });
 
         load_Accesories();
@@ -251,7 +268,9 @@ function action_selected_packages() {
     $('.indicator td')
         .unbind('click')
         .on('click', function () {
-                let prdId = $(this).parent().attr('id');
+                var prdId = $(this).parent().attr('id');
+                var arraryPrd = prdId.split('-');
+                
                 //$("#selectAccesorios").css('visibility', 'visible');;
 
                 let tabla = $('#tblPackages').DataTable();
@@ -266,11 +285,15 @@ function action_selected_packages() {
                     }
                  }, 100);
 
-                productoSelectId = prdId;
+                productoSelectId = arraryPrd[0];
+                productoSelectSKU = arraryPrd[1];
 
-                console.log("se seleccione un producto");
-                getAccesoriesById(prdId);
-                console.log(prdId);
+/*                 console.log("se seleccione un producto");
+                console.log(productoSelectSKU);
+                console.log(productoSelectId); */
+
+
+                getAccesoriesById(productoSelectId);
                 //select_products(prdId);
      });
 }
@@ -308,7 +331,7 @@ function deleteTablaProducts() {
 
 function saveAccesoryId(prdId) {
     var pagina = 'ProductAccessory/saveAccesorioByProducto';
-    var par = `[{"prdId":"${prdId}","parentId":"${productoSelectId}"}]`;
+    var par = `[{"prdId":"${prdId}","parentId":"${productoSelectId}","skuPrdPadre":"${productoSelectSKU}"}]`;
     var tipo = 'json';
     var selector = putAccesoriesRes;
     fillField(pagina, par, tipo, selector);
@@ -344,6 +367,7 @@ function putAccesoriostable(dt) {
     console.log("llego a carga de accesorios");
     let tabla = $('#tblProducts').DataTable();
     tabla.rows().remove().draw();
+
     if (dt[0].prd_id != '') {
         $.each(dt, function (v, u) {
             tabla.row
@@ -360,14 +384,21 @@ function putAccesoriostable(dt) {
 
 //revisar aqui si no graba producto
 function product_apply(prId) {
+    console.log("llego aqui ii");
+
+    console.log(prId);
     let acce = prId.attr('id').split('-');
     console.log(acce);
     //VALIDAR QUE NO EXISTA EL ACCESORIO 
     saveAccesoryId(acce[0]);
+    console.log(acce[2]);
     //console.log("respuesta conseguida"+accesorioExist);
     setTimeout(() => {
         if(accesorioExist != 0){
-            putNewAccesorio(acce[0],acce[1],acce[2]);
+            putNewAccesorio(acce[0],productoSelectSKU,acce[2]);
+
+            //$(`.list-item[data-subcateg^="accesorio 41"]`).attr("hidden",true);
+            $(`.list-item[data-subcateg^="${acce[2]}"]`).attr("hidden",true);
         }
     }, 500);
 }
@@ -415,4 +446,5 @@ function confirm_delet_product(id) {
 
 function putDelPackages(dt) {
     $('#delPackModal').modal('hide');
+    load_Accesories();
 } 

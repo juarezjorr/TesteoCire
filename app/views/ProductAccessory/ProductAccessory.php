@@ -15,7 +15,7 @@
             <div class="mb-3 mvst_panel">
                 <div class="form-group">
                 <div class="form_primary">
-                    <h4 class="mainTitle">Generar paquete</h4>
+                    <h4 class="mainTitle">RELACIÓN PRODUCTO ACCESORIO</h4>
 
 
                         <div class="row">
@@ -92,7 +92,7 @@
                             <thead>
                                 <tr>
                                     <th style="width:  80px">SKU</th>
-                                    <th style="width: auto">id</th>
+                                    <th style="width: auto" hidden >id</th>
                                     <th style="width: auto">Nombre</th>
                                 </tr>
                             </thead>
