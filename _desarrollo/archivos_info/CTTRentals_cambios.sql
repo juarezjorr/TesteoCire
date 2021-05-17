@@ -1,4 +1,4 @@
--- 5 de Mayo 2021
+-- 11 de Mayo 2021
 
  
 
@@ -16,18 +16,21 @@ INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) valu
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Productos','Sección de edición de productos',3,10);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (2,'Productos en subarrendo','Seccion de productos en subarrendo',1,11);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (5,'Perfil de usuario','Seccion de perfil de usuarios',2,12);
-INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Proveedores','Seccion de proveedores',4,13);
+INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Proveedores','Seccion de proveedores',5,13);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (5,'Puestos','Seccion de puestos',3,14);
-INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Documentos','Seccion de docuementos de productos',5,15);
-INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Tipo de Servicios','Seccion de tipos de servicio',6,16);
-INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Subcategorias','Seccion de subcategorias',7,17);
+INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Documentos','Seccion de docuementos de productos',6,15);
+INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Tipo de Servicios','Seccion de tipos de servicio',7,16);
+INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Subcategorias','Seccion de subcategorias',8,17);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (2,'Lista de precios','Seccion de la lista de precios',2,18);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (3,'Paquetes','Seccion de paquetes',1,19);
-INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Productos de almacen','Seccion delistado de productos de almacen',8,20);
+INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (23,'Productos de almacen','Seccion delistado de productos de almacen',2,20);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (3,'Movimientos','Seccion de movimiento',2,22);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (21,'Entradas de almacen','Seccion de entradas de almacen',1,21);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (0,'Operación','Seccion de operación',3,24);
 INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (23,'Código de barras','Seccion de impresor de códigos de barras',1,23);
+INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (4,'Accesorios','Seccion de accesorios',4,25);
+INSERT INTO ctt_menu (mnu_parent,mnu_item,mnu_description,mnu_order,mod_id) values (3,'Productos en subarrendo','Seccion de productos en subarrendo',3,11);
+
  
 -- Inserta en la tabla ctt_modules
 TRUNCATE TABLE ctt_modules;
@@ -52,8 +55,11 @@ INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('pr
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('packgs','Paquetes','Modulo de paquetes','Packages');
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('stlstpr','Lista de productos de almacen','Modulo que lista los productos de un almacen','StoreProductsList');
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('mvalme','Entradas de almacenes','Modulo de entradas de productos alalmacen','MoveStoresIn');
+INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('movimt','Movimientos','Modulo de movimientos','#');
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('codbar','Codigo de barras','Modulo de codigo de barras','CodeBar');
 INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('oper','Operación','Modulo deoperacion','H');
+INSERT INTO ctt_modules (mod_code,mod_name,mod_description,mod_item) values ('accesory','Accesorios','Modulo de accesorios','ProductAccessory');
+ 
 
 
 
@@ -84,4 +90,7 @@ INSERT INTO ctt_users_modules (usr_id,mod_id) values (1,22);
 INSERT INTO ctt_users_modules (usr_id,mod_id) values (1,21);
 INSERT INTO ctt_users_modules (usr_id,mod_id) values (1,23);
 INSERT INTO ctt_users_modules (usr_id,mod_id) values (1,24);
+INSERT INTO ctt_users_modules (usr_id,mod_id) values (1,25);
+
+
 

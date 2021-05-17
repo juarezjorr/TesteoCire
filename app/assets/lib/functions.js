@@ -121,6 +121,12 @@ function importarScript(nombre) {
     document.querySelector('head').appendChild(s);
 }
 
+function importarStyleSheet(nombre) {
+    var s = document.createElement('link');
+    s.href = nombre;
+    document.querySelector('head').appendChild(s);
+}
+
 // Limpia los campos de entrada de datos
 function limpia_campos() {
     $('input').val('');
@@ -178,4 +184,10 @@ function sublevel(id, sn, dt) {
         H += `</ul>`;
     }
     return H;
+}
+
+function getAbsolutePath() {
+    var loc = window.location;
+    var pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
+    return loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
 }

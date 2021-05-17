@@ -1,5 +1,7 @@
-var seccion = '';
+let seccion = '';
 let docs;
+let grp = 20;
+let num = 0;
 
 $(document).ready(function () {
     verifica_usuario();
@@ -19,6 +21,10 @@ function setting_table() {
     $('#tblPriceList').DataTable({
         order: [[2, 'asc']],
         dom: 'Blfrtip',
+        lengthMenu: [
+            [30, 60, 100, -1],
+            [30, 60, 100, 'Todos'],
+        ],
         buttons: [
             {
                 //Botón para Excel
@@ -65,7 +71,7 @@ function setting_table() {
             {data: 'prodqtty', class: 'quantity'},
             {data: 'prodpric', class: 'price'},
             {data: 'prodcoin', class: 'sku'},
-            {data: 'prddocum', class: 'catalog'},
+            {data: 'prddocum', class: 'center'},
             {data: 'categori', class: 'catalog'},
             {data: 'subcateg', class: 'catalog'},
             {data: 'typeserv', class: 'sku'},
@@ -77,7 +83,7 @@ function setting_table() {
 /** +++++  Obtiene los productos de la base */
 function getProducts() {
     var pagina = 'ProductsPriceList/listProducts';
-    var par = `[{"store":""}]`;
+    var par = `[{"grp":"${grp}","num":"${num}"}]`;
     var tipo = 'json';
     var selector = putProducts;
     fillField(pagina, par, tipo, selector);
@@ -85,36 +91,36 @@ function getProducts() {
 
 /** +++++  coloca los productos en la tabla */
 function putProducts(dt) {
-    let tabla = $('#tblPriceList').DataTable();
-    getDocuments();
+    //console.log(dt);
+    if (dt[0].prd_id != '0') {
+        let tabla = $('#tblPriceList').DataTable();
 
-    $.each(dt, function (v, u) {
-        pack = u.prd_level == 'K' ? 'fas' : 'far';
-        tabla.row
-            .add({
-                editable: `<i class="fas fa-eye modif" id="${u.prd_id}" data-content="${u.prd_sku}|${u.prd_name}"></i>`,
-                produsku: `<span class="hide-support">${u.prd_id}</span>${u.prd_sku}`,
-                prodname: `<i class="${pack} fa-box-open fa-sm"></i> ${u.prd_name}`,
-                prodqtty: `<span>${u.quantity}</span>`,
-                prodpric: u.prd_price,
-                prodcoin: u.prd_coin_type,
-                prddocum: `<span id="F${u.prd_id}"></span>`,
-                categori: u.cat_name,
-                subcateg: u.sbc_name,
-                typeserv: u.srv_name,
-                prodengl: u.prd_english_name,
-            })
-            .draw();
-    });
-
-    $('.fa-eye')
-        .unbind('click')
-        .on('click', function () {
-            let prodId = $(this).attr('id');
-            let prdSku = $(this).attr('data-content').split('|')[0];
-            let prdName = $(this).attr('data-content').split('|')[1];
-            getSeries(prodId, prdSku, prdName);
+        $.each(dt, function (v, u) {
+            pack = u.prd_level == 'K' ? 'fas' : 'far';
+            tabla.row
+                .add({
+                    editable: `<i class="fas fa-eye modif" id="${u.prd_id}" data-content="${u.prd_sku}|${u.prd_name}|${u.quantity}|${u.prd_level}"></i>`,
+                    produsku: `<span class="hide-support">${u.prd_id}</span>${u.prd_sku}`,
+                    prodname: `<i class="${pack} fa-box-open fa-sm"></i> ${u.prd_name}`,
+                    prodqtty: `<span>${u.quantity}</span>`,
+                    prodpric: u.prd_price,
+                    prodcoin: u.prd_coin_type,
+                    prddocum: `<span id="F${u.prd_id}"></span>`,
+                    categori: u.cat_name,
+                    subcateg: u.sbc_name,
+                    typeserv: u.srv_name,
+                    prodengl: u.prd_english_name,
+                })
+                .draw();
         });
+
+        num += grp;
+        setTimeout(() => {
+            getProducts();
+        }, 100);
+    } else {
+        getDocuments();
+    }
 }
 
 /** +++++  Obtiene los documentos asociados al producto */
@@ -131,12 +137,68 @@ function putDocuments(dt) {
     $.each(dt, function (v, u) {
         $('#F' + u.prd_id).append(`<i class="fas fa-file docum" id="${u.doc_id}"></i>`);
     });
+    active_icons();
+}
+
+/** +++++  Activa los iconos */
+function active_icons() {
+    $('.fa-eye')
+        .unbind('click')
+        .on('click', function () {
+            let prd = $(this).attr('id');
+            let qty = $(this).attr('data-content').split('|')[2];
+            let pkt = $(this).attr('data-content').split('|')[3];
+            if (qty > 0) {
+                if (pkt == 'K') {
+                    getGroupProducts(prd);
+                } else {
+                    getSeries(prd);
+                }
+            }
+        });
+
+    $('.docum')
+        .unbind('click')
+        .on('click', function () {
+            var id = $(this).attr('id');
+            var pagina = 'Documentos/VerDocumento';
+            var par = `[{"id":"${id}"}]`;
+            var tipo = 'json';
+            var selector = putDocument;
+            fillField(pagina, par, tipo, selector);
+        });
+}
+
+function putDocument(dt) {
+    var a = document.createElement('a');
+    a.href = 'data:application/octet-stream;base64,' + dt.doc_document;
+    a.target = '_blank';
+    a.download = dt.doc_name + '.' + dt.doc_type.trim();
+    a.click();
+}
+
+function getGroupProducts(prdId) {
+    var pagina = 'ProductsPriceList/listProductPackages';
+    var par = `[{"prdId":"${prdId}"}]`;
+    var tipo = 'json';
+    var selector = putGroupProducts;
+    fillField(pagina, par, tipo, selector);
+}
+
+function putGroupProducts(dt) {
+    let prods = '';
+    $.each(dt, function (v, u) {
+        prods += u.prd_id + ',';
+    });
+
+    prods = prods.substring(0, prods.length - 1);
+    getSeries(prods);
 }
 
 /** +++++  Obtiene los numeros de serie de cada producto */
-function getSeries(prdId, prdSku, prdName) {
+function getSeries(prdId) {
     var pagina = 'ProductsPriceList/listSeries';
-    var par = `[{"prdId":"${prdId}","prdSku":"${prdSku}","prdName":"${prdName}"}]`;
+    var par = `[{"prdId":"${prdId}"}]`;
     var tipo = 'json';
     var selector = putSeries;
     fillField(pagina, par, tipo, selector);
@@ -158,6 +220,7 @@ function putSeries(dt) {
         fixedHeader: true,
         columns: [
             {data: 'produsku', class: 'sku'},
+            {data: 'prodname', class: 'product-name'},
             {data: 'serlnumb', class: 'product-name'},
             {data: 'serlcost', class: 'price'},
             {data: 'dateregs', class: 'sku'},
@@ -183,12 +246,13 @@ function putSeries(dt) {
 function build_modal_table(dt) {
     let tabla = $('#tblSerialList').DataTable();
 
-    $('.overlay_closer .title').html(`${dt[0].prd_sku} - ${dt[0].prd_name}`);
+    //   $('.overlay_closer .title').html(`${dt[0].prd_sku} - ${dt[0].prd_name}`);
     tabla.rows().remove().draw();
     $.each(dt, function (v, u) {
         tabla.row
             .add({
                 produsku: `<span class="hide-support">${u.ser_id}</span>${u.ser_sku}`,
+                prodname: u.prd_name,
                 serlnumb: u.ser_serial_number,
                 serlcost: u.ser_cost,
                 dateregs: u.ser_date_registry,

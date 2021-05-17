@@ -28,7 +28,7 @@ class ProductsPriceListController extends Controller
 	public function listProducts($request_params)
 	{
 		$params =  $this->session->get('user');
-		$result = $this->model->listProducts($request_params['store']);
+		$result = $this->model->listProducts($request_params);
 		$i = 0;
 		while($row = $result->fetch_assoc()){
 			$rowdata[$i] = $row;
@@ -80,5 +80,26 @@ class ProductsPriceListController extends Controller
         }
         echo $res;
     }   
+
+
+// Lista productos del paquete
+    public function listProductPackages($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listProductPackages($request_params);
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"prd_id":"0"}]';	
+        }
+        echo $res;
+    }
+
+
 
 }

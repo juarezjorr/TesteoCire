@@ -297,6 +297,7 @@ CREATE TABLE `cttapp_cire`.`ctt_subcategories` (
     `sbc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la subcategoría',
     `sbc_code`              VARCHAR(10) NULL                COMMENT 'Clave de la subcategoría',
     `sbc_name`              VARCHAR(100) NULL               COMMENT 'Nombre de la subcategoría',
+    `sbc_behaviour`         VARCHAR(2) NULL                 COMMENT 'Comportamiento de la subcategoría',
     `sbc_status`            VARCHAR(1) NULL DEFAULT 1       COMMENT 'Estatus de la subcategoría 1-Activo, 0-Inactivo',
     `cat_id`                INT NOT NULL                    COMMENT 'Id del catálogo relación ctt_categories',
 PRIMARY KEY (`sbc_id`))

@@ -107,19 +107,13 @@ class StoreProductsListController extends Controller
         $params = $this->session->get('user');
         $par = $request_params['par'];
 
-        // $gp = explode("@",$request_params['par']);
-
-        // foreach ($gp as $el){
-        //     echo $el . '<br>';
-        // }
-        
-
-        $dir = ROOT . PATH_ASSETS . 'filesupport/listProducts.txt';
+        $dir = ROOT . FOLDER_PATH . '/app/views/StoreProductsList/StoreProductsFile.txt';
 
         $fileJson = fopen( $dir ,"w") or die("problema al escribir el archivo ");
         fwrite($fileJson, $par);
         fclose($fileJson);
 
     } 
+
 
 }

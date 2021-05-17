@@ -1,11 +1,13 @@
 var seccion = '';
 ///const folio = uuidv4();
 let folio;
-let = pr = [];
-let = link = '';
+let pr = [];
+let link = '';
+let url;
 
 $(document).ready(function () {
-    // importarScript('https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js');
+    url = getAbsolutePath();
+    importarScript(url + 'app/assets/lib/kendo.js');
 
     folio = getFolio();
     verifica_usuario();
@@ -274,5 +276,5 @@ function build_data_structure(pr) {
 }
 
 function putSaveList(dt) {
-    window.open('app/views/StoreProductsList/rpt_StoreProducts.php', '_blank');
+    window.open(url + 'app/views/StoreProductsList/StoreProductsReport.php', '_blank');
 }
