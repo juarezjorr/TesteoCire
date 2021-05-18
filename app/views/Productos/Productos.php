@@ -157,6 +157,8 @@
 													<th style="width: auto">Nombre ingles</th>
 									                <th style="width: auto">Precio</th>
 													<th style="width: auto">Existencias</th>
+													<th style="width: auto">Tipo</th>
+
 													<th style="width: auto">Servicio</th>
 													<th style="width: auto">Catálogo</th>
 													<th style="width: auto">Subcategoria</th>

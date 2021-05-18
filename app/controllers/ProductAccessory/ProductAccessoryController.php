@@ -203,7 +203,7 @@ public function getAccesoriesById($request_params)
     {
         $params =  $this->session->get('user');
         $result = $this->model->saveAccesorioByProducto($request_params);
-        $res = $result;
+        $res = json_encode($result,JSON_UNESCAPED_UNICODE) ;
         echo $res;
     }	
 

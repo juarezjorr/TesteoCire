@@ -32,7 +32,26 @@ class ProductosModel extends Model
 		$subcategoria = 0;
 
     	if($params['IsAccesorio']=="A"){
+
+
+
+			$qry1 = "SELECT sbc_id FROM ctt_subcategories WHERE sbc_behaviour = 'AC';";
+
+
+
+
+
+			$result1 = $this->db->query($qry1);
+			if ($row = $result1->fetch_row()) {
+				$Subcategoria  = trim($row[0]);
+			} 
+
+			//print_r("llego".$Subcategoria);
+			//exit();
+
 		}else{
+			print_r("entro else");
+			exit();
 
 
 			//ID de categoria dos digitos.
@@ -62,7 +81,7 @@ class ProductosModel extends Model
 			$SKU = strtoupper($SKU);
 
 
-			$subcategoria = $params['idSubCategoria'];
+			$Subcategoria = $params['idSubCategoria'];
 		}
 
 		$idProducto = 0;
@@ -110,8 +129,7 @@ class ProductosModel extends Model
 									".$params['visible'].",
 									'".$params['DesProducto']."',
 									1,
-									".$subcategoria.",
-						
+									".$Subcategoria.",			
 									".$params['idTipeService'].",
 									'".$model."',
 									'".$SKU."',

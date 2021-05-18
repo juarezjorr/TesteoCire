@@ -108,6 +108,20 @@ public function saveAccesorioByProducto($param)
 
     if($countId == 0){
 
+        //GENERAMOS EL NUMERO SUCESIVO DEL ACCESORIO
+
+        $qry = "SELECT count(*)+1 FROM ctt_accesories WHERE acr_parent =".$prd_parent_id."";
+        $result = $this->db->query($qry);
+        if ($row = $result->fetch_row()) {
+            $acConsecutivo = trim($row[0]);
+        }
+
+
+        $prd_parent_Sku =  $prd_parent_Sku."A".str_pad($acConsecutivo, 3, "0", STR_PAD_LEFT);
+
+        //print_r($prd_parent_Sku);
+        //exit();
+
         $qry = "UPDATE ctt_products SET prd_sku = '".$prd_parent_Sku."' WHERE prd_id = ".$prd_id."";
         $this->db->query($qry);
 
@@ -118,38 +132,15 @@ public function saveAccesorioByProducto($param)
         VALUES ($prd_parent_id,1,$prd_id)";
         $this->db->query($qry);
 
-        $result = $this->db->insert_id;
+        $result = $prd_parent_Sku;
+
+
+        //$result = $this->db->insert_id;
     }else{
         $result = 0;
     }
     return $result ;
 }
-
-// Registra el paquete o kit en la tabla de productos
-    public function savePack($param)
-    {
-        $prd_sku            = $this->db->real_escape_string($param['prdsku']);
-        $prd_name           = $this->db->real_escape_string($param['prdName']);
-        $prd_model          = $this->db->real_escape_string($param['prdModel']);
-        $prd_price	        = $this->db->real_escape_string($param['prdPrice']);
-        $prd_coin_type      = $this->db->real_escape_string($param['prdCoinType']);
-        $prd_visibility     = $this->db->real_escape_string($param['prdVisibility']);
-        $prd_comments       = $this->db->real_escape_string($param['prdComments']);
-        $prd_status	        = $this->db->real_escape_string($param['prdStatus']);
-        $prd_level          = $this->db->real_escape_string($param['prdLevel']);
-        $sbc_id             = $this->db->real_escape_string($param['sbcId']);
-        $srv_id             = $this->db->real_escape_string($param['srvId']);
-        $cin_id             = $this->db->real_escape_string($param['exmId']);
-
-        $qry = "INSERT INTO ctt_products (
-            prd_sku, prd_name, prd_model, prd_price, prd_visibility, prd_comments, prd_status, prd_level, sbc_id, srv_id, cin_id
-        ) VALUES (
-        '$prd_sku', '$prd_name', '$prd_model', '$prd_price', '$prd_visibility', '$prd_comments', '$prd_status', '$prd_level', '$sbc_id', '$srv_id', '$cin_id');
-        ";
-         $this->db->query($qry);
-        $result = $this->db->insert_id;
-        return $result . '|' . $prd_sku . '|' . $prd_name . '|' . $prd_price;
-    }
 
 
 // Registra el producto al paquete
@@ -175,7 +166,7 @@ public function saveAccesorioByProducto($param)
     }
 
 
-// Obtiene detalle de paquete
+// Obtiene detalle del producto
     public function detailPack($param)
     {
         $prd_id            = $this->db->real_escape_string($param['prdId']);
@@ -189,25 +180,8 @@ public function saveAccesorioByProducto($param)
         $result = $this->db->query($qry);
         return $result;
     }    
-/* 
-// Borra el producto y paquete
-    public function deletePackages($param)
-    {
-        $prd_id            = $this->db->real_escape_string($param['prdId']);
 
-        $qry =  "DELETE FROM ctt_products WHERE prd_id = $prd_id" ;
-        
-        $this->db->query($qry);
-
-        $qrr =  "DELETE FROM ctt_products_packages WHERE prd_parent = $prd_id" ;
-        
-        $this->db->query($qrr);
-
-        return $prd_id;
-    }     */
-
-
-// Borra el producto del paquete
+// Borra el accesorio del producto
     public function deleteProduct($param)
     {
         $prd_id            = $this->db->real_escape_string($param['prdId']);

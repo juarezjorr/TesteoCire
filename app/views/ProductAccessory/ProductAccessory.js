@@ -4,6 +4,9 @@ var productoSelectId = 0;
 var productoSelectSKU = "";
 var accesorioExist = 0;
 
+var accesorioSkuNew = "";
+
+
 $(document).ready(function () {
     verifica_usuario();
     inicial();
@@ -395,7 +398,11 @@ function product_apply(prId) {
     //console.log("respuesta conseguida"+accesorioExist);
     setTimeout(() => {
         if(accesorioExist != 0){
-            putNewAccesorio(acce[0],productoSelectSKU,acce[2]);
+
+            
+            putNewAccesorio(acce[0],accesorioExist,acce[2]);
+
+            //putNewAccesorio(acce[0],productoSelectSKU,acce[2]);
 
             //$(`.list-item[data-subcateg^="accesorio 41"]`).attr("hidden",true);
             $(`.list-item[data-subcateg^="${acce[2]}"]`).attr("hidden",true);
