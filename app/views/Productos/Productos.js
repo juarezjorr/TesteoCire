@@ -504,6 +504,9 @@ function getProductosTable() {
                     '</span>' +
                     '</td>' +
 
+                    '<td >' +
+                    row.prd_level +
+                    '</td>' +
 
                     '<td >' +
                     row.srv_name +
