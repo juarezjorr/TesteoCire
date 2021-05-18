@@ -220,9 +220,7 @@ function putSeries(dt) {
         fixedHeader: true,
         columns: [
             {data: 'produsku', class: 'sku'},
-            {data: 'prodname', class: 'product-name'},
             {data: 'serlnumb', class: 'product-name'},
-            {data: 'serlcost', class: 'price'},
             {data: 'dateregs', class: 'sku'},
             {data: 'cvstatus', class: 'code-type_s'},
             {data: 'cvestage', class: 'code-type_s'},
@@ -246,15 +244,13 @@ function putSeries(dt) {
 function build_modal_table(dt) {
     let tabla = $('#tblSerialList').DataTable();
 
-    //   $('.overlay_closer .title').html(`${dt[0].prd_sku} - ${dt[0].prd_name}`);
+    $('.overlay_closer .title').html(`${dt[0].prd_sku} - ${dt[0].prd_name}`);
     tabla.rows().remove().draw();
     $.each(dt, function (v, u) {
         tabla.row
             .add({
                 produsku: `<span class="hide-support">${u.ser_id}</span>${u.ser_sku}`,
-                prodname: u.prd_name,
                 serlnumb: u.ser_serial_number,
-                serlcost: u.ser_cost,
                 dateregs: u.ser_date_registry,
                 cvstatus: u.ser_situation,
                 cvestage: u.ser_stage,

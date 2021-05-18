@@ -46,10 +46,8 @@
             <table class="display compact nowrap"  id="tblSerialList">
                 <thead>
                     <tr>
-                        <th style="width:  160px">SKU</th>
-                        <th style="width: 350px">Producto</th>
+                        <th style="width:  100px">SKU</th>
                         <th style="width:  80px">Núm. serie</th>
-                        <th style="width:  80px">Costo</th>
                         <th style="width: 120px">Fecha de alta</th>
                         <th style="width:  50px">Clave status</th>
                         <th style="width:  50px">Clave etapa</th>

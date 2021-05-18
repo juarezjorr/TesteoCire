@@ -46,7 +46,7 @@
                                     <table class="table-data">
                                         <tr>
                                             <td class="concept">Fecha del reporte:</td>
-                                            <td class="data">2021/05/14</td>
+                                            <td class="data">'. $date .'</td>
                                         </tr>
                                         <tr>
                                             <td class="concept">Num. proyecto:</td>
@@ -94,10 +94,10 @@
                 <thead>
                     <tr>
                         <th style="width:  10mm;"></th>
-                        <th style="width:  30mm;">SKU</th>
+                        <th style="width:  10mm;">SKU</th>
                         <th style="width: 100mm;">DESCRIPCIÓN</th>
-                        <th style="width:  30mm;">SERIE</th>
-                        <th style="width:  auto;">NOTA</th>
+                        <th style="width:  10mm;">SERIE</th>
+                        <th style="width: 140mm;">NOTA</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,11 +108,11 @@
                 $el = explode('|', $dt);
                     $html .= '
                     <tr>
-                        <td style="width:  10mm;"><div class="check-box"></div></td>
-                        <td style="width:  30mm;">'.$el[6].'</td>
-                        <td style="width: 100mm;">'.$el[7].'</td>
-                        <td style="width:  30mm;">'.$el[8].'</td>
-                        <td style="width:  auto;">'.$el[9].'</td>
+                        <td><div class="check-box"></div></td>
+                        <td>'.$el[6].'</td>
+                        <td>'.$el[7].'</td>
+                        <td>'.$el[8].'</td>
+                        <td>'.$el[9].'</td>
                     </tr>';
             }
             $html .= '
@@ -145,12 +145,18 @@
     
     ob_clean();
     ob_get_contents();
-    $mpdf = new \Mpdf\Mpdf([
-        
-        "mode" => "utf-8",
-        "orientation" => "L",
-    ]);
-//    $mpdf -> setHTMLHeader($head);
+    $mpdf= new \Mpdf\Mpdf([
+        'mode' => 'utf-8',
+        'format' => 'Letter',
+        'margin_left' => 15,
+        'margin_right' => 5,
+        'margin_top' => 5,
+        'margin_bottom' => 5,
+        'margin_header' => 5,
+        'margin_footer' => 5, 
+        'orientation' => 'L'
+        ]);
+    
     $mpdf->SetHTMLFooter($foot);
 
     $mpdf->WriteHTML($css,\Mpdf\HTMLParserMode::HEADER_CSS);

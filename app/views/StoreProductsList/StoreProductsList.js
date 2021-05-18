@@ -33,11 +33,19 @@ function setting_table() {
         dom: 'Blrt',
         buttons: [
             {
-                // Boton aplicar cambios
+                // Boton imprimir el el reporte
                 text: 'Imprimir reporte',
                 className: 'btn-apply hidden-field',
                 action: function (e, dt, node, config) {
                     read_exchange_table();
+                },
+            },
+            {
+                // Boton limpiar la interface
+                text: 'Nuevo reporte',
+                className: 'btn-apply hidden-field',
+                action: function (e, dt, node, config) {
+                    window.location = 'StoreProductsList';
                 },
             },
         ],
@@ -259,6 +267,8 @@ function read_exchange_table() {
         let prodnam = $($(u).find('td')[2]).text();
         let serinum = $($(u).find('td')[3]).text();
         let comment = $($(u).find('td')[4]).text();
+
+        prodsku = prodsku.substring(0, 7) + '-' + prodsku.substring(7, prodsku.length);
 
         chain += `${stornam}|${projnum}|${projnam}|${datestr}|${version}|${freelnc}|${prodsku}|${prodnam}|${serinum}|${comment}@`;
     });
