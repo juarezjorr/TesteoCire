@@ -1,11 +1,13 @@
 var seccion = '';
 ///const folio = uuidv4();
 let folio;
-let = pr = [];
-let = link = '';
+let pr = [];
+let link = '';
+let url;
 
 $(document).ready(function () {
-    // importarScript('https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js');
+    url = getAbsolutePath();
+    importarScript(url + 'app/assets/lib/kendo.js');
 
     folio = getFolio();
     verifica_usuario();
@@ -31,11 +33,19 @@ function setting_table() {
         dom: 'Blrt',
         buttons: [
             {
-                // Boton aplicar cambios
+                // Boton imprimir el el reporte
                 text: 'Imprimir reporte',
                 className: 'btn-apply hidden-field',
                 action: function (e, dt, node, config) {
                     read_exchange_table();
+                },
+            },
+            {
+                // Boton limpiar la interface
+                text: 'Nuevo reporte',
+                className: 'btn-apply hidden-field',
+                action: function (e, dt, node, config) {
+                    window.location = 'StoreProductsList';
                 },
             },
         ],
@@ -258,6 +268,8 @@ function read_exchange_table() {
         let serinum = $($(u).find('td')[3]).text();
         let comment = $($(u).find('td')[4]).text();
 
+        prodsku = prodsku.substring(0, 7) + '-' + prodsku.substring(7, prodsku.length);
+
         chain += `${stornam}|${projnum}|${projnam}|${datestr}|${version}|${freelnc}|${prodsku}|${prodnam}|${serinum}|${comment}@`;
     });
     chain = chain.substring(0, chain.length - 1);
@@ -274,5 +286,5 @@ function build_data_structure(pr) {
 }
 
 function putSaveList(dt) {
-    window.open('app/views/StoreProductsList/rpt_StoreProducts.php', '_blank');
+    window.open(url + 'app/views/StoreProductsList/StoreProductsReport.php', '_blank');
 }

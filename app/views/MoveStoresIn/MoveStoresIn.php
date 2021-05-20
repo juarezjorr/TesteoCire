@@ -152,6 +152,7 @@
 
             </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnPrintReport">Imprimir</button>
                     <button type="button" class="btn btn-secondary" id="btnHideModal">Cerrar</button>
                 </div>
             </div>

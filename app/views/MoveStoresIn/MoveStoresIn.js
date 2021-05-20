@@ -283,7 +283,7 @@ function putProducts(dt) {
 function relocation_products() {
     var ps = $('#txtProducts').offset();
 
-    $('.list-group').css({top: ps.top + 60 + 'px'});
+    $('.list-group').css({top: ps.top + 35 + 'px'});
 }
 
 // Valida los campos
@@ -311,10 +311,10 @@ function validator() {
         msg += 'Debes seleccionar un producto';
     }
 
-    if ($('#txtCost').val() == 0 && $('.pos5').attr('class').indexOf('hide-items') < 0) {
-        ky = 1;
-        msg += 'Debes indicar el costo del producto';
-    }
+    // if ($('#txtCost').val() == 0 && $('.pos5').attr('class').indexOf('hide-items') < 0) {
+    //     ky = 1;
+    //     msg += 'Debes indicar el costo del producto';
+    // }
 
     if ($('#txtSerie').val() == 0 && $('.pos6').attr('class').indexOf('hide-items') < 0) {
         ky = 1;
@@ -330,6 +330,8 @@ function validator() {
         $('#btn_exchange').removeClass('disabled');
     } else {
         $('#btn_exchange').addClass('disabled');
+        console.clear();
+        console.log(msg);
     }
 }
 // Aplica la seleccion para la tabla de movimientos
@@ -338,7 +340,7 @@ function exchange_apply() {
     let prdSku = $('#txtIdProducts').val().split('|')[1];
     let prdName = $('#txtIdProducts').val().split('|')[2];
     let serie = parseInt($('#txtNextSerie').val());
-    let sersku = prdSku + refil(serie, 3);
+    let sersku = prdSku + refil(serie, 4);
     let serser = $('#txtSerie').val();
     let sercost = $('#txtCost').val();
     let sercoin = $('#txtCoin').val();
@@ -383,7 +385,7 @@ function fill_table(par) {
     tabla.row
         .add({
             editable: `<i class="fas fa-times-circle kill"></i>`,
-            prod_sku: `<span class="hide-support">${par[0].support}</span>${par[0].sersku}`,
+            prod_sku: `<span class="hide-support" id="SKU-${par[0].sersku}"></span>${par[0].sersku}`,
             prodname: par[0].prodnme,
             prodcant: `<span>${par[0].prodqty}</span>`,
             prodcost: par[0].sercost,
@@ -393,6 +395,9 @@ function fill_table(par) {
             comments: `<div>${par[0].comment}</div>`,
         })
         .draw();
+
+    $(`#SKU-${par[0].sersku}`).parent().parent().attr('data-content', par[0].support);
+
     btn_apply_appears();
 
     $('.edit')
@@ -438,8 +443,7 @@ function read_exchange_table() {
         fillField(pagina, par, tipo, selector);
     } else {
         $('#tblExchanges tbody tr').each(function (v, u) {
-            // let folio = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
-            let seriesku = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[3];
+            let seriesku = $(this).attr('data-content').split('|')[3];
             let prodname = $($(u).find('td')[2]).text();
             let quantity = $($(u).find('td')[3]).text();
             let serienum = $($(u).find('td')[5]).text();
@@ -447,12 +451,12 @@ function read_exchange_table() {
             let comments = $($(u).find('td')[8]).text();
             let codeexch = $($(u).find('td')[6]).text();
             let sericost = $($(u).find('td')[4]).text();
-            let typeexch = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[1];
-            let producid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[0];
-            let storesid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[2];
-            let sericoin = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[4];
-            let suppliid = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[5];
-            let docinvoi = $($(u).find('td')[1]).children('span.hide-support').text().split('|')[6];
+            let typeexch = $(this).attr('data-content').split('|')[1];
+            let producid = $(this).attr('data-content').split('|')[0];
+            let storesid = $(this).attr('data-content').split('|')[2];
+            let sericoin = $(this).attr('data-content').split('|')[4];
+            let suppliid = $(this).attr('data-content').split('|')[5];
+            let docinvoi = $(this).attr('data-content').split('|')[6];
 
             let truk = `${folio}|${seriesku}|${prodname}|${quantity}|${serienum}|${storname}|${comments}|${codeexch}|${typeexch}|${producid}|${storesid}|${sericost}|${sericoin}|${suppliid}|${docinvoi}`;
 
@@ -474,7 +478,7 @@ function read_exchange_table() {
              * 14 - doc    docinvoi                                                                              doc doc_id
              */
 
-            console.log(truk);
+            //console.log(truk);
             build_data_structure(truk);
         });
     }
@@ -548,6 +552,9 @@ function exchange_result(dt) {
     $('#btnHideModal').on('click', function () {
         window.location = 'MoveStoresIn';
     });
+    $('#btnPrintReport').on('click', function () {
+        $('.btn-print').trigger('click');
+    });
 }
 
 function updated_stores(dt) {
@@ -557,6 +564,9 @@ function updated_stores(dt) {
     $('#MoveFolioModal').modal('show');
     $('#btnHideModal').on('click', function () {
         window.location = 'MoveStoresIn';
+    });
+    $('#btnPrintReport').on('click', function () {
+        $('.btn-print').trigger('click');
     });
 }
 

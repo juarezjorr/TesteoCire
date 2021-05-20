@@ -58,10 +58,10 @@ class MoveStoresInModel extends Model
     public function listProducts()
     {
         $qry = "SELECT pd.prd_id, pd.prd_sku, pd.prd_name, (
-                    SELECT ifnull(max(convert(substring( ser_sku,8,3), signed integer)),0) + 1 
+                    SELECT ifnull(max(convert(substring( ser_sku,8,4), signed integer)),0) + 1 
                     FROM ctt_series WHERE prd_id = pd.prd_id AND ser_behaviour = 'C'
                 ) as serNext
-                FROM ctt_products AS pd WHERE pd.prd_status = 1 AND pd.prd_level ='P';";
+                FROM ctt_products AS pd WHERE pd.prd_status = 1 AND pd.prd_level IN ('P', 'A');";
         return $this->db->query($qry);
     }	
 

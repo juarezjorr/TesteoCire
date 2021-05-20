@@ -451,48 +451,63 @@ function jsPDF(options) {
         }
     };
 
-    var roundToPrecision = (API.roundToPrecision = API.__private__.roundToPrecision = function (number, parmPrecision) {
-        var tmpPrecision = precision || parmPrecision;
-        if (isNaN(number) || isNaN(tmpPrecision)) {
-            throw new Error('Invalid argument passed to jsPDF.roundToPrecision');
-        }
-        return number.toFixed(tmpPrecision).replace(/0+$/, '');
-    });
+    var roundToPrecision =
+        (API.roundToPrecision =
+        API.__private__.roundToPrecision =
+            function (number, parmPrecision) {
+                var tmpPrecision = precision || parmPrecision;
+                if (isNaN(number) || isNaN(tmpPrecision)) {
+                    throw new Error('Invalid argument passed to jsPDF.roundToPrecision');
+                }
+                return number.toFixed(tmpPrecision).replace(/0+$/, '');
+            });
 
     // high precision float
     var hpf;
     if (typeof floatPrecision === 'number') {
-        hpf = API.hpf = API.__private__.hpf = function (number) {
-            if (isNaN(number)) {
-                throw new Error('Invalid argument passed to jsPDF.hpf');
-            }
-            return roundToPrecision(number, floatPrecision);
-        };
+        hpf =
+            API.hpf =
+            API.__private__.hpf =
+                function (number) {
+                    if (isNaN(number)) {
+                        throw new Error('Invalid argument passed to jsPDF.hpf');
+                    }
+                    return roundToPrecision(number, floatPrecision);
+                };
     } else if (floatPrecision === 'smart') {
-        hpf = API.hpf = API.__private__.hpf = function (number) {
-            if (isNaN(number)) {
-                throw new Error('Invalid argument passed to jsPDF.hpf');
-            }
-            if (number > -1 && number < 1) {
-                return roundToPrecision(number, 16);
-            } else {
-                return roundToPrecision(number, 5);
-            }
-        };
+        hpf =
+            API.hpf =
+            API.__private__.hpf =
+                function (number) {
+                    if (isNaN(number)) {
+                        throw new Error('Invalid argument passed to jsPDF.hpf');
+                    }
+                    if (number > -1 && number < 1) {
+                        return roundToPrecision(number, 16);
+                    } else {
+                        return roundToPrecision(number, 5);
+                    }
+                };
     } else {
-        hpf = API.hpf = API.__private__.hpf = function (number) {
-            if (isNaN(number)) {
-                throw new Error('Invalid argument passed to jsPDF.hpf');
-            }
-            return roundToPrecision(number, 16);
-        };
+        hpf =
+            API.hpf =
+            API.__private__.hpf =
+                function (number) {
+                    if (isNaN(number)) {
+                        throw new Error('Invalid argument passed to jsPDF.hpf');
+                    }
+                    return roundToPrecision(number, 16);
+                };
     }
-    var f2 = (API.f2 = API.__private__.f2 = function (number) {
-        if (isNaN(number)) {
-            throw new Error('Invalid argument passed to jsPDF.f2');
-        }
-        return roundToPrecision(number, 2);
-    });
+    var f2 =
+        (API.f2 =
+        API.__private__.f2 =
+            function (number) {
+                if (isNaN(number)) {
+                    throw new Error('Invalid argument passed to jsPDF.f2');
+                }
+                return roundToPrecision(number, 2);
+            });
 
     var f3 = (API.__private__.f3 = function (number) {
         if (isNaN(number)) {
@@ -501,16 +516,19 @@ function jsPDF(options) {
         return roundToPrecision(number, 3);
     });
 
-    var scale = (API.scale = API.__private__.scale = function (number) {
-        if (isNaN(number)) {
-            throw new Error('Invalid argument passed to jsPDF.scale');
-        }
-        if (apiMode === ApiMode.COMPAT) {
-            return number * scaleFactor;
-        } else if (apiMode === ApiMode.ADVANCED) {
-            return number;
-        }
-    });
+    var scale =
+        (API.scale =
+        API.__private__.scale =
+            function (number) {
+                if (isNaN(number)) {
+                    throw new Error('Invalid argument passed to jsPDF.scale');
+                }
+                if (apiMode === ApiMode.COMPAT) {
+                    return number * scaleFactor;
+                } else if (apiMode === ApiMode.ADVANCED) {
+                    return number;
+                }
+            });
 
     var transformY = function (y) {
         if (apiMode === ApiMode.COMPAT) {
@@ -626,7 +644,8 @@ function jsPDF(options) {
 
     var setCreationDate = (API.__private__.setCreationDate = function (date) {
         var tmpCreationDateString;
-        var regexPDFCreationDate = /^D:(20[0-2][0-9]|203[0-7]|19[7-9][0-9])(0[0-9]|1[0-2])([0-2][0-9]|3[0-1])(0[0-9]|1[0-9]|2[0-3])(0[0-9]|[1-5][0-9])(0[0-9]|[1-5][0-9])(\+0[0-9]|\+1[0-4]|-0[0-9]|-1[0-1])'(0[0-9]|[1-5][0-9])'?$/;
+        var regexPDFCreationDate =
+            /^D:(20[0-2][0-9]|203[0-7]|19[7-9][0-9])(0[0-9]|1[0-2])([0-2][0-9]|3[0-1])(0[0-9]|1[0-9]|2[0-3])(0[0-9]|[1-5][0-9])(0[0-9]|[1-5][0-9])(\+0[0-9]|\+1[0-4]|-0[0-9]|-1[0-1])'(0[0-9]|[1-5][0-9])'?$/;
         if (typeof date === 'undefined') {
             date = new Date();
         }
@@ -794,13 +813,16 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name getFontSize
      */
-    var getFontSize = (API.__private__.getFontSize = API.getFontSize = function () {
-        if (apiMode === ApiMode.COMPAT) {
-            return activeFontSize;
-        } else {
-            return activeFontSize * scaleFactor;
-        }
-    });
+    var getFontSize =
+        (API.__private__.getFontSize =
+        API.getFontSize =
+            function () {
+                if (apiMode === ApiMode.COMPAT) {
+                    return activeFontSize;
+                } else {
+                    return activeFontSize * scaleFactor;
+                }
+            });
 
     var R2L = options.R2L || false;
 
@@ -941,15 +963,18 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name setDocumentProperties
      */
-    API.__private__.setDocumentProperties = API.setProperties = API.setDocumentProperties = function (properties) {
-        // copying only those properties we can render.
-        for (var property in documentProperties) {
-            if (documentProperties.hasOwnProperty(property) && properties[property]) {
-                documentProperties[property] = properties[property];
-            }
-        }
-        return this;
-    };
+    API.__private__.setDocumentProperties =
+        API.setProperties =
+        API.setDocumentProperties =
+            function (properties) {
+                // copying only those properties we can render.
+                for (var property in documentProperties) {
+                    if (documentProperties.hasOwnProperty(property) && properties[property]) {
+                        documentProperties[property] = properties[property];
+                    }
+                }
+                return this;
+            };
 
     API.__private__.setDocumentProperty = function (key, value) {
         if (Object.keys(documentProperties).indexOf(key) === -1) {
@@ -2440,22 +2465,25 @@ function jsPDF(options) {
         return String.fromCharCode.apply(undefined, newtext);
     };
 
-    var pdfEscape = (API.__private__.pdfEscape = API.pdfEscape = function (text, flags) {
-        /**
-         * Replace '/', '(', and ')' with pdf-safe versions
-         *
-         * Doing to8bitStream does NOT make this PDF display unicode text. For that
-         * we also need to reference a unicode font and embed it - royal pain in the rear.
-         *
-         * There is still a benefit to to8bitStream - PDF simply cannot handle 16bit chars,
-         * which JavaScript Strings are happy to provide. So, while we still cannot display
-         * 2-byte characters property, at least CONDITIONALLY converting (entire string containing)
-         * 16bit chars to (USC-2-BE) 2-bytes per char + BOM streams we ensure that entire PDF
-         * is still parseable.
-         * This will allow immediate support for unicode in document properties strings.
-         */
-        return to8bitStream(text, flags).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
-    });
+    var pdfEscape =
+        (API.__private__.pdfEscape =
+        API.pdfEscape =
+            function (text, flags) {
+                /**
+                 * Replace '/', '(', and ')' with pdf-safe versions
+                 *
+                 * Doing to8bitStream does NOT make this PDF display unicode text. For that
+                 * we also need to reference a unicode font and embed it - royal pain in the rear.
+                 *
+                 * There is still a benefit to to8bitStream - PDF simply cannot handle 16bit chars,
+                 * which JavaScript Strings are happy to provide. So, while we still cannot display
+                 * 2-byte characters property, at least CONDITIONALLY converting (entire string containing)
+                 * 16bit chars to (USC-2-BE) 2-bytes per char + BOM streams we ensure that entire PDF
+                 * is still parseable.
+                 * This will allow immediate support for unicode in document properties strings.
+                 */
+                return to8bitStream(text, flags).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
+            });
 
     var beginPage = (API.__private__.beginPage = function (format) {
         pages[++page] = [];
@@ -2558,9 +2586,12 @@ function jsPDF(options) {
         }
     };
 
-    var getNumberOfPages = (API.__private__.getNumberOfPages = API.getNumberOfPages = function () {
-        return pages.length - 1;
-    });
+    var getNumberOfPages =
+        (API.__private__.getNumberOfPages =
+        API.getNumberOfPages =
+            function () {
+                return pages.length - 1;
+            });
 
     /**
      * Returns a document-specific font key - a label assigned to a
@@ -2779,120 +2810,123 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name output
      */
-    var output = (API.output = API.__private__.output = SAFE(function output(type, options) {
-        options = options || {};
+    var output =
+        (API.output =
+        API.__private__.output =
+            SAFE(function output(type, options) {
+                options = options || {};
 
-        if (typeof options === 'string') {
-            options = {
-                filename: options,
-            };
-        } else {
-            options.filename = options.filename || 'generated.pdf';
-        }
+                if (typeof options === 'string') {
+                    options = {
+                        filename: options,
+                    };
+                } else {
+                    options.filename = options.filename || 'generated.pdf';
+                }
 
-        switch (type) {
-            case undefined:
-                return buildDocument();
-            case 'save':
-                API.save(options.filename);
-                break;
-            case 'arraybuffer':
-                return getArrayBuffer(buildDocument());
-            case 'blob':
-                return getBlob(buildDocument());
-            case 'bloburi':
-            case 'bloburl':
-                // Developer is responsible of calling revokeObjectURL
-                if (typeof globalObject.URL !== 'undefined' && typeof globalObject.URL.createObjectURL === 'function') {
-                    return (globalObject.URL && globalObject.URL.createObjectURL(getBlob(buildDocument()))) || void 0;
-                } else {
-                    console.warn('bloburl is not supported by your system, because URL.createObjectURL is not supported by your browser.');
-                }
-                break;
-            case 'datauristring':
-            case 'dataurlstring':
-                var dataURI = '';
-                var pdfDocument = buildDocument();
-                try {
-                    dataURI = btoa(pdfDocument);
-                } catch (e) {
-                    dataURI = btoa(unescape(encodeURIComponent(pdfDocument)));
-                }
-                return 'data:application/pdf;filename=' + options.filename + ';base64,' + dataURI;
-            case 'pdfobjectnewwindow':
-                if (Object.prototype.toString.call(globalObject) === '[object Window]') {
-                    var pdfObjectUrl = options.pdfObjectUrl || 'https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.min.js';
-                    var htmlForNewWindow =
-                        '<html>' +
-                        '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style><body><script src="' +
-                        pdfObjectUrl +
-                        '"></script><script >PDFObject.embed("' +
-                        this.output('dataurlstring') +
-                        '", ' +
-                        JSON.stringify(options) +
-                        ');</script></body></html>';
-                    var nW = globalObject.open();
+                switch (type) {
+                    case undefined:
+                        return buildDocument();
+                    case 'save':
+                        API.save(options.filename);
+                        break;
+                    case 'arraybuffer':
+                        return getArrayBuffer(buildDocument());
+                    case 'blob':
+                        return getBlob(buildDocument());
+                    case 'bloburi':
+                    case 'bloburl':
+                        // Developer is responsible of calling revokeObjectURL
+                        if (typeof globalObject.URL !== 'undefined' && typeof globalObject.URL.createObjectURL === 'function') {
+                            return (globalObject.URL && globalObject.URL.createObjectURL(getBlob(buildDocument()))) || void 0;
+                        } else {
+                            console.warn('bloburl is not supported by your system, because URL.createObjectURL is not supported by your browser.');
+                        }
+                        break;
+                    case 'datauristring':
+                    case 'dataurlstring':
+                        var dataURI = '';
+                        var pdfDocument = buildDocument();
+                        try {
+                            dataURI = btoa(pdfDocument);
+                        } catch (e) {
+                            dataURI = btoa(unescape(encodeURIComponent(pdfDocument)));
+                        }
+                        return 'data:application/pdf;filename=' + options.filename + ';base64,' + dataURI;
+                    case 'pdfobjectnewwindow':
+                        if (Object.prototype.toString.call(globalObject) === '[object Window]') {
+                            var pdfObjectUrl = options.pdfObjectUrl || 'https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.min.js';
+                            var htmlForNewWindow =
+                                '<html>' +
+                                '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style><body><script src="' +
+                                pdfObjectUrl +
+                                '"></script><script >PDFObject.embed("' +
+                                this.output('dataurlstring') +
+                                '", ' +
+                                JSON.stringify(options) +
+                                ');</script></body></html>';
+                            var nW = globalObject.open();
 
-                    if (nW !== null) {
-                        nW.document.write(htmlForNewWindow);
-                    }
-                    return nW;
-                } else {
-                    throw new Error('The option pdfobjectnewwindow just works in a browser-environment.');
-                }
-            case 'pdfjsnewwindow':
-                if (Object.prototype.toString.call(globalObject) === '[object Window]') {
-                    var pdfJsUrl = options.pdfJsUrl || 'examples/PDF.js/web/viewer.html';
-                    var htmlForPDFjsNewWindow =
-                        '<html>' +
-                        '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>' +
-                        '<body><iframe id="pdfViewer" src="' +
-                        pdfJsUrl +
-                        '?file=&downloadName=' +
-                        options.filename +
-                        '" width="500px" height="400px" />' +
-                        '</body></html>';
-                    var PDFjsNewWindow = globalObject.open();
+                            if (nW !== null) {
+                                nW.document.write(htmlForNewWindow);
+                            }
+                            return nW;
+                        } else {
+                            throw new Error('The option pdfobjectnewwindow just works in a browser-environment.');
+                        }
+                    case 'pdfjsnewwindow':
+                        if (Object.prototype.toString.call(globalObject) === '[object Window]') {
+                            var pdfJsUrl = options.pdfJsUrl || 'examples/PDF.js/web/viewer.html';
+                            var htmlForPDFjsNewWindow =
+                                '<html>' +
+                                '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>' +
+                                '<body><iframe id="pdfViewer" src="' +
+                                pdfJsUrl +
+                                '?file=&downloadName=' +
+                                options.filename +
+                                '" width="500px" height="400px" />' +
+                                '</body></html>';
+                            var PDFjsNewWindow = globalObject.open();
 
-                    if (PDFjsNewWindow !== null) {
-                        PDFjsNewWindow.document.write(htmlForPDFjsNewWindow);
-                        var scope = this;
-                        PDFjsNewWindow.document.documentElement.querySelector('#pdfViewer').onload = function () {
-                            PDFjsNewWindow.document.title = options.filename;
-                            PDFjsNewWindow.document.documentElement.querySelector('#pdfViewer').contentWindow.PDFViewerApplication.open(scope.output('bloburl'));
-                        };
-                    }
-                    return PDFjsNewWindow;
-                } else {
-                    throw new Error('The option pdfjsnewwindow just works in a browser-environment.');
+                            if (PDFjsNewWindow !== null) {
+                                PDFjsNewWindow.document.write(htmlForPDFjsNewWindow);
+                                var scope = this;
+                                PDFjsNewWindow.document.documentElement.querySelector('#pdfViewer').onload = function () {
+                                    PDFjsNewWindow.document.title = options.filename;
+                                    PDFjsNewWindow.document.documentElement.querySelector('#pdfViewer').contentWindow.PDFViewerApplication.open(scope.output('bloburl'));
+                                };
+                            }
+                            return PDFjsNewWindow;
+                        } else {
+                            throw new Error('The option pdfjsnewwindow just works in a browser-environment.');
+                        }
+                    case 'dataurlnewwindow':
+                        if (Object.prototype.toString.call(globalObject) === '[object Window]') {
+                            var htmlForDataURLNewWindow =
+                                '<html>' +
+                                '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>' +
+                                '<body>' +
+                                '<iframe src="' +
+                                this.output('datauristring', options) +
+                                '"></iframe>' +
+                                '</body></html>';
+                            var dataURLNewWindow = globalObject.open();
+                            if (dataURLNewWindow !== null) {
+                                dataURLNewWindow.document.write(htmlForDataURLNewWindow);
+                                dataURLNewWindow.document.title = options.filename;
+                            }
+                            if (dataURLNewWindow || typeof safari === 'undefined') return dataURLNewWindow;
+                        } else {
+                            throw new Error('The option dataurlnewwindow just works in a browser-environment.');
+                        }
+                        break;
+                    case 'datauri':
+                    case 'dataurl':
+                        return (globalObject.document.location.href = this.output('datauristring', options));
+                    default:
+                        return null;
                 }
-            case 'dataurlnewwindow':
-                if (Object.prototype.toString.call(globalObject) === '[object Window]') {
-                    var htmlForDataURLNewWindow =
-                        '<html>' +
-                        '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>' +
-                        '<body>' +
-                        '<iframe src="' +
-                        this.output('datauristring', options) +
-                        '"></iframe>' +
-                        '</body></html>';
-                    var dataURLNewWindow = globalObject.open();
-                    if (dataURLNewWindow !== null) {
-                        dataURLNewWindow.document.write(htmlForDataURLNewWindow);
-                        dataURLNewWindow.document.title = options.filename;
-                    }
-                    if (dataURLNewWindow || typeof safari === 'undefined') return dataURLNewWindow;
-                } else {
-                    throw new Error('The option dataurlnewwindow just works in a browser-environment.');
-                }
-                break;
-            case 'datauri':
-            case 'dataurl':
-                return (globalObject.document.location.href = this.output('datauristring', options));
-            default:
-                return null;
-        }
-    }));
+            }));
 
     /**
      * Used to see if a supplied hotfix was requested when the pdf instance was created.
@@ -2952,17 +2986,20 @@ function jsPDF(options) {
     //---------------------------------------
     // Public API
 
-    var getPageInfo = (API.__private__.getPageInfo = API.getPageInfo = function (pageNumberOneBased) {
-        if (isNaN(pageNumberOneBased) || pageNumberOneBased % 1 !== 0) {
-            throw new Error('Invalid argument passed to jsPDF.getPageInfo');
-        }
-        var objId = pagesContext[pageNumberOneBased].objId;
-        return {
-            objId: objId,
-            pageNumber: pageNumberOneBased,
-            pageContext: pagesContext[pageNumberOneBased],
-        };
-    });
+    var getPageInfo =
+        (API.__private__.getPageInfo =
+        API.getPageInfo =
+            function (pageNumberOneBased) {
+                if (isNaN(pageNumberOneBased) || pageNumberOneBased % 1 !== 0) {
+                    throw new Error('Invalid argument passed to jsPDF.getPageInfo');
+                }
+                var objId = pagesContext[pageNumberOneBased].objId;
+                return {
+                    objId: objId,
+                    pageNumber: pageNumberOneBased,
+                    pageContext: pagesContext[pageNumberOneBased],
+                };
+            });
 
     var getPageInfoByObjId = (API.__private__.getPageInfoByObjId = function (objId) {
         if (isNaN(objId) || objId % 1 !== 0) {
@@ -2976,13 +3013,16 @@ function jsPDF(options) {
         return getPageInfo(pageNumber);
     });
 
-    var getCurrentPageInfo = (API.__private__.getCurrentPageInfo = API.getCurrentPageInfo = function () {
-        return {
-            objId: pagesContext[currentPage].objId,
-            pageNumber: currentPage,
-            pageContext: pagesContext[currentPage],
-        };
-    });
+    var getCurrentPageInfo =
+        (API.__private__.getCurrentPageInfo =
+        API.getCurrentPageInfo =
+            function () {
+                return {
+                    objId: pagesContext[currentPage].objId,
+                    pageNumber: currentPage,
+                    pageContext: pagesContext[currentPage],
+                };
+            });
 
     /**
      * Adds (and transfers the focus to) new page to the PDF document.
@@ -3678,16 +3718,19 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @description All .clip() after calling drawing ops with a style argument of null.
      */
-    var clip = (API.__private__.clip = API.clip = function (rule) {
-        // Call .clip() after calling drawing ops with a style argument of null
-        // W is the PDF clipping op
-        if ('evenodd' === rule) {
-            out('W*');
-        } else {
-            out('W');
-        }
-        return this;
-    });
+    var clip =
+        (API.__private__.clip =
+        API.clip =
+            function (rule) {
+                // Call .clip() after calling drawing ops with a style argument of null
+                // W is the PDF clipping op
+                if ('evenodd' === rule) {
+                    out('W*');
+                } else {
+                    out('W');
+                }
+                return this;
+            });
 
     /**
      * @name clipEvenOdd
@@ -3733,38 +3776,41 @@ function jsPDF(options) {
         return this;
     };
 
-    var getStyle = (API.__private__.getStyle = API.getStyle = function (style) {
-        // see path-painting operators in PDF spec
-        var op = defaultPathOperation; // stroke
+    var getStyle =
+        (API.__private__.getStyle =
+        API.getStyle =
+            function (style) {
+                // see path-painting operators in PDF spec
+                var op = defaultPathOperation; // stroke
 
-        switch (style) {
-            case 'D':
-            case 'S':
-                op = 'S'; // stroke
-                break;
-            case 'F':
-                op = 'f'; // fill
-                break;
-            case 'FD':
-            case 'DF':
-                op = 'B';
-                break;
-            case 'f':
-            case 'f*':
-            case 'B':
-            case 'B*':
-                /*
+                switch (style) {
+                    case 'D':
+                    case 'S':
+                        op = 'S'; // stroke
+                        break;
+                    case 'F':
+                        op = 'f'; // fill
+                        break;
+                    case 'FD':
+                    case 'DF':
+                        op = 'B';
+                        break;
+                    case 'f':
+                    case 'f*':
+                    case 'B':
+                    case 'B*':
+                        /*
                Allow direct use of these PDF path-painting operators:
                - f    fill using nonzero winding number rule
                - f*    fill using even-odd rule
                - B    fill then stroke with fill using non-zero winding number rule
                - B*    fill then stroke with fill using even-odd rule
                */
-                op = style;
-                break;
-        }
-        return op;
-    });
+                        op = style;
+                        break;
+                }
+                return op;
+            });
 
     /**
      * Close the current path. The PDF "h" operator.
@@ -4372,9 +4418,12 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name getFont
      */
-    var getFontEntry = (API.__private__.getFont = API.getFont = function () {
-        return fonts[getFont.apply(API, arguments)];
-    });
+    var getFontEntry =
+        (API.__private__.getFont =
+        API.getFont =
+            function () {
+                return fonts[getFont.apply(API, arguments)];
+            });
 
     /**
      * Returns an object - a tree of fontName to fontStyle relationships available to
@@ -4442,10 +4491,13 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name setLineWidth
      */
-    var setLineWidth = (API.__private__.setLineWidth = API.setLineWidth = function (width) {
-        out(hpf(scale(width)) + ' w');
-        return this;
-    });
+    var setLineWidth =
+        (API.__private__.setLineWidth =
+        API.setLineWidth =
+            function (width) {
+                out(hpf(scale(width)) + ' w');
+                return this;
+            });
 
     /**
      * Sets the dash pattern for upcoming lines.
@@ -4461,30 +4513,36 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name setLineDashPattern
      */
-    API.__private__.setLineDash = jsPDF.API.setLineDash = jsPDF.API.setLineDashPattern = function (dashArray, dashPhase) {
-        dashArray = dashArray || [];
-        dashPhase = dashPhase || 0;
+    API.__private__.setLineDash =
+        jsPDF.API.setLineDash =
+        jsPDF.API.setLineDashPattern =
+            function (dashArray, dashPhase) {
+                dashArray = dashArray || [];
+                dashPhase = dashPhase || 0;
 
-        if (isNaN(dashPhase) || !Array.isArray(dashArray)) {
-            throw new Error('Invalid arguments passed to jsPDF.setLineDash');
-        }
+                if (isNaN(dashPhase) || !Array.isArray(dashArray)) {
+                    throw new Error('Invalid arguments passed to jsPDF.setLineDash');
+                }
 
-        dashArray = dashArray
-            .map(function (x) {
-                return hpf(scale(x));
-            })
-            .join(' ');
-        dashPhase = hpf(scale(dashPhase));
+                dashArray = dashArray
+                    .map(function (x) {
+                        return hpf(scale(x));
+                    })
+                    .join(' ');
+                dashPhase = hpf(scale(dashPhase));
 
-        out('[' + dashArray + '] ' + dashPhase + ' d');
-        return this;
-    };
+                out('[' + dashArray + '] ' + dashPhase + ' d');
+                return this;
+            };
 
     var lineHeightFactor;
 
-    var getLineHeight = (API.__private__.getLineHeight = API.getLineHeight = function () {
-        return activeFontSize * lineHeightFactor;
-    });
+    var getLineHeight =
+        (API.__private__.getLineHeight =
+        API.getLineHeight =
+            function () {
+                return activeFontSize * lineHeightFactor;
+            });
 
     API.__private__.getLineHeight = API.getLineHeight = function () {
         return activeFontSize * lineHeightFactor;
@@ -4500,13 +4558,16 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name setLineHeightFactor
      */
-    var setLineHeightFactor = (API.__private__.setLineHeightFactor = API.setLineHeightFactor = function (value) {
-        value = value || 1.15;
-        if (typeof value === 'number') {
-            lineHeightFactor = value;
-        }
-        return this;
-    });
+    var setLineHeightFactor =
+        (API.__private__.setLineHeightFactor =
+        API.setLineHeightFactor =
+            function (value) {
+                value = value || 1.15;
+                if (typeof value === 'number') {
+                    lineHeightFactor = value;
+                }
+                return this;
+            });
 
     /**
      * Gets the LineHeightFactor, default: 1.15.
@@ -4517,9 +4578,12 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name getLineHeightFactor
      */
-    var getLineHeightFactor = (API.__private__.getLineHeightFactor = API.getLineHeightFactor = function () {
-        return lineHeightFactor;
-    });
+    var getLineHeightFactor =
+        (API.__private__.getLineHeightFactor =
+        API.getLineHeightFactor =
+            function () {
+                return lineHeightFactor;
+            });
 
     setLineHeightFactor(options.lineHeight);
 
@@ -4536,13 +4600,19 @@ function jsPDF(options) {
         }
     });
 
-    var getHorizontalCoordinateString = (API.__private__.getHorizontalCoordinateString = API.getHorizontalCoordinateString = function (value) {
-        return hpf(getHorizontalCoordinate(value));
-    });
+    var getHorizontalCoordinateString =
+        (API.__private__.getHorizontalCoordinateString =
+        API.getHorizontalCoordinateString =
+            function (value) {
+                return hpf(getHorizontalCoordinate(value));
+            });
 
-    var getVerticalCoordinateString = (API.__private__.getVerticalCoordinateString = API.getVerticalCoordinateString = function (value) {
-        return hpf(getVerticalCoordinate(value));
-    });
+    var getVerticalCoordinateString =
+        (API.__private__.getVerticalCoordinateString =
+        API.getVerticalCoordinateString =
+            function (value) {
+                return hpf(getVerticalCoordinate(value));
+            });
 
     var strokeColor = options.strokeColor || '0 G';
 
@@ -4690,9 +4760,12 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name getTextColor
      */
-    var getTextColor = (API.__private__.getTextColor = API.getTextColor = function () {
-        return decodeColorString(textColor);
-    });
+    var getTextColor =
+        (API.__private__.getTextColor =
+        API.getTextColor =
+            function () {
+                return decodeColorString(textColor);
+            });
     /**
      * Sets the text color for upcoming elements.
      *
@@ -4756,9 +4829,12 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name getCharSpace
      */
-    var getCharSpace = (API.__private__.getCharSpace = API.getCharSpace = function () {
-        return parseFloat(activeCharSpace || 0);
-    });
+    var getCharSpace =
+        (API.__private__.getCharSpace =
+        API.getCharSpace =
+            function () {
+                return parseFloat(activeCharSpace || 0);
+            });
 
     /**
      * Set global value of CharSpace.
@@ -4859,15 +4935,19 @@ function jsPDF(options) {
      * @memberof jsPDF#
      * @name setLineMiterLimit
      */
-    API.__private__.setLineMiterLimit = API.__private__.setMiterLimit = API.setLineMiterLimit = API.setMiterLimit = function (length) {
-        length = length || 0;
-        if (isNaN(length)) {
-            throw new Error('Invalid argument passed to jsPDF.setLineMiterLimit');
-        }
-        out(hpf(scale(length)) + ' M');
+    API.__private__.setLineMiterLimit =
+        API.__private__.setMiterLimit =
+        API.setLineMiterLimit =
+        API.setMiterLimit =
+            function (length) {
+                length = length || 0;
+                if (isNaN(length)) {
+                    throw new Error('Invalid argument passed to jsPDF.setLineMiterLimit');
+                }
+                out(hpf(scale(length)) + ' M');
 
-        return this;
-    };
+                return this;
+            };
 
     /**
      * An object representing a pdf graphics state.

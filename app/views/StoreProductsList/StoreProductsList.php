@@ -16,10 +16,7 @@
 
             <div class="mb-3 mvst_panel">
                 <div class="form-group">
-				<h4 id="titulo">Productos para Impresión</h4>   
-
-
-
+                <h4 id="titulo">Productos para Impresión</h4>
 
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
@@ -27,9 +24,6 @@
                             <label for="txtStoreSource" class="form-label">Almacén</label>
                         </div>
                     </div>
-
-                                        
-                
 
                     <div class="row list-finder">
                         <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
@@ -115,7 +109,14 @@
         </div>
 
     </div>
+
+
 </div>
+
+    <!-- Start Formato para impresion -->
+        <div class="prepress" id="format"></div>
+    <!-- End Formato para impresion -->
+
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
 <script src="<?=  PATH_VIEWS . 'StoreProductsList/StoreProductsList.js' ?>"></script>

@@ -7,7 +7,7 @@
 }
 body {
 	font-family: $font_primary;
-	font-size: 14px;
+	font-size: 12px;
 	color: $dark;
 	background-color: $color_deep_body;
 }
@@ -21,7 +21,7 @@ h4 {
 }
 
 h1 {
-	font-size: 1.9rem;
+	font-size: 1.9em;
 	border-bottom: 1px solid #0d75d6;
 }
 h2 {
@@ -87,9 +87,14 @@ h4 {
 .form-floating > .form-control {
 	height: 100%;
 	padding: 0.5rem 0.5rem;
+	&:not(:placeholder-shown) {
+
+		padding-top: 2.0em;
+		padding-bottom: 0.8em;
+	}
 }
 .form-floating > label {
-	padding: 0.4rem 1rem;
+	padding: 0.8em 1.5em;
 	opacity: 0.8;
 	color: $inputs-label;
 }
@@ -147,23 +152,26 @@ h4 {
 		display: none;
 	}
 }
-
+.mb-2 {
+	margin-bottom: .1em !important;
+}
 .form-floating {
 	& > .form-select {
-		height: calc(3rem + 0px);
-		padding: 1.05rem 0.75rem;
-		font-size: 0.8rem;
+		height: calc(4em + 1px);
+		padding: 1.0em 0.9em;
+		font-size: 0.9em;
 		font-weight: 900;
-		padding-top: 1rem;
-		padding-bottom: 0.3rem;
+		padding-top: 1.5em;
+		padding-bottom: 0.5em;
 
 		option {
-			font-size: 0.75rem;
+			font-size: 1.0em;
+			padding: 13px;
 		}
 	}
 	input,
 	textarea {
-		font-size: 0.8rem;
+		font-size: 0.8em;
 		font-weight: 900;
 	}
 	.box-items-list {
@@ -200,6 +208,7 @@ h4 {
 }
 .dataTables_wrapper {
 	display: block;
+	font-size: 0.9em;
 	.dataTables_filter {
 		label {
 			display: block;
@@ -247,7 +256,7 @@ div.dataTables_wrapper div.btn-group button.btn-apply {
 	font-size: 1em;
 	background-color: $dark;
 	color: #ffffff;
-	border-radius: 8px;
+	border-radius: 8px !important;
 	&:hover {
 		background-color: $dark-x;
 	}
@@ -350,6 +359,9 @@ table {
 	td.sku {
 		text-align: center;
 	}
+	td.center {
+		text-align: center;
+	}
 	td.product-name {
 		text-align: left;
 		font-weight: 900;
@@ -439,9 +451,9 @@ table {
 			display: none;
 		}
 		.list-items {
-			font-size: 0.75rem;
+			font-size: 0.9em;
 			border-radius: 5px;
-			box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+			box-shadow: 2px 12px 14px 1px rgba(0, 0, 0, 0.5);
 			width: 100%;
 			max-height: 250px;
 			padding: 4px;
@@ -451,7 +463,7 @@ table {
 			.list-item {
 				width: 100%;
 
-				padding: 6px;
+				padding: 2px;
 				cursor: pointer;
 				border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 				white-space: nowrap;
@@ -487,6 +499,7 @@ table {
 	}
 }
 
+
 // MODALES
 
 .overlay_background {
@@ -514,10 +527,10 @@ table {
 
 		.overlay_closer {
 			width: 100%;
-			height: 50px;
+			height: 40px;
 			padding: 3px 0 0 0;
 			overflow: auto;
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
@@ -525,11 +538,11 @@ table {
 			.title {
 				font-family: $font_secundary;
 				color: $dark;
-				font-size: 1.5rem;
+				font-size: 1.7em;
 			}
 
 			.btn_close {
-				font-size: 1.1rem;
+				font-size: 1.1em;
 				font-weight: 900;
 				border: 3px solid $dark;
 				border-radius: 30px;

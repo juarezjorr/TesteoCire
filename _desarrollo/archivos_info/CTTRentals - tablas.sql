@@ -153,7 +153,7 @@ COMMENT = 'Puestos de empleados en la empresa';
 DROP TABLE `cttapp_cire`.`ctt_products`;
 CREATE TABLE `cttapp_cire`.`ctt_products` (
     `prd_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del proveedor',
-    `prd_sku`               VARCHAR(10) NULL                COMMENT 'SKU identificador del producto',
+    `prd_sku`               VARCHAR(15) NULL                COMMENT 'SKU identificador del producto',
     `prd_name`              VARCHAR(100) NULL               COMMENT 'Nombre del producto',
     `prd_english_name`      VARCHAR(100)  NULL              COMMENT 'Nombre del producto en ingles',
     `prd_model`             VARCHAR(50) NULL                COMMENT 'Modelo del producto',
@@ -218,7 +218,7 @@ COMMENT = 'Tabla pivote m_to_m ctt_profile - ctt_modulo';
 DROP TABLE `cttapp_cire`.`ctt_series`;
 CREATE TABLE `cttapp_cire`.`ctt_series` (
     `ser_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la serie',
-    `ser_sku`               VARCHAR(14) NULL                COMMENT 'SKU identificador del producto',
+    `ser_sku`               VARCHAR(15) NULL                COMMENT 'SKU identificador del producto',
     `ser_serial_number`     VARCHAR(50)  NULL               COMMENT 'Numero de serie del producto',
     `ser_cost`              DECIMAL(10,2)  NULL             COMMENT 'Costo unitario del producto',
     `ser_status`            VARCHAR(1) NULL                 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
@@ -263,7 +263,7 @@ DROP TABLE `cttapp_cire`.`ctt_stores_exchange`;
 CREATE TABLE `cttapp_cire`.`ctt_stores_exchange` (
     `exc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del movimiento',
     `exc_date`              DATETIME NULL DEFAULT CURRENT_TIMESTAMP  COMMENT 'Fecha de registro del movimiento',
-    `exc_sku_product`       VARCHAR(100) NOT NULL           COMMENT 'SKU del producto',
+    `exc_sku_product`       VARCHAR(15) NOT NULL           COMMENT 'SKU del producto',
     `exc_product_name`      VARCHAR(200) NOT NULL           COMMENT 'Nombre del producto',
     `exc_quantity`          INT NULL                        COMMENT 'Cantidad de piezas',
     `exc_serie_product`     VARCHAR(200) NOT NULL           COMMENT 'Numero de series del producto',
@@ -297,6 +297,7 @@ CREATE TABLE `cttapp_cire`.`ctt_subcategories` (
     `sbc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la subcategoría',
     `sbc_code`              VARCHAR(10) NULL                COMMENT 'Clave de la subcategoría',
     `sbc_name`              VARCHAR(100) NULL               COMMENT 'Nombre de la subcategoría',
+    `sbc_behaviour`         VARCHAR(2) NULL                 COMMENT 'Comportamiento de la subcategoría',
     `sbc_status`            VARCHAR(1) NULL DEFAULT 1       COMMENT 'Estatus de la subcategoría 1-Activo, 0-Inactivo',
     `cat_id`                INT NOT NULL                    COMMENT 'Id del catálogo relación ctt_categories',
 PRIMARY KEY (`sbc_id`))
