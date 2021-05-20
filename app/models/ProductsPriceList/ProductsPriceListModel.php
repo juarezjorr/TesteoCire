@@ -85,7 +85,24 @@ public function listProducts($params)
     public function listProductPackages($params)
     {
         $prdId = $this->db->real_escape_string($params['prdId']);
-        $qry = "SELECT prd_id FROM ctt_products_packages WHERE prd_parent = $prdId;";
+        $prdName = $this->db->real_escape_string($params['prdName']);
+        $qry = "SELECT 
+                    p.prd_id, p.prd_sku, p.prd_name, ct.cat_name, sc.sbc_name, sv.srv_name, '$prdName' as paquete,
+                    sum(ifnull(sp.stp_quantity,0)) AS quantity, 
+                    p.prd_price, cn.cin_code AS prd_coin_type,  p.prd_english_name, p.prd_level
+                FROM  ctt_products AS p
+                INNER JOIN ctt_products_packages    AS pk ON pk.prd_id = p.prd_id
+                INNER JOIN ctt_subcategories        AS sc ON sc.sbc_id = p.sbc_id   AND sc.sbc_status = 1
+                INNER JOIN ctt_categories           AS ct ON ct.cat_id = sc.cat_id  AND ct.cat_status = 1
+                INNER JOIN ctt_services             AS sv ON sv.srv_id = p.srv_id   AND sv.srv_status = 1
+                LEFT  JOIN ctt_series               AS sr ON sr.prd_id = p.prd_id
+                LEFT  JOIN ctt_stores_products      AS sp ON sp.ser_id = sr.ser_id
+                LEFT  JOIN ctt_products_documents   AS dc ON sp.ser_id = sr.ser_id
+                LEFT  JOIN ctt_coins                AS cn ON cn.cin_id = p.cin_id
+                WHERE prd_status = 1 AND p.prd_visibility = 1 AND pk.prd_parent = $prdId
+                GROUP BY p.prd_id, p.prd_sku, p.prd_name, ct.cat_name, sc.sbc_name, sv.srv_name, 
+                         p.prd_price, p.prd_coin_type, p.prd_english_name 
+                ORDER BY p.prd_name;";
         return $this->db->query($qry);
     }
 

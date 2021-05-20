@@ -1,8 +1,9 @@
 -- 18 de Mayo 2021
 
  
-ALTER TABLE `cttapp_cire`.`ctt_products` CHANGE COLUMN `prd_sku` `prd_sku` VARCHAR(15) NULL DEFAULT NULL COMMENT 'SKU identificador del producto' ;
-ALTER TABLE `cttapp_cire`.`ctt_series` CHANGE COLUMN `ser_sku` `ser_sku` VARCHAR(15) NULL DEFAULT NULL COMMENT 'SKU identificador del producto' ;
-ALTER TABLE `cttapp_cire`.`ctt_stores_exchange` CHANGE COLUMN `exc_sku_product` `exc_sku_product` VARCHAR(15) NOT NULL COMMENT 'SKU del producto' ;
+
+
+INSERT INTO `cttapp_cire`.`ctt_categories` (`cat_name`, `cat_status`) VALUES ('Bolsa de accesorios', '1');
+INSERT INTO `cttapp_cire`.`ctt_subcategories` (`sbc_code`, `sbc_name`, `sbc_status`, `cat_id`) VALUES ('AC', 'BOLSA DE ACCESORIOS', '1', '17');
 
 

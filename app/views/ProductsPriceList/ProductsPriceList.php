@@ -39,14 +39,14 @@
 </div>
 
 
-<!-- Start Ventana modal -->
-    <div class="overlay_background overlay_hide">
+<!-- Start Ventana modal SERIES -->
+    <div class="overlay_background overlay_hide"id="SerieModal">
         <div class="overlay_modal">
             <div class="overlay_closer"><span class="title"></span><span class="btn_close">Cerrar</span></div>
             <table class="display compact nowrap"  id="tblSerialList">
                 <thead>
                     <tr>
-                        <th style="width:  100px">SKU</th>
+                        <th style="width: 100px">SKU</th>
                         <th style="width:  80px">Núm. serie</th>
                         <th style="width: 120px">Fecha de alta</th>
                         <th style="width:  50px">Clave status</th>
@@ -60,7 +60,29 @@
             </table>
         </div>
     </div>
-<!-- End Ventana modal -->
+<!-- End Ventana modal SERIES -->
+
+
+<!-- Start Ventana modal PRODUCTOS -->
+<div class="overlay_background overlay_hide" id="ProductsModal">
+        <div class="overlay_modal">
+            <div class="overlay_closer"><span class="title"></span><span class="btn_close">Cerrar</span></div>
+            <table class="display compact nowrap"  id="tblProductlList">
+                <thead>
+                    <tr>
+                        <th style="width: 100px">SKU</th>
+                        <th style="width: 350px">Producto</th>
+                        <th style="width:  60px">Existencias</th>
+                        <th style="width:  70px">Precio</th>
+                        <th style="width:  50px">Moneda</th>
+                        <th style="width: 180px">Catálogo</th>
+                        <th style="width: 180px">Subcategoría</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+<!-- End Ventana modal PRODUCTOS -->
 
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
