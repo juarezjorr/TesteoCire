@@ -11,7 +11,7 @@ class ProductosModel extends Model
 //Guarda prodducto 
 	public function SaveProductos($params)
 	{
-		$estatus = 0;
+		//$estatus = 0;
 
 
 	    //INSERTA PRODUCTO (VALIDAR QUE EXISTE)
@@ -149,73 +149,61 @@ class ProductosModel extends Model
 						$idProducto = trim($row[0]);
 					}
 
+
+
+					$qry = "SELECT 
+					p.prd_id,ifnull(p.prd_sku,'') , p.prd_name, p.prd_english_name,p.prd_model,p.prd_price, p.prd_coin_type ,p.prd_visibility, p.prd_comments,p.sbc_id, sc.cat_id, sc.sbc_name,  ct.cat_name, 
+					sv.srv_name, p.prd_level, ifnull(sum(sp.stp_quantity),0) AS quantity 
+					FROM  ctt_products AS p
+					INNER JOIN ctt_subcategories 	AS sc ON sc.sbc_id = p.sbc_id 	AND sc.sbc_status = 1
+					INNER JOIN ctt_categories 		AS ct ON ct.cat_id = sc.cat_id 	AND ct.cat_status = 1
+					INNER JOIN ctt_services 		AS sv ON sv.srv_id = p.srv_id 	AND sv.srv_status = 1
+					LEFT JOIN ctt_series 			AS sr ON sr.prd_id = p.prd_id
+					LEFT JOIN ctt_stores_products 	AS sp ON sp.ser_id = sr.ser_id
+					WHERE prd_status = 1 AND p.prd_id=".$idProducto."
+					GROUP BY 	p.prd_id, p.prd_sku, p.prd_name, ct.cat_name, sc.sbc_name, sv.srv_name, 
+					p.prd_price, p.prd_coin_type, p.prd_english_name;";
+
+
+				
+					$result = $this->db->query($qry);
+					if($row = $result->fetch_row()){
+						$item = array("prd_id" =>$row[0],
+						"prd_sku" =>$row[1],
+						"prd_name" =>$row[2],
+						"prd_english_name" =>$row[3],
+						"prd_model" =>$row[4],
+						"prd_price" =>$row[5],
+						"prd_coin_type" =>$row[6],
+						"prd_visibility" =>$row[7],
+						"prd_comments" =>$row[8],
+						"sbc_id" =>$row[9],
+						"cat_id" =>$row[10],
+						"sbc_name" =>$row[11],
+						"cat_name" =>$row[12],
+						"srv_name" =>$row[13],
+						"prd_level" =>$row[14],
+						"extNum" => $row[15]);
+					}
+
+
+					//print_r($item);
+					//exit();
+
+
+
 					//inserta la relacion de documento con producto
 
 /* 					$qry = "INSERT INTO ctt_products_documents (prd_id, doc_id)
 					VALUES(".$idProducto .",".$params['idDocumento'].")";
 					$this->db->query($qry);	 */
 
-					$estatus = $idProducto;
+					$estatus = $item;
+
+				//$estatus = $idProducto;
 				}else{
 					$estatus = 0;
 				}
-				
-/* 				
-				else{
-					$qry = "SELECT prd_id AS id FROM ctt_products WHERE prd_name = '".$params['NomProducto']."' limit 1;";
-					$result = $this->db->query($qry);
-					if ($row = $result->fetch_row()) {
-						$idProducto = trim($row[0]);
-					}
-					//print_r($qry . "-");
-
-				} */
-
-				/**********************************************/
-
-
-				/**********************************************/
-
-
-
-
-				/**********esto ya no va, porque ya no registrara series de productos **********/
-
-/* 				$qry = " INSERT INTO ctt_series (
-					ser_sku, 
-					ser_serial_number, 
-					ser_cost, 
-					ser_status, 
-					ser_date_registry, 
-					ser_lonely, 
-					ser_behaviour, 
-					prd_id
-					)
-					VALUES('".$SKU."',
-						   '".$params['SerieProducto']."',
-						   ".$params['CostProducto'].",
-						   1,
-						   NOW(),
-						   '".$params['rentSinAccesorios']."',
-						   '".$params['idbehaviour']."',
-						   ". $idProducto.")";
-
-				$this->db->query($qry);	 */
-				//print_r($qry . "-");
-
-
-/* 				$qry = "SELECT MAX(ser_id) AS id FROM ctt_series;";
-				$result = $this->db->query($qry);
-				if ($row = $result->fetch_row()) {
-				    $idSeries = trim($row[0]);
-				}
-
-
-				$qry = "INSERT INTO ctt_stores_products (stp_quantity, str_id, ser_id)
-						VALUES('1',".$params['idAlmacen'].",$idSeries)";
-				$result = $this->db->query($qry); */
-
-
 
 			} catch (Exception $e) {
 
@@ -247,8 +235,8 @@ class ProductosModel extends Model
 	public function GetProductos()
 	{
 		$qry = "SELECT 
-		p.prd_id, p.prd_sku, p.prd_name, p.prd_english_name,p.prd_model,p.prd_price, p.prd_coin_type ,p.prd_visibility, p.prd_comments,p.sbc_id, sc.cat_id, sc.sbc_name,  ct.cat_name, 
-		sv.srv_name, p.prd_level, ifnull(sum(sp.stp_quantity),0) AS quantity 
+		p.prd_id, ifnull(p.prd_sku,'') ,ifnull(p.prd_name,'') , ifnull( p.prd_english_name,''), p.prd_model, p.prd_price, p.prd_coin_type ,p.prd_visibility, ifnull( p.prd_comments,'') ,p.sbc_id, sc.cat_id, ifnull(sc.sbc_name,'') , ifnull(ct.cat_name,''), 
+		ifnull(sv.srv_name,''), p.prd_level, ifnull(sum(sp.stp_quantity),0) AS quantity 
 	FROM  ctt_products AS p
 	INNER JOIN ctt_subcategories 	AS sc ON sc.sbc_id = p.sbc_id 	AND sc.sbc_status = 1
 	INNER JOIN ctt_categories 		AS ct ON ct.cat_id = sc.cat_id 	AND ct.cat_status = 1
@@ -271,8 +259,11 @@ class ProductosModel extends Model
 					$Count++;
 				} */
 			
+				//"prd_sku" =>substr($row[1], -7, 4)."-".substr($row[1], -3),
+
+
 				$item = array("prd_id" =>$row[0],
-				"prd_sku" =>substr($row[1], -7, 4)."-".substr($row[1], -3),
+				"prd_sku" =>$row[1],
 				"prd_name" =>$row[2],
 				"prd_english_name" =>$row[3],
 				"prd_model" =>$row[4],

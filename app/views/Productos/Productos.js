@@ -25,6 +25,12 @@ function inicial() {
         }
     });
 
+    $( "#NomProducto" ).keyup(function() {
+        EnableDisableComun(false);
+    });
+
+
+
     $("body").click(function () {
         //console.log("hols");
         $('#suggestions').fadeOut(500);
@@ -223,7 +229,7 @@ function SaveProducto() {
     var location = 'Productos/SaveProductos';
 
     var IdProducto = $('#IdProducto').val();
-    var NomProducto = $('#NomProducto').val();
+    var NomProducto = $('#NomProducto').val().toUpperCase();
     var NomEngProducto = $('#NomEngProducto').val();
     /*         var ModelProducto = $('#ModelProducto').val();
      */ var SerieProducto = $('#SerieProducto').val();
@@ -289,15 +295,47 @@ function SaveProducto() {
             IsAccesorio: IsAccesorio
         },
         url: location,
-        success: function (respuesta) {
-            console.log(respuesta);
-            if (respuesta == 0) {
-                console.log("no se pudo borrar");
+        success: function (row) {
+            console.log(row);
+            if (row.cat_id == 0) {
+                console.log("no se pudo guardar");
             }else{
-                getProductosTable();
-                $('#ProductoModal').modal('hide');
-                LimpiaModal();
+
+
+                var rowNode = table.row
+                .add({
+                   [0]: "<button onclick='getInfoComunByID(" + row.prd_id +',1,' + row.extNum +',' +row.prd_id +")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
+                   '<button onclick="ConfirmDeletProducto(' +row.prd_id +')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
+                   [1]: row.prd_id,
+                   [2]: row.prd_sku,
+                   [3]: row.prd_name,
+                   [4]: row.prd_price,
+                   [5]: "<span>"+row.extNum+"</span>",
+                   [6]: row.prd_level,
+                   [7]: row.srv_name,
+                   [8]: row.prd_english_name,
+                   [9]: row.cat_name,
+                   [10]: row.sbc_name,
+                   [11]: row.prd_comments,
+                })
+                .draw()
+                .node();
+                $(rowNode).find('td').eq(0).addClass('edit');
+                $(rowNode).find('td').eq(5).addClass('quantity');
+                $(rowNode).find('td').eq(1).attr("hidden",true);
+
+                $(rowNode).find('td').eq(4).css("text-align","right");
+
+
+                LimpiaModal(); 
                 EnableDisableComun(false);
+
+
+
+                //getProductosTable();
+
+                //LimpiaModal();
+                //EnableDisableComun(false);
             }
             $('#titulo').text('Nuevo Producto');
         },
@@ -482,21 +520,19 @@ function getProductosTable() {
                     '</td>' +
 
 
-                    "<td class='dtr-control text-center'>" +
+                    "<td class='dtr-control '>" +
                     row.prd_sku +
                     '</td>' +
 
                     '<td >' +
                     row.prd_name +
                     '</td>' +
-                    '<td >' +
-                    row.prd_english_name +
-                    '</td>' +
 
-                    '<td >' +
+
+
+                    '<td style="text-align: right !important;" >' +
                     row.prd_price +
                     '</td>' +
-
 
                     "<td class='quantity'>" +
                     '<span onclick=skuByID('+row.prd_id +','+row.extNum+')>' +
@@ -511,6 +547,12 @@ function getProductosTable() {
                     '<td >' +
                     row.srv_name +
                     '</td>' +
+
+                    '<td >' +
+                    row.prd_english_name +
+                    '</td>' +
+
+
                     '<td >' +
                     row.cat_name +
                     '</td>' +
@@ -1051,11 +1093,20 @@ function EnableDisableComun(estatus) {
     $('#ModelProducto').prop('disabled', estatus);
     $('#PriceProducto').prop('disabled', estatus);
     $('#checkProducto').prop('disabled', estatus);
+    $('#checkRentAccesories').prop('disabled', estatus);
+    $('#checkIsAccesorie').prop('disabled', estatus);
+
+
     $('#selectRowSubCategorias').prop('disabled', estatus);
     $('#selectRowCategorias').prop('disabled', estatus);
     $('#selectRowService').prop('disabled', estatus);
     $('#selectRowProovedores').prop('disabled', estatus);
     $('#selectRowDocument').prop('disabled', estatus);
+
+    $('#GuardarCategoria').prop('disabled', estatus);
+
+    
+
 }
 
 function EnableDisableExt(estatus) {

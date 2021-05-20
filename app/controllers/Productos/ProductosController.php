@@ -36,7 +36,7 @@
 		  }else{
 			$result = $this->model->ActualizaProducto($request_params);	  
 		  } 
-		  $result=1;
+		  //$result=1;
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
 
