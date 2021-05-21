@@ -109,7 +109,7 @@ function cargaInicial() {
     //getProveedores();
     getAlmacenes();
     getTipoMoneda();
-    //getDocumentos();
+    getDocumentos();
     $('#formSubCategorias').removeClass('was-validated');
     NomProductoSelect();
 }
@@ -125,6 +125,30 @@ function validaFormulario() {
         }
     });
     return valor;
+}
+
+// Optiene las documentos *
+function getDocumentos(id) {
+    $('#selectRowDocument').html('');
+    var location = 'Documentos/GetDocumentosFicha';
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: location,
+        success: function (respuesta) {
+
+            console.log(respuesta);
+            var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
+            respuesta.forEach(function (row, index) {
+                renglon += '<option id=' + row.doc_id + '  value="' + row.doc_id + '">' + row.doc_code + '-' + row.doc_name + '</option> ';
+            });
+            $('#selectRowDocument').append(renglon);
+            if (id != '') {
+                $("#selectRowDocument option[id='" + id + "']").attr('selected', 'selected');
+            }
+        },
+        error: function () {},
+    }).done(function () {});
 }
 
 //Edita el Proveedores *
@@ -245,7 +269,7 @@ function SaveProducto() {
     var idTipeService = $('#selectRowService option:selected').attr('id');
     //var idProveedor = $('#selectRowProovedores option:selected').attr('id');
     var idAlmacen = $('#selectRowAlmacen option:selected').attr('id');
-    //var idDocumento = $('#selectRowDocument option:selected').attr('id');
+    var idDocumento = $('#selectRowDocument option:selected').attr('id');
 
     var visible = 0;
     var rentSinAccesorios = 0;
@@ -292,11 +316,21 @@ function SaveProducto() {
             idCategoria: idCategoria,
             rentSinAccesorios: rentSinAccesorios,
             esUnico: esUnico,
-            IsAccesorio: IsAccesorio
+            IsAccesorio: IsAccesorio,
+            idDocumento: idDocumento
         },
         url: location,
         success: function (row) {
             console.log(row);
+
+            if (IdProducto != '') {
+                table
+                   .row(':eq(' + positionRow + ')')
+                   .remove()
+                   .draw();
+             }
+
+
             if (row.cat_id == 0) {
                 console.log("no se pudo guardar");
             }else{
@@ -743,7 +777,7 @@ function getInfoComun(nombreDocument, productoComun, cantidadSKU, idproducto) {
             setTimeout(() => {
                 $('#selectMonedaProducto option[value=' + respuesta[0].prd_coin_type + ']').prop('selected', true);
                 getSubCategorias(respuesta[0].sbc_id, respuesta[0].cat_id);
-               // getDocumentos(respuesta[0].doc_id);
+                getDocumentos(respuesta[0].doc_id);
                 $('#selectRowCategorias option[value=' + respuesta[0].cat_id + ']').prop('selected', true);
                 $('#selectRowService option[value=' + respuesta[0].srv_id + ']').prop('selected', true);
                 $('#selectRowProovedores option[value=' + respuesta[0].sup_id + ']').prop('selected', true);
@@ -800,7 +834,7 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
             setTimeout(() => {
                 $('#selectMonedaProducto option[value=' + respuesta[0].prd_coin_type + ']').prop('selected', true);
                 getSubCategorias(respuesta[0].sbc_id, respuesta[0].cat_id);
-                //getDocumentos(respuesta[0].doc_id);
+                getDocumentos(respuesta[0].doc_id);
                 $('#selectRowCategorias option[value=' + respuesta[0].cat_id + ']').prop('selected', true);
                 $('#selectRowService option[value=' + respuesta[0].srv_id + ']').prop('selected', true);
                 $('#selectRowProovedores option[value=' + respuesta[0].sup_id + ']').prop('selected', true);

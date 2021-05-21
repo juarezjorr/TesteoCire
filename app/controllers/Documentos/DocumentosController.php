@@ -45,6 +45,11 @@
 	      $result = $this->model->GetDocumentos($request_params);
 		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		}
+		public function GetDocumentosFicha($request_params)
+		{
+	      $result = $this->model->GetDocumentosFicha($request_params);
+		  echo json_encode($result,JSON_UNESCAPED_UNICODE);	
+		}
 
 		public function DeleteDocumentos($request_params)
 		{

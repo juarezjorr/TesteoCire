@@ -96,11 +96,21 @@
 								</div>
 							</div>
 
+
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowService"  name="selectRowService"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowService" class="form-label">Tipo de servicio</label>
+								</div>
+							</div>
+
+							
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowDocument"  name="selectRowDocument"  class="form-select form-select-sm" >
+									</select>
+									<label for="selectRowDocument" class="form-label">Documento</label>
 								</div>
 							</div>
 

@@ -48,10 +48,28 @@ public function SaveDocumento($request_params)
 	return $estatus;
 }
 
-// Optiene los Usuaios existentes
+// Optiene los Documentos existentes
 	public function GetDocumentos()
 	{
 		$qry = "SELECT doc.doc_id, doc.doc_code, doc.doc_name, doc.doc_type, doc.dot_id, td.dot_name FROM ctt_documents as doc LEFT JOIN ctt_documents_type AS td ON td.dot_id = doc.dot_id";
+		$result = $this->db->query($qry);
+		$lista = array();
+		while ($row = $result->fetch_row()){
+			$item = array("doc_id" =>$row[0],
+						"doc_code" =>$row[1],
+						"doc_name" =>$row[2],
+						"doc_type" =>$row[3],
+						"dot_id" =>$row[4],
+						"dot_name" =>$row[5]);
+			array_push($lista, $item);
+		}
+		return $lista;
+	}
+
+	// Optiene los Documentos existentes
+	public function GetDocumentosFicha()
+	{
+		$qry = "SELECT doc.doc_id, doc.doc_code, doc.doc_name, doc.doc_type, doc.dot_id, td.dot_name FROM ctt_documents as doc LEFT JOIN ctt_documents_type AS td ON td.dot_id = doc.dot_id WHERE doc.dot_id = 2";
 		$result = $this->db->query($qry);
 		$lista = array();
 		while ($row = $result->fetch_row()){
