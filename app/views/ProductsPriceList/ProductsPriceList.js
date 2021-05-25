@@ -1,6 +1,6 @@
 let seccion = '';
 let docs;
-let grp = 20;
+let grp = 50;
 let num = 0;
 
 $(document).ready(function () {
@@ -78,6 +78,8 @@ function setting_table() {
             {data: 'prodengl', class: 'catalog'},
         ],
     });
+
+    $('#LoadingModal').removeClass('overlay_hide');
 }
 
 /** +++++  Obtiene los productos de la base */
@@ -120,6 +122,8 @@ function putPriceList(dt) {
         }, 100);
     } else {
         getDocuments();
+        active_icons();
+        $('#LoadingModal').addClass('overlay_hide');
     }
 }
 
@@ -137,7 +141,6 @@ function putDocuments(dt) {
     $.each(dt, function (v, u) {
         $('#F' + u.prd_id).append(`<i class="fas fa-file docum" id="${u.doc_id}"></i>`);
     });
-    active_icons();
 }
 
 /** +++++  Activa los iconos */
@@ -149,6 +152,9 @@ function active_icons() {
             let qty = $(this).attr('data-content').split('|')[2];
             let pkt = $(this).attr('data-content').split('|')[3];
             let pkn = $(this).attr('data-content').split('|')[1];
+
+            console.log(prd, qty);
+
             if (qty > 0) {
                 if (pkt == 'K') {
                     getProducts(prd, pkn);
@@ -225,13 +231,13 @@ function build_modal_product(dt) {
     let tabla = $('#tblProductlList').DataTable();
 
     $('.overlay_closer .title').html(`${dt[0].paquete}`);
-
+    tabla.rows().remove().draw();
     $.each(dt, function (v, u) {
         pack = u.prd_level == 'K' ? 'fas' : 'far';
         tabla.row
             .add({
-                editable: `<i class="fas fa-eye modif" id="${u.prd_id}" data-content="${u.prd_sku}|${u.prd_name}|${u.quantity}|${u.prd_level}"></i>`,
-                produsku: `<span class="hide-support">${u.prd_id}</span>${u.prd_sku}`,
+                editable: ``,
+                produsku: `${u.prd_sku}`,
                 prodname: `<i class="${pack} fa-box-open fa-sm"></i> ${u.prd_name}`,
                 prodqtty: `<span>${u.quantity}</span>`,
                 prodpric: u.prd_price,

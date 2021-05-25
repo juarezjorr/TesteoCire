@@ -162,7 +162,7 @@ function get_stores() {
 function put_Products(dt) {
     var ps = $('#txtProducts').offset();
 
-    $('.list-group').css({top: ps.top + 60 + 'px'});
+    $('.list-group').css({top: ps.top + 40 + 'px'});
     $('.list-group').slideUp('100', function () {
         $('#listProducts').html('');
     });
@@ -187,16 +187,18 @@ function put_Products(dt) {
         sel_products(res);
     });
 
-    $('.list-group .list-item').on('click', function () {
-        let prdNm = $(this).html();
-        let prdId = $(this).attr('id') + '|' + $(this).attr('data_complement');
-        $('#txtProducts').val(prdNm);
-        $('#txtIdProducts').val(prdId);
-        $('#txtPrice').val($(this).attr('data_complement').split('|')[3]);
-        $('#txtCoinType').val($(this).attr('data_complement').split('|')[4]);
-        $('.list-group').slideUp(100);
-        validator();
-    });
+    $('.list-group .list-item')
+        .unbind('click')
+        .on('click', function () {
+            let prdNm = $(this).html();
+            let prdId = $(this).attr('id') + '|' + $(this).attr('data_complement');
+            $('#txtProducts').val(prdNm);
+            $('#txtIdProducts').val(prdId);
+            $('#txtPrice').val($(this).attr('data_complement').split('|')[3]);
+            $('#txtCoinType').val($(this).attr('data_complement').split('|')[4]);
+            $('.list-group').slideUp(100);
+            validator();
+        });
 }
 /**  +++ Ocultalos productos del listado que no cumplen con la cadena  */
 function sel_products(res) {

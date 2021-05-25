@@ -16,11 +16,13 @@ $(document).ready(function () {
 
 function inicial() {
     getStores();
-    getProducts();
     setting_table();
     setting_datepicket($('#txtStartDate'));
-    $('#listProducts').mouseleave(function () {
-        $('.list-group').slideToggle('slow');
+    $('#btn_products').on('click', function () {
+        exchange_apply();
+        $('#txtProducts').val('');
+        $('#txtIdProducts').val('');
+        $('#txtComments').val('');
     });
 }
 
@@ -103,9 +105,9 @@ function getStores() {
     fillField(pagina, par, tipo, selector);
 }
 // Solicita los productos de un almacen seleccionado
-function getProducts() {
+function getProducts(strId) {
     var pagina = 'StoreProductsList/listProducts';
-    var par = `[{"store":""}]`;
+    var par = `[{"store":"${strId}"}]`;
     var tipo = 'json';
     var selector = putProducts;
     fillField(pagina, par, tipo, selector);
@@ -123,73 +125,134 @@ function putStores(dt) {
     }
 
     $('#txtStoreSource').on('change', function () {
-        let id = $(this).val();
-        // $(`#txtStoreTarget option`).css({display: 'block'});
-        // $(`#txtStoreTarget option[value="${id}"]`).css({display: 'none'});
-
-        drawProducts(id);
+        let strId = $(this).val();
+        $('.list-group').slideUp('slow', function () {
+            getProducts(strId);
+            validator();
+        });
     });
+
+    active_list();
 }
 
 // Coloca los productos en el selector
 function putProducts(dt) {
-    $.each(dt, function (v, u) {
-        let H = `<div class="list-item" id="P-${u.ser_id}" data-store="${u.str_id}" data-content="${u.ser_id}|${u.ser_sku}|${u.ser_serial_number}|${u.prd_name}|${u.ser_cost}|${u.prd_coin_type}">
-         ${u.ser_sku} - ${u.prd_name}<div class="items-just"><i class="fas fa-arrow-circle-right"></i></div></div>`;
-        $('#listProducts').append(H);
+    if (dt[0].prd_id != '0') {
+        var ps = $('#txtProducts').offset();
+        $('.list-group').css({top: ps.top + 35 + 'px'});
+        $('.list-group').slideUp('100', function () {
+            $('#listProducts').html('');
+
+            $.each(dt, function (v, u) {
+                let H = `<div class="list-item" id="P-${u.prd_id}" data_complement="${u.ser_id}|${u.ser_sku}|${u.ser_serial_number}|${u.ser_cost}|${u.cin_id}">${u.ser_sku} - ${u.prd_name}</div>`;
+                $('#listProducts').append(H);
+            });
+        });
+
+        $('#txtProducts').on('focus', function () {
+            $('.list-group').slideDown('slow');
+        });
+
+        $('.list-group .list-item').on('click', function () {
+            let prdNm = $(this).html();
+            let prdId = $(this).attr('id') + '|' + $(this).attr('data_complement');
+            $('#txtProducts').val(prdNm);
+            $('#txtIdProducts').val(prdId);
+            $('.list-group').slideUp(100);
+            validator();
+        });
+    } else {
+        $('#listProducts').html('');
+        $('#txtProducts').val('');
+        $('#txtIdProducts').val('');
+        $('.list-group').slideUp('slow');
+    }
+}
+
+function active_list() {
+    $('#txtProducts').on('keyup', function (e) {
+        var res = $(this).val().toUpperCase();
+        if (res == '') {
+            $('.list-group').slideUp(100);
+        } else {
+            $('.list-group').slideDown(400);
+        }
+        res = omitirAcentos(res);
+        sel_products(res);
+    });
+}
+
+/**  +++ Ocultalos productos del listado que no cumplen con la cadena  */
+function sel_products(res) {
+    if (res.length < 1) {
+        $('#listProducts div.list-item').css({display: 'block'});
+    } else {
+        $('#listProducts div.list-item').css({display: 'none'});
+    }
+
+    $('#listProducts div.list-item').each(function (index) {
+        var cm = $(this).html();
+        cm = omitirAcentos(cm);
+        var cr = cm.indexOf(res);
+        if (cr > -1) {
+            //            alert($(this).children().html())
+            $(this).css({display: 'block'});
+        }
     });
 }
 
 // Dibuja los productos del almacen seleccionado
-function drawProducts(str) {
-    $('.list-item').addClass('hide-items');
-    $(`.list-item[data-store^="${str}"]`).removeClass('hide-items');
+// function drawProducts(str) {
+//     $('.list-item').addClass('hide-items');
+//     $(`.list-item[data-store^="${str}"]`).removeClass('hide-items');
 
-    var ps = $('#boxProducts').offset();
-    $('.list-group').css({top: ps.top + 30 + 'px', display: 'none'});
-    $('.box-items-list i').removeClass('rotate');
-    $('#boxProducts')
-        .unbind('click')
-        .on('click', function () {
-            $('.list-group').slideToggle('slow');
-            $('.box-items-list i').toggleClass('rotate');
-        });
+//     var ps = $('#boxProducts').offset();
+//     $('.list-group').css({top: ps.top + 30 + 'px', display: 'none'});
+//     $('.box-items-list i').removeClass('rotate');
+//     $('#boxProducts')
+//         .unbind('click')
+//         .on('click', function () {
+//             $('.list-group').slideToggle('slow');
+//             $('.box-items-list i').toggleClass('rotate');
+//         });
 
-    $('.list-item .items-just i')
-        .unbind('click')
-        .on('click', function () {
-            let id = $(this).parents('.list-item');
-            exchange_apply(id);
-        });
-}
+//     $('.list-item .items-just i')
+//         .unbind('click')
+//         .on('click', function () {
+//             let id = $(this).parents('.list-item');
+//             exchange_apply(id);
+//         });
+// }
 
 // Valida los campos
-function validator(prId) {
+function validator() {
     let ky = 0;
-
-    let qtystk = prId.children().children('.quantity').attr('data-content');
-    let qtysel = prId.children().children('.quantity').text();
-    if (qtystk < qtysel) {
-        prId.children().children('.quantity').text(qtystk);
-    }
-    if (qtysel < 1) {
+    let msg = '';
+    if ($('#txtStoreSource').val() == 0) {
         ky = 1;
-        msg += 'No tiene stock suficiente';
+        msg += 'Debes seleccionar un almacen';
     }
 
-    $('.fail')
-        .unbind('focus')
-        .on('focus', function () {
-            $(this).removeClass('fail');
-        });
-    return ky;
+    if ($('#txtIdProducts').val() == 0) {
+        ky = 1;
+        msg += 'Debes seleccionar un producto';
+    }
+
+    if (ky == 0) {
+        $('#btn_products').removeClass('disabled');
+    } else {
+        $('#btn_products').addClass('disabled');
+        console.clear();
+        console.log(msg);
+    }
 }
 // Aplica la seleccion para la tabla de reporte
-function exchange_apply(prId) {
-    let prod = prId.attr('data-content').split('|');
-    let productSKU = prod[1];
-    let productName = prod[3];
-    let productSerie = prod[2];
+function exchange_apply() {
+    let prId = $('#txtIdProducts').val();
+    let productName = $('#txtProducts').val().split(' - ')[1].replace(/\"/g, "'");
+    let prod = prId.split('|');
+    let productSKU = prod[2];
+    let productSerie = prod[3];
 
     let commnets = $('#txtComments').val();
 
@@ -287,4 +350,14 @@ function build_data_structure(pr) {
 
 function putSaveList(dt) {
     window.open(url + 'app/views/StoreProductsList/StoreProductsReport.php', '_blank');
+}
+
+/**  ++++ Omite acentos para su facil consulta */
+function omitirAcentos(text) {
+    var acentos = 'ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç';
+    var original = 'AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc';
+    for (var i = 0; i < acentos.length; i++) {
+        text = text.replace(acentos.charAt(i), original.charAt(i));
+    }
+    return text;
 }

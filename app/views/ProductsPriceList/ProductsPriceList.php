@@ -85,6 +85,14 @@
 <!-- End Ventana modal PRODUCTOS -->
 
 
+<!-- Start Ventana modal PRODUCTOS -->
+<div class="overlay_background overlay_hide" id="LoadingModal">
+
+    </div>
+<!-- End Ventana modal PRODUCTOS -->
+
+
+
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
 <script src="<?=  PATH_VIEWS . 'ProductsPriceList/ProductsPriceList.js' ?>"></script>
 

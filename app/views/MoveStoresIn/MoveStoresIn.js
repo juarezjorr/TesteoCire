@@ -241,7 +241,7 @@ function putCoins(dt) {
 function putProducts(dt) {
     var ps = $('#txtProducts').offset();
 
-    $('.list-group').css({top: ps.top + 60 + 'px'});
+    $('.list-group').css({top: ps.top + 40 + 'px'});
     $('.list-group').slideUp('100', function () {
         $('#listProducts').html('');
     });

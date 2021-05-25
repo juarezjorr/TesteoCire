@@ -33,7 +33,7 @@ class StoreProductsListModel extends Model
 		$qry = "SELECT * FROM ctt_products AS pr
 				INNER JOIN ctt_series AS sr ON sr.prd_id = pr.prd_id
 				INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id
-				WHERE sr.ser_status = 1 AND st.stp_quantity > 0;";
+				WHERE sr.ser_status = 1 AND st.stp_quantity > 0 AND st.str_id = $store;";
 		return $this->db->query($qry);
 	}	
 // Listado de Movimientos
