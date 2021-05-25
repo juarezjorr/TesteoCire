@@ -25,6 +25,12 @@ function inicial() {
         }
     });
 
+    $( "#NomProducto" ).keyup(function() {
+        EnableDisableComun(false);
+    });
+
+
+
     $("body").click(function () {
         //console.log("hols");
         $('#suggestions').fadeOut(500);
@@ -103,7 +109,7 @@ function cargaInicial() {
     //getProveedores();
     getAlmacenes();
     getTipoMoneda();
-    //getDocumentos();
+    getDocumentos();
     $('#formSubCategorias').removeClass('was-validated');
     NomProductoSelect();
 }
@@ -119,6 +125,30 @@ function validaFormulario() {
         }
     });
     return valor;
+}
+
+// Optiene las documentos *
+function getDocumentos(id) {
+    $('#selectRowDocument').html('');
+    var location = 'Documentos/GetDocumentosFicha';
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: location,
+        success: function (respuesta) {
+
+            console.log(respuesta);
+            var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
+            respuesta.forEach(function (row, index) {
+                renglon += '<option id=' + row.doc_id + '  value="' + row.doc_id + '">' + row.doc_code + '-' + row.doc_name + '</option> ';
+            });
+            $('#selectRowDocument').append(renglon);
+            if (id != '') {
+                $("#selectRowDocument option[id='" + id + "']").attr('selected', 'selected');
+            }
+        },
+        error: function () {},
+    }).done(function () {});
 }
 
 //Edita el Proveedores *
@@ -223,7 +253,7 @@ function SaveProducto() {
     var location = 'Productos/SaveProductos';
 
     var IdProducto = $('#IdProducto').val();
-    var NomProducto = $('#NomProducto').val();
+    var NomProducto = $('#NomProducto').val().toUpperCase();
     var NomEngProducto = $('#NomEngProducto').val();
     /*         var ModelProducto = $('#ModelProducto').val();
      */ var SerieProducto = $('#SerieProducto').val();
@@ -239,7 +269,7 @@ function SaveProducto() {
     var idTipeService = $('#selectRowService option:selected').attr('id');
     //var idProveedor = $('#selectRowProovedores option:selected').attr('id');
     var idAlmacen = $('#selectRowAlmacen option:selected').attr('id');
-    //var idDocumento = $('#selectRowDocument option:selected').attr('id');
+    var idDocumento = $('#selectRowDocument option:selected').attr('id');
 
     var visible = 0;
     var rentSinAccesorios = 0;
@@ -286,18 +316,60 @@ function SaveProducto() {
             idCategoria: idCategoria,
             rentSinAccesorios: rentSinAccesorios,
             esUnico: esUnico,
-            IsAccesorio: IsAccesorio
+            IsAccesorio: IsAccesorio,
+            idDocumento: idDocumento
         },
         url: location,
-        success: function (respuesta) {
-            console.log(respuesta);
-            if (respuesta == 0) {
-                console.log("no se pudo borrar");
+        success: function (row) {
+            console.log(row);
+
+            if (IdProducto != '') {
+                table
+                   .row(':eq(' + positionRow + ')')
+                   .remove()
+                   .draw();
+             }
+
+
+            if (row.cat_id == 0) {
+                console.log("no se pudo guardar");
             }else{
-                getProductosTable();
-                $('#ProductoModal').modal('hide');
-                LimpiaModal();
+
+
+                var rowNode = table.row
+                .add({
+                   [0]: "<button onclick='getInfoComunByID(" + row.prd_id +',1,' + row.extNum +',' +row.prd_id +")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
+                   '<button onclick="ConfirmDeletProducto(' +row.prd_id +')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
+                   [1]: row.prd_id,
+                   [2]: row.prd_sku,
+                   [3]: row.prd_name,
+                   [4]: row.prd_price,
+                   [5]: "<span>"+row.extNum+"</span>",
+                   [6]: row.prd_level,
+                   [7]: row.srv_name,
+                   [8]: row.prd_english_name,
+                   [9]: row.cat_name,
+                   [10]: row.sbc_name,
+                   [11]: row.prd_comments,
+                })
+                .draw()
+                .node();
+                $(rowNode).find('td').eq(0).addClass('edit');
+                $(rowNode).find('td').eq(5).addClass('quantity');
+                $(rowNode).find('td').eq(1).attr("hidden",true);
+
+                $(rowNode).find('td').eq(4).css("text-align","right");
+
+
+                LimpiaModal(); 
                 EnableDisableComun(false);
+
+
+
+                //getProductosTable();
+
+                //LimpiaModal();
+                //EnableDisableComun(false);
             }
             $('#titulo').text('Nuevo Producto');
         },
@@ -482,21 +554,19 @@ function getProductosTable() {
                     '</td>' +
 
 
-                    "<td class='dtr-control text-center'>" +
+                    "<td class='dtr-control '>" +
                     row.prd_sku +
                     '</td>' +
 
                     '<td >' +
                     row.prd_name +
                     '</td>' +
-                    '<td >' +
-                    row.prd_english_name +
-                    '</td>' +
 
-                    '<td >' +
+
+
+                    '<td style="text-align: right !important;" >' +
                     row.prd_price +
                     '</td>' +
-
 
                     "<td class='quantity'>" +
                     '<span onclick=skuByID('+row.prd_id +','+row.extNum+')>' +
@@ -511,6 +581,12 @@ function getProductosTable() {
                     '<td >' +
                     row.srv_name +
                     '</td>' +
+
+                    '<td >' +
+                    row.prd_english_name +
+                    '</td>' +
+
+
                     '<td >' +
                     row.cat_name +
                     '</td>' +
@@ -701,7 +777,7 @@ function getInfoComun(nombreDocument, productoComun, cantidadSKU, idproducto) {
             setTimeout(() => {
                 $('#selectMonedaProducto option[value=' + respuesta[0].prd_coin_type + ']').prop('selected', true);
                 getSubCategorias(respuesta[0].sbc_id, respuesta[0].cat_id);
-               // getDocumentos(respuesta[0].doc_id);
+                getDocumentos(respuesta[0].doc_id);
                 $('#selectRowCategorias option[value=' + respuesta[0].cat_id + ']').prop('selected', true);
                 $('#selectRowService option[value=' + respuesta[0].srv_id + ']').prop('selected', true);
                 $('#selectRowProovedores option[value=' + respuesta[0].sup_id + ']').prop('selected', true);
@@ -758,7 +834,7 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
             setTimeout(() => {
                 $('#selectMonedaProducto option[value=' + respuesta[0].prd_coin_type + ']').prop('selected', true);
                 getSubCategorias(respuesta[0].sbc_id, respuesta[0].cat_id);
-                //getDocumentos(respuesta[0].doc_id);
+                getDocumentos(respuesta[0].doc_id);
                 $('#selectRowCategorias option[value=' + respuesta[0].cat_id + ']').prop('selected', true);
                 $('#selectRowService option[value=' + respuesta[0].srv_id + ']').prop('selected', true);
                 $('#selectRowProovedores option[value=' + respuesta[0].sup_id + ']').prop('selected', true);
@@ -1051,11 +1127,20 @@ function EnableDisableComun(estatus) {
     $('#ModelProducto').prop('disabled', estatus);
     $('#PriceProducto').prop('disabled', estatus);
     $('#checkProducto').prop('disabled', estatus);
+    $('#checkRentAccesories').prop('disabled', estatus);
+    $('#checkIsAccesorie').prop('disabled', estatus);
+
+
     $('#selectRowSubCategorias').prop('disabled', estatus);
     $('#selectRowCategorias').prop('disabled', estatus);
     $('#selectRowService').prop('disabled', estatus);
     $('#selectRowProovedores').prop('disabled', estatus);
     $('#selectRowDocument').prop('disabled', estatus);
+
+    $('#GuardarCategoria').prop('disabled', estatus);
+
+    
+
 }
 
 function EnableDisableExt(estatus) {

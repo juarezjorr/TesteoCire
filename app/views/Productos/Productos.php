@@ -43,7 +43,7 @@
 
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
-									<input id="NomProducto" name="NomProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required >
+									<input id="NomProducto" name="NomProducto" type="text" class="form-control form-control-sm" autocomplete="off"  required   style="text-transform: uppercase" >
 									<label for="NomProducto">Nombre </label>
 									<div id="suggestions"></div>
 
@@ -96,11 +96,21 @@
 								</div>
 							</div>
 
+
 							<div class="row">
 								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
 									<select id="selectRowService"  name="selectRowService"  class="form-select form-select-sm" autocomplete="off"  >
 									</select>
 									<label for="selectRowService" class="form-label">Tipo de servicio</label>
+								</div>
+							</div>
+
+							
+							<div class="row">
+								<div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+									<select id="selectRowDocument"  name="selectRowDocument"  class="form-select form-select-sm" >
+									</select>
+									<label for="selectRowDocument" class="form-label">Documento</label>
 								</div>
 							</div>
 
@@ -147,19 +157,20 @@
 
 					<div class="row">
 						<div class="col-12 col-md-12">		
-								<table id="ProductosTable" class="display compact nowrap" style="width:100%">         
+								<table id="ProductosTable" class="display compact nowrap" style="width:100%; text-aling: rigt !important;">         
 										<thead>
 											<tr>
 													<th style="width: 30px"></th>
 													<th style="width: 30px" hidden >Id</th>
 													<th style="width: auto">SKU</th>
 													<th style="width: auto">Nombre</th>
-													<th style="width: auto">Nombre ingles</th>
 									                <th style="width: auto">Precio</th>
 													<th style="width: auto">Existencias</th>
 													<th style="width: auto">Tipo</th>
 
 													<th style="width: auto">Servicio</th>
+													<th style="width: auto">Nombre ingles</th>
+
 													<th style="width: auto">Catálogo</th>
 													<th style="width: auto">Subcategoria</th>
 													<th style="width: auto">Descripción Segun Proveedor</th>
