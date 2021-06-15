@@ -1,0 +1,420 @@
+// BOTONES Y ENLACES
+.btn-add  {
+    border: none;
+    background-color: transparent;
+    color: #888888;
+    font-size: 0.9em;
+    &:hover  {
+        color: #000000;
+        font-weight: 900;
+    }
+}
+
+.bn {
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin: 20px 0;
+    border: 2px solid transparent;
+    background-color: #FFFFFF;
+}
+.btn-ok  {
+    color: $setColor;
+    border-color: $setColor;
+    
+    &:hover {
+        
+        background-color: $setColor;
+        color: #FFFFFF;
+     
+    }
+}
+.btn-cn  {
+    color: $btn-red;
+    border-color: $btn-red;
+    
+    &:hover {
+        background-color: $btn-red;
+        color: #FFFFFF;
+     
+    }
+}
+h6 {
+    font-size: 1.2em;
+    font-family: $font_secundary;
+}
+hr {
+    margin: 5px 0 20px 0;
+}
+
+.text_center  {
+    text-align: center;
+}
+
+.block_01 {
+    width: calc(100% - 250px);
+    height: 100vh;
+    padding: 50px 10px 10px 10px;
+    overflow: auto;
+
+    .blocks {
+        padding: 4px;
+        background-color: #ffffff;
+        border: 4px solid #eeeeee;
+        border-radius: 10px;
+    }
+
+    .block_01-01,
+    .block_01-02 {
+        // box-shadow: 0 8px 10px 2px rgba(0,0,0,0.3);
+        min-height: 10px;
+
+        padding: 12px;
+    }
+}
+.block_02 {
+    width: 250px;
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 0px -4px 6px 2px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    right: 0px;
+    top: 0;
+    padding: 50px 15px 10px 15px;
+
+    .blocks {
+        &.total  {
+            font-size: 1.3em;
+            padding-top: 10px;
+        }
+        &.documents  {
+            color: #999999;
+            cursor: pointer;
+            &:hover {
+                color: $setColor;
+                background-color: #F0F0F0;
+            }
+        }
+        .full {
+            width: 100%;
+        }
+        .half {
+            border-bottom: 1px dotted #EEEEEE;
+            display: inline-block;
+            padding: 0;
+            &.left {
+                width: 40%;
+                text-align: left;
+                
+            }
+            &.right {
+                width: 58%;
+                text-align: right;
+               
+            }
+
+        }
+        .concepto  {
+            background-color: #ffffff;
+            font-size: 1.1em;
+            font-weight: 300;
+            color: $setColor;
+            font-family: $font_secundary;
+        }
+        .dato  {
+            background-color: #ffffff;
+            font-size: 1.2em;
+            color: #999999;
+            font-family: $font_secundary;
+            padding: 0;
+        }
+    }
+}
+
+.table_information {
+    width: 100%;
+    font-family: $font_primary;
+    border-collapse: collapse;
+    td {
+        padding: 0px 5px;
+        // border:1px solid #CCCCCC;
+    }
+    .concepto {
+        width: 130px;
+        text-align: right;
+        color: $setColor;
+        vertical-align: top;
+    }
+    .dato {
+        vertical-align: top;
+        font-weight: 900;
+        color: #666666;
+    }
+    .enlace {
+        vertical-align: top;
+        text-align: right;
+        font-weight: 300;
+        color: #999999;
+
+        span {
+            cursor: pointer;
+            padding: 4px 0;
+            border-radius: 20px;
+
+            &:hover {
+                font-weight: 900;
+                color: #000000;
+            }
+        }
+    }
+}
+
+.table_control {
+    font-family: $font_primary;
+    border-collapse: collapse;
+    font-weight: 700;
+
+    th {
+        text-align: center;
+        font-weight: 900;
+        padding: 4px 0;
+    }
+    td {
+        color: #999999;
+        border-bottom: 1px dotted #dddddd;
+        padding: 3px 0;
+    }
+    tbody {
+        border-top: 1px solid $setColor;
+    }
+    // ANCHOS DE COLUMNAS
+    .w1 {
+        width: 350px;
+    }
+    .w2 {
+        width: 80px;
+    }
+    .w3 {
+        width: 100px;
+    }
+
+    .headrow {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    // ZONAS
+    .zone_01 {
+        background-color: rgba(144, 146, 158, 0.05);
+    }
+    .zone_02 {
+        background-color: rgba(144, 146, 158, 0.1);
+    }
+    .zone_03 {
+        background-color: rgba(144, 146, 158, 0.15);
+    }
+    // ESTILOS DE COLUMNAS
+
+    th.product {
+        background-color: #ffffff;
+    }
+    .product {
+        text-align: left;
+        position: relative;
+        &:hover > i.fa-bars {
+            display: block;
+        }
+
+        i.fa-bars {
+            color: #EEEEEE;
+            position: absolute;
+            right: 5px;
+            top: 4px;
+            display: none;
+            cursor: pointer;
+            font-size: 15px;
+            &:hover {
+                color: $setColor;
+            }
+        }
+        i.fa-ellipsis-v {
+            color: #eeeeee;
+        }
+    }
+    .quantity {
+        text-align: center;
+    }
+    .price {
+        text-align: right;
+        padding-right: 12px;
+    }
+    .cost {
+        text-align: right;
+        padding-right: 12px;
+        font-weight: 900;
+    }
+    .days {
+        text-align: center;
+    }
+    .desct {
+        text-align: center;
+    }
+    .sel {
+        position: relative;
+        &:hover > i {
+            display: block;
+        }
+
+        i {
+            position: absolute;
+            left: 5px;
+            top: 6px;
+            display: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+    }
+}
+
+
+// Modales
+
+.box_modal_deep {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.3);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: all 0.8s ease;
+
+    .box_modal  {
+        width: 80%;
+        height: 80%;
+        background-color: #FFFFFF;
+        border-radius: 6px;
+        box-shadow: 0px 6px 12px 12px rgba(0,0,0,0.3);
+        position: absolute;
+        top:120%;
+        .row  {
+            height: 100%;
+        }
+        .form  {
+            padding: 0;
+
+           
+
+            .form_group  {
+                width: 100%;
+                margin-bottom: 10px;
+                border-bottom: 1px dotted #DDDDDD;
+                padding: 0px 4px;
+
+                label {
+                    font-family: $font_secundary;
+                    color: #AAAAAA;
+                }
+                .textbox  {
+                    border: none;
+                    padding: 0 10px;
+                    color: #777777;
+                    width: 100%;
+                    outline: none;
+                }
+                .fa-calendar-alt  {
+                    position: absolute;
+                    font-size: 1.3em;
+                    color: #CCCCCC;
+                    cursor: pointer
+                    ;
+                    &:hover  {
+                        color: $setColor;
+                    }
+                }
+
+               
+            }
+            &.qst{
+                padding: 60px 30px 30px 30px;
+            }
+
+            &.image  {
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                height: 100%;
+                border-radius: 0px 6px 6px 0px;
+
+            }
+            &.img01  {
+                background-image: url("../img/programer/20.png") ;
+            }
+            &.img02  {
+                background-image: url("../img/programer/21.png") ;
+            }
+            .error  {
+                label {
+                    color: $btn-red;
+                }
+                .textbox  {
+                    background-color: transparent;
+                }
+                    border-color: $btn-red;
+                    background-color: rgba($btn-red, 0.2);
+            }
+            .list_select {
+                position: relative;
+                height: 50px;
+
+                .list_group {
+                    position: absolute;
+                    top:42px;
+                    left:10px;
+                    padding: 10px;
+                    background-color: #FFFFFF;
+                    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                    border-radius: 4px;
+                    height: 200px;
+                    width: 90%;
+                    display: none;
+
+                    .list_items  {
+                        background-color:#FFFFFF;
+                        padding: 3px 10px;
+                        border-bottom: 1px solid #eeeeee;
+                        cursor:pointer;
+                        
+                        &:hover  {
+                            background-color: #FBFBFB;
+                        }
+               ;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+.box_days  {
+    width: 70px;
+    height: 30px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    border-radius: 4px;
+    z-index: 1500;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .minitext  {
+        width: 50px;
+        height: 20px;
+        text-align: center;
+        border: 1px solid #DDDDDD;
+        outline: none;
+    }
+}
