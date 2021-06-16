@@ -43,27 +43,7 @@
  		public function GetProductos($request_params)
 		{
 			echo $this->model->GetProductos($request_params);
-			
-	
-		  //echo json_encode($result,JSON_UNESCAPED_UNICODE);	
 		} 
-
-/* 		public function GetProductos($request_params)
-		{
-			$result = $this->model->GetProductos($request_params);
-			$i = 0;
-			while($row = $result->fetch_assoc()){
-				$rowdata[$i] = $row;
-				$i++;
-			}
-			if ($i>0){
-				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
-			} else {
-				$res =  '[]';	
-			}
-			echo $res;
-		  //echo json_encode($result,JSON_UNESCAPED_UNICODE);	
-		} */
 
 		public function DeleteProducto($request_params)
 		{

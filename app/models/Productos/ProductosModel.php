@@ -8,6 +8,7 @@ class ProductosModel extends Model
 	{
 		parent::__construct();
 	}
+
 //Guarda prodducto 
 	public function SaveProductos($params)
 	{
@@ -23,37 +24,20 @@ class ProductosModel extends Model
 		//print_r($countId);
 
 
-
-/************************* Generar SKU *******************************/
-
+/*********************************************************************/
+/****** GENERERAR SKU SI ES PRODUCTO, CASO CONTRARIO DEJAR VACIO *****/
+/*********************************************************************/
 		$SKU = "";
 		$model = "";
-
 		$subcategoria = 0;
 
     	if($params['IsAccesorio']=="A"){
-
-
-
 			$qry1 = "SELECT sbc_id FROM ctt_subcategories WHERE sbc_behaviour = 'AC';";
-
-
-
-
-
 			$result1 = $this->db->query($qry1);
 			if ($row = $result1->fetch_row()) {
 				$Subcategoria  = trim($row[0]);
-			} 
-
-			//print_r("llego".$Subcategoria);
-			//exit();
-
+			}
 		}else{
-			print_r("entro else");
-			exit();
-
-
 			//ID de categoria dos digitos.
 			$categoria = str_pad($params['idCategoria'], 2, "0", STR_PAD_LEFT);
 
@@ -65,7 +49,6 @@ class ProductosModel extends Model
 			}
 
 			$Subcategoria = str_pad($Subcategoria, 2, "0", STR_PAD_LEFT);
-
 
 			//MODELO 3 DIGITOS
 			$qry = "SELECT count(*) FROM ctt_products WHERE sbc_id =  ".$params['idSubCategoria'].";";
@@ -83,28 +66,7 @@ class ProductosModel extends Model
 
 			$Subcategoria = $params['idSubCategoria'];
 		}
-
 		$idProducto = 0;
-
-		
-/* 		//NUMERO CONSECUTIVO DE PRODUCTO 4 DIGITOS 
-		$qry = "SELECT COUNT(ser_id) FROM  ctt_series WHERE prd_id = '".$idProducto."';";
-		$result = $this->db->query($qry);
-		if ($row = $result->fetch_row()) {
-			$consecutivo  = trim($row[0]);
-			$consecutivo = $consecutivo + 1;
-		}
-
-		$consecutivo = str_pad($consecutivo, 4, "0", STR_PAD_LEFT);
-
-		//NUMERO DE ACCESORIO 3 DIGITOS
-		$accesorio = "000"; */
-
-
-
-
-
-
 
 			try {
 				if($countId == 0){
@@ -138,20 +100,13 @@ class ProductosModel extends Model
 									'".$params['IsAccesorio']."',
 									".$params['idDocumento'].")";
 
-
-					//print_r($qry);
-					//exit();
-
 					$this->db->query($qry);	
-					//print_r($qry . "-");
 					$qry = "SELECT MAX(prd_id) AS id FROM ctt_products;";
 
 					$result = $this->db->query($qry);
 					if ($row = $result->fetch_row()) {
 						$idProducto = trim($row[0]);
 					}
-
-
 
 					$qry = "SELECT 
 					p.prd_id,ifnull(p.prd_sku,'') , p.prd_name, p.prd_english_name,p.prd_model,p.prd_price, p.prd_coin_type ,p.prd_visibility, p.prd_comments,p.sbc_id, sc.cat_id, sc.sbc_name,  ct.cat_name, 
@@ -165,8 +120,6 @@ class ProductosModel extends Model
 					WHERE prd_status = 1 AND p.prd_id=".$idProducto."
 					GROUP BY 	p.prd_id, p.prd_sku, p.prd_name, ct.cat_name, sc.sbc_name, sv.srv_name, 
 					p.prd_price, p.prd_coin_type, p.prd_english_name;";
-
-
 				
 					$result = $this->db->query($qry);
 					if($row = $result->fetch_row()){
@@ -187,52 +140,16 @@ class ProductosModel extends Model
 						"prd_level" =>$row[14],
 						"extNum" => $row[15]);
 					}
-
-
-					//print_r($item);
-					//exit();
-
-
-
-					//inserta la relacion de documento con producto
-
-/* 					$qry = "INSERT INTO ctt_products_documents (prd_id, doc_id)
-					VALUES(".$idProducto .",".$params['idDocumento'].")";
-					$this->db->query($qry);	 */
-
 					$estatus = $item;
 
-				//$estatus = $idProducto;
 				}else{
 					$estatus = 0;
 				}
-
 			} catch (Exception $e) {
-
 				$estatus = 0;
 			}
 		return $estatus;
 	}
-// Optiene las subcategorias existentes
-/* 	public function GetProductos()
-	{
-		$qry = "SELECT pro.prd_id, pro.prd_sku, pro.prd_name, pro.prd_english_name,
-		pro.prd_model, pro.prd_cost, pro.prd_price,
-		pro.prd_coin_type, pro.prd_visibility,pro.prd_comments, pro.sbc_id, 
-		pro.sup_id, pro.srv_id, cat.cat_id, storeP.str_id 
-	   ,subcat.sbc_name , cat.cat_name , store.str_name , serv.srv_name , storeP.stp_id
-				FROM  ctt_products AS pro
-				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
-				LEFT JOIN ctt_categories AS cat ON cat.cat_id = subcat.cat_id
-				LEFT JOIN ctt_store_product AS storeP ON storeP.prd_id = pro.prd_id
-				LEFT JOIN ctt_stores AS store ON store.str_id = storeP.str_id
-				LEFT JOIN ctt_services AS serv ON serv.srv_id = pro.srv_id
-				where pro.prd_status = 1;";
-
-		return $this->db->query($qry);
-	} */
-
-
 
 	public function GetProductos()
 	{
@@ -253,17 +170,6 @@ class ProductosModel extends Model
 
 		$lista = array();
 		while ($row = $result->fetch_row()){
-
-/* 			    $Count = 0;
-				$qry = "SELECT ser_sku FROM ctt_series WHERE ser_status=1 and prd_id = ".$row[0].";";
-				$resultt = $this->db->query($qry);
-				while ($roww = $resultt->fetch_row()){
-					$Count++;
-				} */
-			
-				//"prd_sku" =>substr($row[1], -7, 4)."-".substr($row[1], -3),
-
-
 				$item = array("prd_id" =>$row[0],
 				"prd_sku" =>$row[1],
 				"prd_name" =>$row[2],
@@ -281,65 +187,23 @@ class ProductosModel extends Model
 				"prd_level" =>$row[14],
 				"extNum" => $row[15]);
 				array_push($lista, $item);
-			
 		}
-	
 		$lista = json_encode($lista,JSON_UNESCAPED_UNICODE);
 		return $lista;
 	}
 
-/* 	public function GetProductos()
+   public function ActualizaProducto($params)
 	{
-		$qry = "SELECT pro.prd_id, pro.prd_sku, pro.prd_name, pro.prd_english_name,
-		pro.prd_model, pro.prd_price,
-		pro.prd_coin_type, pro.prd_visibility,pro.prd_comments, pro.sbc_id, 
-		 cat.cat_id 
-	   ,subcat.sbc_name , cat.cat_name  , serv.srv_name, pro.prd_level
-				FROM  ctt_products AS pro
-				LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
-				LEFT JOIN ctt_categories AS cat ON cat.cat_id = subcat.cat_id
-				LEFT JOIN ctt_services AS serv ON serv.srv_id = pro.srv_id
-				where pro.prd_status = 1;";
 
-		$result = $this->db->query($qry);
-
-		$lista = array();
-		while ($row = $result->fetch_row()){
-
-			    $Count = 0;
-				$qry = "SELECT ser_sku FROM ctt_series WHERE ser_status=1 and prd_id = ".$row[0].";";
-				$resultt = $this->db->query($qry);
-				while ($roww = $resultt->fetch_row()){
-					$Count++;
-				}
-			
-				$item = array("prd_id" =>$row[0],
-				"prd_sku" =>substr($row[1], -7, 4)."-".substr($row[1], -3),
-				"prd_name" =>$row[2],
-				"prd_english_name" =>$row[3],
-				"prd_model" =>$row[4],
-				"prd_price" =>$row[5],
-				"prd_coin_type" =>$row[6],
-				"prd_visibility" =>$row[7],
-				"prd_comments" =>$row[8],
-				"sbc_id" =>$row[9],
-				"cat_id" =>$row[10],
-				"sbc_name" =>$row[11],
-				"cat_name" =>$row[12],
-				"srv_name" =>$row[13],
-				"prd_level" =>$row[14],
-				"extNum" => $Count);
-				array_push($lista, $item);
-			
+		$Subcategoria = $params['idSubCategoria'];
+    	if($params['IsAccesorio']=="A"){
+			$qry1 = "SELECT sbc_id FROM ctt_subcategories WHERE sbc_behaviour = 'AC';";
+			$result1 = $this->db->query($qry1);
+			if ($row = $result1->fetch_row()) {
+				$Subcategoria  = trim($row[0]);
+			}
 		}
-	
-		$lista = json_encode($lista,JSON_UNESCAPED_UNICODE);
-		return $lista;
-	} */
 
-
-    public function ActualizaProducto($params)
-	{
         $estatus = 0;
 			try {
 
@@ -353,51 +217,12 @@ class ProductosModel extends Model
 						,prd_coin_type = '".$params['idMoneda']."'
 						,prd_visibility = '".$params['visible']."'
 						,prd_comments = '".$params['DesProducto']."'
-						,sbc_id = '".$params['idSubCategoria']."'
+						,sbc_id = '".$Subcategoria."'
 						,srv_id =  '".$params['idTipeService']."'
 						,doc_id =  ".$params['idDocumento']."
 						,prd_level = '".$params['IsAccesorio']."'
 						WHERE prd_id =   ".$params['IdProducto'].";";
 				$this->db->query($qry);	
-
-
-/* 				$qry = "UPDATE ctt_products_documents
-				SET doc_id ='".$params['idDocumento']."' 
-				WHERE prd_id = ".$params['IdProducto'].";";
-				$this->db->query($qry);	 */
-
-				//SI ES SOLO UNO ACTULIZA LO SIGUIENTE
-/* 				if($params['esUnico'] == 1){
-
-					$qry = "SELECT ser_id AS id FROM ctt_series WHERE prd_id = ".$params['IdProducto'].";";
-					$result = $this->db->query($qry);
-					if ($row = $result->fetch_row()) {
-						$idSeries = trim($row[0]);
-					}
-					//print_r($idSeries);
-
-					$qry = "UPDATE ctt_series
-							SET ser_serial_number ='".$params['SerieProducto']."'
-							,ser_cost = ".$params['CostProducto']."
-							,ser_lonely = '".$params['rentSinAccesorios']."'
-							,ser_behaviour = '".$params['idbehaviour']."' 
-							WHERE ser_id = ".$idSeries.";";
-					$this->db->query($qry);	
-
-					//print_r($qry);
-
-					$qry = "UPDATE ctt_stores_products
-					SET str_id ='".$params['idAlmacen']."' 
-					WHERE ser_id = ".$idSeries.";";
-					$this->db->query($qry);	
-				}else{	
-					$qry = "UPDATE ctt_products_documents
-					SET doc_id ='".$params['idDocumento']."' 
-					WHERE prd_id = ".$params['IdProducto'].";";
-					$this->db->query($qry);	
-				} */
-
-
 
 				$qry = "SELECT 
 				p.prd_id,ifnull(p.prd_sku,'') , p.prd_name, p.prd_english_name,p.prd_model,p.prd_price, p.prd_coin_type ,p.prd_visibility, p.prd_comments,p.sbc_id, sc.cat_id, sc.sbc_name,  ct.cat_name, 
@@ -408,12 +233,10 @@ class ProductosModel extends Model
 				INNER JOIN ctt_services 		AS sv ON sv.srv_id = p.srv_id 	AND sv.srv_status = 1
 				LEFT JOIN ctt_series 			AS sr ON sr.prd_id = p.prd_id
 				LEFT JOIN ctt_stores_products 	AS sp ON sp.ser_id = sr.ser_id
-				WHERE prd_status = 1 AND p.prd_id=".$idProducto."
+				WHERE prd_status = 1 AND p.prd_id=".$params['IdProducto']."
 				GROUP BY 	p.prd_id, p.prd_sku, p.prd_name, ct.cat_name, sc.sbc_name, sv.srv_name, 
 				p.prd_price, p.prd_coin_type, p.prd_english_name;";
-
-
-			
+	
 				$result = $this->db->query($qry);
 				if($row = $result->fetch_row()){
 					$item = array("prd_id" =>$row[0],
@@ -434,15 +257,13 @@ class ProductosModel extends Model
 					"extNum" => $row[15]);
 				}
 
-
-
-
-
-
-
-
-
 				$estatus = $item;
+
+
+
+
+
+
 			} catch (Exception $e) {
 				$estatus = 0;
 			}
@@ -464,7 +285,6 @@ class ProductosModel extends Model
         }
 		return $estatus;
 	}
-
 
 	public function GetTipoMoneda()
 	{
@@ -601,8 +421,6 @@ class ProductosModel extends Model
         }
 		return $lista;
 	}
-
-
 
 	public function DeleteSku($params)
 	{

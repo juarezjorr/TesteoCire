@@ -261,11 +261,8 @@ function SaveProducto() {
     var PriceProducto = $('#PriceProducto').val();
     var DesProducto = $('#DesProducto').val();
     var idStoreProducto = $('#idStoreProducto').val();
-
     var esUnico = $('#esUnico').val();
-
     var idMoneda = $('#selectMonedaProducto option:selected').attr('id');
-
     var idTipeService = $('#selectRowService option:selected').attr('id');
     //var idProveedor = $('#selectRowProovedores option:selected').attr('id');
     var idAlmacen = $('#selectRowAlmacen option:selected').attr('id');
@@ -321,7 +318,7 @@ function SaveProducto() {
         },
         url: location,
         success: function (row) {
-            console.log(row);
+            console.log("resultado :"+row);
 
             if (IdProducto != '') {
                 table
@@ -330,9 +327,13 @@ function SaveProducto() {
                    .draw();
              }
 
-
-            if (row.cat_id == 0) {
+            if (row == 0) {
                 console.log("no se pudo guardar");
+                LimpiaModal(); 
+                EnableDisableComun(false);
+                $('#NombreConcepto').text(NomProducto);
+                $('#ProductoExisteModal').modal('show');
+
             }else{
 
 

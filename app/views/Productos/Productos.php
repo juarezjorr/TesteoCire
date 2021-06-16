@@ -214,6 +214,31 @@
 	</div>
 </div>
 
+
+
+<!-- Modal Borrar -->
+<div class="modal fade" id="ProductoExisteModal" tabindex="-1" aria-labelledby="ProductoExisteLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+			<div class="modal-header ">
+			</div>
+			<div class="modal-body" style="padding: 0px !important;">
+
+
+			<div class="row">
+				<div class="col-12 text-center">
+					<span class="modal-title text-center" style="font-size: .9rem;" id="ProductoExisteLabel">El concepto <span id="NombreConcepto"></span>  ya se encuentra registro en base de datos</span>
+				</div>
+			</div>
+
+			</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+	</div>
+</div>
+
 <!-- ************* -->
 <div class="overlay_background overlay_hide">
         <div class="overlay_modal">
