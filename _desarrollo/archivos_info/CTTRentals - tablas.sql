@@ -163,6 +163,8 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
     `prd_status`            VARCHAR(1) NULL                 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
     `prd_level`             VARCHAR(1) DEFAULT 'P'          COMMENT 'Nivel del producto  K=Kit, P=Producto',
     `prd_lonely`            VARCHAR(1)                      COMMENT 'Se puede rentar sin accesosrios 1-si, 0-no',
+    `prd_assured`           VARCHAR(1)                      COMMENT 'Cotiza seguro 1-si, 0-no',
+    `doc_id`                INT NULL                        COMMENT 'Id del docuemnto para relacionar la ficha técnica ctt_products_documents',
     `sbc_id`                INT NULL                        COMMENT 'Id de la subcategoría relacion ctt_subcategories',
     `srv_id`                INT NULL                        COMMENT 'Id del tipo de servicio relacion ctt_services',
     `cin_id`                INT NULL                        COMMENT 'Id del tipo de moneda relacion ctt_coins',
