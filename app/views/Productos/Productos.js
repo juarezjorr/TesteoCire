@@ -271,6 +271,7 @@ function SaveProducto() {
     var visible = 0;
     var rentSinAccesorios = 0;
     var IsAccesorio = "P";
+    var aplicaSeguro = 0;
 
     var idCategoria = "";
     var idSubCategoria = "";
@@ -279,6 +280,11 @@ function SaveProducto() {
     if ($('#checkProducto').prop('checked')) {
         visible = 1;
     }
+
+    if ($('#checkAplicaSeguro').prop('checked')) {
+        aplicaSeguro = 1;
+    }
+
     if ($('#checkRentAccesories').prop('checked')) {
         rentSinAccesorios = 1;
     }
@@ -314,7 +320,8 @@ function SaveProducto() {
             rentSinAccesorios: rentSinAccesorios,
             esUnico: esUnico,
             IsAccesorio: IsAccesorio,
-            idDocumento: idDocumento
+            idDocumento: idDocumento,
+            aplicaSeguro: aplicaSeguro
         },
         url: location,
         success: function (row) {
@@ -794,11 +801,7 @@ function getInfoComun(nombreDocument, productoComun, cantidadSKU, idproducto) {
                 $('#checkProducto').prop('checked', false);
             }
 
-            
-
-
-
-
+        
             if (1 >= cantidadSKU) {
             } else {
                 EnableDisableComun(true);
@@ -878,6 +881,13 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
                     } else {
                         $('#checkRentAccesories').prop('checked', false);
                     }
+
+                    if (respuesta[0].prd_assured == 1) {
+                        $('#checkAplicaSeguro').prop('checked', true);
+                    } else {
+                        $('#checkAplicaSeguro').prop('checked', false);
+                    }
+
                     if (respuesta[0].prd_behaviour == 'C') {
                         $('#ventOrRent1').prop('checked', true);
 
