@@ -130,12 +130,33 @@
                             <th style="width:  70px">SkU</th>
                             <th style="width: 600px">Nombre</th>
                             <th style="width:  80px">Precio</th>
-                            <th style="width:  60px" id="numeroSerieColum">No. Serie</th>
-                            <th style="width:  auto" id="fechaRegColum">Fecha registro</th>
+                            <th style="width:  80px">Subcategoria</th>
+
+<!--                             <th style="width:  60px" id="numeroSerieColum">No. Serie</th>
+                            <th style="width:  auto" id="fechaRegColum">Fecha registro</th> -->
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
+
+                 <table class="display compact nowrap"  id="tblExchangesProductos"  style="width: 100%;"  >
+                    <thead>
+                        <tr>
+                            <th style="width:  70px">SkU</th>
+                            <th style="width: 600px">Nombre</th>
+                            <th style="width:  auto">Costo</th>
+                            <th style="width:  auto">Serie</th>
+                            <th style="width:  auto">Fecha Alta</th>
+                            <th style="width:  auto">Proveedor</th> 
+                            <th style="width:  auto">Subcategoria</th> 
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table> 
+
+
+
             </div>
 
 

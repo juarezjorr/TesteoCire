@@ -26,6 +26,7 @@ function inicial() {
     });
 
     setting_table();// Inicializa data table
+    setting_table_pro();// inicializa la tabla de productos
 
     setting_datepicket($('#txtStartDate'));//fecha del dia en curso
 
@@ -33,24 +34,11 @@ function inicial() {
         getProducts();
     });
 
-    estadoTablaColum(true);
-
-/*     $('.checkTipe').change(function () {
-        if ($('#RadioConceptos1').prop('checked')) {
-            estadoTablaColum(true);
-
-        }else{
-            estadoTablaColum(false);
-        }    
-    }); */
-
 }
 
-function estadoTablaColum(estatus) {
-    $('#numeroSerieColum').prop('hidden', estatus);
-    $('#fechaRegColum').prop('hidden', estatus);
-}
 
+
+//conceptos
 function setting_table() {
     let title = 'Salidas de Almacen';
     // let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
@@ -92,10 +80,64 @@ function setting_table() {
             {data: 'skuColum', class: 'edit'},
             {data: 'nameColum', class: 'product-name'},
             {data: 'priceColum', class: 'product-name'},
-            {data: 'SerieColum', class: 'serie-product'},
-            {data: 'dateColum', class: ''}
+            {data: 'subCategoriaColum', class: 'product-name'}
         ],
     });
+}
+
+
+//conceptos x prod
+function setting_table_pro() {
+    let title = 'Salidas de Almacen';
+    // let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
+
+    $('#tblExchangesProductos').DataTable({
+        order: [[1, 'desc']],
+        dom: 'Blrt',
+        buttons: [
+            {
+                extend: 'excel',
+                text: '<button class="btn btn-excel btn-apply hidden-field"><i class="fas fa-file-excel"></i></button>',
+            },
+            {
+                // Boton imprimir el el reporte
+                text: 'Imprimir reporte',
+                className: 'btn-apply hidden-field',
+                action: function (e, dt, node, config) {
+                    read_exchange_table();
+                },
+            },
+            {
+                // Boton limpiar la interface
+                text: 'Nuevo reporte',
+                className: 'btn-apply hidden-field',
+                action: function (e, dt, node, config) {
+                    window.location = 'ProductStocks';
+                },
+            },
+        ],
+        paging: false,
+        pagingType: 'simple_numbers',
+        language: {
+            url: 'app/assets/lib/dataTable/spanish.json',
+        },
+        scrollY: 'calc(100vh - 260px)',
+        scrollX: true,
+        fixedHeader: true,
+        columns: [
+            {data: 'skuColum', class: 'edit'},
+            {data: 'nameColum', class: 'product-name'},
+            {data: 'costoColum', class: 'product-name'},
+            {data: 'SerieColum', class: 'serie-product'},
+            {data: 'FechaAltaColum', class: 'serie-product'},
+            {data: 'ProveedorColum', class: ''},
+            {data: 'SubCategoriaColum', class: ''}
+        ],
+    });
+    setTimeout(() => {
+        $("#tblExchangesProductos_wrapper").attr("hidden",true);
+    }, 20);
+  
 }
 
 
@@ -169,11 +211,11 @@ function getSubCategorias(id, idCategoria) {
         data: {id: id, idCategoria: idCategoria},
         url: location,
         success: function (respuesta) {
-            console.log(respuesta);
+            //console.log(respuesta);
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             if (respuesta[0].sbc_id != 0) {
                 respuesta.forEach(function (row, index) {
-                    renglon += '<option id=' + row.sbc_id + '  value="">' + row.sbc_name + '</option> ';
+                    renglon += '<option id=' + row.sbc_id + '  value="' + row.sbc_id + '">' + row.sbc_name + '</option> ';
                 });
             }
 
@@ -191,18 +233,6 @@ function getSubCategorias(id, idCategoria) {
 
 // Solicita los productos de un almacen seleccionado
 function getProducts() {
-
-    let tabla = $('#tblExchanges').DataTable();
-    tabla.clear();
-    if ($('#RadioConceptos1').prop('checked')) {
-        estadoTablaColum(true);
-
-    }else{
-        estadoTablaColum(false);
-    }   
-
-
-
     var idAlmacen = $('#txtStoreSource option:selected').val();
     var idCategoria = $('#selectRowCategorias option:selected').val();
     var idSubCategoria = $('#selectRowSubCategorias option:selected').val();
@@ -241,10 +271,36 @@ function getProducts() {
 
 function putProducts(dt) {
 
-    btn_apply_appears(); 
-    $.each(dt, function (v, u) {
-        fill_table(u); 
-    });
+    let tabla = $('#tblExchanges').DataTable();
+    tabla.clear().draw();
+
+    let tablaProductos = $('#tblExchangesProductos').DataTable();
+    tablaProductos.clear().draw();
+
+    if(dt[0].prd_id != 0){
+        if (isConcepto == 0){
+            $("#tblExchangesProductos_wrapper").attr("hidden",false);
+            $("#tblExchanges_wrapper").attr("hidden",true);
+
+            $.each(dt, function (v, u) {
+                fill_table_Productos(u); 
+            });
+
+            //console.log("entro if");
+        }else{
+            $("#tblExchanges_wrapper").attr("hidden",false);
+            $("#tblExchangesProductos_wrapper").attr("hidden",true);
+
+            $.each(dt, function (v, u) {
+                fill_table(u); 
+            });
+
+            //console.log("entro else");
+        }
+
+        btn_apply_appears(); 
+    }
+
 }
 
 /*  LLENA LOS DATOS DE LOS ELEMENTOS */
@@ -272,7 +328,6 @@ function sel_products(res) {
         cm = omitirAcentos(cm);
         var cr = cm.indexOf(res);
         if (cr > -1) {
-            //            alert($(this).children().html())
             $(this).css({display: 'block'});
         }
     });
@@ -298,33 +353,51 @@ function validator() {
     } else {
         $('#btn_products').addClass('disabled');
         console.clear();
-        console.log(msg);
+        //console.log(msg);
     }
 }
 
 // Llena la tabla de movimientos
 function  fill_table(par, tipoDato) {
+
     let largo = $('#tblExchanges tbody tr td').html();
     largo == 'Ningún dato disponible en esta tabla' ? $('#tblExchanges tbody tr').remove() : '';
    // par = JSON.parse(par);
-   console.log(par);
+   //console.log(par);
    let tabla = $('#tblExchanges').DataTable();
    var rowNode = tabla.row
         .add({
             skuColum: par.prd_sku,
             nameColum: par.prd_name,
             priceColum: par.prd_price,
-            SerieColum: par.ser_serial_number,
-            dateColum: par.ser_date_registry
+            subCategoriaColum: par.sbc_name
         })
         .draw() 
         .node();
-
-        if(isConcepto == 1){
-            $(rowNode).find('td').eq(3).attr("hidden",true);
-            $(rowNode).find('td').eq(4).attr("hidden",true);
-        }
 }
+
+
+// Llena la tabla de movimientos
+function  fill_table_Productos(par, tipoDato) {
+
+   let largo = $('#tblExchangesProductos tbody tr td').html();
+   largo == 'Ningún dato disponible en esta tabla' ? $('#tblExchanges tbody tr').remove() : '';
+   let tabla = $('#tblExchangesProductos').DataTable();
+   var rowNode = tabla.row
+        .add({
+            skuColum: par.ser_sku,
+            nameColum: par.prd_name,
+            costoColum: par.ser_cost,
+            SerieColum: par.ser_serial_number,
+            FechaAltaColum: par.ser_date_registry,
+            ProveedorColum: par.sup_business_name,
+            SubCategoriaColum: par.sbc_name
+        })
+        .draw() 
+        .node();
+}
+
+
 
 function btn_apply_appears() {
 
@@ -357,17 +430,38 @@ function read_exchange_table() {
     let freelnc = $('#txtFreelance').val();
     let chain = '';
 
-    $('#tblExchanges tbody tr').each(function (v, u) {
-        let prodsku = $($(u).find('td')[0]).text();
-        let prodnam = $($(u).find('td')[1]).text();
-        let prodPrice = $($(u).find('td')[2]).text();
-        let serinum = $($(u).find('td')[3]).text();
-        let dateRegis = $($(u).find('td')[4]).text();
+    if (isConcepto == 0){
+        $('#tblExchangesProductos tbody tr').each(function (v, u) {
+            let prodsku = $($(u).find('td')[0]).text();
+            let prodnam = $($(u).find('td')[1]).text();
+            let prodPrice = $($(u).find('td')[2]).text();
+            let serinum = $($(u).find('td')[3]).text();
+            let dateRegis = $($(u).find('td')[4]).text();
 
-        prodsku = prodsku.substring(0, 7) + '-' + prodsku.substring(7, prodsku.length);
+            let pos5 = $($(u).find('td')[5]).text();
+            let pos6 = $($(u).find('td')[6]).text();
 
-        chain += `${stornam}|${projnum}|${projnam}|${datestr}|${version}|${freelnc}|${prodsku}|${prodnam}|${prodPrice}|${serinum}|${dateRegis}|${isConcepto}@`;
-    });
+            prodsku = prodsku.substring(0, 7) + '-' + prodsku.substring(7, prodsku.length);
+    
+            chain += `${stornam}|${projnum}|${projnam}|${datestr}|${version}|${freelnc}|${prodsku}|${prodnam}|${prodPrice}|${serinum}|${dateRegis}|${pos5}|${pos6}|${isConcepto}@`;
+        });
+    }else{
+        $('#tblExchanges tbody tr').each(function (v, u) {
+            let prodsku = $($(u).find('td')[0]).text();
+            let prodnam = $($(u).find('td')[1]).text();
+            let prodPrice = $($(u).find('td')[2]).text();
+            let serinum = $($(u).find('td')[3]).text();
+            let dateRegis = $($(u).find('td')[4]).text();
+
+            let pos5 = $($(u).find('td')[5]).text();
+            let pos6 = $($(u).find('td')[6]).text();
+    
+            prodsku = prodsku.substring(0, 7) + '-' + prodsku.substring(7, prodsku.length);
+    
+            chain += `${stornam}|${projnum}|${projnam}|${datestr}|${version}|${freelnc}|${prodsku}|${prodnam}|${prodPrice}|${serinum}|${dateRegis}|${pos5}|${pos6}|${isConcepto}@`;
+        });
+    }
+
     chain = chain.substring(0, chain.length - 1);
     build_data_structure(chain);
 }

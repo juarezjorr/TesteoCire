@@ -43,14 +43,14 @@ class ProductStocksModel extends Model
 		$BanderaLevel = 0;
 
 		if($idAlmacen <> 0){
-			$queryExt.= " AND st.str_id=".$idAlmacen;
+			$queryExt.= " AND st.str_id = ".$idAlmacen;
 		}
 
 		if($idCategoria <> 0){
 			if($idSubCategoria <> 0){
-				$queryExt.= " AND pr.sbc_id=".$idSubCategoria;
+				$queryExt.= " AND pr.sbc_id = ".$idSubCategoria;
 			}else{
-				$queryExt.= " AND pr.sbc_id in (select sbc_id from ctt_subcategories where cat_id =".$idCategoria.")";
+				$queryExt.= " AND pr.sbc_id in (select sbc_id from ctt_subcategories where cat_id = ".$idCategoria.")";
 			}
 		}
 	
@@ -74,15 +74,18 @@ class ProductStocksModel extends Model
 
 
 		if($isConcepto == 1){
-			$qry = "SELECT distinct pr.prd_sku, pr.prd_name, prd_price, '' as ser_date_registry, '' as ser_serial_number FROM ctt_products AS pr
+			$qry = "SELECT distinct pr.prd_sku, pr.prd_name, prd_price, sb.sbc_name FROM ctt_products AS pr
 			INNER JOIN ctt_series AS sr ON sr.prd_id = pr.prd_id
 			INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id
+			INNER JOIN ctt_subcategories AS sb ON sb.sbc_id = pr.sbc_id
 			WHERE sr.ser_status = 1 AND st.stp_quantity > 0 ".$queryExt;
 		}else{
-			$qry = "SELECT pr.prd_sku, pr.prd_name, prd_price,  sr.ser_date_registry, sr.ser_serial_number FROM ctt_products AS pr
+			$qry = "SELECT  sr.ser_sku, pr.prd_name, sr.ser_cost, sr.ser_serial_number , sr.ser_date_registry, sp.sup_business_name, sb.sbc_name FROM ctt_products AS pr
 			INNER JOIN ctt_series AS sr ON sr.prd_id = pr.prd_id
 			INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id
-			WHERE sr.ser_status = 1 AND st.stp_quantity > 0 ".$queryExt;
+			INNER JOIN ctt_subcategories AS sb ON sb.sbc_id = pr.sbc_id
+			LEFT JOIN ctt_suppliers AS sp ON sp.sup_id = sr.sup_id
+			WHERE sr.ser_status = 1 AND st.stp_quantity > 0  ".$queryExt;
 		}
 
 		//print_r($qry);

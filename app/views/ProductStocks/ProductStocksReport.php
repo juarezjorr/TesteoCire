@@ -30,7 +30,7 @@
               $version = $el[4];
               $freelance = $el[5];
               $date = $el[3];
-              $isConcepto = $el[11];
+              $isConcepto = $el[13];
           }
 
 
@@ -83,14 +83,17 @@
                         $html .= '
                         <th style="width:  25mm;">SKU</th>
                         <th style="width:  150mm;">NOMBRE</th>
-                        <th style="width: 15mm;">PRECIO</th>';
+                        <th style="width: 15mm;">PRECIO</th>
+                        <th style="width: 15mm;">SUBCATEGORIA</th>';
                     }else{
                         $html .= ' 
                         <th style="width:  25mm;">SKU</th>
                         <th style="width:  150mm;">NOMBRE</th>
-                        <th style="width: 15mm;">PRECIO</th>
+                        <th style="width: 15mm;">COSTO</th>
                         <th style="width:  20mm;">SERIE</th>
-                        <th style="width: 25mm;">FECHA</th>';
+                        <th style="width: 25mm;">FECHA ALTA</th>
+                        <th style="width:  20mm;">PROVEEDOR</th>
+                        <th style="width: 25mm;">SUBCATEGORIA</th>';
                     }
 
             $html .= '</tr>
@@ -106,6 +109,7 @@
                             <td>'.$el[6].'</td>
                             <td>'.$el[7].'</td>
                             <td>'.$el[8].'</td>
+                            <td>'.$el[9].'</td>
                         </tr>';
                 }
             }
@@ -119,6 +123,8 @@
                             <td>'.$el[8].'</td>
                             <td>'.$el[9].'</td>
                             <td>'.$el[10].'</td>
+                            <td>'.$el[11].'</td>
+                            <td>'.$el[12].'</td>
                         </tr>';
                 }
             }
