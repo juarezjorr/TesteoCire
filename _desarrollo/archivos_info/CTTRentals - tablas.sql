@@ -43,6 +43,29 @@ COMMENT='Áreas organizacionales de la empresa';
 
 
 
+
+DROP TABLE `cttapp_cire`.`ctt_budget`;
+CREATE TABLE `cttapp_cire`.`ctt_budget` (
+  `bdg_id`                   INT NOT NULL AUTO_INCREMENT    COMMENT 'Id de la cotización',
+  `bdg_prod_sku`             VARCHAR(15)  NULL              COMMENT 'SKU identificador del producto',
+  `bdg_prod_name`            VARCHAR(100) NULL              COMMENT 'Nombre del producto',
+  `bdg_prod_price`           DECIMAL(10,2) NULL             COMMENT 'Precio unitario del producto',
+  `bdg_quantity`             INT NULL                       COMMENT 'Cantidad de productos',
+  `bdg_days_base`            INT NULL                       COMMENT 'Días solicitados en renta',
+  `bdg_discount_base`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado a la renta',
+  `bdg_days_trip`            INT NULL                       COMMENT 'Días solicitados en viaje',
+  `bdg_discount_trip`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado al viaje',
+  `bdg_days_test`            INT NULL                       COMMENT 'Días solicitados en prueba',
+  `bdg_discount_test`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado en prueba',
+  `bdg_insured`              DECIMAL(10,2) NULL DEFAULT .1  COMMENT 'Porcentaje de seguro',
+  `ver_id`                   INT NOT NULL                   COMMENT 'FK Id de la version relación ctt_version',
+  `prd_id`                   INT NOT NULL                   COMMENT 'FK Id del producto relación ctt_products',
+
+PRIMARY KEY (`bdg_id`)) 
+COMMENT='Áreas organizacionales de la empresa';
+
+
+
 DROP TABLE `cttapp_cire`.`ctt_categories`;
 CREATE TABLE `cttapp_cire`.`ctt_categories` (
     `cat_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del catálogo',
@@ -114,6 +137,31 @@ COMMENT = 'Tabla de los empleados de la empresa';
 
 
 
+DROP TABLE `cttapp_cire`.`ctt_house_production`;
+CREATE TABLE `cttapp_cire`.`ctt_house_production` (
+      `hpr_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la casa productora',
+      `hpr_code`            VARCHAR(50)                     COMMENT 'código de la casa prductora',
+      `hpr_name`    		VARCHAR(100)                    COMMENT 'Nombre de la casa productora',
+      `hpr_rfc`    			VARCHAR(20)						COMMENT 'RFC de la casa productora',
+      `hpr_email`           VARCHAR(50)                     COMMENT 'email de la casa productora',
+      `hpr_phone`           VARCHAR(50)                     COMMENT 'telefono de la casa productora',
+      `hpr_status`          VARCHAR(1)                    	COMMENT 'status de la casa productora 1-Activo, 0-Inactivo',
+PRIMARY KEY (`hpr_id`))
+COMMENT='Casas productoras';
+
+
+
+DROP TABLE `cttapp_cire`.`ctt_location`;
+CREATE TABLE `cttapp_cire`.`ctt_location` (
+    `loc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la locación',
+    `loc_location`          VARCHAR(100) NULL               COMMENT 'Ubicación de la locación',
+    `loc_country`           VARCHAR(100) NULL               COMMENT 'Pais de la locación',
+    `loc_type_location`     VARCHAR(100) NULL               COMMENT 'Tipo de locación',
+PRIMARY KEY (`loc_id`))
+COMMENT = 'Locación en donde se llevara la filmación';
+
+
+
 DROP TABLE `cttapp_cire`.`ctt_menu`;
 CREATE TABLE `cttapp_cire`.`ctt_menu` (
     `mnu_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del menu',
@@ -147,6 +195,22 @@ CREATE TABLE `cttapp_cire`.`ctt_position` (
     `pos_status`            VARCHAR(1) NULL                 COMMENT 'Estatus del puesto 1-Activo, 0-Inactivo',
 PRIMARY KEY (`pos_id`))
 COMMENT = 'Puestos de empleados en la empresa';
+
+
+
+
+DROP TABLE `cttapp_cire`.`ctt_producer`;
+CREATE TABLE `cttapp_cire`.`ctt_producer` (
+      `pdc_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del productor',
+      `pdc_code`            VARCHAR(50)                     COMMENT 'Código del productor',
+      `pdc_name`            VARCHAR(100)                    COMMENT 'Nombre del productor',
+      `pdc_RFC`             VARCHAR(20)                     COMMENT 'RFC del productor',
+      `pdc_emal`            VARCHAR(50)                     COMMENT 'Correo electrónico',
+      `pdc_phone`           VARCHAR(50)                     COMMENT 'Teléfono de contacto',
+      `pdc_qualification`   VARCHAR(10)                     COMMENT 'Calificacion del cliente',
+PRIMARY KEY (`pdc_id`))
+COMMENT='Clientes prospectos para nuevas cotizaciones';
+
 
 
 
@@ -214,6 +278,34 @@ CREATE TABLE `cttapp_cire`.`ctt_profiles_modules` (
     `mod_id`                INT NOT NULL                    COMMENT 'FK Id del modulo relación ctt_modulo',
 PRIMARY KEY (`pfm_id`))
 COMMENT = 'Tabla pivote m_to_m ctt_profile - ctt_modulo';
+
+
+
+DROP TABLE `cttapp_cire`.`ctt_projects`;
+CREATE TABLE `cttapp_cire`.`ctt_projects` (
+      `pjt_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del proyecto',
+      `pjt_name`            VARCHAR(100)                    COMMENT 'Nombre de la casa prductora',
+      `pjt_type_project`    VARCHAR(100)                    COMMENT 'Nombre del productor responsable',
+      `pjt_date_project`    DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de generación del proyecto',
+      `prs_id`              INT NULL                        COMMENT 'FK Id del prospecto relación ctt_prospects',
+      `pdc_id`              INT NULL                        COMMENT 'FK Id del productor relación ctt_producers',
+      `loc_id`              INT NOT NULL                    COMMENT 'FK Id de la locación relación ctt_location',
+PRIMARY KEY (`pjt_id`))
+COMMENT='proyectos registrados';
+
+
+
+DROP TABLE `cttapp_cire`.`ctt_prospects`;
+CREATE TABLE `cttapp_cire`.`ctt_prospects` (
+      `prs_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del clientes prospecto',
+      `prs_production_house`VARCHAR(100)                    COMMENT 'Nombre de la casa prductora',
+      `prs_producer`        VARCHAR(100)                    COMMENT 'Nombre del productor responsable',
+      `prs_address`         VARCHAR(100)                    COMMENT 'Domicilio de la casa productora',
+      `prs_emal`            VARCHAR(50)                     COMMENT 'Correo electrónico',
+      `prs_phone`           VARCHAR(50)                     COMMENT 'Teléfono de contacto',
+      `prs_qualification`   VARCHAR(10)                     COMMENT 'Calificacion de propspecto',
+PRIMARY KEY (`prs_id`))
+COMMENT='Clientes prospectos para nuevas cotizaciones';
 
 
 
@@ -291,6 +383,8 @@ CREATE TABLE `cttapp_cire`.`ctt_stores_products` (
       `ser_id`              INT NOT NULL                    COMMENT 'Id del numero de serie relacion ctt_series',
 PRIMARY KEY (`stp_id`))
 COMMENT='Tabla de cantidad de productos en almacen';
+
+
 
 
 
@@ -392,6 +486,15 @@ PRIMARY KEY (`urm_id`))
 COMMENT = 'Tabla pivote m_to_m ctt_usuarios - ctt_modules';
 
 
+
+DROP TABLE `cttapp_cire`.`ctt_version`;
+CREATE TABLE `cttapp_cire`.`ctt_version` (
+    `ver_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la version',
+    `ver_code`              VARCHAR(20) NULL                COMMENT 'Código de la version',
+    `ver_date`              DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de generación del documento',
+    `ver_status`            VARCHAR(0) NULL                COMMENT 'Código de la version',
+PRIMARY KEY (`ver_id`))
+COMMENT = 'Version de docuemntos de cotización';
 
 
 
