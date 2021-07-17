@@ -87,6 +87,41 @@ PRIMARY KEY (`cin_id`))
 COMMENT='Tabla catalogo de monedas';
 
 
+DROP TABLE `cttapp_cire`.`ctt_customers`;
+CREATE TABLE `cttapp_cire`.`ctt_customers` (
+    `cus_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del cliente',
+    `cus_name`              VARCHAR(100)                    COMMENT 'Nombre del cliente',
+    `cus_contact`           VARCHAR(50)                     COMMENT 'nombre del contacto',
+    `cus_address`           VARCHAR(300)                    COMMENT 'Domicilio del cliente',
+    `cus_email`             VARCHAR(100)                    COMMENT 'Correo electrónico del cliente',
+    `cus_phone`             VARCHAR(100)                    COMMENT 'Teléfono del cliente',
+    `cus_qualification`     VARCHAR(10)                     COMMENT 'Calificación del cliente',
+    `cus_prospect`          VARCHAR(1) DEFAULT 0            COMMENT 'Registro de cliente 1-cliente 0-prospecto',
+    `cus_sponsored`         VARCHAR(1) DEFAULT 0            COMMENT 'Cliente con patrocinio 1-con patrocinio 0-sin patrocinio',
+    `cut_id`                INT NOT NULL                    COMMENT 'Tipo de cliente relacion con ctt_customer_type',
+    `cus_status`            INT DEFAULT 1                   COMMENT 'Estatus de la moneda 1-activo 0-inactivo',
+PRIMARY KEY (`cos_id`)) 
+COMMENT='Clientes y prospectos de cliente';
+
+
+
+DROP TABLE `cttapp_cire`.`ctt_customers_type`;
+CREATE TABLE `cttapp_cire`.`ctt_customers_type` (
+    `cut_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del tipo de cliente',
+    `cut_name`              VARCHAR(50)                     COMMENT 'Nombre del tipo de cliente',
+PRIMARY KEY (`cut_id`)) 
+COMMENT='Catálogo de tipos de cliente ';
+
+
+
+DROP TABLE `cttapp_cire`.`ctt_customers_owner`;
+CREATE TABLE `cttapp_cire`.`ctt_customers_owner` (
+    `cuo_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la relacion',
+    `cus_id`                INT                             COMMENT 'Id del cliente',
+    `cus_parent`            INT                             COMMENT 'Id del cliente relación',
+PRIMARY KEY (`cuo_id`)) 
+COMMENT='Relacion de clientes pertenecientes a otros clientes';
+
 
 DROP TABLE `cttapp_cire`.`ctt_counter_exchange`;
 CREATE TABLE `cttapp_cire`.`ctt_counter_exchange` (
@@ -136,21 +171,6 @@ PRIMARY KEY (`emp_id`))
 COMMENT = 'Tabla de los empleados de la empresa';
 
 
-
-DROP TABLE `cttapp_cire`.`ctt_house_production`;
-CREATE TABLE `cttapp_cire`.`ctt_house_production` (
-      `hpr_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la casa productora',
-      `hpr_code`            VARCHAR(50)                     COMMENT 'código de la casa prductora',
-      `hpr_name`    		VARCHAR(100)                    COMMENT 'Nombre de la casa productora',
-      `hpr_rfc`    			VARCHAR(20)						COMMENT 'RFC de la casa productora',
-      `hpr_email`           VARCHAR(50)                     COMMENT 'email de la casa productora',
-      `hpr_phone`           VARCHAR(50)                     COMMENT 'telefono de la casa productora',
-      `hpr_status`          VARCHAR(1)                    	COMMENT 'status de la casa productora 1-Activo, 0-Inactivo',
-PRIMARY KEY (`hpr_id`))
-COMMENT='Casas productoras';
-
-
-
 DROP TABLE `cttapp_cire`.`ctt_location`;
 CREATE TABLE `cttapp_cire`.`ctt_location` (
     `loc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la locación',
@@ -195,21 +215,6 @@ CREATE TABLE `cttapp_cire`.`ctt_position` (
     `pos_status`            VARCHAR(1) NULL                 COMMENT 'Estatus del puesto 1-Activo, 0-Inactivo',
 PRIMARY KEY (`pos_id`))
 COMMENT = 'Puestos de empleados en la empresa';
-
-
-
-
-DROP TABLE `cttapp_cire`.`ctt_producer`;
-CREATE TABLE `cttapp_cire`.`ctt_producer` (
-      `pdc_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del productor',
-      `pdc_code`            VARCHAR(50)                     COMMENT 'Código del productor',
-      `pdc_name`            VARCHAR(100)                    COMMENT 'Nombre del productor',
-      `pdc_RFC`             VARCHAR(20)                     COMMENT 'RFC del productor',
-      `pdc_emal`            VARCHAR(50)                     COMMENT 'Correo electrónico',
-      `pdc_phone`           VARCHAR(50)                     COMMENT 'Teléfono de contacto',
-      `pdc_qualification`   VARCHAR(10)                     COMMENT 'Calificacion del cliente',
-PRIMARY KEY (`pdc_id`))
-COMMENT='Clientes prospectos para nuevas cotizaciones';
 
 
 
@@ -284,28 +289,17 @@ COMMENT = 'Tabla pivote m_to_m ctt_profile - ctt_modulo';
 DROP TABLE `cttapp_cire`.`ctt_projects`;
 CREATE TABLE `cttapp_cire`.`ctt_projects` (
       `pjt_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del proyecto',
-      `pjt_name`            VARCHAR(100)                    COMMENT 'Nombre de la casa prductora',
-      `pjt_type_project`    VARCHAR(100)                    COMMENT 'Nombre del productor responsable',
+      `pjt_number`          VARCHAR(50)                     COMMENT 'Numero del proyecto',
+      `pjt_name`            VARCHAR(100)                    COMMENT 'Nombre del proyecto',
       `pjt_date_project`    DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de generación del proyecto',
-      `prs_id`              INT NULL                        COMMENT 'FK Id del prospecto relación ctt_prospects',
-      `pdc_id`              INT NULL                        COMMENT 'FK Id del productor relación ctt_producers',
+      `pjt_date_start`      DATETIME NULL                   COMMENT 'Fecha de inicio del proyecto',
+      `pjt_date_end`        DATETIME NULL                   COMMENT 'Fecha de fin del proyecto',
+      `pjt_location`        VARCHAR(200) NULL               COMMENT 'Ubicación del desarrollo del proyecto',
+      `pjt_status`          VARCHAR(1) NULL DEFAULT 1       COMMENT 'Estatus del proyecto 1-Activo, 0-Inactivo',
+      `cuo_id`              INT NOT NULL                    COMMENT 'FK Id de propietario relacion con ctt_costumer_owner',
       `loc_id`              INT NOT NULL                    COMMENT 'FK Id de la locación relación ctt_location',
 PRIMARY KEY (`pjt_id`))
 COMMENT='proyectos registrados';
-
-
-
-DROP TABLE `cttapp_cire`.`ctt_prospects`;
-CREATE TABLE `cttapp_cire`.`ctt_prospects` (
-      `prs_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del clientes prospecto',
-      `prs_production_house`VARCHAR(100)                    COMMENT 'Nombre de la casa prductora',
-      `prs_producer`        VARCHAR(100)                    COMMENT 'Nombre del productor responsable',
-      `prs_address`         VARCHAR(100)                    COMMENT 'Domicilio de la casa productora',
-      `prs_emal`            VARCHAR(50)                     COMMENT 'Correo electrónico',
-      `prs_phone`           VARCHAR(50)                     COMMENT 'Teléfono de contacto',
-      `prs_qualification`   VARCHAR(10)                     COMMENT 'Calificacion de propspecto',
-PRIMARY KEY (`prs_id`))
-COMMENT='Clientes prospectos para nuevas cotizaciones';
 
 
 
@@ -492,7 +486,8 @@ CREATE TABLE `cttapp_cire`.`ctt_version` (
     `ver_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la version',
     `ver_code`              VARCHAR(20) NULL                COMMENT 'Código de la version',
     `ver_date`              DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de generación del documento',
-    `ver_status`            VARCHAR(0) NULL                COMMENT 'Código de la version',
+    `ver_status`            VARCHAR(1) NULL                 COMMENT 'Código de la version',
+    `pjt_id`                INT NOT NULL                    COMMENT 'FK Id del projeto relación ctt_projects',
 PRIMARY KEY (`ver_id`))
 COMMENT = 'Version de docuemntos de cotización';
 

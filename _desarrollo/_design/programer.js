@@ -282,25 +282,25 @@ function update_totals() {
             dayts = parseInt($(this).children('td.daytest').text());
             dests = parseInt($(this).children('td.destest').text());
 
-            stt01 = qtybs * prcbs;
-            stt02 = stt01 * daybs;
-            stt03 = desbs / 100;
-            stt04 = stt02 * stt03;
-            cstbs = stt02 - stt04;
+            stt01 = qtybs * prcbs; // Importe de cantidad x precio
+            stt02 = stt01 * daybs; // Costo de Importe x días base
+            stt03 = desbs / 100; // Porcentaje de descuento base
+            stt04 = stt02 * stt03; // Costo de Importe x porcentaje descuento base
+            cstbs = stt02 - stt04; // Costo base
 
-            stt05 = stt01 * daytr;
-            stt06 = destr / 100;
-            stt07 = stt05 * stt06;
-            csttr = stt05 - stt07;
+            stt05 = stt01 * daytr; // Costo de Importe x dias viaje
+            stt06 = destr / 100; // Porcentaje de descuento viaje
+            stt07 = stt05 * stt06; // Costo de Importe x porcentaje descuento viaje
+            csttr = stt05 - stt07; // Costo viaje
 
-            stt08 = stt01 * dayts;
-            stt09 = dests / 100;
-            stt10 = stt08 * stt09;
-            cstts = stt08 - stt10;
+            stt08 = stt01 * dayts; // Costo de Importe x dias prueba
+            stt09 = dests / 100; // Porcentaje de descuento prueba
+            stt10 = stt08 * stt09; // Costo de Importe x porcentaje prueba
+            cstts = stt08 - stt10; // Costo prueba
 
-            costbase += cstbs;
-            costtrip += csttr;
-            costtest += cstts;
+            costbase += cstbs; // Total de Costo Base
+            costtrip += csttr; // Total de Costo Viaje
+            costtest += cstts; // Total de Costo Prueba
 
             $('#prd' + v)
                 .children('td.costbase')

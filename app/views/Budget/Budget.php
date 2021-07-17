@@ -20,13 +20,29 @@
                         <div class="  block_01-01 ">
                             <table class="table_information">
                                 <tr>
-                                    <td class="concepto">Casa productora</td>
-                                    <td class="dato" id="FilmProducerHouse"></td>
-                                </tr>
+                                    <td class="concepto">Nombre del Cliente</td>
+                                    <td class="dato" id="Customer" >
+                                        <div class="grouper" 
+                                        
+                                        contenteditable="true" data_identy=""></div>
+                                        <div class="customerType"></div>
+                                        <i class="fas fa-caret-down turn"></i>
+
+                                        <div class="list_items">
+                                           <ul></ul>
+                                        </div>
+                                    </td>
+                                </tr> 
                                 <tr>
-                                    <td class="concepto">Productor responsable</td>
-                                    <td class="dato" id="FilmProducer"></td>
-                                </tr>
+                                    <td class="concepto" style="heigth:30px">&nbsp;</td>
+                                    <td class="dato"></td>
+                                </tr>   
+
+                                <tr>
+                                    <td class="concepto">&nbsp;</td>
+                                    <td class="dato" id="Relation"></td>
+                                </tr>    
+                            
                                 <tr>
                                     <td class="concepto">Domicilio</td>
                                     <td class="dato" id="AddressProducer"></td>
@@ -45,9 +61,11 @@
                                 </tr>
                                 <tr>
                                     <td class="concepto"></td>
-                                    <td class="enlace"><button class="btn-add" id="addProducer"> + Agregar cliente</button></td>
+                                    <td class="enlace">&nbsp;</td>
                                 </tr>
                             </table>
+
+                            <button class="btn-add right" id="addProducer"> + Agregar cliente</button>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 blocks">
@@ -55,16 +73,34 @@
                         <div class="  block_01-02">
                             <table class="table_information">
                                 <tr>
+                                    <td class="concepto">Numero de proyecto</td>
+                                    <td class="dato" id="numProject">
+                                        <div class="search" contenteditable="true" ></div>
+                                        <i class="fas fa-search serc"></i>
+                                    </td>
+                                </tr>    
+                                <tr>
+                                    <td class="concepto"></td>
+                                    <td class="error">&nbsp;</td>
+                                </tr>
+                                <tr>
                                     <td class="concepto">Proyecto</td>
-                                    <td class="dato" id="Project"></td>
+                                    <td class="dato" id="Projects">
+                                    <div class="grouper" contenteditable="true" data_identy=""></div>
+                                        <i class="fas fa-caret-down turn"></i>
+
+                                        <div class="list_items">
+                                           <ul></ul>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="concepto">Locación</td>
-                                    <td class="dato" id="Location"></td>
+                                    <td class="dato" id="LocationProject"></td>
                                 </tr>
                                 <tr>
-                                    <td class="concepto">Tpo de proyecto</td>
-                                    <td class="dato" id="TypeProject"></td>
+                                    <td class="concepto">Periodo</td>
+                                    <td class="dato" id="PeriodProject"></td>
                                 </tr>
                                 <tr>
                                     <td class="concepto">Tipo de locación</td>
@@ -72,7 +108,7 @@
                                 </tr>
                                 <tr>
                                     <td class="concepto">Fecha del proyecto</td>
-                                    <td class="dato" id="PeriodProject"></td>
+                                    <td class="dato" id="DateProject"></td>
                                 </tr>
                                
                                 <tr>
@@ -81,9 +117,10 @@
                                 </tr>
                                 <tr>
                                     <td class="concepto"></td>
-                                    <td class="enlace"><button class="btn-add" id="addProject"> + Agregar proyecto</button></td>
+                                    <td class="enlace"></td>
                                 </tr>
                             </table>
+                            <button class="btn-add right" id="addProject"> + Agregar proyecto</button>
                         </div>
                     </div>
                 </div>
@@ -91,34 +128,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 blocks">
                         <div class="block_01-02">
-                            <div id="tbl_dynamic">
-                                <table class="table_control" id="tblControl" style="width: 1310px;">
-                                    <thead>
-                                        <tr class="headrow">
-                                            <th rowspan="2" class="w1 fix product">PRODUCTO</th>
-                                            <th colspan="5" class="zone_01 headrow" >COTIZACIÓN BASE</th>
-                                            <th colspan="3" class="zone_02 headrow" >VIAJE</th>
-                                            <th colspan="3" class="zone_03 headrow" >PRUEBAS</th>
-                                        </tr>
-                                        <tr>
-                                            <th class="w2 zone_01" >Cantidad</th>
-                                            <th class="w3 zone_01" >Precio</th>
-                                            <th class="w2 zone_01 sel" ><i class="fas fa-caret-left" id="daybase"></i>Días</th>
-                                            <th class="w2 zone_01 sel" ><i class="fas fa-caret-left" id="desbase"></i>Desc.</th>
-                                            <th class="w3 zone_01" >Costo</th>
-                                            <th class="w2 zone_02 sel" ><i class="fas fa-caret-left" id="daytrip"></i>Días</th>
-                                            <th class="w2 zone_02 sel" ><i class="fas fa-caret-left" id="destrip"></i>Desc.</th>
-                                            <th class="w3 zone_02" >Costo</th>
-                                            <th class="w2 zone_03 sel" ><i class="fas fa-caret-left" id="daytest"></i>Días</th>
-                                            <th class="w2 zone_03 sel" ><i class="fas fa-caret-left" id="destest"></i>Desc.</th>
-                                            <th class="w3 zone_03" >Costo</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
+                            <div id="tbl_dynamic"></div>
                         </div>   
                     </div>
                 </div>
@@ -157,18 +167,8 @@
                     </div>
                 </div>
                 <hr>
-                <div class="blocks">
-                    <div class="full text_center">
-                        <h6>DOCUMENTOS</h6>
-                    </div>
-                </div>
-                <div class="blocks documents">
-                    <div class="half left">C0001</div>
-                    <div class="half right">00/00/0000</div>
-                </div>
-                <div class="blocks documents">
-                    <div class="half left">C0002</div>
-                    <div class="half right">00/00/0000</div>
+                <div class="blocks" id="versions">
+                   
                 </div>
             </div>
 
@@ -179,6 +179,15 @@
             
         
     </div>
+
+    <!-- Start Lista de productos -->
+<div class="box_list_products" id="Products" >
+    <div class="sel_product" contenteditable="true" ></div>
+    <div class="list_products">
+        <ul></ul>
+    </div>
+</div>
+<!-- End Lista de productos -->
 </div>
 
 <!-- Start Modales -->
@@ -188,7 +197,9 @@
 <!-- End Modales -->
 
 
+
+
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
-<script src="<?=  PATH_VIEWS . 'budget/budget.js' ?>"></script>
+<script src="<?=  PATH_VIEWS . 'Budget/Budget.js' ?>"></script>
 
 <?php require ROOT . FOLDER_PATH . "/app/assets/footer.php"; ?>

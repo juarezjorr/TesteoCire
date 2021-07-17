@@ -1,9 +1,3 @@
--- 18 de Mayo 2021
+-- Actualizacion del 15 de julio 2021
 
- 
-
-
-INSERT INTO `cttapp_cire`.`ctt_categories` (`cat_name`, `cat_status`) VALUES ('Bolsa de accesorios', '1');
-INSERT INTO `cttapp_cire`.`ctt_subcategories` (`sbc_code`, `sbc_name`, `sbc_status`, `cat_id`) VALUES ('AC', 'BOLSA DE ACCESORIOS', '1', '17');
-
-
+ALTER TABLE `cttapp_cire`.`ctt_products` CHANGE COLUMN `prd_assured` `prd_assured` VARCHAR(1) NULL DEFAULT 0 COMMENT 'Cotiza seguro 1-si, 0-no' ;

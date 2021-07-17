@@ -1,41 +1,52 @@
 // BOTONES Y ENLACES
-.btn-add  {
+.btn-add {
     border: none;
     background-color: transparent;
     color: #888888;
     font-size: 0.9em;
-    &:hover  {
+    &:hover {
         color: #000000;
         font-weight: 900;
     }
+    
+&.right {
+    position: absolute;
+    bottom: 1px;
+    
 }
+
+}
+
+.right {
+    right: 10px;
+   
+}
+
+
 
 .bn {
     padding: 2px 10px;
     border-radius: 20px;
     margin: 20px 0;
     border: 2px solid transparent;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
-.btn-ok  {
+.btn-ok {
     color: $setColor;
     border-color: $setColor;
-    
+
     &:hover {
-        
         background-color: $setColor;
-        color: #FFFFFF;
-     
+        color: #ffffff;
     }
 }
-.btn-cn  {
+.btn-cn {
     color: $btn-red;
     border-color: $btn-red;
-    
+
     &:hover {
         background-color: $btn-red;
-        color: #FFFFFF;
-     
+        color: #ffffff;
     }
 }
 h6 {
@@ -46,7 +57,7 @@ hr {
     margin: 5px 0 20px 0;
 }
 
-.text_center  {
+.text_center {
     text-align: center;
 }
 
@@ -67,7 +78,7 @@ hr {
     .block_01-02 {
         // box-shadow: 0 8px 10px 2px rgba(0,0,0,0.3);
         min-height: 10px;
-
+        position: relative;
         padding: 12px;
     }
 }
@@ -82,45 +93,42 @@ hr {
     padding: 50px 15px 10px 15px;
 
     .blocks {
-        &.total  {
+        &.total {
             font-size: 1.3em;
             padding-top: 10px;
         }
-        &.documents  {
+        &.documents {
             color: #999999;
             cursor: pointer;
             &:hover {
                 color: $setColor;
-                background-color: #F0F0F0;
+                background-color: #e0cece;
             }
         }
         .full {
             width: 100%;
         }
         .half {
-            border-bottom: 1px dotted #EEEEEE;
+            border-bottom: 1px dotted #eeeeee;
             display: inline-block;
             padding: 0;
             &.left {
                 width: 40%;
                 text-align: left;
-                
             }
             &.right {
                 width: 58%;
                 text-align: right;
-               
             }
-
         }
-        .concepto  {
+        .concepto {
             background-color: #ffffff;
             font-size: 1.1em;
             font-weight: 300;
             color: $setColor;
             font-family: $font_secundary;
         }
-        .dato  {
+        .dato {
             background-color: #ffffff;
             font-size: 1.2em;
             color: #999999;
@@ -136,7 +144,7 @@ hr {
     border-collapse: collapse;
     td {
         padding: 0px 5px;
-        // border:1px solid #CCCCCC;
+        //  border:1px solid #CCCCCC;
     }
     .concepto {
         width: 130px;
@@ -144,10 +152,104 @@ hr {
         color: $setColor;
         vertical-align: top;
     }
+    .error  {
+        color: #cc0000;
+        font-weight: 900;
+    }
     .dato {
         vertical-align: top;
         font-weight: 900;
         color: #666666;
+        position: relative;
+        width: calc(100% - 140px);
+
+        .serc  {
+            visibility: hidden;
+        }
+        .search  {
+            border-radius: 4px;
+            width: 200px;
+            height: 22px;
+            padding: 2px 5px;
+            outline: none;
+            &:focus {
+                border: 1px solid $color_btn_default_top;
+                background-color: rgba(10, 5, 5, 0.08);
+                & ~ .serc {
+                    visibility: visible;
+                }
+            }
+        }
+
+        
+
+        .grouper {
+            // border: 1px solid #000000;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: calc(100% - 30px);
+            padding-right: 25px;
+            display: inline-block;
+            position: absolute;
+            outline: none;
+            &:focus {
+                background-color: rgba(10, 5, 5, 0.03);
+            }
+        }
+        .customerType {
+            position: absolute;
+            top: 18px;
+            span {
+                color: $dark;
+                font-size: 0.8em;
+                border: 1px solid $dark;
+                border-radius: 50px;
+                padding: 0px 5px;
+                background-color: rgba($dark, 0.09);
+                
+            }
+        }
+        
+        i {
+            position: absolute;
+            top: 2px;
+            right: 0;
+            z-index: 10;
+            transition: 0.3s ease all;
+            &.turn.rotar {
+                transform: rotate(180deg);
+            }
+        }
+        .list_items {
+            position: absolute;
+            top: 20px;
+            left: 4px;
+            width: 90%;
+            min-height: 20px;
+            max-height: 120px;
+            background-color: $color_deep_table;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
+            z-index: 11;
+            padding: 6px;
+            overflow: auto;
+            display: none;
+
+            ul li {
+                padding: 2px 6px;
+                color: #DDDDDD;
+                border-bottom: 1px dashed $grey-form;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(100, 100, 100, 0.03);
+                    border-bottom: 1px dashed $setColor;
+                }
+                &.enable {
+                    color: $setColor;
+                }
+            }
+        }
     }
     .enlace {
         vertical-align: top;
@@ -224,7 +326,7 @@ hr {
         }
 
         i.fa-bars {
-            color: #EEEEEE;
+            color: #eeeeee;
             position: absolute;
             right: 5px;
             top: 4px;
@@ -274,95 +376,119 @@ hr {
     }
 }
 
-
 // Modales
+.box_list_products  {
+    width: 500px;
+    position: fixed;
+    z-index: 100;
+    font-size: 0.9em;
+    font-weight: 900;
+    // box-shadow: 1px 5px 10px rgba(0,0,0,0.2);
+    display:none;
+    .sel_product  {
+        width: 100%;
+        background-color: #FFFFFF;
+        outline: none;
+        &:focus {
+            background-color: #f6f6f6;
+            border: 1px dotted #bbbbbb;
+            padding: 3px;
+        }
+    }
 
+    .list_products  {
+        width: 100%;
+        height: 140px;
+        background-color: #FFFFFF;
+        box-shadow: 1px 5px 10px rgba(0,0,0,0.2);
+        padding: 10px;
+        overflow: auto;
+
+        li  {
+            cursor: pointer;
+        }
+    }
+}
 .box_modal_deep {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 100;
     transition: all 0.8s ease;
 
-    .box_modal  {
+    .box_modal {
         width: 80%;
         height: 80%;
-        background-color: #FFFFFF;
+        background-color: #ffffff;
         border-radius: 6px;
-        box-shadow: 0px 6px 12px 12px rgba(0,0,0,0.3);
+        box-shadow: 0px 6px 12px 12px rgba(0, 0, 0, 0.3);
         position: absolute;
-        top:120%;
-        .row  {
+        top: 120%;
+        .row {
             height: 100%;
         }
-        .form  {
+        .form {
             padding: 0;
 
-           
-
-            .form_group  {
+            .form_group {
                 width: 100%;
                 margin-bottom: 10px;
-                border-bottom: 1px dotted #DDDDDD;
+                border-bottom: 1px dotted #dddddd;
                 padding: 0px 4px;
 
                 label {
                     font-family: $font_secundary;
-                    color: #AAAAAA;
+                    color: #aaaaaa;
                 }
-                .textbox  {
+                .textbox {
                     border: none;
                     padding: 0 10px;
                     color: #777777;
                     width: 100%;
                     outline: none;
                 }
-                .fa-calendar-alt  {
+                .fa-calendar-alt {
                     position: absolute;
                     font-size: 1.3em;
-                    color: #CCCCCC;
-                    cursor: pointer
-                    ;
-                    &:hover  {
+                    color: #cccccc;
+                    cursor: pointer;
+                    &:hover {
                         color: $setColor;
                     }
                 }
-
-               
             }
-            &.qst{
+            &.qst {
                 padding: 60px 30px 30px 30px;
             }
 
-            &.image  {
+            &.image {
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
                 height: 100%;
                 border-radius: 0px 6px 6px 0px;
-
             }
-            &.img01  {
-                background-image: url("../img/programer/20.png") ;
+            &.img01 {
+                background-image: url("../img/programer/20.png");
             }
-            &.img02  {
-                background-image: url("../img/programer/21.png") ;
+            &.img02 {
+                background-image: url("../img/programer/21.png");
             }
-            .error  {
+            .error {
                 label {
                     color: $btn-red;
                 }
-                .textbox  {
+                .textbox {
                     background-color: transparent;
                 }
-                    border-color: $btn-red;
-                    background-color: rgba($btn-red, 0.2);
+                border-color: $btn-red;
+                background-color: rgba($btn-red, 0.2);
             }
             .list_select {
                 position: relative;
@@ -370,51 +496,49 @@ hr {
 
                 .list_group {
                     position: absolute;
-                    top:42px;
-                    left:10px;
+                    top: 42px;
+                    left: 10px;
                     padding: 10px;
-                    background-color: #FFFFFF;
-                    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                    background-color: #ffffff;
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
                     border-radius: 4px;
                     height: 200px;
                     width: 90%;
                     display: none;
 
-                    .list_items  {
-                        background-color:#FFFFFF;
+                    .list_items {
+                        background-color: #ffffff;
                         padding: 3px 10px;
                         border-bottom: 1px solid #eeeeee;
-                        cursor:pointer;
-                        
-                        &:hover  {
-                            background-color: #FBFBFB;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: #fbfbfb;
                         }
-               ;
                     }
                 }
             }
         }
-
     }
 }
 
-.box_days  {
+.box_days {
     width: 70px;
     height: 30px;
-    background-color: #FFFFFF;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 4px;
     z-index: 1500;
     position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    .minitext  {
+
+    .minitext {
         width: 50px;
         height: 20px;
         text-align: center;
-        border: 1px solid #DDDDDD;
+        border: 1px solid #dddddd;
         outline: none;
     }
 }

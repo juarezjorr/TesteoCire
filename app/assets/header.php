@@ -38,6 +38,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 
+		<script src="<?=  PATH_ASSETS . 'lib/tables/tables.js' ?>"></script>
+
 <!-- 		<script src="<?=  PATH_ASSETS . 'lib/jquery-ui.js' ?>"></script>
  -->
 
