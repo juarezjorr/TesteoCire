@@ -52,7 +52,7 @@ function tabla_fix_row(sl) {
 function tabla_fix_col(sl) {
     var H = $('#' + sl + ' .frame_content').html();
     $('#' + sl + ' .frame_fix_col').html(H);
-    let hg = $('#' + sl + ' table thead').height();
+    let hg = $('#' + sl + ' table thead').height() + 2;
     $('#' + sl + ' .frame_fix_col').css({height: hg + 'px'});
     $('#' + sl + ' .frame_fix_col td').attr('contenteditable', false);
 }
@@ -60,7 +60,7 @@ function tabla_fix_col(sl) {
 function tabla_fix_top(sl) {
     var H = $('#' + sl + ' .frame_content').html();
     $('#' + sl + ' .frame_fix_top').html(H);
-    let hg = $('#' + sl + ' table thead').height();
+    let hg = $('#' + sl + ' table thead').height() + 2;
     let wht = $('#' + sl + ' table .fix').width() - 1;
     $('#' + sl + ' .frame_fix_top').css({width: wht + 'px'});
     $('#' + sl + ' .frame_fix_top').css({height: hg + 'px'});
@@ -101,4 +101,18 @@ function add_columns(tbl) {
     }
     H += '</tr>';
     $('#' + tbl + ' table tbody').append(H);
+}
+
+function editable_disable(tbl) {
+    $('#' + tbl + ' .frame_fix_row td').removeAttr('contenteditable');
+    $('#' + tbl + ' .frame_fix_col td').removeAttr('contenteditable');
+    $('#' + tbl + ' .frame_fix_top td').removeAttr('contenteditable');
+
+    // $('.frame_content').on('focus', function (event) {
+    //     console.log(event);
+    //     if (event.keyCode == 9) {
+    //         // Código para la tecla TAB
+    //         console.log('Oprimiste la tecla TAB');
+    //     }
+    // });
 }

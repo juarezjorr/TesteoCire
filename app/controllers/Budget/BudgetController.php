@@ -63,6 +63,26 @@ class BudgetController extends Controller
     } 
 
     
+// Lista los tipos de proyectos
+    public function listProjectsType($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listProjectsType($request_params);
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"pjt_id":"0"}]';	
+        }
+        echo $res;
+
+    } 
+
+    
 // Lista las casas productoras
     public function listCustomersDef($request_params)
     {
@@ -81,9 +101,30 @@ class BudgetController extends Controller
         echo $res;
     } 
 
+ 
+// Lista las casas productoras
+    public function listCustomersOwn($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listCustomersOwn($request_params);
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"cuo_id":"0"}]';	
+        }
+        echo $res;
+    } 
 
 
-// Lista los proyectos
+    
+
+
+// Lista los proyectos relacionados
     public function listProjectsDef($request_params)
     {
         $params =  $this->session->get('user');
@@ -140,8 +181,26 @@ class BudgetController extends Controller
         echo $res;
     } 
 
+// Lista los descuentos
+    public function listDiscounts($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listDiscounts($request_params);
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $rowdata[$i] = $row;
+            $i++;
+        }
+        if ($i>0){
+            $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+        } else {
+            $res =  '[{"dis_id":"0"}]';	
+        }
+        echo $res;
+    } 
+
     
-// Lista los versiones
+// Lista los productos
     public function listProducts($request_params)
     {
         $params =  $this->session->get('user');
@@ -154,10 +213,29 @@ class BudgetController extends Controller
         if ($i>0){
             $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
         } else {
-            $res =  '[{"ver_id":"0"}]';	
+            $res =  '[{"prd_id":"0"}]';	
         }
         echo $res;
     } 
+
+    
+// Lista los relacionados al producto
+public function listProductsRelated($request_params)
+{
+    $params =  $this->session->get('user');
+    $result = $this->model->listProductsRelated($request_params);
+    $i = 0;
+    while($row = $result->fetch_assoc()){
+        $rowdata[$i] = $row;
+        $i++;
+    }
+    if ($i>0){
+        $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+    } else {
+        $res =  '[{"prd_id":"0"}]';	
+    }
+    echo $res;
+} 
 
 // Guarda la cotización
     public function SaveBudget($request_params)
@@ -167,4 +245,46 @@ class BudgetController extends Controller
         echo $result;
         
     } 
+
+
+    
+    
+// Guarda nuevo proyecto
+    public function SaveProject($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->SaveProject($request_params);
+        echo $result;
+    } 
+
+
+        
+// Guarda nueva version
+    public function SaveVersion($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->SaveVersion($request_params);
+        echo $result;
+    } 
+
+
+// Promueve proyecto
+    public function PromoteProject($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->PromoteProject($request_params);
+        echo $result;
+    } 
+
+
+// Promueve la version de proyecto
+public function PromoteVersion($request_params)
+{   
+    $params =  $this->session->get('user');
+    $result = $this->model->PromoteVersion($request_params);
+    echo $result;
+} 
+
+
+    
 }

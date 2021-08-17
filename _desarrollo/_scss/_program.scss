@@ -8,21 +8,16 @@
         color: #000000;
         font-weight: 900;
     }
-    
-&.right {
-    position: absolute;
-    bottom: 1px;
-    
-}
 
+    &.right {
+        position: absolute;
+        bottom: 1px;
+    }
 }
 
 .right {
     right: 10px;
-   
 }
-
-
 
 .bn {
     padding: 2px 10px;
@@ -31,6 +26,7 @@
     border: 2px solid transparent;
     background-color: #ffffff;
 }
+
 .btn-ok {
     color: $setColor;
     border-color: $setColor;
@@ -40,6 +36,21 @@
         color: #ffffff;
     }
 }
+
+.enable {
+    color: $setColor;
+    border-color: $setColor;
+
+    &:hover {
+        background-color: $setColor;
+        color: #ffffff;
+    }
+}
+.disable {
+    border-color: #dddddd;
+    color: #dddddd;
+}
+
 .btn-cn {
     color: $btn-red;
     border-color: $btn-red;
@@ -70,7 +81,7 @@ hr {
     .blocks {
         padding: 4px;
         background-color: #ffffff;
-        border: 4px solid #eeeeee;
+        border: 2px solid #eeeeee;
         border-radius: 10px;
     }
 
@@ -79,7 +90,7 @@ hr {
         // box-shadow: 0 8px 10px 2px rgba(0,0,0,0.3);
         min-height: 10px;
         position: relative;
-        padding: 12px;
+        padding: 4px;
     }
 }
 .block_02 {
@@ -102,7 +113,8 @@ hr {
             cursor: pointer;
             &:hover {
                 color: $setColor;
-                background-color: #e0cece;
+                font-weight: 900;
+                background-color: #eeeeee;
             }
         }
         .full {
@@ -152,7 +164,7 @@ hr {
         color: $setColor;
         vertical-align: top;
     }
-    .error  {
+    .error {
         color: #cc0000;
         font-weight: 900;
     }
@@ -163,25 +175,24 @@ hr {
         position: relative;
         width: calc(100% - 140px);
 
-        .serc  {
+        .serc {
             visibility: hidden;
         }
-        .search  {
+        .search {
             border-radius: 4px;
             width: 200px;
-            height: 22px;
-            padding: 2px 5px;
+            height: 24px;
+            padding: 1px 5px;
             outline: none;
+            border: 1px solid $color_btn_default_top;
+            font-size: 1.2em;
             &:focus {
-                border: 1px solid $color_btn_default_top;
                 background-color: rgba(10, 5, 5, 0.08);
                 & ~ .serc {
                     visibility: visible;
                 }
             }
         }
-
-        
 
         .grouper {
             // border: 1px solid #000000;
@@ -207,10 +218,9 @@ hr {
                 border-radius: 50px;
                 padding: 0px 5px;
                 background-color: rgba($dark, 0.09);
-                
             }
         }
-        
+
         i {
             position: absolute;
             top: 2px;
@@ -237,7 +247,7 @@ hr {
 
             ul li {
                 padding: 2px 6px;
-                color: #DDDDDD;
+                color: #dddddd;
                 border-bottom: 1px dashed $grey-form;
                 cursor: pointer;
 
@@ -281,9 +291,11 @@ hr {
         padding: 4px 0;
     }
     td {
-        color: #999999;
+        color: #333333;
         border-bottom: 1px dotted #dddddd;
-        padding: 3px 0;
+        padding: 0.3em 0;
+        overflow: hidden;
+        font-weight: 500;
     }
     tbody {
         border-top: 1px solid $setColor;
@@ -300,18 +312,18 @@ hr {
     }
 
     .headrow {
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: rgba(0, 0, 0, 0.02);
     }
 
     // ZONAS
     .zone_01 {
-        background-color: rgba(144, 146, 158, 0.05);
+        background-color: rgba(144, 146, 158, 0.01);
     }
     .zone_02 {
-        background-color: rgba(144, 146, 158, 0.1);
+        background-color: rgba(144, 146, 158, 0.05);
     }
     .zone_03 {
-        background-color: rgba(144, 146, 158, 0.15);
+        background-color: rgba(144, 146, 158, 0.08);
     }
     // ESTILOS DE COLUMNAS
 
@@ -377,35 +389,119 @@ hr {
 }
 
 // Modales
-.box_list_products  {
-    width: 500px;
+.box_list_products {
+    width: 650px;
+    height: 170px;
     position: fixed;
     z-index: 100;
     font-size: 0.9em;
     font-weight: 900;
+    overflow: hidden;
     // box-shadow: 1px 5px 10px rgba(0,0,0,0.2);
-    display:none;
-    .sel_product  {
+    display: none;
+    .sel_product {
         width: 100%;
-        background-color: #FFFFFF;
+        position: absolute;
+        margin-bottom: 3px;
+        background-color: #ffffff;
+        border: 1px dotted #dddddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 3px;
+        top: 0px;
         outline: none;
+        z-index: 10;
         &:focus {
             background-color: #f6f6f6;
             border: 1px dotted #bbbbbb;
-            padding: 3px;
         }
     }
 
-    .list_products  {
+    .list_products {
         width: 100%;
-        height: 140px;
-        background-color: #FFFFFF;
-        box-shadow: 1px 5px 10px rgba(0,0,0,0.2);
+        height: 125px;
+        background-color: #ffffff;
+        border: 1px dotted #bbbbbb;
+        box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.2);
         padding: 10px;
         overflow: auto;
+        position: absolute;
+        top: 20px;
+        z-index: 8;
 
-        li  {
+        li {
             cursor: pointer;
+            clear: both;
+            border-bottom: 1px dashed #dddddd;
+            padding: 1px 0;
+            overflow: hidden;
+            // &:hover {
+            //     border-bottom: 1px dashed $setColor;
+            //     background-color: #f6f6f6;
+            // }
+
+            .prodName {
+                width: 450px;
+                float: left;
+            }
+            .prodStock {
+                width: 50px;
+                float: left;
+                text-align: center;
+            }
+            .prodLevel {
+                width: 80px;
+                float: left;
+                text-align: left;
+            }
+        }
+    }
+}
+
+.box_minimenu {
+    width: 150px;
+    height: 70px;
+    position: fixed;
+    padding: 10px;
+    z-index: 100;
+    font-size: 0.9em;
+    font-weight: 900;
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    background-color: $setColor;
+    color: $color_deep_table;
+    z-index: 100;
+    display: none;
+    &::before {
+        position: absolute;
+        width: 0;
+        height: 0;
+        left: -14px;
+        top: 38px;
+        content: "";
+        border-top: 7px solid transparent;
+        border-right: 14px solid $setColor;
+        border-bottom: 7px solid transparent;
+    }
+
+    .list_menu {
+        ul {
+            li {
+                line-height: 2em;
+                cursor: pointer;
+                padding: 2px 5px;
+                font-weight: 300;
+                text-transform: uppercase;
+
+                &:hover {
+                    background-color: $color_deep_modl;
+                    border-radius: 4px;
+                }
+
+                i {
+                    font-size: 1.3em;
+                    margin-right: 10px;
+                }
+            }
         }
     }
 }
@@ -415,7 +511,7 @@ hr {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
     display: none;
     justify-content: center;
     align-items: center;
@@ -433,38 +529,95 @@ hr {
         .row {
             height: 100%;
         }
+        .space_end  {
+            height: 50px;
+        }
+
+        .fix_buttons {
+            position: absolute;
+            display: block;
+            bottom: 0px;
+            z-index: 100;
+            
+        }
         .form {
-            padding: 0;
+            padding: 30px 0;
+            
 
             .form_group {
                 width: 100%;
+                height: 60px;
                 margin-bottom: 10px;
-                border-bottom: 1px dotted #dddddd;
+                border-bottom: 1px dotted #000000;
                 padding: 0px 4px;
+
+                position: relative;
+
+                .subgroup {
+                    font-family: $font_secundary;
+                    padding-left: 100px;
+
+                    i {
+                        margin-right: 80px;
+                        margin-left: 10px;
+                        font-size: 1.5em;
+                        cursor: pointer;
+                    }
+                }
 
                 label {
                     font-family: $font_secundary;
-                    color: #aaaaaa;
+                    color: $setColor;
+                    font-size: 1.2em;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+                .form-select {
+                    position: absolute;
+                    border: none;
+                    top: 20px;
+                    padding: 0 10px 0 50px;
+                    font-size: 0.9em;
+                    width: 95%;
+                    z-index: 10;
                 }
                 .textbox {
                     border: none;
-                    padding: 0 10px;
+                    padding: 0 10px 0 50px;
                     color: #777777;
-                    width: 100%;
+                    width: 95%;
                     outline: none;
+                    position: absolute;
+                    top: 20px;
+                    left: 0;
                 }
                 .fa-calendar-alt {
                     position: absolute;
-                    font-size: 1.3em;
+                    top: 20px;
+                    font-size: 1.8em;
                     color: #cccccc;
                     cursor: pointer;
                     &:hover {
                         color: $setColor;
                     }
                 }
+
+                .alert {
+                    color: $btn-red;
+                    font-size: 0.9em;
+                    font-weight: 300;
+                    font-family: $font_primary;
+                    font-stretch: expanded;
+                    position: absolute;
+                    top: -20px;
+                    right: 10px;
+                }
             }
             &.qst {
                 padding: 60px 30px 30px 30px;
+                height: 100%;
+                overflow: auto;
             }
 
             &.image {
@@ -519,9 +672,68 @@ hr {
                 }
             }
         }
+        .product_container {
+            width: 100%;
+
+            h2 {
+                font-size: 1.7em;
+                span {
+                    font-size: 0.8em;;
+                }
+            }
+            .subcatego,
+            .catego {
+                float: right;
+                display: inline-block;
+                padding: 2px 10px 10px 10px;
+                font-size: 1.0em;
+                font-weight: 600;
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+
+                th {
+                    border-bottom: 2px solid $setColor;
+                }
+
+                td {
+                    color: #000000;
+                    border-bottom: 1px dotted #EEEEEE;
+                    padding: 2px 3px;
+
+                    &.pdd_prc  {
+                        text-align: right;
+                    }
+                    &.blk {
+                        font-weight: 900;
+                        color: #000000;
+                        font-size: 1.1em;
+                    }
+                }
+            }
+        }
     }
 }
+.box_desc {
+    width: 70px;
+    height: auto;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    z-index: 1500;
+    padding: 10px 20px;
+    position: fixed;
 
+    li {
+        text-align: right;
+        cursor: pointer;
+        &:hover {
+            font-weight: 900;
+        }
+    }
+}
 .box_days {
     width: 70px;
     height: 30px;
@@ -541,4 +753,51 @@ hr {
         border: 1px solid #dddddd;
         outline: none;
     }
+}
+
+.menu_control {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 5px;
+
+    ul {
+        border-bottom: 1px dashed $setColor;
+        li {
+            display: inline-block;
+        }
+    }
+
+    .menu_block {
+        display: none;
+    }
+
+    .menu_version {
+        font-weight: 900;
+        font-size: 1.1em;
+        padding-right: 20px;
+    }
+
+    .menu_button {
+        width: 110px;
+        text-align: center;
+        border: none;
+        background-color: transparent;
+        color: #888888;
+        font-size: 0.9em;
+        padding: 3px 0;
+        cursor: pointer;
+        &:hover {
+            color: #000000;
+            font-weight: 900;
+        }
+        i {
+            font-size: 1.2em;
+        }
+    }
+}
+
+.box_desc {
+    width: 90px;
+    height: 100px;
+    overflow: auto;
 }

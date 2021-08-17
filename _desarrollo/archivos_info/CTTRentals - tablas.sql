@@ -35,9 +35,9 @@ COMMENT = 'Bitácora de actividades realizadas en el sistema';
 
 DROP TABLE `cttapp_cire`.`ctt_areas`;
 CREATE TABLE `cttapp_cire`.`ctt_areas` (
-  `are_id`                   INT NOT NULL AUTO_INCREMENT    COMMENT 'Id del área',
-  `are_name`                 VARCHAR(50)                    COMMENT 'nombre del área',
-  `are_status`               INT DEFAULT 1                  COMMENT 'Estatus del área 1-activo 0-inactivo',
+    `are_id`                   INT NOT NULL AUTO_INCREMENT    COMMENT 'Id del área',
+    `are_name`                 VARCHAR(50)                    COMMENT 'nombre del área',
+    `are_status`               INT DEFAULT 1                  COMMENT 'Estatus del área 1-activo 0-inactivo',
 PRIMARY KEY (`are_id`)) 
 COMMENT='Áreas organizacionales de la empresa';
 
@@ -46,23 +46,24 @@ COMMENT='Áreas organizacionales de la empresa';
 
 DROP TABLE `cttapp_cire`.`ctt_budget`;
 CREATE TABLE `cttapp_cire`.`ctt_budget` (
-  `bdg_id`                   INT NOT NULL AUTO_INCREMENT    COMMENT 'Id de la cotización',
-  `bdg_prod_sku`             VARCHAR(15)  NULL              COMMENT 'SKU identificador del producto',
-  `bdg_prod_name`            VARCHAR(100) NULL              COMMENT 'Nombre del producto',
-  `bdg_prod_price`           DECIMAL(10,2) NULL             COMMENT 'Precio unitario del producto',
-  `bdg_quantity`             INT NULL                       COMMENT 'Cantidad de productos',
-  `bdg_days_base`            INT NULL                       COMMENT 'Días solicitados en renta',
-  `bdg_discount_base`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado a la renta',
-  `bdg_days_trip`            INT NULL                       COMMENT 'Días solicitados en viaje',
-  `bdg_discount_trip`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado al viaje',
-  `bdg_days_test`            INT NULL                       COMMENT 'Días solicitados en prueba',
-  `bdg_discount_test`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado en prueba',
-  `bdg_insured`              DECIMAL(10,2) NULL DEFAULT .1  COMMENT 'Porcentaje de seguro',
-  `ver_id`                   INT NOT NULL                   COMMENT 'FK Id de la version relación ctt_version',
-  `prd_id`                   INT NOT NULL                   COMMENT 'FK Id del producto relación ctt_products',
+    `bdg_id`                   INT NOT NULL AUTO_INCREMENT    COMMENT 'Id de la cotización',
+    `bdg_prod_sku`             VARCHAR(15)  NULL              COMMENT 'SKU identificador del producto',
+    `bdg_prod_name`            VARCHAR(100) NULL              COMMENT 'Nombre del producto',
+    `bdg_prod_price`           DECIMAL(10,2) NULL             COMMENT 'Precio unitario del producto',
+    `bdg_quantity`             INT NULL                       COMMENT 'Cantidad de productos',
+    `bdg_days_base`            INT NULL                       COMMENT 'Días solicitados en renta',
+    `bdg_discount_base`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado a la renta',
+    `bdg_days_trip`            INT NULL                       COMMENT 'Días solicitados en viaje',
+    `bdg_discount_trip`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado al viaje',
+    `bdg_days_test`            INT NULL                       COMMENT 'Días solicitados en prueba',
+    `bdg_discount_test`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado en prueba',
+    `bdg_insured`              DECIMAL(10,2) NULL DEFAULT .1  COMMENT 'Porcentaje de seguro',
+    `bdg_prod_level`           VARCHAR(1) DEFAULT 'P'         COMMENT 'Nivel del producto  K=Kit, P=Producto',
+    `ver_id`                   INT NOT NULL                   COMMENT 'FK Id de la version relación ctt_version',
+    `prd_id`                   INT NOT NULL                   COMMENT 'FK Id del producto relación ctt_products',
 
 PRIMARY KEY (`bdg_id`)) 
-COMMENT='Áreas organizacionales de la empresa';
+COMMENT='Cotizaciones generadas';
 
 
 
@@ -132,6 +133,18 @@ PRIMARY KEY (`con_id`))
 COMMENT='Tabla generador de folios';
 
 
+
+
+DROP TABLE `cttapp_cire`.`ctt_discounts`;
+CREATE TABLE `cttapp_cire`.`ctt_discounts` (
+    `dis_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del descuento',
+    `dis_discount`          DECIMAL(10,2) NULL              COMMENT 'Porcentaje en decimal',
+    `dis_name`              VARCHAR(10)                     COMMENT 'Porcentaje en texto',
+    `dis_level`             INT                             COMMENT 'Nivel ',
+    `dis_status`            INT DEFAULT 1                   COMMENT 'Estatus del folio 1-activo 0-inactivo',
+PRIMARY KEY (`dis_id`)) 
+COMMENT='Tabla de descuentos';
+
 DROP TABLE `cttapp_cire`.`ctt_documents`;
 CREATE TABLE `cttapp_cire`.`ctt_documents` (
     `doc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del documento',
@@ -174,8 +187,6 @@ COMMENT = 'Tabla de los empleados de la empresa';
 DROP TABLE `cttapp_cire`.`ctt_location`;
 CREATE TABLE `cttapp_cire`.`ctt_location` (
     `loc_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la locación',
-    `loc_location`          VARCHAR(100) NULL               COMMENT 'Ubicación de la locación',
-    `loc_country`           VARCHAR(100) NULL               COMMENT 'Pais de la locación',
     `loc_type_location`     VARCHAR(100) NULL               COMMENT 'Tipo de locación',
 PRIMARY KEY (`loc_id`))
 COMMENT = 'Locación en donde se llevara la filmación';
@@ -288,18 +299,55 @@ COMMENT = 'Tabla pivote m_to_m ctt_profile - ctt_modulo';
 
 DROP TABLE `cttapp_cire`.`ctt_projects`;
 CREATE TABLE `cttapp_cire`.`ctt_projects` (
-      `pjt_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del proyecto',
-      `pjt_number`          VARCHAR(50)                     COMMENT 'Numero del proyecto',
-      `pjt_name`            VARCHAR(100)                    COMMENT 'Nombre del proyecto',
-      `pjt_date_project`    DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de generación del proyecto',
-      `pjt_date_start`      DATETIME NULL                   COMMENT 'Fecha de inicio del proyecto',
-      `pjt_date_end`        DATETIME NULL                   COMMENT 'Fecha de fin del proyecto',
-      `pjt_location`        VARCHAR(200) NULL               COMMENT 'Ubicación del desarrollo del proyecto',
-      `pjt_status`          VARCHAR(1) NULL DEFAULT 1       COMMENT 'Estatus del proyecto 1-Activo, 0-Inactivo',
-      `cuo_id`              INT NOT NULL                    COMMENT 'FK Id de propietario relacion con ctt_costumer_owner',
-      `loc_id`              INT NOT NULL                    COMMENT 'FK Id de la locación relación ctt_location',
+    `pjt_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del proyecto',
+    `pjt_number`          VARCHAR(50)                     COMMENT 'Numero del proyecto',
+    `pjt_name`            VARCHAR(100)                    COMMENT 'Nombre del proyecto',
+    `pjt_date_project`    DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de generación del proyecto',
+    `pjt_date_start`      DATETIME NULL                   COMMENT 'Fecha de inicio del proyecto',
+    `pjt_date_end`        DATETIME NULL                   COMMENT 'Fecha de fin del proyecto',
+    `pjt_location`        VARCHAR(200) NULL               COMMENT 'Ubicación del desarrollo del proyecto',
+    `pjt_status`          VARCHAR(1) NULL DEFAULT 1       COMMENT 'Estatus del proyecto 0-Inactivo, 1-Activo, 2-En proyecto',
+    `cuo_id`              INT NOT NULL                    COMMENT 'FK Id de propietario relacion con ctt_costumer_owner',
+    `loc_id`              INT NOT NULL                    COMMENT 'FK Id de la locación relación ctt_location',
+    `pjttp_id`            INT NOT NULL                    COMMENT 'Fk Id del Tipo de projecto relacion ctt_projects_type',
 PRIMARY KEY (`pjt_id`))
 COMMENT='proyectos registrados';
+
+
+DROP TABLE `cttapp_cire`.`ctt_projects_type`;
+CREATE TABLE `cttapp_cire`.`ctt_projects_type` (
+    `pjttp_id`              INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Id del tipo de proyecto',
+    `pjttp_name`            VARCHAR(100) NULL               COMMENT 'Nombre del tipo de proyecto',
+    `pjttp_min_download`    INT(11) NOT NULL                COMMENT 'Horas minimas requeridos para carga/descarga',
+    `pjttp_max_download`    INT(11) NOT NULL                COMMENT 'Horas maximas requeridos para carga/descarga',
+PRIMARY KEY (`pjttp_id`))
+COMMENT='Tipos de proyectos o eventos que se ofrecen y siministran';
+
+
+
+
+DROP TABLE `cttapp_cire`.`ctt_proyects_detail`;
+CREATE TABLE `cttapp_cire`.`ctt_proyects_detail` (
+    `pjtdt_id`                   INT NOT NULL AUTO_INCREMENT    COMMENT 'Id del detalle de proyecto',
+    `pjtdt_prod_sku`             VARCHAR(15)  NULL              COMMENT 'SKU identificador del producto',
+    `pjtdt_prod_name`            VARCHAR(100) NULL              COMMENT 'Nombre del producto',
+    `pjtdt_prod_price`           DECIMAL(10,2) NULL             COMMENT 'Precio unitario del producto',
+    `pjtdt_prod_level`           VARCHAR(1) DEFAULT 'P'         COMMENT 'Nivel del producto  K=Kit, P=Producto',
+    `pjtdt_quantity`             INT NULL                       COMMENT 'Cantidad de productos',
+    `pjtdt_days_base`            INT NULL                       COMMENT 'Días solicitados en renta',
+    `pjtdt_discount_base`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado a la renta',
+    `pjtdt_days_trip`            INT NULL                       COMMENT 'Días solicitados en viaje',
+    `pjtdt_discount_trip`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado al viaje',
+    `pjtdt_days_test`            INT NULL                       COMMENT 'Días solicitados en prueba',
+    `pjtdt_discount_test`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado en prueba',
+    `pjtdt_insured`              DECIMAL(10,2) NULL DEFAULT .1  COMMENT 'Porcentaje de seguro',
+    `pjtdt_status`               VARCHAR(1) NULL DEFAULT 1      COMMENT 'Estatus de la serie 1-Activo, 0-Inactivo',
+    `ver_id`                     INT NOT NULL                   COMMENT 'FK Id de la version relación ctt_version',
+    `ser_id`                     INT NOT NULL                   COMMENT 'FK Id de la serie relación ctt_series',
+    `pjt_id`                     INT NOT NULL                   COMMENT 'FK Id del proyecto relación ctt_projects',
+
+PRIMARY KEY (`pjtdt_id`)) 
+COMMENT='Detalle del proyecto, cotización promovida';
 
 
 
@@ -314,13 +362,16 @@ CREATE TABLE `cttapp_cire`.`ctt_series` (
     `ser_stage`             VARCHAR(5) NULL                 COMMENT 'Etapa dentro del proceso',
     `ser_date_registry`     DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de registro del producto',
     `ser_date_down`         DATETIME NULL                   COMMENT 'Fecha de baja del producto',
+    `ser_reserve_start`     DATETIME NULL                   COMMENT 'Fecha de reservado comienzo',
+    `ser_reserve_end`       DATETIME NULL                   COMMENT 'Fecha de reservado termino',
+    `ser_reserve_count`     INT NULL                        COMMENT 'Contador de rentas',
     `ser_behaviour`         VARCHAR(1) NOT NULL             COMMENT 'Comportamiento del producto C-Compra, R-Renta',
     `prd_id`                INT NULL                        COMMENT 'Id del producto relacion ctt_productos',
     `sup_id`                INT NULL                        COMMENT 'Id de la proveedor relacion ctt_suppliers',
     `cin_id`                INT NULL                        COMMENT 'Id del tipo de moneda relacion ctt_coins',
+    `pjtdt_id`              INT NULL                        COMMENT 'Id del detalle de proyecto relacion ctt_projects_detail',
 PRIMARY KEY (`ser_id`))
 COMMENT = 'Numero serie de productos correspondientes a un modelo.';
-
 
 
 
@@ -371,10 +422,10 @@ COMMENT = 'Movimientos de productos entre almacenes';
 
 DROP TABLE `cttapp_cire`.`ctt_stores_products`;
 CREATE TABLE `cttapp_cire`.`ctt_stores_products` (
-      `stp_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del registro',
-      `stp_quantity`        INT NOT NULL DEFAULT 0          COMMENT 'Cantidad de productos',
-      `str_id`              INT NOT NULL                    COMMENT 'Id del almacen relacion ctt_store',
-      `ser_id`              INT NOT NULL                    COMMENT 'Id del numero de serie relacion ctt_series',
+    `stp_id`              INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del registro',
+    `stp_quantity`        INT NOT NULL DEFAULT 0          COMMENT 'Cantidad de productos',
+    `str_id`              INT NOT NULL                    COMMENT 'Id del almacen relacion ctt_store',
+    `ser_id`              INT NOT NULL                    COMMENT 'Id del numero de serie relacion ctt_series',
 PRIMARY KEY (`stp_id`))
 COMMENT='Tabla de cantidad de productos en almacen';
 
@@ -452,8 +503,6 @@ COMMENT = 'Tipos de movimientos entre almacenes';
 
 
 
-
-
 DROP TABLE `cttapp_cire`.`ctt_users`;
 CREATE TABLE `cttapp_cire`.`ctt_users` (
     `usr_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id del usuario',
@@ -486,7 +535,7 @@ CREATE TABLE `cttapp_cire`.`ctt_version` (
     `ver_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de la version',
     `ver_code`              VARCHAR(20) NULL                COMMENT 'Código de la version',
     `ver_date`              DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de generación del documento',
-    `ver_status`            VARCHAR(1) NULL                 COMMENT 'Código de la version',
+    `ver_status`            VARCHAR(1) NULL DEFAULT 'C'     COMMENT 'Tipo de version C= Cotización P=Proyecto',
     `pjt_id`                INT NOT NULL                    COMMENT 'FK Id del projeto relación ctt_projects',
 PRIMARY KEY (`ver_id`))
 COMMENT = 'Version de docuemntos de cotización';

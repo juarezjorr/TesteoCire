@@ -68,6 +68,7 @@ function show_error(xhr, textStatus, error, selector) {
     var H = '';
     H += errors;
     alert(H);
+    console.log(error, selector.name);
     //$('#msgError').append(H)
 }
 
@@ -76,6 +77,11 @@ function refil(number, length) {
     var str = '' + number;
     while (str.length < length) str = '0' + str;
     return str;
+}
+
+function pure_num(nm) {
+    let num = nm.replace(/,/g, '');
+    return num;
 }
 
 // DA FORMATO A LOS NUMEROS
