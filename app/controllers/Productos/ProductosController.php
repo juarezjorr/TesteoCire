@@ -124,8 +124,20 @@
 
 		public function GetSkuById($request_params)
 		{
-		  $result = $this->model->GetSkuById($request_params);	  
-		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);
+
+			$result = $this->model->GetSkuById($request_params);	  
+			$i = 0;
+			while($row = $result->fetch_assoc()){
+			   $rowdata[$i] = $row;
+			  $i++;
+			  }
+			  if ($i>0){
+				  $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			  } else {
+				  $res =  '[{"ser_id":"0"}]';	
+			  }
+			  echo $res;
+		 
 		}
 
 		public function GetInfoSkuById($request_params)
@@ -155,7 +167,30 @@
 		  $result = $this->model->DeleteSku($request_params);	  
 		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);
 		}
-	
- }
+
+
+		public function listCategories($request_params)
+		{
+		  $result = $this->model->listCategories($request_params);	  
+		  $i = 0;
+		  while($row = $result->fetch_assoc()){
+			 $rowdata[$i] = $row;
+			$i++;
+			}
+			if ($i>0){
+				$res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+			} else {
+				$res =  '[{"cat_id":"0"}]';	
+			}
+			echo $res;
+		}	
+
+		
+		public function getDownloadInvoice($request_params)
+		{
+		  $result = $this->model->getDownloadInvoice($request_params);	  
+		  echo json_encode($result ,JSON_UNESCAPED_UNICODE);
+		}	
+}
 
 

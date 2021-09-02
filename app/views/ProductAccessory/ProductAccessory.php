@@ -12,7 +12,7 @@
         <div class="row mvst_group">
 
 
-            <div class="mb-3 mvst_panel">
+            <div class="mvst_panel">
                 <div class="form-group">
                 <div class="form_primary">
                     <h4 class="mainTitle">RELACIÓN PRODUCTO ACCESORIO</h4>
@@ -83,7 +83,7 @@
             </div>
 
 
-            <div class="mb-3 mvst_table">
+            <div class="mvst_table">
                 <h1>Asignacion de accesorios</h1>
                 <div class="double-column">
                     <div class="left-side">
@@ -91,9 +91,8 @@
                         <table class="display compact nowrap"  id="tblPackages"  style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width:  80px">SKU</th>
-                                    <th style="width: auto" hidden >id</th>
-                                    <th style="width: auto">Nombre</th>
+                                    <th style="width:  70px">SKU</th>
+                                    <th style="width:  auto">Nombre</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -105,9 +104,9 @@
                         <table class="display compact nowrap"  id="tblProducts" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width:  30px"></th>
-                                    <th style="width:  80px">SKU</th>
-                                    <th style="width: auto">Accesorio</th>
+                                    <th style="width:  20px"></th>
+                                    <th style="width:  70px">SKU</th>
+                                    <th >Accesorio</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

@@ -75,9 +75,9 @@ public function listProductsPack($params)
 public function getAccesoriesById($params)
 {
     $prdId = $this->db->real_escape_string($params['prdId']);
-            $qry = "SELECT prd.prd_id , prd.prd_sku, prd_name FROM ctt_accesories as acc
+    $qry = "SELECT prd.prd_id , prd.prd_sku, prd_name FROM ctt_accesories as acc
             INNER JOIN ctt_products AS prd on prd.prd_id = acc.prd_id
-            WHERE acc.acr_parent = ".$prdId." and acc.acr_status = 1;";
+            WHERE acc.acr_parent = $prdId and acc.acr_status = 1;";
     return $this->db->query($qry);
 }
 

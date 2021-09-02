@@ -71,7 +71,7 @@ function setting_table() {
         language: {
             url: 'app/assets/lib/dataTable/spanish.json',
         },
-        scrollY: 'calc(100vh - 260px)',
+        scrollY: 'calc(100vh - 190px)',
         scrollX: true,
         fixedHeader: true,
         columns: [
@@ -175,7 +175,7 @@ function putStores(dt) {
 function putProducts(dt) {
     $.each(dt, function (v, u) {
         let H = `<div class="list-item" id="P-${u.ser_id}" data-store="${u.str_id}" data-content="${u.ser_id}|${u.ser_sku}|${u.ser_serial_number}|${u.prd_name}|${u.ser_cost}|${u.prd_coin_type}">
-         ${u.ser_sku} - ${u.prd_name}<div class="items-just"><div class="quantity editable" data-content="${u.stp_quantity}" contenteditable=true>${u.stp_quantity}</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
+        ${u.ser_sku} - ${u.prd_name}<div class="items-just"><div class="quantity editable" data-content="${u.stp_quantity}" contenteditable=true>${u.stp_quantity}</div><i class="fas fa-arrow-circle-right"></i></div></div>`;
         $('#listProducts').append(H);
     });
 }
@@ -280,24 +280,24 @@ function exchange_apply(prId) {
 
         update_array_products(productId, productQuantity);
         let par = `
-            [{
-               "support"    :  "${folio}|${productSKU}|${typeExchangeIdSource}|${typeExchangeIdTarget}|${productId}|${storeIdSource}|${storeIdTarget}",
-               "prodsku"	: 	"${productSKU}",
-               "prodnme"	:	"${productName}",
-               "prodqty"	:	"${productQuantity}",
-               "prodser"	:	"${productSerie}",
-               "excodsr"	:	"${typeExchangeCodeSource}",
-               "stnmesr"	:	"${storeNameSource}",
-               "excodtg"	:	"${typeExchangeCodeTarget}",
-               "stnmetg"	:	"${storeNameTarget}",
-               "comment"	:	"${commnets}",
-               "project"	:	"${project}",
-               "excidsr"	:	"${typeExchangeIdSource}",
-               "excidtg"	:	"${typeExchangeIdTarget}",
-               "stoidsr"	:	"${storeIdSource}",
-               "stoidtg"	:	"${storeIdTarget}",
-               "dtfolio"	:	"${folio}"
-            }]
+[{
+    "support"    :  "${folio}|${productSKU}|${typeExchangeIdSource}|${typeExchangeIdTarget}|${productId}|${storeIdSource}|${storeIdTarget}",
+    "prodsku"	: 	"${productSKU}",
+    "prodnme"	:	"${productName}",
+    "prodqty"	:	"${productQuantity}",
+    "prodser"	:	"${productSerie}",
+    "excodsr"	:	"${typeExchangeCodeSource}",
+    "stnmesr"	:	"${storeNameSource}",
+    "excodtg"	:	"${typeExchangeCodeTarget}",
+    "stnmetg"	:	"${storeNameTarget}",
+    "comment"	:	"${commnets}",
+    "project"	:	"${project}",
+    "excidsr"	:	"${typeExchangeIdSource}",
+    "excidtg"	:	"${typeExchangeIdTarget}",
+    "stoidsr"	:	"${storeIdSource}",
+    "stoidtg"	:	"${storeIdTarget}",
+    "dtfolio"	:	"${folio}"
+}]
             `;
         console.log(par);
         fill_table(par);
@@ -426,32 +426,30 @@ function putNextExchangeNumber(dt) {
 
 function build_data_structure(pr) {
     let el = pr.split('|');
-    let par = `[
-               {
-                  "fol" :  "${el[0]}",
-                  "sku" :  "${el[1]}",
-                  "pnm" :  "${el[2]}",
-                  "qty" :  "${el[3]}",
-                  "ser" :  "${el[4]}",
-                  "str" :  "${el[5]}",
-                  "com" :  "${el[6]}",
-                  "cod" :  "${el[7]}",
-                  "idx" :  "${el[8]}",
-                  "prj" :  ""
-               }
-            ]`;
+    let par = `
+[{
+    "fol" :  "${el[0]}",
+    "sku" :  "${el[1]}",
+    "pnm" :  "${el[2]}",
+    "qty" :  "${el[3]}",
+    "ser" :  "${el[4]}",
+    "str" :  "${el[5]}",
+    "com" :  "${el[6]}",
+    "cod" :  "${el[7]}",
+    "idx" :  "${el[8]}",
+    "prj" :  ""
+}]`;
     save_exchange(par);
 }
 function build_update_store_data(pr) {
     let el = pr.split('|');
-    let par = `[
-               {
-                  "prd" :  "${el[0]}",
-                  "qty" :  "${el[1]}",
-                  "str" :  "${el[2]}",
-                  "mov" :  "${el[3]}"
-               }
-            ]`;
+    let par = `
+[{
+    "prd" :  "${el[0]}",
+    "qty" :  "${el[1]}",
+    "str" :  "${el[2]}",
+    "mov" :  "${el[3]}"
+}]`;
 
     update_store(par);
 }
@@ -475,13 +473,26 @@ function update_store(ap) {
     fillField(pagina, par, tipo, selector);
 }
 
-function exchange_result(dt) {}
+function exchange_result(dt) {
+    $('.resFolio').text(refil(folio, 7));
+    $('#MoveFolioModal').modal('show');
+    $('#btnHideModal').on('click', function () {
+        window.location = 'MoveStoresOut';
+    });
+    $('#btnPrintReport').on('click', function () {
+        $('.btn-print').trigger('click');
+    });
+}
 
 function updated_stores(dt) {
     $('.resFolio').text(refil(folio, 7));
     $('#MoveFolioModal').modal('show');
     $('#btnHideModal').on('click', function () {
         window.location = 'MoveStoresOut';
+    });
+
+    $('#btnPrintReport').on('click', function () {
+        $('.btn-print').trigger('click');
     });
 }
 

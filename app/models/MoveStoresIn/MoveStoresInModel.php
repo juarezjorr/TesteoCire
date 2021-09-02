@@ -54,14 +54,29 @@ class MoveStoresInModel extends Model
         return $this->db->query($qry);
     }
 
-// Listado de Productos
-    public function listProducts()
+
+        
+// Listado de categorias
+    public function listCategories()
     {
+        $qry = "SELECT * FROM ctt_categories WHERE cat_status  = 1;";
+        return $this->db->query($qry);
+    }
+
+
+// Listado de Productos
+    public function listProducts($param)
+    {
+        $catId = $this->db->real_escape_string($param['catId']);
+        
         $qry = "SELECT pd.prd_id, pd.prd_sku, pd.prd_name, (
                     SELECT ifnull(max(convert(substring( ser_sku,8,4), signed integer)),0) + 1 
                     FROM ctt_series WHERE prd_id = pd.prd_id AND ser_behaviour = 'C'
-                ) as serNext
-                FROM ctt_products AS pd WHERE pd.prd_status = 1 AND pd.prd_level IN ('P', 'A');";
+                ) as serNext, sb.sbc_name, ct.cat_name
+                FROM ctt_products AS pd 
+                INNER JOIN ctt_subcategories AS sb ON sb.sbc_id = pd.sbc_id
+                INNER JOIN ctt_categories AS ct ON ct.cat_id = sb.cat_id
+                WHERE pd.prd_status = '1' AND pd.prd_level IN ('P', 'A') AND ct.cat_id = $catId;";
         return $this->db->query($qry);
     }	
 
@@ -121,7 +136,7 @@ public function NextExchange()
         $this->db->query($qry3);
 
         
-		$qry4 = "INSERT INTO ctt_products_documents (prd_id, doc_id) VALUES ($prd_id, $doc_id);";
+		$qry4 = "INSERT INTO ctt_products_documents (prd_id, doc_id, dcp_source) VALUES ($serId, $doc_id, 'S');";
         $this->db->query($qry4);
 
         return $con_id ;

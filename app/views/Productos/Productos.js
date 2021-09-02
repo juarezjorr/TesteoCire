@@ -10,33 +10,29 @@ $(document).ready(function () {
 });
 
 function inicial() {
-    getProductosTable();
+    // getProductosTable();
     cargaInicial();
 
     $('#checkIsAccesorie').change(function () {
         if ($('#checkIsAccesorie').prop('checked')) {
-            $('#hiddenCatalago').attr("hidden",true);
-            $('#hiddenSubcategoria').attr("hidden",true);
+            $('#hiddenCatalago').attr('hidden', true);
+            $('#hiddenSubcategoria').attr('hidden', true);
             //$('#titulo').text('Nuevo Accesorio');
-        }else{
+        } else {
             //$('#titulo').text('Nuevo Producto');
-            $('#hiddenCatalago').attr("hidden",false);
-            $('#hiddenSubcategoria').attr("hidden",false);
+            $('#hiddenCatalago').attr('hidden', false);
+            $('#hiddenSubcategoria').attr('hidden', false);
         }
     });
 
-    $( "#NomProducto" ).keyup(function() {
+    $('#NomProducto').keyup(function () {
         EnableDisableComun(false);
     });
 
-
-
-    $("body").click(function () {
+    $('body').click(function () {
         //console.log("hols");
         $('#suggestions').fadeOut(500);
-
     });
-
 
     //Open modal *
     $('#nuevoProducto').on('click', function () {
@@ -83,7 +79,7 @@ function inicial() {
             if (RenglonesSelection == 0 || RenglonesSelection == 1) {
                 $('.btn-apply').addClass('hidden-field');
             } else {
-               $('.btn-apply').removeClass('hidden-field');
+                $('.btn-apply').removeClass('hidden-field');
             }
         }, 10);
     });
@@ -105,6 +101,7 @@ function inicial() {
 function cargaInicial() {
     LimpiaModal();
     getCategorias();
+    getCategories();
     getServicios(0);
     //getProveedores();
     getAlmacenes();
@@ -112,6 +109,34 @@ function cargaInicial() {
     getDocumentos();
     $('#formSubCategorias').removeClass('was-validated');
     NomProductoSelect();
+}
+
+// Solicita los tipos de movimiento
+function getCategories() {
+    var pagina = 'Productos/listCategories';
+    var par = '[{"parm":""}]';
+    var tipo = 'json';
+    var selector = putCategories;
+    fillField(pagina, par, tipo, selector);
+}
+
+function putCategories(dt) {
+    if (dt[0].cat_id != '0') {
+        let catId = dt[0].cat_id;
+        $.each(dt, function (v, u) {
+            var H = `<option value="${u.cat_id}">${u.cat_name}</option>`;
+            $('#txtCategoryList').append(H);
+        });
+
+        getProductosTable(catId);
+
+        $('#txtCategoryList').on('change', function () {
+            let id = $(this).val();
+
+            let catId = $(`#txtCategoryList option[value="${id}"]`).val();
+            getProductosTable(catId);
+        });
+    }
 }
 
 //Valida los campos seleccionado *
@@ -136,8 +161,6 @@ function getDocumentos(id) {
         dataType: 'JSON',
         url: location,
         success: function (respuesta) {
-
-            console.log(respuesta);
             var renglon = "<option id='0'  value='0'>Seleccione...</option> ";
             respuesta.forEach(function (row, index) {
                 renglon += '<option id=' + row.doc_id + '  value="' + row.doc_id + '">' + row.doc_code + '-' + row.doc_name + '</option> ';
@@ -165,7 +188,6 @@ function EditProducto(id, idCategoria, idSubCategoria, idServicio, idAlmacen, id
             $('#NomProducto').val(respuesta.prd_name);
             $('#IdProducto').val(respuesta.prd_id);
             $('#idStoreProducto').val(idStoreProducto);
-
             $('#NomEngProducto').val(respuesta.prd_english_name);
             $('#ModelProducto').val(respuesta.prd_model);
             $('#SerieProducto').val(respuesta.prd_serial_number);
@@ -270,12 +292,11 @@ function SaveProducto() {
 
     var visible = 0;
     var rentSinAccesorios = 0;
-    var IsAccesorio = "P";
+    var IsAccesorio = 'P';
     var aplicaSeguro = 0;
 
-    var idCategoria = "";
-    var idSubCategoria = "";
-
+    var idCategoria = '';
+    var idSubCategoria = '';
 
     if ($('#checkProducto').prop('checked')) {
         visible = 1;
@@ -289,10 +310,10 @@ function SaveProducto() {
         rentSinAccesorios = 1;
     }
     if ($('#checkIsAccesorie').prop('checked')) {
-        IsAccesorio = "A";
-        idCategoria = "";
-        idSubCategoria = "";
-    }else{
+        IsAccesorio = 'A';
+        idCategoria = '';
+        idSubCategoria = '';
+    } else {
         idCategoria = $('#selectRowCategorias option:selected').attr('id');
         idSubCategoria = $('#selectRowSubCategorias option:selected').attr('id');
     }
@@ -321,58 +342,61 @@ function SaveProducto() {
             esUnico: esUnico,
             IsAccesorio: IsAccesorio,
             idDocumento: idDocumento,
-            aplicaSeguro: aplicaSeguro
+            aplicaSeguro: aplicaSeguro,
         },
         url: location,
         success: function (row) {
-            console.log("resultado :"+row);
+            console.log('resultado :' + row);
 
             if (IdProducto != '') {
                 table
-                   .row(':eq(' + positionRow + ')')
-                   .remove()
-                   .draw();
-             }
+                    .row(':eq(' + positionRow + ')')
+                    .remove()
+                    .draw();
+            }
 
             if (row == 0) {
-                console.log("no se pudo guardar");
-                LimpiaModal(); 
+                console.log('no se pudo guardar');
+                LimpiaModal();
                 EnableDisableComun(false);
                 $('#NombreConcepto').text(NomProducto);
                 $('#ProductoExisteModal').modal('show');
-
-            }else{
-
-
+            } else {
                 var rowNode = table.row
-                .add({
-                   [0]: "<button onclick='getInfoComunByID(" + row.prd_id +',1,' + row.extNum +',' +row.prd_id +")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
-                   '<button onclick="ConfirmDeletProducto(' +row.prd_id +')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
-                   [1]: row.prd_id,
-                   [2]: row.prd_sku,
-                   [3]: row.prd_name,
-                   [4]: row.prd_price,
-                   [5]: "<span>"+row.extNum+"</span>",
-                   [6]: row.prd_level,
-                   [7]: row.srv_name,
-                   [8]: row.prd_english_name,
-                   [9]: row.cat_name,
-                   [10]: row.sbc_name,
-                   [11]: row.prd_comments,
-                })
-                .draw()
-                .node();
+                    .add({
+                        [0]:
+                            "<button onclick='getInfoComunByID(" +
+                            row.prd_id +
+                            ',1,' +
+                            row.extNum +
+                            ',' +
+                            row.prd_id +
+                            ")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
+                            '<button onclick="ConfirmDeletProducto(' +
+                            row.prd_id +
+                            ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>',
+                        [1]: row.prd_id,
+                        [2]: row.prd_sku,
+                        [3]: row.prd_name,
+                        [4]: row.prd_price,
+                        [5]: '<span>' + row.extNum + '</span>',
+                        [6]: row.prd_level,
+                        [7]: row.srv_name,
+                        [8]: row.prd_english_name,
+                        [9]: row.cat_name,
+                        [10]: row.sbc_name,
+                        [11]: row.prd_comments,
+                    })
+                    .draw()
+                    .node();
                 $(rowNode).find('td').eq(0).addClass('edit');
                 $(rowNode).find('td').eq(5).addClass('quantity');
-                $(rowNode).find('td').eq(1).attr("hidden",true);
+                $(rowNode).find('td').eq(1).attr('hidden', true);
 
-                $(rowNode).find('td').eq(4).css("text-align","right");
+                $(rowNode).find('td').eq(4).css('text-align', 'right');
 
-
-                LimpiaModal(); 
+                LimpiaModal();
                 EnableDisableComun(false);
-
-
 
                 //getProductosTable();
 
@@ -411,9 +435,8 @@ function LimpiaModal() {
     $('#checkRentAccesories').prop('checked', true);
     $('#ventOrRent1').prop('checked', true);
     $('#checkIsAccesorie').prop('checked', false);
-    $('#hiddenCatalago').attr("hidden",false);
-    $('#hiddenSubcategoria').attr("hidden",false);
-
+    $('#hiddenCatalago').attr('hidden', false);
+    $('#hiddenSubcategoria').attr('hidden', false);
 }
 
 // Optiene las categorias *
@@ -531,86 +554,37 @@ function getAlmacenesSku(id) {
     }).done(function () {});
 }
 
-function getProductosTable() {
+function getProductosTable(catId) {
     var location = 'Productos/GetProductos';
+    $('.deep_loading').css({display: 'flex'});
+    $('.tblProdMaster').css({display: 'none'});
     $('#ProductosTable').DataTable().destroy();
     $('#tablaProductosRow').html('');
-
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
         url: location,
+        data: {catId: catId},
         _success: function (respuesta) {
             //console.log(respuesta);
             respuesta.forEach(function (row, index) {
-                renglon =
-                    '<tr>' +
-                    '<td class="text-center edit"> ' +
-                    "<button onclick='getInfoComunByID(" +
-                    row.prd_id +
-                    ',1,' +
-                    row.extNum +
-                    ',' +
-                    row.prd_id +
-                    ")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
-                    '<button onclick="ConfirmDeletProducto(' +
-                    row.prd_id +
-                    ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>' +
-                    '</td>' +
-                    "<td class='dtr-control text-center' hidden>" +
-                    row.prd_id +
-                    '</td>' +
-
-
-                    "<td class='dtr-control '>" +
-                    row.prd_sku +
-                    '</td>' +
-
-                    '<td >' +
-                    row.prd_name +
-                    '</td>' +
-
-
-
-                    '<td style="text-align: right !important;" >' +
-                    row.prd_price +
-                    '</td>' +
-
-                    "<td class='quantity'>" +
-                    '<span onclick=skuByID('+row.prd_id +','+row.extNum+')>' +
-                    row.extNum +
-                    '</span>' +
-                    '</td>' +
-
-                    '<td >' +
-                    row.prd_level +
-                    '</td>' +
-
-                    '<td >' +
-                    row.srv_name +
-                    '</td>' +
-
-                    '<td >' +
-                    row.prd_english_name +
-                    '</td>' +
-
-
-                    '<td >' +
-                    row.cat_name +
-                    '</td>' +
-                    '<td >' +
-                    row.sbc_name +
-                    '</td>' +
-
-
-
-                    '<td >' +
-                    row.prd_comments +
-                    '</td>' +
-
-
-
-                    +'</tr>';
+                renglon = `<tr>
+                        <td class="text-center edit">
+                            <button onclick='getInfoComunByID("${row.prd_id},1,${row.extNum},${row.prd_id}")' type='button' class='btn btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>
+                            <button onclick="ConfirmDeletProducto(${row.prd_id})" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>
+                        </td>
+                        <td class='dtr-control text-center' hidden>${row.prd_id}</td>
+                        <td class='dtr-control '>${row.prd_sku}</td>
+                        <td class="product-name">${row.prd_name}</td>
+                        <td style="text-align: right !important;" >${row.prd_price}</td>
+                        <td class='quantity'><span onclick=skuByID(${row.prd_id},${row.extNum}) class="toLink">${row.extNum}</span></td>
+                        <td>${row.prd_level}</td>
+                        <td>${row.srv_name}</td>
+                        <td>${row.prd_english_name}</td>
+                        <td>${row.cat_name}</td>
+                        <td>${row.sbc_name}</td>
+                        <td>${row.prd_comments}</td>
+                    </tr>`;
                 $('#tablaProductosRow').append(renglon);
             });
 
@@ -619,14 +593,12 @@ function getProductosTable() {
 
             table = $('#ProductosTable').DataTable({
                 order: [[1, 'asc']],
-                select: {
-                    style: 'multi',
-                    info: false,
-                },
+
                 lengthMenu: [
-                    [10, 25, 50, 100, -1],
-                    ['10', '25', '50', 'Todo'],
+                    [50, 100, 150, -1],
+                    ['50', '100', '150', 'Todo'],
                 ],
+                pageLength: '100',
                 dom: 'Blfrtip',
                 buttons: [
                     {
@@ -643,7 +615,6 @@ function getProductosTable() {
                         filename: filename,
                         text: '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
                     },
-
                     {
                         extend: 'print',
                         footer: true,
@@ -667,7 +638,7 @@ function getProductosTable() {
                         },
                     },
                 ],
-                scrollY: 'calc(100vh - 260px)',
+                scrollY: 'calc(100vh - 190px)',
                 scrollX: true,
                 paging: true,
                 pagingType: 'simple_numbers',
@@ -689,7 +660,14 @@ function getProductosTable() {
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         },
-    }).done(function () {});
+    }).done(function () {
+        $('.tblProdMaster')
+            .delay(500)
+            .slideDown('fast', function () {
+                $('#ProductosTable').DataTable().draw();
+                $('.deep_loading').css({display: 'none'});
+            });
+    });
 }
 
 function getTipoMoneda(id) {
@@ -801,7 +779,6 @@ function getInfoComun(nombreDocument, productoComun, cantidadSKU, idproducto) {
                 $('#checkProducto').prop('checked', false);
             }
 
-        
             if (1 >= cantidadSKU) {
             } else {
                 EnableDisableComun(true);
@@ -812,7 +789,6 @@ function getInfoComun(nombreDocument, productoComun, cantidadSKU, idproducto) {
         error: function () {},
     }).done(function () {});
 }
-
 
 //EDITA EL PRODUCTO BUENO
 function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
@@ -854,20 +830,17 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
                 $('#checkProducto').prop('checked', false);
             }
 
-            if (respuesta[0].prd_level == "A") {
+            if (respuesta[0].prd_level == 'A') {
                 $('#checkIsAccesorie').prop('checked', true);
 
-                $('#hiddenCatalago').attr("hidden",true);
-                $('#hiddenSubcategoria').attr("hidden",true);
+                $('#hiddenCatalago').attr('hidden', true);
+                $('#hiddenSubcategoria').attr('hidden', true);
                 $('#titulo').text('Nuevo Accesorio');
-
-
-
             } else {
                 $('#checkIsAccesorie').prop('checked', false);
 
-                $('#hiddenCatalago').attr("hidden",false);
-                $('#hiddenSubcategoria').attr("hidden",false);
+                $('#hiddenCatalago').attr('hidden', false);
+                $('#hiddenSubcategoria').attr('hidden', false);
             }
 
             if (productoComun == 1) {
@@ -890,7 +863,6 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
 
                     if (respuesta[0].prd_behaviour == 'C') {
                         $('#ventOrRent1').prop('checked', true);
-
                     } else {
                         $('#ventOrRent2').prop('checked', true);
                     }
@@ -911,6 +883,7 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
 }
 
 function editBySku(idSerie) {
+    console.log(idSerie);
     UnSelectRowTableSku();
     $('#collapseExample').collapse('show');
     var location = 'Productos/GetInfoSkuById';
@@ -960,122 +933,131 @@ function DeletSKU(idSku) {
     }).done(function () {});
 }
 
-function skuByID(idProduct,cantidad) {
-    if (cantidad != 0){
+function skuByID(idProduct, cantidad) {
+    if (cantidad != 0) {
+        UnSelectRowTable();
+        $('#collapseExample').collapse('hide');
+        $('#SKUTable').DataTable().destroy();
+        $('#tablaSKURow').html('');
+        var location = 'Productos/GetSkuById';
 
+        console.log(idProduct);
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            data: {prdId: idProduct},
+            url: location,
+            success: function (respuesta) {
+                respuesta.forEach(function (row, index) {
+                    let strSku = '';
+                    strSku += row.ser_sku.slice(0, 7) == '' ? '' : row.ser_sku.slice(0, 7);
+                    strSku += row.ser_sku.slice(7, 11) == '' ? '' : '-' + row.ser_sku.slice(7, 11);
+                    strSku += row.ser_sku.slice(11, 14) == '' ? '' : '-' + row.ser_sku.slice(11, 14);
+                    let docInvo = `<span class="invoiceView" id="F${row.doc_id}"><i class="fas fa-file-pdf"></i></span>`;
+                    let invoice = row.doc_id != '' ? docInvo : '';
+                    renglon = `
+                        <tr>
+                            <td class="text-center edit" hidden>
+                                <button onclick="editBySku(${row.ser_id})" type="button" class="btn btn-default btn-icon-edit" aria-label="Left Align"><i class="fas fa-pen modif"></i></button>
+                                <button onclick="DeletSKU(${row.ser_id})" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>
+                            </td>
+                            <td class="dtr-control">${strSku}</td>
+                            <td>${row.ser_serial_number}</td>
+                            <td class="text-right">${row.ser_cost}</td>
+                            <td class="cellInvoice">${invoice}</td>
+                            <td class="text-center">${row.ser_date_registry}</td>
+                            <td>${row.ser_behaviour_name}</td>
+                        </tr>`;
 
-   
-    
-    UnSelectRowTable();
-    $('#collapseExample').collapse('hide');
-    $('#SKUTable').DataTable().destroy();
-    $('#tablaSKURow').html('');
-    var location = 'Productos/GetSkuById';
-    $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        data: {id: idProduct},
-        url: location,
-        success: function (respuesta) {
-            respuesta.forEach(function (row, index) {
-                renglon =
-                    '<tr>' +
-                    '<td class="text-center edit" hidden> ' +
-                    "<button onclick='editBySku(" +
-                    row.ser_id +
-                    ")' type='button' class='btn btn-default btn-icon-edit' aria-label='Left Align'><i class='fas fa-pen modif'></i></button>" +
-                    '<button onclick="DeletSKU(' +
-                    row.ser_id +
-                    ')" type="button" class="btn btn-default btn-icon-delete" aria-label="Left Align"><i class="fas fa-times-circle kill"></i></button>' +
-                    '</td>' +
-                    "<td class='dtr-control text-center'>" +
-                    row.ser_sku.slice(0, 7) +
-                    '-' +
-                    row.ser_sku.slice(7, 11) +
-                    '-' +
-                    row.ser_sku.slice(11, 14) +
-                    '</td>' +
-                    '<td >' +
-                    row.ser_serial_number +
-                    '</td>' +
-                    '<td >' +
-                    row.ser_cost +
-                    '</td>' +
-                    '<td >' +
-                    row.ser_date_registry +
-                    '</td>' +
-
-                    '<td >' +
-                    row.ser_behaviour_name +
-                    '</td>' +
-                    +'</tr>';
-                $('#tablaSKURow').append(renglon);
-            });
-            let title = 'Productos';
-            let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
-            table2 = $('#SKUTable').DataTable({
-                order: [[1, 'asc']],
-                select: {
-                    style: 'multi',
-                    info: false,
-                },
-                lengthMenu: [
-                    [10, 25, 50, 100, -1],
-                    ['10', '25', '50', 'Todo'],
-                ],
-                dom: 'Blfrtip',
-                buttons: [
-                    {
-                        extend: 'pdf',
-                        footer: true,
-                        title: title,
-                        filename: filename,
-                        text: '<button class="btn btn-pdf"><i class="fas fa-file-pdf"></i></button>',
-                    },
-                    {
-                        extend: 'excel',
-                        footer: true,
-                        title: title,
-                        filename: filename,
-                        text: '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
-                    },
-
-                    {
-                        extend: 'print',
-                        footer: true,
-                        title: title,
-                        filename: filename,
-                        text: '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
-                    },
-
-                ],
-                scrollY: 'calc(100vh - 260px)',
-                scrollX: true,
-                paging: true,
-                pagingType: 'simple_numbers',
-                fixedHeader: true,
-                language: {
-                    url: './app/assets/lib/dataTable/spanish.json',
-                },
-            });
-            //$("#modalSKU").modal('show');
-
-            $('.overlay_background').removeClass('overlay_hide');
-            $('.btn_close')
-                .unbind('click')
-                .on('click', function () {
-                    $('#collapseExample').collapse('hide');
-
-                    $('.overlay_background').addClass('overlay_hide');
+                    $('#tablaSKURow').append(renglon);
                 });
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        },
-    }).done(function () {});
 
+                let title = 'Productos';
+                let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
+                table2 = $('#SKUTable').DataTable({
+                    order: [[1, 'asc']],
+                    lengthMenu: [
+                        [50, 100, 200, -1],
+                        ['50', '100', '200', 'Todo'],
+                    ],
+                    dom: 'Blfrtip',
+                    buttons: [
+                        {
+                            extend: 'pdf',
+                            footer: true,
+                            title: title,
+                            filename: filename,
+                            text: '<button class="btn btn-pdf"><i class="fas fa-file-pdf"></i></button>',
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            title: title,
+                            filename: filename,
+                            text: '<button class="btn btn-excel"><i class="fas fa-file-excel"></i></button>',
+                        },
+
+                        {
+                            extend: 'print',
+                            footer: true,
+                            title: title,
+                            filename: filename,
+                            text: '<button class="btn btn-print"><i class="fas fa-print"></i></button>',
+                        },
+                    ],
+                    scrollY: 'calc(100vh - 290px)',
+                    scrollX: true,
+                    paging: true,
+                    pagingType: 'simple_numbers',
+                    fixedHeader: true,
+                    language: {
+                        url: './app/assets/lib/dataTable/spanish.json',
+                    },
+                });
+                //$("#modalSKU").modal('show');
+
+                $('.overlay_background').removeClass('overlay_hide');
+                $('.btn_close')
+                    .unbind('click')
+                    .on('click', function () {
+                        $('#collapseExample').collapse('hide');
+
+                        $('.overlay_background').addClass('overlay_hide');
+                    });
+                $('.invoiceView')
+                    .unbind('click')
+                    .on('click', function () {
+                        let docId = $(this).attr('id');
+                        docId = docId.slice(1, 20);
+                        getDownloadInvoice(docId);
+                    });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            },
+        }).done(function () {});
+    }
 }
 
+function getDownloadInvoice(docId) {
+    var pagina = 'Productos/getDownloadInvoice';
+    var par = '[{"docId":"' + docId + '"}]';
+    var tipo = 'json';
+    console.log(par);
+    var selector = putDownloadInvoice;
+    fillField(pagina, par, tipo, selector);
+}
+
+function putDownloadInvoice(dt) {
+    console.log(dt);
+
+    var a = document.createElement('a');
+    a.href = 'data:application/octet-stream;base64,' + dt.doc_document;
+    a.target = '_blank';
+    // a.download = respuesta.doc_name;
+
+    a.download = dt.doc_name + '.' + dt.doc_type.trim();
+    a.click();
 }
 
 function SaveSku() {
@@ -1132,7 +1114,7 @@ function SaveSku() {
 }
 
 function EnableDisableComun(estatus) {
-    $('#NomEngProducto').prop('disabled', estatus);
+    // $('#NomEngProducto').prop('disabled', estatus);
     $('#selectMonedaProducto').prop('disabled', estatus);
     $('#DesProducto').prop('disabled', estatus);
     $('#ModelProducto').prop('disabled', estatus);
@@ -1141,7 +1123,6 @@ function EnableDisableComun(estatus) {
     $('#checkRentAccesories').prop('disabled', estatus);
     $('#checkIsAccesorie').prop('disabled', estatus);
 
-
     $('#selectRowSubCategorias').prop('disabled', estatus);
     $('#selectRowCategorias').prop('disabled', estatus);
     $('#selectRowService').prop('disabled', estatus);
@@ -1149,9 +1130,6 @@ function EnableDisableComun(estatus) {
     $('#selectRowDocument').prop('disabled', estatus);
 
     $('#GuardarCategoria').prop('disabled', estatus);
-
-    
-
 }
 
 function EnableDisableExt(estatus) {

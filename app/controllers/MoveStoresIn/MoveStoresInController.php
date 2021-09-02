@@ -15,7 +15,7 @@ class MoveStoresInController extends Controller
         $this->session = new Session();
         $this->session->init();
         if($this->session->getStatus() === 1 || empty($this->session->get('user')))
-            header('location: ' . FOLDER_PATH .'/login');
+            header('location: ' . FOLDER_PATH .'/Login');
     }
 
     public function exec()
@@ -61,11 +61,29 @@ class MoveStoresInController extends Controller
             echo $res;
     }    
 
+// Lista los Categorias 
+    public function listCategories($request_params)
+    {
+        $params =  $this->session->get('user');
+        $result = $this->model->listCategories();
+            $i = 0;
+            while($row = $result->fetch_assoc()){
+                $rowdata[$i] = $row;
+                $i++;
+            }
+            if ($i>0){
+                $res =  json_encode($rowdata,JSON_UNESCAPED_UNICODE);	
+            } else {
+                $res =  '[{"cat_id":"0"}]';	
+            }
+            echo $res;
+    }    
+
 // Lista los productos
     public function listProducts($request_params)
     {
         $params =  $this->session->get('user');
-        $result = $this->model->listProducts();
+        $result = $this->model->listProducts($request_params);
         $i = 0;
         while($row = $result->fetch_assoc()){
             $rowdata[$i] = $row;

@@ -9,7 +9,7 @@ body {
 	font-family: $font_primary;
 	font-size: 12px;
 	color: $dark;
-	background-color: $color_deep_body;
+	// background-color: $color_deep_body;
 }
 
 h1,
@@ -41,16 +41,29 @@ h4 {
 	background-color: $dark-x;
 }
 
-ul  {
+ul {
 	padding: 0;
 	list-style: none;
+}
+.rowTop {
+	position: relative;
+	.topList {
+		display: inline-block;
+		width: 200px;
+		position: absolute;
+		right: 10px;
+		background-color: transparent;
+		border: none;
+		outline: none;
+		color: $setColor;
+	}
 }
 
 // start LOGIN  -------------
 .login-section {
 	.form-control,
 	.btn {
-		min-height: 1.125rem;
+		min-height: 1.125em;
 		line-height: initial;
 		color: $light;
 	}
@@ -105,7 +118,7 @@ ul  {
 
 .mvst_group {
 	width: 100%;
-	height: 100vh;
+	height: 99.9vh;
 	display: grid;
 	grid-template-columns: 300px auto;
 	grid-template-rows: 1fr;
@@ -121,7 +134,7 @@ ul  {
 	.mvst_table {
 		width: 100%;
 		overflow: auto;
-		padding: 60px 10px 0 10px;
+		padding: 40px 10px 0 4px;
 		z-index: 5;
 		grid-column: 2 / span 1;
 
@@ -143,8 +156,35 @@ ul  {
 		grid-column: 1 / span 2;
 		width: 100%;
 		overflow: auto;
-		padding: 60px 10px 0 10px;
+		padding: 40px 10px 0 10px;
 		z-index: 5;
+		position: relative;
+	}
+}
+
+.deep_loading {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	position: absolute;
+	z-index: 100;
+	top: 85px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+	justify-content: center;
+	align-items: center;
+
+	.flash_loading {
+		width: 300px;
+		height: 70px;
+		background-color: rgba(255, 255, 255, 0.6);
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+		text-align: center;
+		padding: 2% 0;
+		font-size: 1.5em;
+		border-radius: 5px;
 	}
 }
 
@@ -277,6 +317,10 @@ div.dataTables_wrapper div.btn-group button.hidden-field {
 	display: none;
 }
 
+div.dataTables_wrapper .dataTables_paginate ul {
+	margin-bottom: 0;
+}
+
 div.dataTables_wrapper .dataTables_paginate .paginate_button {
 	padding: 2px 4px;
 	background-color: #ffffff;
@@ -319,14 +363,22 @@ div.dataTables_wrapper .dataTables_paginate .paginate_button {
 	padding: 4px;
 	display: block;
 }
-
+.hide {
+	display: none;
+}
 table {
+	tr {
+		.hide_row {
+			display: none;
+		}
+	}
 	td {
+		padding: 3px 4px !important;
 		i {
-			font-size: 1.3em;
 			margin: 1px 6px;
 			cursor: pointer;
 			&.kill {
+				font-size: 1.3em;
 				color: $btn-red;
 				opacity: 1;
 				&:hover {
@@ -335,6 +387,7 @@ table {
 				}
 			}
 			&.modif {
+				font-size: 1.5em;
 				color: $dark;
 				opacity: 1;
 				&:hover {
@@ -368,7 +421,8 @@ table {
 	}
 	td.product-name {
 		text-align: left;
-		font-weight: 900;
+		font-weight: 700;
+		font-size: 0.8em;
 	}
 
 	td.supply {
@@ -379,13 +433,20 @@ table {
 		text-align: center;
 
 		span {
-			padding: 3px 8px;
+			padding: 2px 6px;
 			background-color: #005599;
 			color: #ffffff;
 			font-weight: 900;
 			font-size: 0.8em;
 			margin: 2px 0;
 			border-radius: 5px;
+
+			&.toLink {
+				cursor: pointer;
+				&:hover {
+					background-color: #cc0000;
+				}
+			}
 		}
 	}
 	td.price {
@@ -419,10 +480,80 @@ table {
 			white-space: nowrap;
 		}
 	}
+	td.cellInvoice {
+		text-align: center;
+		position: relative;
+		width: 50px;
+		i {
+			font-size: 1.8em;
+			position: absolute;
+			top: 2px;
+			left: 25px;
+		}
+	}
+	td.concept {
+		width: 200px;
+		font-size: 0.9em;
+		font-weight: 700;
+		color: #000000;
+		text-align: right;
+		padding: 3px 0 0 10px;
+		vertical-align: top;
+		overflow: hidden;
+	}
+	td.data {
+		width: auto;
+		padding: 3px 5px 0 0;
+		font-size: 0.9em;
+		vertical-align: top;
+
+		.textbox {
+			color: #555555;
+			outline: none;
+			border: 1px solid $texboxColorBorder;
+			border-radius: 4px;
+			padding: 2px 10px;
+			
+
+			&:focus {
+				background-color: #ffffEE;
+				border-color: #cccccc;
+			}
+			&.fail {
+				border-color: #bb0000;
+				background-color: rgba($color: #bb0000, $alpha: 0.1);
+			}
+		}
+		.checkbox {
+			font-size: 1.4em;
+			.fa-square {
+				color: $texboxColorBorder;
+			}
+		}
+		.fail_note {
+			color: #bb0000;
+			font-size: 0.8em;
+			font-weight: 900;
+			margin-left: 10px;
+			&.hide {
+				display: none;
+			}
+		}
+		.intructions {
+			display: block;
+			width: 400px;
+			font-size: 0.8em;
+			color: #999999;
+			margin-bottom: 10px;
+			margin-top: 2px;
+		}
+	}
 }
 .btn {
-	border-radius: 1rem;
-	padding: 8px 20px;
+	border-radius: 1.5em;
+	padding: 6px 20px;
+	font-size: 1em;
+	margin: 2px 5px;
 }
 .btn-primary {
 	background-color: $dark;
@@ -431,6 +562,10 @@ table {
 .btn-danger {
 	background-color: $btn-red;
 	border: $btn-red;
+}
+
+.editable:focus {
+	background-color: rgba($color: #ffff00, $alpha: 0.1);
 }
 
 // Listador de elementos pertenecientes a un input
@@ -526,7 +661,7 @@ table {
 		background-color: #ffffff;
 		box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5);
 		border-radius: 10px;
-		padding: 30px;
+		padding: 15px;
 
 		.overlay_closer {
 			width: 100%;
@@ -560,10 +695,27 @@ table {
 				}
 			}
 		}
+
+		.formButtons {
+			position: absolute;
+			top: 60px;
+			left: 0;
+			right: 0;
+			height: 50px;
+			padding: 10px;
+			border-bottom: 1px solid #eeeeee;
+		}
+		.formContent {
+			position: absolute;
+			top: 110px;
+			left: 0;
+			right: 0;
+			bottom: 10px;
+			padding: 20px;
+			overflow: auto;
+		}
 	}
 }
-
-
 
 /* Scrollbar custom */
 /* size */
@@ -573,27 +725,23 @@ table {
 }
 /* Track */
 ::-webkit-scrollbar-track {
-	box-shadow: inset  0 0 5px transparent;
+	box-shadow: inset 0 0 5px transparent;
 	border-radius: 10px;
 }
 
-::-webkit-scrollbar-track-piece  {
+::-webkit-scrollbar-track-piece {
 	background-color: transparent;
 	margin: 10px;
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #F0F0F0;
+	background: #f0f0f0;
 	border-radius: 5px;
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 	background: $setColor;
 }
-
-
-
-
 
 //START Estilos de Juan
 .card-body {
@@ -647,8 +795,6 @@ table {
 .container-fluid {
 	padding: 0px;
 }
-
-
 
 @media screen and (max-width: 780px) {
 	.container-fluid {

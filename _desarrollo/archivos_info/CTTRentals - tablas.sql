@@ -236,6 +236,8 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
     `prd_sku`               VARCHAR(15) NULL                COMMENT 'SKU identificador del producto',
     `prd_name`              VARCHAR(100) NULL               COMMENT 'Nombre del producto',
     `prd_english_name`      VARCHAR(100)  NULL              COMMENT 'Nombre del producto en ingles',
+    `prd_code_provider`     VARCHAR(30)  NULL               COMMENT 'Código del producto segun proveedor',
+    `prd_name_provider`     VARCHAR(100)  NULL              COMMENT 'Nombre del producto segun proveedor',
     `prd_model`             VARCHAR(50) NULL                COMMENT 'Modelo del producto',
     `prd_price`             DECIMAL(10,2)  NULL             COMMENT 'Precio unitario del producto',
     `prd_visibility`        VARCHAR(1) NULL                 COMMENT 'Visibilidad del producto en cotización 1-visible, 0-no visible',
@@ -256,7 +258,8 @@ COMMENT = 'Productos de la empresa.';
 DROP TABLE `cttapp_cire`.`ctt_products_documents`;
 CREATE TABLE `cttapp_cire`.`ctt_products_documents` (
     `dcp_id`                INT NOT NULL AUTO_INCREMENT     COMMENT 'Id de relacion producto-documento',
-    `dcp_id_source`         INT NULL                        COMMENT 'Id del producto o serie',
+    `dcp_source`            VARCHAR(1) NOT NULL             COMMENT 'Tipo de elemento P=Producto, S=Serie',
+    `prd_id`                INT NULL                        COMMENT 'Id del producto o serie',
     `doc_id`                INT NULL                        COMMENT 'Id del documento relación ctt_documents',
 PRIMARY KEY (`dcp_id`))
 COMMENT = 'Relación de documentos con productos';
@@ -366,6 +369,7 @@ CREATE TABLE `cttapp_cire`.`ctt_series` (
     `ser_reserve_end`       DATETIME NULL                   COMMENT 'Fecha de reservado termino',
     `ser_reserve_count`     INT NULL                        COMMENT 'Contador de rentas',
     `ser_behaviour`         VARCHAR(1) NOT NULL             COMMENT 'Comportamiento del producto C-Compra, R-Renta',
+    `ser_comments`          VARCHAR(500) NOT NULL           COMMENT 'Comentarios sobre la serie',
     `prd_id`                INT NULL                        COMMENT 'Id del producto relacion ctt_productos',
     `sup_id`                INT NULL                        COMMENT 'Id de la proveedor relacion ctt_suppliers',
     `cin_id`                INT NULL                        COMMENT 'Id del tipo de moneda relacion ctt_coins',

@@ -9,7 +9,7 @@
 	<div class="contenido">
 		<div class="row mvst_group">
 				<!-- Start área de formularios -->
-				<div class="mb-3 mvst_panel">
+				<div class=" mvst_panel">
 					<div class="form-group">
 						<h4 id="titulo">Nuevo Catalogo</h4>  
 						<form id="formCategoria" class="row g-3 needs-validation" novalidate>
@@ -50,7 +50,7 @@
 				<!-- End área de formularios -->
 
 				<!-- Start área de listado -->
-				<div class="mb-3 mvst_table">
+				<div class="mvst_table">
 					<h1>Catálogos</h1>
 
 					<div class="row">

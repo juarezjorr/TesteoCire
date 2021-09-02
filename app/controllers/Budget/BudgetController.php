@@ -15,7 +15,7 @@ class BudgetController extends Controller
         $this->session = new Session();
         $this->session->init();
         if($this->session->getStatus() === 1 || empty($this->session->get('user')))
-            header('location: ' . FOLDER_PATH .'/login');
+            header('location: ' . FOLDER_PATH .'/Login');
     }
 
     public function exec()

@@ -12,7 +12,7 @@
         <div class="row mvst_group">
 
 
-            <div class="mb-3 mvst_panel">
+            <div class="mvst_panel">
                 <div class="form-group">
 
 
@@ -44,6 +44,14 @@
                         <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
                             <select id="txtInvoice" class="form-select form-select-sm"><option value="0" selected>Selecciona factura</option></select>
                             <label for="txtInvoice">Factura</label>
+                        </div>
+                    </div>
+
+                    <!-- Factura posición 3 -->
+                    <div class="row pos4 hide-items">
+                        <div class="col-md-12 col-lg-12 col-xl-12 mb-2 form-floating">
+                            <select id="txtCategory" class="form-select form-select-sm"><option value="0" selected>Catálogo</option></select>
+                            <label for="txtCategory">Catálogo</label>
                         </div>
                     </div>
 
@@ -104,12 +112,12 @@
             </div>
 
 
-            <div class="mb-3 mvst_table">
+            <div class="mvst_table">
                 <h1>Entradas de almacenes</h1>
                 <table class="display compact nowrap"  id="tblExchanges">
                     <thead>
                         <tr>
-                            <th style="width:  30px"></th>
+                            <th style="width:  20px"></th>
                             <th style="width:  80px">SKU</th>
                             <th style="width: 350px">Producto</th>
                             <th style="width:  60px">Cantidad</th>

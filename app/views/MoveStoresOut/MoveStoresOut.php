@@ -12,7 +12,7 @@
         <div class="row mvst_group">
 
 
-            <div class="mb-3 mvst_panel">
+            <div class="mvst_panel">
                 <div class="form-group">
 
 
@@ -79,7 +79,7 @@
             </div>
 
 
-            <div class="mb-3 mvst_table">
+            <div class="mvst_table">
                 <h1>Salidas de almacenes</h1>
                 <table class="display compact nowrap"  id="tblExchanges">
                     <thead>

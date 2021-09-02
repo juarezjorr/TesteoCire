@@ -16,7 +16,7 @@ function inicial() {
     getSuppliers();
     getInvoice();
     getCoins();
-    getProducts();
+    getCategories();
     setting_table();
     $('#btn_exchange').on('click', function () {
         exchange_apply(0);
@@ -81,7 +81,7 @@ function setting_table() {
         language: {
             url: 'app/assets/lib/dataTable/spanish.json',
         },
-        scrollY: 'calc(100vh - 260px)',
+        scrollY: 'calc(100vh - 190px)',
         scrollX: true,
         fixedHeader: true,
         columns: [
@@ -138,10 +138,19 @@ function getCoins() {
     var selector = putCoins;
     fillField(pagina, par, tipo, selector);
 }
-// Solicita los productos de un almacen seleccionado
-function getProducts() {
-    var pagina = 'MoveStoresIn/listProducts';
+// Solicita las categorias
+function getCategories() {
+    console.log('categos');
+    var pagina = 'MoveStoresIn/listCategories';
     var par = `[{"store":""}]`;
+    var tipo = 'json';
+    var selector = putCategories;
+    fillField(pagina, par, tipo, selector);
+}
+// Solicita los productos de un almacen seleccionado
+function getProducts(catId) {
+    var pagina = 'MoveStoresIn/listProducts';
+    var par = `[{"catId":"${catId}"}]`;
     var tipo = 'json';
     var selector = putProducts;
     fillField(pagina, par, tipo, selector);
@@ -237,9 +246,24 @@ function putCoins(dt) {
     });
 }
 
+function putCategories(dt) {
+    if (dt[0].cat_id != 0) {
+        $.each(dt, function (v, u) {
+            let H = `<option value="${u.cat_id}"> ${u.cat_name}</option>`;
+            $('#txtCategory').append(H);
+        });
+
+        $('#txtCategory').on('change', function () {
+            let catId = $(this).val();
+            getProducts(catId);
+        });
+    }
+}
+
 // Almacena los registros de productos en un arreglo
 function putProducts(dt) {
     var ps = $('#txtProducts').offset();
+    $('#listProducts').html('');
 
     $('.list-group').css({top: ps.top + 40 + 'px'});
     $('.list-group').slideUp('100', function () {
@@ -376,6 +400,7 @@ function exchange_apply() {
 
 // Llena la tabla de movimientos
 function fill_table(par) {
+    console.log(par);
     let largo = $('#tblExchanges tbody tr td').html();
     largo == 'Ningún dato disponible en esta tabla' ? $('#tblExchanges tbody tr').remove() : '';
     par = JSON.parse(par);
@@ -385,7 +410,7 @@ function fill_table(par) {
     tabla.row
         .add({
             editable: `<i class="fas fa-times-circle kill"></i>`,
-            prod_sku: `<span class="hide-support" id="SKU-${par[0].sersku}"></span>${par[0].sersku}`,
+            prod_sku: `<span class="hide-support" id="SKU-${par[0].sersku}"></span>${par[0].sersku.slice(0, 7)}-${par[0].sersku.slice(7, 11)}`,
             prodname: par[0].prodnme,
             prodcant: `<span>${par[0].prodqty}</span>`,
             prodcost: par[0].sercost,
@@ -492,37 +517,35 @@ function putNextExchangeNumber(dt) {
 
 function build_data_structure(pr) {
     let el = pr.split('|');
-    let par = `[
-               {
-                  "fol" :  "${el[0]}",
-                  "sku" :  "${el[1]}",
-                  "pnm" :  "${el[2]}",
-                  "qty" :  "${el[3]}",
-                  "ser" :  "${el[4]}",
-                  "str" :  "${el[5]}",
-                  "com" :  "${el[6]}",
-                  "cod" :  "${el[7]}",
-                  "idx" :  "${el[8]}",
-                  "prd" :  "${el[9]}",
-                  "sti" :  "${el[10]}",
-                  "cos" :  "${el[11]}",
-                  "cin" :  "${el[12]}",
-                  "sup" :  "${el[13]}",
-                  "doc" :  "${el[14]}"
-               }
-            ]`;
+    let par = `
+[{
+    "fol" :  "${el[0]}",
+    "sku" :  "${el[1]}",
+    "pnm" :  "${el[2]}",
+    "qty" :  "${el[3]}",
+    "ser" :  "${el[4]}",
+    "str" :  "${el[5]}",
+    "com" :  "${el[6]}",
+    "cod" :  "${el[7]}",
+    "idx" :  "${el[8]}",
+    "prd" :  "${el[9]}",
+    "sti" :  "${el[10]}",
+    "cos" :  "${el[11]}",
+    "cin" :  "${el[12]}",
+    "sup" :  "${el[13]}",
+    "doc" :  "${el[14]}"
+}]`;
     save_exchange(par);
 }
 function build_update_store_data(pr) {
     let el = pr.split('|');
-    let par = `[
-               {
-                  "prd" :  "${el[0]}",
-                  "qty" :  "${el[1]}",
-                  "str" :  "${el[2]}",
-                  "mov" :  "${el[3]}"
-               }
-            ]`;
+    let par = `
+[{
+    "prd" :  "${el[0]}",
+    "qty" :  "${el[1]}",
+    "str" :  "${el[2]}",
+    "mov" :  "${el[3]}"
+}]`;
 
     update_store(par);
 }
@@ -598,7 +621,7 @@ function sel_products(res) {
     }
 
     $('#listProducts div.list-item').each(function (index) {
-        var cm = $(this).html();
+        var cm = $(this).attr('data_complement').toUpperCase().replace(/|/g, '');
 
         cm = omitirAcentos(cm);
         var cr = cm.indexOf(res);

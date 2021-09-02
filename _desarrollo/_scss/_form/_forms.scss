@@ -5,18 +5,16 @@
 
 .form-group {
     background-color: $grey-form;
-    overflow: hidden;
-    padding: 8px;
     border-radius: 4px;
-    height: 100vh;
+    height: 99.9vh;
     overflow: auto;
-    padding: 60px 10px 10px 10px;
+    padding: 40px 4px 40px 4px;
     color: $inputs-label;
 }
 
 @media screen and (max-width: 750px) {
     .form-group {
-        padding: 60px 10px 10px 10px;
+        padding: 40px 10px 10px 10px;
         
     }
 }

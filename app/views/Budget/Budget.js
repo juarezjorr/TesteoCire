@@ -1400,7 +1400,7 @@ function add_project() {
 
     let fecha = moment(Date()).format('DD/MM/YYYY');
 
-    $('#reportrange').daterangepicker(
+    $('#calendar').daterangepicker(
         {
             autoApply: true,
             locale: {
@@ -1423,8 +1423,8 @@ function add_project() {
             opens: 'right',
         },
         function (start, end, label) {
-            $('#txtPeriodProject').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
-            $('#txtPeriodProject').parent().children('span').html('');
+            $('#txtSerDateRegistry').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            // $('#txtPeriodProject').parent().children('span').html('');
             // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         }
     );

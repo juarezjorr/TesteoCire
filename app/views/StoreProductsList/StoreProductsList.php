@@ -14,7 +14,7 @@
         <div class="row mvst_group">
 
 
-            <div class="mb-3 mvst_panel">
+            <div class="mvst_panel">
                 <div class="form-group">
                 <h4 id="titulo">Productos para Impresión</h4>
 
@@ -69,7 +69,7 @@
             </div>
 
 
-            <div class="mb-3 mvst_table" style="text-align:left">
+            <div class="mvst_table" style="text-align:left">
 
                 <h1>Productos de almacén</h1>
 

@@ -12,7 +12,7 @@
         <div class="row mvst_group">
 
 
-            <div class="mb-3 mvst_panel">
+            <div class="mvst_panel">
                 <div class="form-group">
                 <div class="form_primary">
                     <h4 class="mainTitle">Generar paquete</h4>
@@ -102,18 +102,18 @@
             </div>
 
 
-            <div class="mb-3 mvst_table">
+            <div class="mvst_table">
                 <h1>Paquetes</h1>
                 <div class="double-column">
                     <div class="left-side">
                         <h3>Paquetes</h3>
-                        <table class="display compact nowrap"  id="tblPackages"  style="width:100%">
+                        <table class="display compact nowrap"  id="tblPackages"  style="width:95%">
                             <thead>
                                 <tr>
                                     <th style="width:  30px"></th>
-                                    <th style="width:  80px">SKU</th>
+                                    <th style="width:  70px">SKU</th>
                                     <th style="width:  auto">Nombre</th>
-                                    <th style="width:  90px">Precio</th>
+                                    <th style="width:  70px">Precio</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -121,13 +121,13 @@
                     </div>
                     <div class="right-side">
                         <h3>Productos</h3>
-                        <table class="display compact nowrap"  id="tblProducts" style="width:100%">
+                        <table class="display compact nowrap"  id="tblProducts" style="width:95%">
                             <thead>
                                 <tr>
-                                    <th style="width:  30px"></th>
-                                    <th style="width:  80px">SKU</th>
+                                    <th style="width:  20px"></th>
+                                    <th style="width:  70px">SKU</th>
                                     <th style="width:  auto">Producto</th>
-                                    <th style="width:  90px">Precio</th>
+                                    <th style="width:  70px">Precio</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

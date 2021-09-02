@@ -37,6 +37,7 @@ function inicial() {
 function setting_table_packages() {
     let tabla = $('#tblPackages').DataTable({
         order: [[1, 'asc']],
+        pageLength: 1000,
         select: true,
         dom: 'Brti',
         buttons: [
@@ -53,7 +54,7 @@ function setting_table_packages() {
         language: {
             url: 'app/assets/lib/dataTable/spanish.json',
         },
-        scrollY: 'calc(100vh - 300px)',
+        scrollY: 'calc(100vh - 240px)',
         scrollX: true,
         fixedHeader: true,
         columns: [
@@ -69,6 +70,7 @@ function setting_table_packages() {
 function setting_table_products() {
     $('#tblProducts').DataTable({
         order: [[1, 'asc']],
+        pageLength: 1000,
         dom: 'Brti',
         buttons: [
             {
@@ -84,7 +86,7 @@ function setting_table_products() {
         language: {
             url: 'app/assets/lib/dataTable/spanish.json',
         },
-        scrollY: 'calc(100vh - 300px)',
+        scrollY: 'calc(100vh - 240px)',
         scrollX: true,
         fixedHeader: true,
         columns: [

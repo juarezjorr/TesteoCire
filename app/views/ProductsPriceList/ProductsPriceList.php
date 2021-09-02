@@ -10,30 +10,34 @@
 <div class="container-fluid">
 	<div class="contenido">
         <div class="row mvst_group">
-        <div class="mb-3 mvst_list">
-        <h1>Lista de precios</h1>
-            <table class="display compact nowrap"  id="tblPriceList">
-                <thead>
-                    <tr>
-                        <th style="width:  30px"></th>
-                        <th style="width:  80px">SKU</th>
-                        <th style="width: 350px">Producto</th>
-                        <th style="width:  60px">Existencias</th>
-                        <th style="width:  70px">Precio</th>
-                        <th style="width:  50px">Moneda</th>
-                        <th style="width:  30px">Ficha Técnica</th>
-                        <th style="width: 180px">Catálogo</th>
-                        <th style="width: 180px">Subcategoría</th>
-                        <th style="width:  70px">Tipo</th>
-                        <th style="width: 350px">Descripción en inglés</th>
-                    </tr>
-                </thead>
-                <tbody>	
+            <div class="mvst_list tblProdMaster">
+                <div class="row rowTop">
+                    <h1>Lista de precios</h1>
+                    <select id="txtCategoryList" class="topList"></select>
+                </div>
+                <table class="display compact nowrap"  id="tblPriceList">
+                    <thead>
+                        <tr>
+                            <th style="width:  10px"></th>
+                            <th style="width:  70px">SKU</th>
+                            <th style="width: 350px">Producto</th>
+                            <th style="width:  60px">Existencias</th>
+                            <th style="width:  70px">Precio</th>
+                            <th style="width:  50px">Moneda</th>
+                            <th style="width:  40px">Ficha<br>Técnica</th>
+                            <th style="width: 180px">Catálogo</th>
+                            <th style="width: 180px">Subcategoría</th>
+                            <th style="width:  70px">Tipo</th>
+                            <th style="width:  auto">Descripción en inglés</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
 
-                </tbody>
-
-            </table>
-</div>
+            </div>
+        </div>
+        <div class="deep_loading">
+            <div class="flash_loading"> Cargando datos...</div>
         </div>
     </div>
 </div>
