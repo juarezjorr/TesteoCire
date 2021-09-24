@@ -855,7 +855,7 @@ function getInfoComunByID(idDocument, productoComun, cantidadSKU, idproducto) {
                         $('#checkRentAccesories').prop('checked', false);
                     }
 
-                    if (respuesta[0].prd_assured == 1) {
+                    if (respuesta[0].prd_insured == 1) {
                         $('#checkAplicaSeguro').prop('checked', true);
                     } else {
                         $('#checkAplicaSeguro').prop('checked', false);

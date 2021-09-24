@@ -19,6 +19,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 blocks">
                         
                         <div class="  block_01-02">
+                        <span class="titleSection">Proyectos</span>
                             <table class="table_information">
                                 <tr>
                                     <td class="concepto"><b>Numero de proyecto</b></td>
@@ -75,11 +76,12 @@
                                     <td class="enlace"></td>
                                 </tr>
                             </table>
-                            <button class="btn-add right" id="addProject"> + Agregar proyecto</button>
+                            <!-- <button class="btn-add right" id="addProject"> + Agregar proyecto</button> -->
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 blocks">
                         <div class="  block_01-01 ">
+                        <span class="titleSection">&nbsp;</span>
                             <table class="table_information">
                                 <tr>
                                     <td class="concepto">Nombre del Cliente</td>
@@ -144,11 +146,11 @@
             </div>
             <div class="block_02">
                 <div class="blocks">
-                    <button class="btn-add" id="newQuote"> + nueva cotización</button>
+                    <button class="btn-add" id="newQuote"></button>
                 </div>
                 <hr>
                 <div class="blocks">
-                    <div class="half left concepto">cotización base</div>
+                    <div class="half left concepto">Costo base</div>
                     <div class="half right dato" id="costbase">0</div>
                 </div>
                 <div class="blocks">
@@ -169,11 +171,11 @@
                     <div class="half right total dato" id="total">0</div>
                 </div>
                 
-                <div class="blocks">
+                <!-- <div class="blocks">
                     <div class="full text_center">
-                        <button class="bn disable" id="addBudget"> aceptar cotización</button>
+                        <button class="bn disable" id="addBudget">Aplicar cambios</button>
                     </div>
-                </div>
+                </div> -->
                 <hr>
                 <div class="blocks" id="versions">
 

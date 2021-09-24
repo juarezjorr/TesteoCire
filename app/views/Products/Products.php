@@ -55,7 +55,7 @@
     <div class="overlay_background overlay_hide"id="SerieModal">
         <div class="overlay_modal">
             <div class="overlay_closer"><span class="title"></span><span class="btn_close">Cerrar</span></div>
-            <table class="display compact nowrap"  id="tblSerialList">
+            <table class="display compact nowrap"  id="tblSerie">
                 <thead>
                     <tr>
                         <th style="width:  30px"></th>
@@ -179,7 +179,7 @@
                         <td class="concept"><span class="reqsign">&nbsp;</span> Seguro:</td>
                         <td class="data">
                             
-                            <div id="txtPrdAssured"  class="checkbox"><i class="far fa-square"></i> <i class="fas fa-check-square"></i></div>
+                            <div id="txtPrdInsured"  class="checkbox"><i class="far fa-square"></i> <i class="fas fa-check-square"></i></div>
                             <span class="fail_note hide"></span>
                             <span class="intructions">Indica si aplica seguro en la cotización</span>
                         </td>
@@ -333,6 +333,37 @@
         </div>
     </div>
 <!-- End Ventana modal ELIMINA PRODUCTO -->
+
+
+
+<!-- Start Ventana modal ELIMINA SERIE -->
+<div class="modal fade" id="delSerieModal" tabindex="-1" aria-labelledby="BorrarPerfilLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                <div class="modal-header ">
+                </div>
+                <div class="modal-body" style="padding: 0px !important;">
+
+
+                <div class="row">
+                    <input type="hidden" class="form-control" id="txtIdSerie" aria-describedby="basic-addon3">
+                    <div class="col-12 text-center">
+                        <span class="modal-title text-center" style="font-size: 1.2rem;" id="BorrarPerfilLabel">¿Seguro que desea borrarlo?</span>
+                    </div>
+                </div>
+
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-danger" id="btnDelSerie">Borrar</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+<!-- End Ventana modal ELIMINA SERIE -->
+
+
+
 
 <script src="<?=  PATH_ASSETS . 'lib/functions.js' ?>"></script>
 <script src="<?=  PATH_VIEWS . 'Products/Products.js' ?>"></script>

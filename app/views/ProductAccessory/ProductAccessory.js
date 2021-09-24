@@ -53,6 +53,7 @@ function setting_table_product() {
 function setting_table_accesorys() {
     $('#tblProducts').DataTable({
         order: [[1, 'asc']],
+        pageLength: 1000,
         dom: 'Brti',
         buttons: [
             {

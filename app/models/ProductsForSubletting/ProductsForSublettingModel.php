@@ -42,7 +42,7 @@ class ProductsForSublettingModel extends Model
 // Listado de Almacenes
     public function listStores()
     {
-        $qry = "SELECT str_id, str_name FROM ctt_stores WHERE str_type = 'estaticos' AND str_status = 1;";
+        $qry = "SELECT str_id, str_name FROM ctt_stores WHERE str_type = 'ESTATICOS' AND str_status = 1;";
         return $this->db->query($qry);
     }
 

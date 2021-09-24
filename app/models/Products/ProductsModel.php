@@ -77,7 +77,7 @@ public function listInvoice()
                         WHEN p.prd_level = 'P' THEN  ifnull(sum(sp.stp_quantity),0)
                         ELSE 0 
                     END AS quantity, 
-                    p.prd_price, cn.cin_code AS prd_coin_type,  p.prd_english_name, p.prd_level, IFNULL(dc.doc_id, 0) AS doc_id, ct.cat_id,
+                    p.prd_price, cn.cin_code AS prd_coin_type,  p.prd_english_name, p.prd_level, IFNULL(dt.doc_id, 0) AS doc_id, dt.doc_name, ct.cat_id,
                     sv.srv_name, p.prd_comments
                 FROM  ctt_products AS p
                 INNER JOIN ctt_subcategories        AS sc ON sc.sbc_id = p.sbc_id   AND sc.sbc_status = 1
@@ -86,7 +86,8 @@ public function listInvoice()
                 LEFT JOIN ctt_series                AS sr ON sr.prd_id = p.prd_id
                 LEFT JOIN ctt_stores_products       AS sp ON sp.ser_id = sr.ser_id
                 LEFT JOIN ctt_coins                 AS cn ON cn.cin_id = p.cin_id
-                LEFT JOIN ctt_products_documents    AS dc ON dc.prd_id = p.prd_id   AND dc.dcp_source = 'P'
+                LEFT JOIN ctt_products_documents    AS dc ON dc.prd_id = p.prd_id 
+                LEFT JOIN ctt_documents 			AS dt ON dt.doc_id = dc.doc_id AND dt.dot_id = 2  
                 WHERE prd_status = 1 AND p.prd_level IN ('A', 'P') AND ct.cat_id = $catId
                 GROUP BY p.prd_id, p.prd_sku, p.prd_name, ct.cat_name, sc.sbc_name, sv.srv_name, p.prd_price, p.prd_coin_type, p.prd_english_name 
                 ORDER BY p.prd_sku ;";
@@ -109,6 +110,7 @@ public function listInvoice()
                     , se.ser_comments
                     , pd.prd_sku 
                     , pd.prd_name
+                    , pd.prd_id
                     , sp.stp_quantity
                     , st.str_name
                     , ifnull(dc.doc_id,0) AS doc_id
@@ -199,9 +201,8 @@ public function listInvoice()
                         prd_price           = '$prdPr',
                         prd_visibility      = '$prdVs',
                         prd_comments        = '$prdCm',
-                        prd_level           = '$prdLv',
                         prd_lonely          = '$prdLn',
-                        prd_assured         = '$prdAs',
+                        prd_insured         = '$prdAs',
                         sbc_id              = '$prdSb',
                         srv_id              = '$prdSv',
                         cin_id              = '$prdCn'
@@ -330,7 +331,7 @@ public function saveEdtSeries($params)
         $qry = "INSERT INTO ctt_products (
                     prd_sku, prd_name, prd_english_name, prd_code_provider, prd_name_provider, 
                     prd_model, prd_price, prd_visibility, prd_comments, prd_level, prd_lonely, 
-                    prd_assured, sbc_id, srv_id, cin_id, prd_status
+                    prd_insured, sbc_id, srv_id, cin_id, prd_status
                 ) VALUES (
                     '$prdSk', '$prdNm', '$prdEn', '$prdCd', '$prdNp', 
                     '$prdMd', '$prdPr', '$prdVs', '$prdCm', '$prdLv', '$prdLn', 
@@ -371,10 +372,37 @@ public function saveEdtSeries($params)
     {
 
         $prdId = $this->db->real_escape_string($params['prdId']);
-        $qry = " UPDATE ctt_products SET prd_status = '0' WHERE prd_id = $prdId; ";
+        $qry1 = "UPDATE ctt_products SET prd_status = '0' WHERE prd_id = $prdId; ";
+        $this->db->query($qry1);
         
-        $this->db->query($qry);
+        $qry2 = "UPDATE ctt_series SET ser_status = '0' WHERE prd_id = $prdId; ";
+        $this->db->query($qry2);
+
+        $qry3 = "UPDATE ctt_stores_products AS sp
+                INNER JOIN  ctt_series AS sr ON sr.ser_id = sp.ser_id
+                SET sp.stp_quantity = 0
+                WHERE sr.prd_id = $prdId; ";
+        $this->db->query($qry3);
+        
         return $prdId;
+
+    }
+
+    
+// Guarda nuevo producto
+    public function deleteSerie($params)
+    {
+
+        $serId = $this->db->real_escape_string($params['serId']);
+        $prdId = $this->db->real_escape_string($params['prdId']);
+
+        $qry1 = "UPDATE ctt_series SET ser_status = '0' WHERE ser_id = $serId;";
+        $this->db->query($qry1);
+
+        $qry2 = "UPDATE ctt_stores_products SET stp_quantity = 0 WHERE ser_id = $serId;";
+        $this->db->query($qry2);
+
+        return $serId.'|'.$prdId;
 
     }
 }

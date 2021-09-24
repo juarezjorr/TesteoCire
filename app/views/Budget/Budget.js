@@ -1,6 +1,7 @@
 let cust, proj, relc, vers, prod, disc, budg;
 
 $('document').ready(function () {
+    url = getAbsolutePath();
     verifica_usuario();
     inicial();
 });
@@ -20,7 +21,7 @@ function get_customers() {
     var par = `[{"prm":""}]`;
     var tipo = 'json';
     var selector = put_customers;
-    cahing_events('get_customers');
+    caching_events('get_customers');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -30,7 +31,7 @@ function get_projects() {
     var par = `[{"prm":""}]`;
     var tipo = 'json';
     var selector = put_projects;
-    cahing_events('get_projects');
+    caching_events('get_projects');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -40,7 +41,7 @@ function load_project_type() {
     var par = `[{"pjt":""}]`;
     var tipo = 'json';
     var selector = put_projects_type;
-    cahing_events('put_projects_type');
+    caching_events('put_projects_type');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -50,7 +51,7 @@ function get_rel_customers(cusId, cutId) {
     var par = `[{"cusId":"${cusId}", "cutId":"${cutId}"}]`;
     var tipo = 'json';
     var selector = put_rel_customers;
-    cahing_events('get_rel_customers');
+    caching_events('get_rel_customers');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -60,7 +61,7 @@ function get_customers_owner() {
     var par = `[{"cusId":"", "cutId":""}]`;
     var tipo = 'json';
     var selector = put_customers_owner;
-    cahing_events('get_customers_owner');
+    caching_events('get_customers_owner');
     fillField(pagina, par, tipo, selector);
 }
 /**  Obtiene los Id's de los proyectos relacionados con la seleccion del cliente */
@@ -69,7 +70,7 @@ function get_rel_projects(id, prn) {
     var par = `[{"cusId":"${id}"}]`;
     var tipo = 'json';
     var selector = put_rel_projects;
-    cahing_events('get_rel_projects');
+    caching_events('get_rel_projects');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -79,7 +80,7 @@ function get_version(pjtId) {
     var par = `[{"pjtId":"${pjtId}"}]`;
     var tipo = 'json';
     var selector = put_version;
-    cahing_events('get_version');
+    caching_events('get_version');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -93,7 +94,7 @@ function get_budgets() {
     var par = `[{"verId":"${vers}","dstr":"${dstr}","dend":"${dend}"}]`;
     var tipo = 'json';
     var selector = put_budgets;
-    cahing_events('get_budgets');
+    caching_events('get_budgets');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -103,7 +104,7 @@ function get_discounts() {
     var par = `[{"level":"1"}]`;
     var tipo = 'json';
     var selector = put_discounts;
-    cahing_events('get_discounts');
+    caching_events('get_discounts');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -113,7 +114,7 @@ function get_products(word, dstr, dend) {
     var par = `[{"word":"${word}","dstr":"${dstr}","dend":"${dend}"}]`;
     var tipo = 'json';
     var selector = put_products;
-    cahing_events('get_products');
+    caching_events('get_products');
     fillField(pagina, par, tipo, selector);
 }
 
@@ -123,13 +124,13 @@ function get_products_related(id, tp) {
     var par = `[{"prdId":"${id}","type":"${tp}"}]`;
     var tipo = 'json';
     var selector = put_products_related;
-    cahing_events('get_products');
+    caching_events('get_products');
     fillField(pagina, par, tipo, selector);
 }
 
 /**  Llena el listado de prductores */
 function put_customers(dt) {
-    cahing_events('put_customers');
+    caching_events('put_customers');
     cust = dt;
     $.each(cust, function (v, u) {
         let H = ` <li id="C${u.cus_id}" class="enable" data_content="${v}|${u.cut_name}">${u.cus_name}</li>`;
@@ -140,7 +141,7 @@ function put_customers(dt) {
 
 /**  Llena el listado de proyectos */
 function put_projects(dt) {
-    cahing_events('put_projects');
+    caching_events('put_projects');
     if (dt[0].pjt_id > 0) {
         proj = dt;
         $.each(proj, function (v, u) {
@@ -164,7 +165,7 @@ function put_projects_type(dt) {
 
 /**  Llena el listado de prductores */
 function put_rel_customers(dt) {
-    cahing_events('put_rel_customers');
+    caching_events('put_rel_customers');
     $('#Relation .list_items ul li').css({display: 'none'});
     $.each(dt, function (v, u) {
         $(`#R${u.cus_id}`).css({display: 'block'});
@@ -174,19 +175,19 @@ function put_rel_customers(dt) {
 
 /**  Llena el listado de prductores */
 function put_customers_owner(dt) {
-    cahing_events('put_customers_owner');
+    caching_events('put_customers_owner');
     relc = dt;
 }
 
 /**  Llena el listado de descuentos */
 function put_discounts(dt) {
-    cahing_events('put_discounts');
+    caching_events('put_discounts');
     disc = dt;
 }
 
 /**  Llena el listado de prductores */
 function put_rel_projects(dt) {
-    cahing_events('put_rel_projects');
+    caching_events('put_rel_projects');
     $('#Projects .list_items ul li').removeClass('enable').addClass('disable');
     $.each(dt, function (v, u) {
         $('#Projects .list_items ul li').each(function () {
@@ -201,7 +202,7 @@ function put_rel_projects(dt) {
 }
 /**  Llena el listado de versiones */
 function put_version(dt) {
-    cahing_events('put_version');
+    caching_events('put_version');
     let H = `
     <div class="full text_center">
         <h6>DOCUMENTOS</h6>
@@ -243,14 +244,12 @@ function put_version(dt) {
 
 /**  Llena el listado de cotizaciones */
 function put_budgets(dt) {
-    console.log(dt);
-    console.log(vers);
-    cahing_events('put_budgets');
+    budg = dt;
+    caching_events('put_budgets');
     let days = get_days_period();
     if (dt[0].bdg_id > 0) {
         $.each(dt, function (v, u) {
             let jsn = JSON.stringify(u);
-            budg = jsn;
             fill_budget_prods(jsn, days);
         });
     } else {
@@ -260,19 +259,19 @@ function put_budgets(dt) {
 
 /**  Llena el listado de productos */
 function put_products(dt) {
-    cahing_events('put_products');
+    caching_events('put_products');
     prod = dt;
     $.each(dt, function (v, u) {
         let level = '';
         switch (u.prd_level) {
             case 'A':
-                level = 'ACCESORIOS';
+                level = 'ACCESORIO';
                 break;
             case 'K':
-                level = 'PAQUETES';
+                level = 'PAQUETE';
                 break;
             case 'P':
-                level = 'PRODUCTOS';
+                level = 'PRODUCTO';
                 break;
             default:
         }
@@ -297,7 +296,7 @@ function put_products(dt) {
 
 /**  Activa los botones de acciones */
 function button_actions() {
-    cahing_events('button_actions');
+    caching_events('button_actions');
     $('#addProducer')
         .unbind('click')
         .on('click', function () {
@@ -409,7 +408,7 @@ function button_actions() {
 
 /** Coloca el boton de agregar nuevo producto en la tabla  */
 function add_boton() {
-    cahing_events('add_boton');
+    caching_events('add_boton');
     let H = `
     <tr>
         <td colspan="12">
@@ -465,7 +464,7 @@ function add_boton() {
 }
 
 function modal_products() {
-    cahing_events('modal_products');
+    caching_events('modal_products');
     $('.box_modal_deep').css({display: 'flex'});
     $('.box_modal').animate(
         {
@@ -478,7 +477,7 @@ function modal_products() {
 /** Selectores de items */
 /** Clientes */
 function select_customer() {
-    cahing_events('select_customer');
+    caching_events('select_customer');
     $('#Customer .list_items ul li.enable')
         .unbind('click')
         .on('click', function () {
@@ -512,7 +511,7 @@ function select_customer() {
 }
 /** Relacion */
 function select_relation() {
-    cahing_events('select_relation');
+    caching_events('select_relation');
     $('#Relation .list_items li')
         .unbind('click')
         .on('click', function () {
@@ -530,7 +529,7 @@ function select_relation() {
 
 /** Proyectos */
 function selector_projects() {
-    cahing_events('selector_projects');
+    caching_events('selector_projects');
     $('#Projects .list_items ul li')
         .unbind('click')
         .on('click', function () {
@@ -569,7 +568,7 @@ function selector_projects() {
 }
 /**  +++++   Arma el escenario de la cotizacion  */
 function fill_dinamic_table() {
-    cahing_events('fill_dinamic_table');
+    caching_events('fill_dinamic_table');
     let H = `
     
     <table class="table_control" id="tblControl" style="width: 1310px;">
@@ -686,8 +685,6 @@ function build_menu_control() {
             <li class="menu_version" data_content=""></li>
             <li class="menu_button" id="mkproj"><i class="fas fa-upload"></i> Hacer proyecto</li>
             <li class="menu_button" id="printr"><i class="fas fa-print"></i> Imprimir</li>
-            <li class="menu_button" id="expexl"><i class="fas fa-file-excel"></i> Exportar Excel</li>
-            <li class="menu_button" id="exppdf"><i class="fas fa-file-pdf"></i> Exportar PDF</li>
         </ul>
         `;
     $('.menu_control').html(H);
@@ -696,11 +693,11 @@ function build_menu_control() {
         let acc = $(this).attr('id');
         switch (acc) {
             case 'mkproj':
-                // alert('Convertir Cotizacion a proyecto');
                 make_project();
                 break;
             case 'printr':
-                alert('Imprimir cotización');
+                getListBudget();
+                // alert('Imprimir cotización');
                 break;
             case 'expexl':
                 alert('Exportar cotizacion a Excel');
@@ -713,10 +710,24 @@ function build_menu_control() {
     });
 }
 
+function getListBudget() {
+    let projectId = $('#IdProject').val();
+    let versionId = $('.menu_version').attr('data_content');
+    console.log(projectId, versionId);
+    var pagina = 'Budget/saveBudgetList';
+    var par = `[{"verId":"${versionId}"}]`;
+    var tipo = 'html';
+    var selector = printBudget;
+    fillField(pagina, par, tipo, selector);
+}
+function printBudget(dt) {
+    window.open(url + 'app/views/Budget/BudgetReport.php?u=' + dt, '_blank');
+}
+
 /** Limpiadores de campos */
 /** Limpia proyectos */
 function clean_projects_field() {
-    cahing_events('clean_projects_field');
+    caching_events('clean_projects_field');
     $('#Projects .grouper').html('');
     $('#LocationProject').html('');
     $('#PeriodProject').html('');
@@ -744,7 +755,7 @@ function clean_projects_field() {
 }
 /** Limpia clientes */
 function clean_customer_field() {
-    cahing_events('clean_customer_field');
+    caching_events('clean_customer_field');
     $('#Customer .grouper').html('');
     $('#Customer .grouper').attr('data_identy', '');
     $('#Relation .grouper').html('');
@@ -759,7 +770,7 @@ function clean_customer_field() {
 
 /** Actualiza los totales */
 function update_totals() {
-    cahing_events('update_totals');
+    caching_events('update_totals');
     let costbase = 0,
         costtrip = 0,
         costtest = 0;
@@ -776,7 +787,7 @@ function update_totals() {
             destr = parseInt($(this).children('td.destrip').text());
             dayts = parseInt($(this).children('td.daytest').text());
             dests = parseInt($(this).children('td.destest').text());
-            assur = parseFloat($(this).attr('data_assured'));
+            assur = parseFloat($(this).attr('data_insured'));
 
             qtyst = parseInt(pure_num($(this).children('td.qtybase').attr('data_quantity')));
 
@@ -848,7 +859,7 @@ function sel_items(res, sele) {
 
 /**  ++++++  Guarda la nueva version */
 function save_version() {
-    cahing_events('save_version');
+    caching_events('save_version');
     let bdgSku = 0;
     let pjtId = $('#IdProject').val();
     let verCode = $('#version').text();
@@ -874,7 +885,7 @@ function save_version() {
 
 /**  +++++++ Guarda la cotización    */
 function save_budget(verId) {
-    cahing_events('save_budget');
+    caching_events('save_budget');
     console.log('Guardando Cotizacion');
 
     $('.frame_content #tblControl tbody tr').each(function (v) {
@@ -882,6 +893,7 @@ function save_budget(verId) {
         if (tr.attr('id') != undefined) {
             let prdId = tr.attr('id').substring(3, 10);
             let bdgSku = tr.attr('data_sku');
+            let bdgLevel = tr.attr('data_level');
             let bdgProduct = tr.children('td.product').text().replace(/\"/g, '°');
             let bdgQuantity = tr.children('td.qtybase').text().replace(/,/g, '');
             let bdgPriceBase = tr.children('td.prcbase').text().replace(/,/g, '');
@@ -891,13 +903,14 @@ function save_budget(verId) {
             let bdgDesTrip = parseFloat(tr.children('td.destrip').text()) / 100;
             let bdgDayTest = tr.children('td.daytest').text().replace(/,/g, '');
             let bdgDesTest = parseFloat(tr.children('td.destest').text()) / 100;
-            let bdgInsured = tr.attr('data_assured');
+            let bdgInsured = tr.attr('data_insured');
             let pjtId = $('#IdProject').val();
 
             if (bdgSku != undefined) {
                 let par = `
                 [{
                     "bdgSku"          : "${bdgSku}",
+                    "bdgLevel"        : "${bdgLevel}",
                     "bdgProduc"       : "${bdgProduct}",
                     "bdgPricBs"       : "${bdgPriceBase}",
                     "bdgQtysBs"       : "${bdgQuantity}",
@@ -923,20 +936,20 @@ function save_budget(verId) {
 }
 
 function resp_budget(dt) {
-    cahing_events('resp_budget');
+    caching_events('resp_budget');
     $('#P' + dt).trigger('click');
 }
 
 /**  +++++ Guarda el producto en la cotización +++++ */
 function fill_budget(pr, vr, ix) {
-    cahing_events('fill_budget');
+    caching_events('fill_budget');
     // console.log(pr);
     // console.log(vr);
     // console.log(ix);
 
     $('#Products .sel_product').text('');
 
-    let insurance = pr.prd_assured == 0 ? 0 : 0.1;
+    let insurance = pr.prd_insured == 0 ? 0 : 0.1;
 
     var par = `
     [{
@@ -957,9 +970,9 @@ function fill_budget(pr, vr, ix) {
 
 /**   ++++++  Arma los elementos para agregar ala cotización */
 function load_budget(inx, bdgId) {
-    cahing_events('load_budget');
+    caching_events('load_budget');
 
-    let insurance = prod[inx].prd_assured == 0 ? 0 : 0.1;
+    let insurance = prod[inx].prd_insured == 0 ? 0 : 0.1;
     let produ = prod[inx].prd_name.replace(/\"/g, '°');
     let days = get_days_period();
 
@@ -1009,11 +1022,10 @@ function registered_product(id) {
 
 /** ++++++ Llena la tabla de cotizaciones */
 function fill_budget_prods(pd, days) {
-    cahing_events('fill_budget_prods');
+    caching_events('fill_budget_prods');
     let pds = JSON.parse(pd);
-
     let H = `
-    <tr id="bdg${pds.prd_id}" class="bdg${pds.prd_id}" data_sku="${pds.bdg_prod_sku}" data_assured="${pds.bdg_insured}" data_level="${pds.bdg_prod_level}">
+    <tr id="bdg${pds.prd_id}" class="bdg${pds.prd_id}" data_sku="${pds.bdg_prod_sku}" data_insured="${pds.bdg_insured}" data_level="${pds.bdg_prod_level}">
         <td class="w1 product"><i class="fas fa-ellipsis-v"></i>${pds.bdg_prod_name.replace(/°/g, '"')}<i class="fas fa-bars minimenu"></i></td>
         <td class="w2 zone_01 quantity qtybase" data_quantity="${pds.bdg_stock}" contenteditable="true">${pds.bdg_quantity}</td>
         <td class="w3 zone_01 price prcbase">${mkn(pds.bdg_prod_price, 'n')}</td>
@@ -1137,7 +1149,7 @@ function kill_product(id) {
 }
 
 function show_info_product(id, lvl) {
-    cahing_events('add_client');
+    caching_events('add_client');
     $('.box_modal_deep').css({display: 'flex'});
     $('.box_modal').animate(
         {
@@ -1178,7 +1190,6 @@ function show_info_product(id, lvl) {
 }
 /**  Llena el listado de relacionados al prducto */
 function put_products_related(dt) {
-    console.log(dt);
     let name = '',
         titcol = '';
     switch (dt[0].prd_level) {
@@ -1221,7 +1232,7 @@ function hide_control_menu(prm) {
 
 /**  Agrega nuevo cliente */
 function add_client() {
-    cahing_events('add_client');
+    caching_events('add_client');
     $('.box_modal_deep').css({display: 'flex'});
     $('.box_modal').animate(
         {
@@ -1291,7 +1302,7 @@ function add_client() {
 
 /**  Coloca los datos del cliente del formulario en la cotización */
 function save_costumer() {
-    cahing_events('save_costumer');
+    caching_events('save_costumer');
     let CustomerName = $('#txtCustomerName').val();
     let CustomerContact = $('#txtCustomerContact').val();
     let CustomerAddress = $('#txtCustomerAddress').val();
@@ -1320,7 +1331,7 @@ function save_costumer() {
 
 /**  Agrega nuevo proyecto */
 function add_project() {
-    cahing_events('add_project');
+    caching_events('add_project');
     $('.box_modal_deep').css({display: 'flex'});
     $('.box_modal').animate(
         {
@@ -1479,7 +1490,7 @@ function add_project() {
 
 /**  Coloca los datos del proyecto del formulario en la cotización */
 function save_project() {
-    cahing_events('save_project');
+    caching_events('save_project');
     let projName = $('#txtProject').val();
     let projLocation = $('#txtLocation').val();
     let projLocationTypeValue = $('#txtTypeLocation option:selected').val();
@@ -1532,7 +1543,7 @@ function save_project() {
 
 /**  ++++++ Inicia la carga de proyectos */
 function load_project(dt) {
-    cahing_events('load_project');
+    caching_events('load_project');
     $('#Projects .list_items ul').html('');
     get_projects();
 
@@ -1543,7 +1554,7 @@ function load_project(dt) {
 
 /**  Cierra la ventana del modal */
 function close_modal() {
-    cahing_events('close_modal');
+    caching_events('close_modal');
     $('.box_modal').animate(
         {
             top: '120%',
@@ -1659,15 +1670,16 @@ function mkn(cf, tp) {
 }
 
 /**  +++++ Cachando eventos   */
-function cahing_events(ev) {
+function caching_events(ev) {
     //console.log(ev);
 }
+/**  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/**  +++++ Convierte la cotizacion en un proyecto                                */
+/**  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
-/**  +++++ Convierte la cotizacion en un proyecto  */
 function make_project() {
     let projectId = $('#IdProject').val();
     let versionId = $('.menu_version').attr('data_content');
-    console.log(projectId, versionId);
     promote_project();
 }
 
@@ -1685,8 +1697,6 @@ function get_budgets_promote() {
             }
         }
     });
-
-    console.log(par);
 }
 
 function promote_project() {
@@ -1695,34 +1705,42 @@ function promote_project() {
     var par = `[{"pjtId":"${projectId}"}]`;
     var tipo = 'html';
     var selector = show_promote_project;
-    cahing_events('promote_project');
+    caching_events('promote_project');
     fillField(pagina, par, tipo, selector);
 }
 
 function show_promote_project(dt) {
-    console.log(dt);
     let versionId = $('.menu_version').attr('data_content');
     var pagina = 'Budget/PromoteVersion';
     var par = `[{"verId":"${versionId}","pjtId":"${dt}"}]`;
     var tipo = 'html';
     var selector = show_promote_version;
-    cahing_events('promote_version');
+    caching_events('promote_version');
     fillField(pagina, par, tipo, selector);
 }
 
 function show_promote_version(dt) {
-    console.log(dt);
-
     let pjtId = dt.split('|')[0];
     let verId = dt.split('|')[1];
 
     $('#P' + pjtId).remove();
     clean_projects_field();
     clean_customer_field();
+    show_promote_budget(dt);
 }
 
 function show_promote_budget(dt) {
-    console.log(dt);
     let pjtId = dt.split('|')[0];
     let verId = dt.split('|')[1];
+
+    var pagina = 'Budget/ProcessProjectProduct';
+    var par = `[{"verId":"${verId}", "pjtId":"${pjtId}"}]`;
+    var tipo = 'html';
+    var selector = show_result;
+    caching_events('promote_version');
+    fillField(pagina, par, tipo, selector);
+}
+
+function show_result(dt) {
+    console.log(dt);
 }

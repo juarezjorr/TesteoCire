@@ -107,13 +107,31 @@ public function listProjectsType($params)
         $dstr = $this->db->real_escape_string($params['dstr']);
         $dend = $this->db->real_escape_string($params['dend']);
 
-        $qry = "SELECT pd.*, (
-                    SELECT ifnull(SUM(stp_quantity),0) FROM ctt_series AS sr 
-                    INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id 
-                    WHERE prd_id = pd.prd_id
-                    AND (ser_reserve_end < '$dstr' OR ser_reserve_end IS NULL
-                    AND ser_reserve_start > '$dend'  OR ser_reserve_start  IS NULL )) AS bdg_stock
-                FROM ctt_budget as pd WHERE ver_id = $verId ORDER BY bdg_prod_name ASC;";
+        $qry = "SELECT bg.*, pj.pjt_id, 
+                    date_format(pj.pjt_date_start, '%Y%m%d') AS pjt_date_start, 
+                    date_format(pj.pjt_date_end, '%Y%m%d') AS pjt_date_end, 
+                    CASE 
+                        WHEN bdg_prod_level ='K' THEN 
+                            (SELECT count(*) FROM ctt_products_packages WHERE prd_parent = bg.prd_id)
+                        WHEN bdg_prod_level ='P' THEN 
+                            (SELECT ifnull(SUM(stp_quantity),0) FROM ctt_series AS sr 
+                            INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id 
+                            WHERE prd_id =  bg.prd_id
+                            AND (ser_reserve_end < '$dstr' OR ser_reserve_end IS NULL
+                            AND ser_reserve_start > '$dend'  OR ser_reserve_start IS NULL) AND sr.ser_status = 1
+                            )
+                        ELSE 
+                            (SELECT ifnull(SUM(stp_quantity),0) FROM ctt_series AS sr 
+                            INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id 
+                            WHERE prd_id =  bg.prd_id
+                            AND (ser_reserve_end < '$dstr' OR ser_reserve_end IS NULL
+                            AND ser_reserve_start > '$dend'  OR ser_reserve_start IS NULL) AND sr.ser_status = 1
+                            )
+                        END AS bdg_stock
+                FROM ctt_budget AS bg
+                INNER JOIN ctt_version AS vr ON vr.ver_id = bg.ver_id
+                INNER JOIN ctt_projects AS pj ON pj.pjt_id = vr.pjt_id
+                WHERE bg.ver_id = $verId ORDER BY bdg_prod_name ASC;";
         return $this->db->query($qry);
     }    
 
@@ -135,15 +153,29 @@ public function listDiscounts($params)
         $dstr = $this->db->real_escape_string($params['dstr']);
         $dend = $this->db->real_escape_string($params['dend']);
 
-        $qry = "SELECT pd.prd_id, pd.prd_sku, pd.prd_name, pd.prd_price, pd.prd_level, pd.prd_assured, ( 
-                    SELECT ifnull(SUM(stp_quantity),0) FROM ctt_series AS sr 
-                    INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id 
-                    WHERE prd_id = pd.prd_id
-                    AND (ser_reserve_end < '$dstr' OR ser_reserve_end IS NULL
-                    AND ser_reserve_start > '$dend'  OR ser_reserve_start IS NULL )) AS stock
-                FROM ctt_products AS pd
-                WHERE pd.prd_status = 1 AND upper(pd.prd_name) LIKE '%$word%' OR upper(pd.prd_sku) LIKE '%$word%'
-                ORDER BY pd.prd_name ;";
+        $qry = "SELECT pd.prd_id, pd.prd_sku, pd.prd_name, pd.prd_price, pd.prd_level, pd.prd_insured, 
+                CASE 
+                    WHEN prd_level ='K' THEN 
+                        (SELECT count(*) FROM ctt_products_packages WHERE prd_parent = pd.prd_id)
+                    WHEN prd_level ='P' THEN 
+                        (SELECT ifnull(SUM(stp_quantity),0) FROM ctt_series AS sr 
+                        INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id 
+                        WHERE prd_id =  pd.prd_id
+                        AND (ser_reserve_end < '$dstr' OR ser_reserve_end IS NULL
+                        AND ser_reserve_start > '$dend'  OR ser_reserve_start IS NULL) AND sr.ser_status = 1
+                        )
+                    ELSE 
+                        (SELECT ifnull(SUM(stp_quantity),0) FROM ctt_series AS sr 
+                        INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id 
+                        WHERE prd_id =  pd.prd_id
+                        AND (ser_reserve_end < '$dstr' OR ser_reserve_end IS NULL
+                        AND ser_reserve_start > '$dend'  OR ser_reserve_start IS NULL) AND sr.ser_status = 1
+                        )
+                    END AS stock
+            FROM ctt_products AS pd
+            WHERE pd.prd_status = 1 AND pd.prd_visibility = 1 
+                AND upper(pd.prd_name) LIKE '%$word%' OR upper(pd.prd_sku) LIKE '%$word%'
+            ORDER BY pd.prd_name ;";
         return $this->db->query($qry);
     } 
 
@@ -213,6 +245,7 @@ public function listProductsRelated($params)
     {
 
         $bdg_prod_sku           = $params['bdgSku'];
+        $bdg_prod_level         = $params['bdgLevel'];
         $bdg_prod_name          = str_replace('°','"',$params['bdgProduc']);
         $bdg_prod_price         = $params['bdgPricBs'];
         $bdg_quantity           = $params['bdgQtysBs'];
@@ -229,9 +262,9 @@ public function listProductsRelated($params)
 
 
         $qry = "INSERT INTO 
-                    ctt_budget (bdg_prod_sku, bdg_prod_name, bdg_prod_price, bdg_quantity, bdg_days_base, bdg_discount_base, bdg_days_trip, bdg_discount_trip, bdg_days_test, bdg_discount_test,bdg_insured, ver_id, prd_id ) 
+                    ctt_budget (bdg_prod_sku, bdg_prod_name, bdg_prod_price, bdg_prod_level, bdg_quantity, bdg_days_base, bdg_discount_base, bdg_days_trip, bdg_discount_trip, bdg_days_test, bdg_discount_test,bdg_insured, ver_id, prd_id ) 
                 VALUES
-                    ('$bdg_prod_sku','$bdg_prod_name','$bdg_prod_price','$bdg_quantity','$bdg_days_base','$bdg_discount_base','$bdg_days_trip','$bdg_discount_trip','$bdg_days_test','$bdg_discount_test','$bdg_insured','$ver_id','$prd_id');
+                    ('$bdg_prod_sku','$bdg_prod_name','$bdg_prod_price', '$bdg_prod_level','$bdg_quantity','$bdg_days_base','$bdg_discount_base','$bdg_days_trip','$bdg_discount_trip','$bdg_days_test','$bdg_discount_test','$bdg_insured','$ver_id','$prd_id');
                 ";
             $this->db->query($qry);
             $result = $this->db->insert_id;
@@ -285,7 +318,25 @@ public function listProductsRelated($params)
 
     }
 
-    
+
+// Promueve proyecto
+public function saveBudgetList($params)
+{
+    $verId = $this->db->real_escape_string($params['verId']);
+    $qry = "SELECT *, ucase(date_format(vr.ver_date, '%d-%b-%Y %H:%i')) as ver_date_real,
+                CONCAT_WS(' - ' , date_format(pj.pjt_date_start, '%d-%b-%Y'), date_format(pj.pjt_date_end, '%d-%b-%Y')) as period
+            FROM ctt_budget AS bg
+            INNER JOIN ctt_version AS vr ON vr.ver_id = bg.ver_id
+            INNER JOIN ctt_projects AS pj ON pj.pjt_id = vr.pjt_id
+            INNER JOIN ctt_projects_type AS pt ON pt.pjttp_id = pj.pjttp_id
+            INNER JOIN ctt_location AS lc ON lc.loc_id = pj.loc_id
+            INNER JOIN ctt_products AS pd ON pd.prd_id = bg.prd_id
+            INNER JOIN ctt_customers_owner AS co ON co.cuo_id = pj.cuo_id
+            INNER JOIN ctt_customers AS cu ON cu.cus_id = co.cus_id
+            WHERE bg.ver_id =  $verId;";
+    return $this->db->query($qry);
+}
+
 
 // Promueve proyecto
     public function PromoteProject($params)
@@ -298,36 +349,132 @@ public function listProductsRelated($params)
 
     }
 
-    
+
+
 
 
 // Promueve la version de proyecto
     public function PromoteVersion($params)
     {
-        $pjtId                  = $this->db->real_escape_string($params['pjtId']);
-        $verId                  = $this->db->real_escape_string($params['verId']);
+        $pjtId         = $this->db->real_escape_string($params['pjtId']);
+        $verId         = $this->db->real_escape_string($params['verId']);
 
         $qry = "UPDATE ctt_version SET ver_status = 'P' WHERE ver_id = $verId;";
         $this->db->query($qry);
 
-
-        $qry01 = "SELECT * FROM ctt_budget WHERE ver_id = $verId;";
-        $bdgItems = $this->db->query($qry01);
-        $i = 0;
-        while($row = $bdgItems->fetch_assoc()){
-           
-        }
-
-
-
-
-
-
-
         return $pjtId.'|'. $verId;
-
     }
 
+// Promueve la version de proyecto
+    public function SaveProjectContent($params){
 
+        $verId        = $this->db->real_escape_string($params['verId']);
+
+        $qry = "INSERT INTO ctt_projects_content (
+                    pjtcn_prod_sku, pjtcn_prod_name, pjtcn_prod_price, pjtcn_prod_level, pjtcn_quantity, 
+                    pjtcn_days_base, pjtcn_discount_base, pjtcn_days_trip, pjtcn_discount_trip, 
+                    pjtcn_days_test, pjtcn_discount_test, pjtcn_insured,  ver_id, prd_id, pjt_id
+                )
+                SELECT 
+                    bg.bdg_prod_sku, bg.bdg_prod_name, bg.bdg_prod_price, bg.bdg_prod_level, bg.bdg_quantity,  
+                    bg.bdg_days_base, bg.bdg_discount_base, bg.bdg_days_trip, bg.bdg_discount_trip,
+                    bg.bdg_days_test, bg.bdg_discount_test, bg.bdg_insured, bg.ver_id, bg.prd_id, vr.pjt_id 
+                FROM ctt_budget AS bg
+                INNER JOIN ctt_version AS vr ON vr.ver_id = bg.ver_id
+                WHERE bg.ver_id = $verId;";
+        return $this->db->query($qry);
+    }
+
+    
+// Obtiene la version de proyecto
+    public function GetProjectContent($params)
+    {
+        $pjtId        = $this->db->real_escape_string($params['pjtId']);
+        $verId        = $this->db->real_escape_string($params['verId']);
+
+        $qry = "SELECT * 
+                FROM ctt_projects_content AS pc
+                INNER JOIN ctt_version AS vr ON vr.ver_id = pc.ver_id
+                INNER JOIN ctt_projects AS pj ON pj.pjt_id = vr.pjt_id
+                INNER JOIN ctt_products AS pd ON pd.prd_id = pc.prd_id
+                WHERE pc.ver_id = $verId;";
+        return $this->db->query($qry);
+    }
+
+    public function SettingSeries($params)
+    {
+        $prodId        = $this->db->real_escape_string($params['prodId']);
+        $pjetId        = $this->db->real_escape_string($params['pjetId']);
+        $dtinic        = $this->db->real_escape_string($params['dtinic']);
+        $dtfinl        = $this->db->real_escape_string($params['dtfinl']);
+        $bdgsku        = $this->db->real_escape_string($params['bdgsku']);
+        $bdgnme        = $this->db->real_escape_string($params['bdgnme']);
+        $bdgprc        = $this->db->real_escape_string($params['bdgprc']);
+        $bdglvl        = $this->db->real_escape_string($params['bdglvl']);
+        $bdgqty        = $this->db->real_escape_string($params['bdgqty']);
+        $dybase        = $this->db->real_escape_string($params['dybase']);
+        $dsbase        = $this->db->real_escape_string($params['dsbase']);
+        $dytrip        = $this->db->real_escape_string($params['dytrip']);
+        $dstrip        = $this->db->real_escape_string($params['dstrip']);
+        $dytest        = $this->db->real_escape_string($params['dytest']);
+        $dstest        = $this->db->real_escape_string($params['dstest']);
+        $bdgIns        = $this->db->real_escape_string($params['bdgIns']);
+        $versId        = $this->db->real_escape_string($params['versId']);
+
+        $qry = "SELECT ser_id, ser_sku FROM ctt_series WHERE prd_id = $prodId 
+                AND ser_reserve_start is null AND ser_reserve_end is null
+                ORDER BY ser_reserve_count asc LIMIT 1;";
+        $result =  $this->db->query($qry);
+        
+        $series = $result->fetch_object();
+        if ($series != null){
+            $serie  = $series->ser_id; 
+            $sersku  = $series->ser_sku; 
+
+            $qry1 = "UPDATE ctt_series 
+                        SET 
+                            ser_reserve_start = '$dtinic', 
+                            ser_reserve_end   = '$dtfinl', 
+                            ser_reserve_count = ser_reserve_count + 1, 
+                            pjtdt_id = $pjetId WHERE ser_id = $serie;";
+            $this->db->query($qry1);
+
+        }else {
+            $serie  = null; 
+            $sersku  = 'Pendiente' ;
+        }
+
+        
+        $qry2 = "INSERT INTO ctt_projects_detail (
+            pjtdt_prod_sku, pjtdt_prod_name, pjtdt_prod_price, pjtdt_prod_level, pjtdt_quantity, pjtdt_days_base, pjtdt_discount_base, pjtdt_days_trip, 
+            pjtdt_discount_trip, pjtdt_days_test, pjtdt_discount_test, pjtdt_insured, ser_id, pjtcn_id
+        ) VALUES (
+            '$sersku', '$bdgnme', '$bdgprc', '$bdglvl', '$bdgqty', '$dybase', '$dsbase', '$dytrip', 
+            '$dstrip', '$dytest', '$dstest', '$bdgIns', '$serie',  '$pjetId'
+        );        ";
+
+        $this->db->query($qry2);
+        return  $serie;
+    }
+
+    public function GetAccesories($params)
+    {
+        $prodId        = $this->db->real_escape_string($params);
+        $qry = "SELECT pd.* FROM ctt_products AS pd
+                INNER JOIN ctt_accesories AS ac ON ac.prd_id = pd.prd_id 
+                WHERE ac.acr_parent = $prodId;";
+        return $this->db->query($qry);
+
+    }
+    public function GetProducts($params)
+    {
+        $prodId        = $this->db->real_escape_string($params);
+        $qry = "SELECT pd.* 
+                FROM ctt_products_packages AS pk 
+                INNER JOIN ctt_products AS pd ON pd.prd_id = pk.prd_id
+                WHERE  pk.prd_parent = $prodId;";
+        return $this->db->query($qry);
+
+    }
 
 }

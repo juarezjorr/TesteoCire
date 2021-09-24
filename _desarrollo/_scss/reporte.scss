@@ -1,0 +1,134 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    margin-bottom: 30px;
+
+    .cornisa {
+        overflow: hidden;
+        width: 100%;
+
+        .table-main {
+            width: 100%;
+
+            td {
+                vertical-align: top;
+            }
+        }
+
+        .box-logo {
+            width: 10mm;
+            img {
+                width: 10mm;
+            }
+        }
+        .box-data {
+            padding-left: 5mm;
+            .table-data {
+                width: 100%;
+
+                .concept {
+                    width: 40mm;
+                    font-size: 8pt;
+                    text-align: right;
+                    padding: 5px 5px;
+                    color: #666666;
+                }
+                .data {
+                    font-size: 8pt;
+                    font-weight: 700;
+                    text-align: left;
+                    padding: 5px 0;
+                    border-bottom: 1px dotted #999999;
+                }
+            }
+        }
+        .box-address {
+            text-align: right;
+            width: 60mm;
+            .table-address {
+                
+                border-collapse: collapse;
+
+                .addData {
+                    text-align: right;
+                    padding-right: 10px;
+                    font-size: 10px;
+                    width: 100%;
+                    color: #999999;
+                }
+
+                .addIcon {
+                    width: 30px;
+                    height: 25px;
+                    padding: 7px;
+                }
+
+                .addColor01 {
+                    background-color: #8dd8f8;
+                }
+                .addColor02 {
+                    background-color: #16c1f3;
+                }
+                .addColor03 {
+                    background-color: #00aeee;
+                }
+            }
+        }
+    }
+}
+
+section {
+    .listing {
+        width: 100%;
+        // padding: 10px 0;
+
+        .tabla-content {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+
+            thead {
+                tr {
+                    th {
+                        padding: 6px;
+                        border-top: 3px solid #000000;
+                        border-bottom: 3px solid #000000;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        vertical-align: middle;
+                        border-bottom: 1px dotted #999999;
+                        padding: 6px;
+                    }
+                    &:last-child > td {
+                        border-bottom: 3px solid #000000;
+                    }
+                    .check-box {
+                        width: 10mm;
+                        height: 10mm;
+                        border: 3px solid #000000;
+                        border-radius: 3px;
+                    }
+                }
+            }
+        }
+    }
+
+    .comments {
+        padding: 20px 0;
+    }
+}
+footer {
+    border-top: 1px solid #999999;
+
+    table {
+        font-size: 9px;
+        color: #999999;
+    }
+}
+

@@ -262,5 +262,15 @@ public function saveEdtSeries($request_params)
 
 
 	
+// Borra una serie seleccionada
+public function deleteSerie($request_params)
+{
+	$params =  $this->session->get('user');
+	$result = $this->model->deleteSerie($request_params);
+	$res = $result ;
+	echo $res;
+}
+
+	
 
 }

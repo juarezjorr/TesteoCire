@@ -34,6 +34,7 @@ h4 {
 	font-size: 1.3rem;
 }
 
+
 .bg-dark {
 	background-color: $dark !important;
 }
@@ -373,7 +374,7 @@ table {
 		}
 	}
 	td {
-		padding: 3px 4px !important;
+		padding: 0 4px;
 		i {
 			margin: 1px 6px;
 			cursor: pointer;

@@ -197,7 +197,7 @@ function putProducts(dt) {
         var catId = dt[0].cat_id;
         $.each(dt, function (v, u) {
             pack = u.prd_level == 'K' ? 'fas' : 'far';
-            let docInvo = `<span class="invoiceView" id="F${u.doc_id}"><i class="fas fa-file-alt"></i></span>`;
+            let docInvo = `<span class="invoiceView" id="F${u.doc_id}"><i class="fas fa-file-alt" title="${u.doc_name}"></i></span>`;
             let invoice = u.doc_id == 0 ? '' : docInvo;
             let skufull = u.prd_sku.slice(7, 11) == '' ? u.prd_sku.slice(0, 7) : u.prd_sku.slice(0, 7) + '-' + u.prd_sku.slice(7, 11);
 
@@ -228,7 +228,7 @@ function putProducts(dt) {
 
 /** +++++  configura la table de productos */
 function settingTable() {
-    let title = 'Lista de precios';
+    let title = 'Lista de productos';
     let filename = title.replace(/ /g, '_') + '-' + moment(Date()).format('YYYYMMDD');
     $('#tblProducts').DataTable({
         order: [[4, 'desc']],
@@ -319,8 +319,6 @@ function activeIcons() {
             let pkt = $(this).parent().attr('data-content').split('|')[3];
             let pkn = $(this).parent().attr('data-content').split('|')[1];
 
-            console.log(pkt, prd, qty);
-
             if (qty > 0) {
                 getSeries(prd);
             }
@@ -330,7 +328,6 @@ function activeIcons() {
         .unbind('click')
         .on('click', function () {
             var id = $(this).attr('id').slice(1, 10);
-            console.log(id);
             var pagina = 'Documentos/VerDocumento';
             var par = `[{"id":"${id}"}]`;
             var tipo = 'json';
@@ -345,7 +342,6 @@ function activeIcons() {
             let prdId = sltor.parents('tr').attr('id');
             let prdNm = 'Modifica producto';
 
-            console.log(prdId);
             $('#ProductModal').removeClass('overlay_hide');
             $('.overlay_closer .title').html(prdNm);
             getSelectProduct(prdId);
@@ -390,8 +386,6 @@ function putDelProducts(dt) {
 }
 
 function putDocument(dt) {
-    console.log(dt);
-
     var a = document.createElement('a');
     a.href = 'data:application/octet-stream;base64,' + dt.doc_document;
     a.target = '_blank';
@@ -403,7 +397,6 @@ function putDocument(dt) {
 
 function putSelectProduct(dt) {
     cleanProductsFields();
-    console.log(dt);
     let prdId = dt[0].prd_id;
     let prdName = dt[0].prd_name;
     let prdSku = dt[0].prd_sku;
@@ -416,7 +409,7 @@ function putSelectProduct(dt) {
     let prdVisibility = dt[0].prd_visibility;
     let prdLevel = dt[0].prd_level;
     let prdLonely = dt[0].prd_lonely;
-    let prdAssured = dt[0].prd_assured;
+    let prdInsured = dt[0].prd_insured;
     let sbcId = dt[0].sbc_id;
     let catId = $(`#txtSbcId option[value="${sbcId}"]`).attr('data_category');
     let cinId = dt[0].cin_id;
@@ -428,7 +421,7 @@ function putSelectProduct(dt) {
     // let lvl = prdLevel == 'A' ? ' <i class="fas fa-check-square" data_val="1"></i>' : '<i class="far fa-square" data_val="0"></i>';
     let lvl = prdLevel == 'A' ? ' Accesorio' : 'Producto';
     let lnl = prdLonely == '1' ? ' <i class="fas fa-check-square" data_val="1"></i>' : '<i class="far fa-square" data_val="0"></i>';
-    let ass = prdAssured == '1' ? ' <i class="fas fa-check-square" data_val="1"></i>' : '<i class="far fa-square" data_val="0"></i>';
+    let ass = prdInsured == '1' ? ' <i class="fas fa-check-square" data_val="1"></i>' : '<i class="far fa-square" data_val="0"></i>';
 
     $(`#txtCatId`).attr('disabled', true);
     $(`#txtSbcId`).attr('disabled', true);
@@ -451,7 +444,7 @@ function putSelectProduct(dt) {
     $('#txtPrdVisibility').html(vsb);
     $('#txtPrdLevel').html(lvl);
     $('#txtPrdLonely').html(lnl);
-    $('#txtPrdAssured').html(ass);
+    $('#txtPrdInsured').html(ass);
 
     $('#tblEditProduct .checkbox i')
         .unbind('click')
@@ -497,10 +490,10 @@ function saveEditProduct() {
         let prdNp = $('#txtPrdCodeProvider').val();
         let prdCm = $('#txtPrdComments').val();
         let prdVs = $('#txtPrdVisibility').children('i').attr('data_val');
-        let prdLv = $('#txtPrdLevel').children('i').attr('data_val');
-        prdLv = prdLv == '1' ? 'A' : 'P';
+        let prdLl = $('#txtPrdLevel').children('i').attr('data_val');
+        let prdLv = prdLl == '1' ? 'A' : 'P';
         let prdLn = $('#txtPrdLonely').children('i').attr('data_val');
-        let prdAs = $('#txtPrdAssured').children('i').attr('data_val');
+        let prdAs = $('#txtPrdInsured').children('i').attr('data_val');
         let prdCt = $(`#txtCatId`).val();
         let prdSb = $(`#txtSbcId`).val();
         let prdCn = $(`#txtCinId`).val();
@@ -545,7 +538,8 @@ function resEdtProduct(dt) {
     let prdPr = formato_numero($('#txtPrdPrice').val(), 2, '.', ',');
     let prdEn = $('#txtPrdEnglishName').val();
     let prdCm = $('#txtPrdComments').val();
-    let prdLv = $('#txtPrdLevel').children('i').attr('data_val');
+    // let prdLv = $('#txtPrdLevel').children('i').attr('data_val');
+    let prdLv = $('#txtPrdLevel').text().substring(1, 2);
     let prdCt = $(`#txtCatId option:selected`).text();
     let prdSb = $(`#txtSbcId option:selected`).text();
     let prdCn = $(`#txtCinId option:selected`).val() == 0 ? '' : $(`#txtCinId option:selected`).text().split('-')[0];
@@ -554,7 +548,7 @@ function resEdtProduct(dt) {
 
     let docInvo = `<span class="invoiceView" id="F${prdDi}"><i class="fas fa-file-alt"></i></span>`;
     let prdDc = prdDi == 0 ? '' : docInvo;
-    prdLv = prdLv == '1' ? 'A' : 'P';
+    prdLv = prdLv == 'A' ? 'A' : 'P';
 
     let el = $(`#tblProducts tr[id="${prdId}"]`);
     $(el.find('td')[1]).text(prdSk);
@@ -673,7 +667,7 @@ function saveNewProduct() {
         let prdLv = $('#txtPrdLevel').children('i').attr('data_val');
         prdLv = prdLv == '1' ? 'A' : 'P';
         let prdLn = $('#txtPrdLonely').children('i').attr('data_val');
-        let prdAs = $('#txtPrdAssured').children('i').attr('data_val');
+        let prdAs = $('#txtPrdInsured').children('i').attr('data_val');
         let prdCt = $(`#txtCatId`).val();
         let prdSb = $(`#txtSbcId`).val();
         let prdCn = $(`#txtCinId`).val();
@@ -733,7 +727,6 @@ function validatorProductsFields() {
             $(this).addClass('fail').parent().children('.fail_note').removeClass('hide');
         }
     });
-    console.log(ky);
     inactiveFocus();
     return ky;
 }
@@ -750,7 +743,7 @@ function inactiveFocus() {
 function putSeries(dt) {
     $('#SerieModal').removeClass('overlay_hide');
 
-    $('#tblSerialList').DataTable({
+    $('#tblSerie').DataTable({
         destroy: true,
         order: [[2, 'desc']],
         lengthMenu: [
@@ -789,17 +782,16 @@ function putSeries(dt) {
 
 /** +++++  Coloca los seriales en la tabla de seriales */
 function build_modal_serie(dt) {
-    let tabla = $('#tblSerialList').DataTable();
-    console.log('lista de series: ', dt);
+    let tabla = $('#tblSerie').DataTable();
     $('.overlay_closer .title').html(`${dt[0].prd_sku} - ${dt[0].prd_name}`);
     tabla.rows().remove().draw();
     $.each(dt, function (v, u) {
-        let docInvo = `<span class="invoiceView" id="F${u.doc_id}"><i class="fas fa-file-alt"></i></span>`;
+        let docInvo = `<span class="invoiceViewSer" id="F${u.doc_id}"><i class="fas fa-file-alt" title="${u.doc_name}"></i></span>`;
         let invoice = u.doc_id == 0 ? '' : docInvo;
         tabla.row
             .add({
                 sermodif: `<i class='fas fa-pen serie modif' id="E${u.ser_id}"></i><i class="fas fa-times-circle serie kill" id="K${u.ser_id}"></i>`,
-                produsku: `<span class="hide-support">${u.ser_id}</span>${u.ser_sku.slice(0, 7)}-${u.ser_sku.slice(7, 11)}`,
+                produsku: `${u.ser_sku.slice(0, 7)}-${u.ser_sku.slice(7, 11)}`,
                 serlnumb: u.ser_serial_number,
                 dateregs: u.ser_date_registry,
                 cvstatus: u.ser_situation,
@@ -810,7 +802,23 @@ function build_modal_serie(dt) {
                 comments: u.ser_comments,
             })
             .draw();
+        $(`#E${u.ser_id}`).parents('tr').attr('data-product', u.prd_id);
     });
+    activeIconsSerie();
+}
+
+function activeIconsSerie() {
+    $('.invoiceViewSer')
+        .unbind('click')
+        .on('click', function () {
+            var id = $(this).attr('id').slice(1, 10);
+            console.log(id);
+            var pagina = 'Documentos/VerDocumento';
+            var par = `[{"id":"${id}"}]`;
+            var tipo = 'json';
+            var selector = putDocument;
+            fillField(pagina, par, tipo, selector);
+        });
 
     $('.serie.modif')
         .unbind('click')
@@ -824,19 +832,56 @@ function build_modal_serie(dt) {
                 .on('click', function () {
                     $('#ModifySerieModal').addClass('overlay_hide');
                 });
-            console.log('Seleccionó: ' + serId);
             getSelectSerie(serId);
         });
     $('.serie.kill')
         .unbind('click')
         .on('click', function () {
             console.log('Elimina serie');
+            let sltor = $(this);
+            let serId = sltor.attr('id').substring(1, 10);
+            let prdId = sltor.parents('tr').attr('data-product');
+            console.log('Kill ' + serId);
+            $('#delSerieModal').modal('show');
+            $('#txtIdSerie').val(serId);
+            $('#btnDelSerie').on('click', function () {
+                let Id = $('#txtIdSerie').val();
+                console.log(Id);
+                let tabla = $('#tblSerie').DataTable();
+                $('#delSerieModal').modal('hide');
+
+                let prdRow = $(`#${Id}`);
+
+                tabla.row(prdRow).remove().draw();
+
+                var pagina = 'Products/deleteSerie';
+                var par = `[{"serId":"${Id}", "prdId":"${prdId}"}]`;
+                var tipo = 'html';
+                var selector = putDelSerie;
+                fillField(pagina, par, tipo, selector);
+            });
         });
 }
 
-function putSelectSerie(dt) {
+function putDelSerie(dt) {
     console.log(dt);
+    let serId = dt.split('|')[0];
+    let prdId = dt.split('|')[1];
 
+    let tabla = $('#tblSerie').DataTable();
+    tabla
+        .row($('#K' + serId).parents('tr'))
+        .remove()
+        .draw();
+
+    let el = $('#' + prdId);
+    let cll = $(el.find('td')[4]).children('.toLink');
+    let qty = cll.text();
+    cll.text(qty - 1);
+    console.log(qty - 1);
+}
+
+function putSelectSerie(dt) {
     $('#txtSerIdSerie').val(dt[0].ser_id);
     $('#txtSerSkuSerie').val(dt[0].ser_sku.slice(0, 7) + '-' + dt[0].ser_sku.slice(7, 11));
     $('#txtSerSerialNumber').val(dt[0].ser_serial_number);
@@ -860,7 +905,6 @@ function putSelectSerie(dt) {
                 "serCm"  :  "${$('#txtSerComments').val()}"
             }]
         `;
-            console.log(par);
             var pagina = 'Products/saveEdtSeries';
             var tipo = 'html';
             var selector = resEdtSeries;
@@ -901,8 +945,6 @@ function putSelectSerie(dt) {
 }
 
 function resEdtSeries(dt) {
-    console.log(dt);
-
     let serId = $('#txtSerIdSerie').val();
     let serSr = $('#txtSerSerialNumber').val();
     let serDt = $('#txtSerDateRegistry').val();
@@ -910,17 +952,19 @@ function resEdtSeries(dt) {
     let serDi = $('#txtDcpIdSerie').val();
     let serCm = $('#txtSerComments').val();
 
-    let el = $(`#tblSerialList tr td i[id="E${serId}"]`).parents('tr');
-    $(el.find('td')[2]).text(serSr);
-    $(el.find('td')[3]).text(serDt);
-    $(el.find('td')[6]).val(serDc);
-    $(el.find('td')[9]).val(serCm);
+    let el = $(`#tblSerie tr td i[id="E${serId}"]`).parents('tr');
+    let docInvo = `<span class="invoiceView" id="F${serDc}"><i class="fas fa-file-alt"></i></span>`;
+    let invoi = serDc == 0 ? '' : docInvo;
+    $(el.find('td')[2]).html(serSr);
+    $(el.find('td')[3]).html(serDt);
+    $(el.find('td')[6]).html(invoi);
+    $(el.find('td')[9]).html(serCm);
 
+    activeIconsSerie();
     $('#ModifySerieModal .btn_close').trigger('click');
 }
 
 function putInvoice(dt) {
-    console.log(dt);
     if (dt[0].doc_id != '0') {
         $.each(dt, function (v, u) {
             var H = `<option value="${u.doc_id}">${u.doc_name}</option>`;

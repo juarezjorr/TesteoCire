@@ -20,121 +20,121 @@
 
     $dato = explode('@', $getFile);
     //  var_dump(  $dato1 );
-  
-          foreach ($dato as $dt){
-            //  echo $dt . '<br>';
-              $el = explode('|', $dt);
 
-              $numProject = $el[1];
-              $nameProject = $el[2];
-              $version = $el[4];
-              $freelance = $el[5];
-              $date = $el[3];
-              $isConcepto = $el[13];
-          }
+    foreach ($dato as $dt){
+        //  echo $dt . '<br>';
+        $el = explode('|', $dt);
+
+        $numProject = $el[1];
+        $nameProject = $el[2];
+        $version = $el[4];
+        $freelance = $el[5];
+        $date = $el[3];
+        $isConcepto = $el[13];
+    }
 
 
     $html = '
-    <header>
-        <div class="cornisa">
-            <table class="table-main">
-                <tr>
-                    <td class="box-logo">
-                        <img class="img-logo" src="../../../app/assets/img/logo-blanco.jpg" width="70px" alt="">
-                    </td>
-                    <td class="box-data">
-                            <h2>Productos en existencia</h2>
-                                    <table class="table-data">
-                                        <tr>
-                                            <td class="concept">Fecha del reporte:</td>
-                                            <td class="data">'. $date .'</td>
-                                        </tr>
+        <header>
+            <div class="cornisa">
+                <table class="table-main">
+                    <tr>
+                        <td class="box-logo">
+                            <img class="img-logo" src="../../../app/assets/img/logo-blanco.jpg" width="70px" alt="">
+                        </td>
+                        <td class="box-data">
+                                <h2>Productos en existencia</h2>
+                                        <table class="table-data">
+                                            <tr>
+                                                <td class="concept">Fecha del reporte:</td>
+                                                <td class="data">'. $date .'</td>
+                                            </tr>
 
-                                    </table>
-                    </td>
-                    <td  class="box-address">
-                            <table class="table-address">
-                                <tr>
-                                    <td class="addData">55 5676-1113<br />55 5676-1483</td>
-                                    <td class="addIcon addColor01"><img class="img-logo" src="../../../app/assets/img/icon-phone.png" style="height:auto; width:14px;"></td>
-                                </tr>
-                                <tr>
-                                    <td class="addData">Av Guadalupe I. Ramírez 763,<br />Tepepan Xochimilco, 16020, CDMX</td>
-                                    <td class="addIcon addColor02"><img class="img-logo" src="../../../app/assets/img/icon-location.png" style="height:auto; width:14px;"></td>
-                                </tr>
-                                <tr>
-                                    <td class="addData">ventas@cttrentals.com<br />contacto@cttretnals.com<br />cotizaciones@cttrentals.com</td>
-                                    <td class="addIcon addColor03"><img class="img-logo" src="../../../app/assets/img/icon-email.png" style="height:auto; width:14px;"></td>
-                                </tr>
-                            </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </header>
-    <section>
-        
-        <div class="listing">
-            <table class="tabla-content">
-                <thead>
-                    <tr>';
+                                        </table>
+                        </td>
+                        <td  class="box-address">
+                                <table class="table-address">
+                                    <tr>
+                                        <td class="addData">55 5676-1113<br />55 5676-1483</td>
+                                        <td class="addIcon addColor01"><img class="img-logo" src="../../../app/assets/img/icon-phone.png" style="height:auto; width:14px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="addData">Av Guadalupe I. Ramírez 763,<br />Tepepan Xochimilco, 16020, CDMX</td>
+                                        <td class="addIcon addColor02"><img class="img-logo" src="../../../app/assets/img/icon-location.png" style="height:auto; width:14px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="addData">ventas@cttrentals.com<br />contacto@cttretnals.com<br />cotizaciones@cttrentals.com</td>
+                                        <td class="addIcon addColor03"><img class="img-logo" src="../../../app/assets/img/icon-email.png" style="height:auto; width:14px;"></td>
+                                    </tr>
+                                </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </header>
+        <section>
+            
+            <div class="listing">
+                <table class="tabla-content">
+                    <thead>
+                        <tr>';
 
-                    if($isConcepto == 1){
-                        $html .= '
-                        <th style="width:  25mm;">SKU</th>
-                        <th style="width:  150mm;">NOMBRE</th>
-                        <th style="width: 15mm;">PRECIO</th>
-                        <th style="width: 15mm;">SUBCATEGORIA</th>';
-                    }else{
-                        $html .= ' 
-                        <th style="width:  25mm;">SKU</th>
-                        <th style="width:  150mm;">NOMBRE</th>
-                        <th style="width: 15mm;">COSTO</th>
-                        <th style="width:  20mm;">SERIE</th>
-                        <th style="width: 25mm;">FECHA ALTA</th>
-                        <th style="width:  20mm;">PROVEEDOR</th>
-                        <th style="width: 25mm;">SUBCATEGORIA</th>';
+                        if($isConcepto == 1){
+                            $html .= '
+                            <th style="width:  25mm;">SKU</th>
+                            <th style="width:  150mm;">NOMBRE</th>
+                            <th style="width: 15mm;">PRECIO</th>
+                            <th style="width: 15mm;">SUBCATEGORIA</th>';
+                        }else{
+                            $html .= ' 
+                            <th style="width:  25mm;">SKU</th>
+                            <th style="width:  150mm;">NOMBRE</th>
+                            <th style="width: 15mm;">COSTO</th>
+                            <th style="width:  20mm;">SERIE</th>
+                            <th style="width: 25mm;">FECHA ALTA</th>
+                            <th style="width:  20mm;">PROVEEDOR</th>
+                            <th style="width: 25mm;">SUBCATEGORIA</th>';
+                        }
+
+                $html .= '</tr>
+                    </thead>
+                    <tbody>
+                ';
+
+                if($isConcepto == 1){
+                    foreach ($dato as $dt){
+                        $el = explode('|', $dt);
+                            $html .= '
+                            <tr>
+                                <td>'.$el[6].'</td>
+                                <td>'.$el[7].'</td>
+                                <td>'.$el[8].'</td>
+                                <td>'.$el[9].'</td>
+                            </tr>';
                     }
-
-            $html .= '</tr>
-                </thead>
-                <tbody>
-            ';
-
-            if($isConcepto == 1){
-                foreach ($dato as $dt){
-                    $el = explode('|', $dt);
-                        $html .= '
-                        <tr>
-                            <td>'.$el[6].'</td>
-                            <td>'.$el[7].'</td>
-                            <td>'.$el[8].'</td>
-                            <td>'.$el[9].'</td>
-                        </tr>';
                 }
-            }
-            else{
-                foreach ($dato as $dt){
-                    $el = explode('|', $dt);
-                        $html .= '
-                        <tr>
-                            <td>'.$el[6].'</td>
-                            <td>'.$el[7].'</td>
-                            <td>'.$el[8].'</td>
-                            <td>'.$el[9].'</td>
-                            <td>'.$el[10].'</td>
-                            <td>'.$el[11].'</td>
-                            <td>'.$el[12].'</td>
-                        </tr>';
+                else{
+                    foreach ($dato as $dt){
+                        $el = explode('|', $dt);
+                            $html .= '
+                            <tr>
+                                <td>'.$el[6].'</td>
+                                <td>'.$el[7].'</td>
+                                <td>'.$el[8].'</td>
+                                <td>'.$el[9].'</td>
+                                <td>'.$el[10].'</td>
+                                <td>'.$el[11].'</td>
+                                <td>'.$el[12].'</td>
+                            </tr>';
+                    }
                 }
-            }
 
-            $html .= '
-                   
-                </tbody>
-            </table>
-        </div>
-    </section>
+                $html .= '
+                    
+                    </tbody>
+                </table>
+            </div>
+        </section>
     ';
 
 

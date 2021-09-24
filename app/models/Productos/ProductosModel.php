@@ -83,7 +83,7 @@ class ProductosModel extends Model
                                         prd_sku,
                                         prd_lonely,
                                         prd_level,
-                                        prd_assured,
+                                        prd_insured,
                                         doc_id
                                         ) 
                                 VALUES('".$params['NomProducto']."',
@@ -116,7 +116,7 @@ class ProductosModel extends Model
 
                     $qry = "SELECT 
                     p.prd_id,ifnull(p.prd_sku,'') , p.prd_name, p.prd_english_name,p.prd_model,p.prd_price, p.prd_coin_type ,p.prd_visibility, p.prd_comments,p.sbc_id, sc.cat_id, sc.sbc_name,  ct.cat_name, 
-                    sv.srv_name, p.prd_level, ifnull(sum(sp.stp_quantity),0) AS quantity, p.prd_assured
+                    sv.srv_name, p.prd_level, ifnull(sum(sp.stp_quantity),0) AS quantity, p.prd_insured
                     FROM  ctt_products AS p
                     INNER JOIN ctt_subcategories 	AS sc ON sc.sbc_id = p.sbc_id 	AND sc.sbc_status = 1
                     INNER JOIN ctt_categories 		AS ct ON ct.cat_id = sc.cat_id 	AND ct.cat_status = 1
@@ -145,7 +145,7 @@ class ProductosModel extends Model
                         "srv_name" =>$row[13],
                         "prd_level" =>$row[14],
                         "extNum" => $row[15],
-                        "prd_assured" => $row[16]);
+                        "prd_insured" => $row[16]);
                     }
                     $estatus = $item;
 
@@ -331,7 +331,7 @@ class ProductosModel extends Model
     {
         $qry = "SELECT pro.prd_name, pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
                 pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, 
-                pro.srv_id, subcat.cat_id, pro.prd_lonely, pro.prd_level, pro.doc_id ,pro.prd_assured
+                pro.srv_id, subcat.cat_id, pro.prd_lonely, pro.prd_level, pro.doc_id ,pro.prd_insured
                 FROM ctt_products AS pro
                 LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
                 LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id
@@ -344,7 +344,7 @@ class ProductosModel extends Model
         $qry = "SELECT pro.prd_id, pro.prd_name, pro.prd_english_name, pro.prd_model, pro.prd_price, pro.prd_coin_type, 
                 pro.prd_visibility, pro.prd_comments, pro.prd_status, pro.sbc_id, 
                 pro.srv_id, subcat.cat_id, ser.ser_serial_number , ser.ser_cost,
-                ser.ser_lonely, sProduct.str_id , pro.prd_lonely, pro.prd_level, pro.doc_id ,pro.prd_assured
+                ser.ser_lonely, sProduct.str_id , pro.prd_lonely, pro.prd_level, pro.doc_id ,pro.prd_insured
                 FROM ctt_products AS pro
                 LEFT JOIN ctt_subcategories AS subcat ON subcat.sbc_id = pro.sbc_id
                 LEFT JOIN ctt_products_documents AS productD ON productD.prd_id = pro.prd_id

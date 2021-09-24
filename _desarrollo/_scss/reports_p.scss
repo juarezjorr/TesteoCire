@@ -1,0 +1,216 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    td {
+        padding: 0;
+        margin: 0;
+        vertical-align: top;
+    }
+}
+
+.top-color {
+    background-color: #ffffff;
+}
+.side-color {
+    width: 30mm;
+}
+header {
+    background-color: #ffffff;
+
+    .cornisa {
+        overflow: hidden;
+        width: 100%;
+
+        .box-logo {
+            text-align: right;
+            .img-logo {
+                width: 20mm;
+                margin: 3mm 2.5mm 0 2.5mm;
+            }
+        }
+        .box-address {
+            text-align: right;
+            padding: 5mm 4mm;
+            .date-top {
+                margin-bottom: 5mm;
+            }
+
+            .table-address {
+                border-collapse: collapse;
+                margin-top: 2mm;
+                margin-bottom: 5mm;
+                .addData {
+                    text-align: right;
+                    padding-right: 2mm;
+                    font-size: 7pt;
+                    width: 50mm;
+                    color: #666666;
+                }
+                .addIcon {
+                    text-align: center;
+                    vertical-align: middle;
+                }
+                .addColor01 {
+                    background-color: #8dd8f8;
+                    width: 7mm;
+                }
+                .addColor02 {
+                    background-color: #16c1f3;
+                    width: 7mm;
+                }
+                .addColor03 {
+                    background-color: #00aeee;
+                    width: 7mm;
+                }
+            }
+        }
+    }
+}
+
+section {
+    .container {
+        margin-right: 10mm;
+        padding-left: 30mm;
+
+        .name-report  {
+            width: 100%;
+            text-align: right;
+            .number  {
+                font-size: 1.8rem;
+                font-weight: 700;
+            }
+        }
+        
+            h1 {
+                margin-top: 10mm;
+                width: 100%;
+                text-align: right;
+            }
+            h2 {
+                margin-top: 10mm;
+                margin-bottom: 0mm;
+
+                width: 100%;
+            }
+            .table-data {
+                // width: 100%;
+                margin-bottom: 2mm;
+                margin-top: 2mm;
+
+                .concept {
+                    width: 30mm;
+                    font-size: 8pt;
+                    text-align: right;
+                    color: #666666;
+                    padding-right: 2mm;
+                }
+                .data {
+                    font-size: 8pt;
+                    font-weight: 700;
+                    text-align: left;
+                    padding-bottom: 2px;
+                }
+
+                .tit-totals {
+                    text-align: right;
+                    color: #666666;
+                    padding: 5mm 5mm 0 0;
+                    width: 25%;
+                }
+                .dat-totals {
+                    text-align: right;
+                    color: #000000;
+                    font-weight: 900;
+                    font-size: 1.3rem;
+                    padding: 0 5mm 5mm 0;
+                }
+
+                .tit-figure {
+                    padding: 2mm 0;
+                    border-bottom: 2px solid #000000;
+                }
+
+                th.prod {
+                    width: auto;
+                    text-align: center;
+                }
+                th.pric,
+                th.disc,
+                th.amou {
+                    width: 22mm;
+                    text-align: right;
+                }
+                th.qnty,
+                th.days {
+                    width: 15mm;
+                    text-align: right;
+                }
+
+                .dat-figure {
+                    padding: 0.9mm 0;
+                    border-bottom: 1px dotted #cccccc;
+                }
+                td.prod {
+                    font-weight: 700;
+                }
+                td.pric,
+                td.disc,
+                td.amou {
+                    text-align: right;
+                }
+                td.qnty,
+                td.days {
+                    width: 15mm;
+                    text-align: right;
+                }
+            }
+
+            .half {
+                width: 50%;
+            }
+        
+    }
+}
+
+footer {
+    border-top: 1px solid #999999;
+
+    table {
+        font-size: 9px;
+        color: #999999;
+    }
+    .table-footer {
+        .td-foot {
+            height: 15mm;
+            padding: 4mm;
+        }
+    }
+}
+
+.rline {
+    border-right: 1px solid #cccccc;
+}
+.bline {
+    border-bottom: 1px solid #cccccc;
+}
+.bline-d {
+    border-bottom: 2px solid #000000;
+}
+.tline {
+    border-top: 1px solid #cccccc;
+}
+.tline-d {
+    border-top: 2px solid #cccccc;
+}
+.rtext  {
+    text-align: right;
+}

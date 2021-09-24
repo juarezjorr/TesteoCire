@@ -16,10 +16,10 @@
         <div class="row">
             <div class="block_01">
                 <div class="row">
-
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 blocks">
                         
                         <div class="  block_01-02">
+                        <span class="titleSection">Cotizaciones</span>
                             <table class="table_information">
                                 <tr>
                                     <td class="concepto"><b>Numero de proyecto</b></td>
@@ -81,6 +81,7 @@
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 blocks">
                         <div class="  block_01-01 ">
+                        <span class="titleSection">&nbsp;</span>
                             <table class="table_information">
                                 <tr>
                                     <td class="concepto">Nombre del Cliente</td>

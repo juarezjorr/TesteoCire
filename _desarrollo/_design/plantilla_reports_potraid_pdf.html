@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Reportes Potraid</title>
+        <link rel="stylesheet" href="../../app/assets/css/reports_p.css" />
+    </head>
+    <body>
+        <header>
+            <div class="cornisa">
+                <table class="table-main" border="0">
+                    <tr>
+                        <td class="box-logo side-color">
+                            <img class="img-logo" src="../../../app/assets/img/logo-blanco.jpg" />
+                        </td>
+                        <td class="box-address top-color">
+                            <!-- Direccion de la empresa -->
+                            <table class="table-address">
+                                <tr>
+                                    <td class="addData">55 5676-1113<br />55 5676-1483</td>
+                                    <td class="addIcon addColor01"><img class="img-logo" src="../../../app/assets/img/icon-phone.png" /></td>
+
+                                    <td class="addData">Av Guadalupe I. Ramírez 763,<br />Tepepan Xochimilco, 16020, CDMX</td>
+                                    <td class="addIcon addColor02"><img class="img-logo" src="../../../app/assets/img/icon-location.png" /></td>
+                                    <td class="addData">ventas@cttrentals.com<br />contacto@cttretnals.com<br />cotizaciones@cttrentals.com</td>
+                                    <td class="addIcon addColor03"><img class="img-logo" src="../../../app/assets/img/icon-email.png" /></td>
+                                </tr>
+                            </table>
+                            <h1>Cotización</h1>
+                            <p class="date-top">21 Septiembre 2021 14:16</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </header>
+
+        <section>
+            <div class="container">
+                <table class="table-main" border="0">
+                    <tr>
+                        <td class="side-color"></td>
+                        <td class="box-data">
+                            <!-- Start Datos de identificación  -->
+                            <table class="table-data bline tline" border="0">
+                                <tr>
+                                    <td class="rline half">
+                                        <!-- Start datos del cliente -->
+                                        <table class="table-data">
+                                            <tr>
+                                                <td class="concept">Cliente:</td>
+                                                <td class="data">'. $cus_name .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Domicilio:</td>
+                                                <td class="data">'. $cus_address .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Correo Electrónico:</td>
+                                                <td class="data">'. $cus_email .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Teléfono:</td>
+                                                <td class="data">'. $cus_phone .'</td>
+                                            </tr>
+                                        </table>
+                                        <!-- End datos del cliente -->
+                                    </td>
+                                    <td class="half">
+                                        <!-- Start Datos del projecto -->
+                                        <table class="table-data">
+                                            <tr>
+                                                <td class="concept">Num. proyecto:</td>
+                                                <td class="data">'. $pjt_number .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Proyecto:</td>
+                                                <td class="data">'. $pjt_name .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Locación:</td>
+                                                <td class="data">'. $pjt_location .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Tipo de Locación:</td>
+                                                <td class="data">'. $loc_name .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Tipo de proyecto:</td>
+                                                <td class="data">'. $pjttp_name .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Periodo:</td>
+                                                <td class="data">'. $pjt_date_start . '-' . $pjt_date_end .'</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">&nbsp;</td>
+                                                <td class="data">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="concept">Versión:</td>
+                                                <td class="data">'. $ver_code .'</td>
+                                            </tr>
+                                        </table>
+                                        <!-- End Datos del projecto -->
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- End Datos de identificación  -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="side-color"></td>
+                        <td class="box-data">
+                            <!-- Start Tabla de totales  -->
+                            <table class="table-data bline">
+                                <tr>
+                                    <td>
+                                        <table class="table-data">
+                                            <thead>
+                                                <tr>
+                                                    <th class="tit-totals">Costo base</th>
+                                                    <th class="tit-totals">Costo Viaje</th>
+                                                    <th class="tit-totals">Costo Pruebas</th>
+                                                    <th class="tit-totals">Seguro</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="dat-totals">0.00</td>
+                                                    <td class="dat-totals">0.00</td>
+                                                    <td class="dat-totals">0.00</td>
+                                                    <td class="dat-totals">0.00</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- End Tabla de totales  -->
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="side-color"></td>
+                        <td class="box-data">
+                            <!-- Start Tabla de costo base  -->
+                            <h2>Costo Base</h2>
+                            <table class="table-data bline-d">
+                                <thead>
+                                    <tr>
+                                        <th class="tit-figure prod">Producto</th>
+                                        <th class="tit-figure pric">Precio</th>
+                                        <th class="tit-figure qnty">Cant.</th>
+                                        <th class="tit-figure days">Días</th>
+                                        <th class="tit-figure disc">Descuento</th>
+                                        <th class="tit-figure amou">Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure qnty">3</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure qnty">3</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure qnty">3</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure qnty">3</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Tabla de costo base  -->
+                            <!-- Start Tabla de costo Viaje  -->
+                            <h2>Costo Viaje</h2>
+                            <table class="table-data bline-d">
+                                <thead>
+                                    <tr>
+                                        <th class="tit-figure prod">Producto</th>
+                                        <th class="tit-figure pric">Precio</th>
+                                        <th class="tit-figure days">Días</th>
+                                        <th class="tit-figure disc">Descuento</th>
+                                        <th class="tit-figure amou">Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Tabla de costo base  -->
+                            <!-- Start Tabla de costo Viaje  -->
+                            <h2>Costo Pruebas</h2>
+                            <table class="table-data bline-d">
+                                <thead>
+                                    <tr>
+                                        <th class="tit-figure prod">Producto</th>
+                                        <th class="tit-figure pric">Precio</th>
+                                        <th class="tit-figure days">Días</th>
+                                        <th class="tit-figure disc">Descuento</th>
+                                        <th class="tit-figure amou">Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dat-figure prod">CLAQUETA INSERT CON STICKS DE COLORES</td>
+                                        <td class="dat-figure pric">1,400.00</td>
+                                        <td class="dat-figure days">23</td>
+                                        <td class="dat-figure disc">0.00</td>
+                                        <td class="dat-figure amou">96,600.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Tabla de costo base  -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <table class="table-footer">
+                <tr>
+                    <td class="side-color"></td>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td class="td-foot foot-date" width="33%">{DATE F j, Y}</td>
+                                <td class="td-foot foot-page" width="33%" align="center">{PAGENO}/{nbpg}</td>
+                                <td class="td-foot foot-rept" width="33%" style="text-align: right">Cotización</td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+           
+        </footer>
+    </body>
+</html>

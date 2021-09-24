@@ -244,8 +244,9 @@ CREATE TABLE `cttapp_cire`.`ctt_products` (
     `prd_comments`          VARCHAR(300) NULL               COMMENT 'Observaciones',
     `prd_status`            VARCHAR(1) NULL                 COMMENT 'Estatus del producto 1-Activo, 0-Inactivo',
     `prd_level`             VARCHAR(1) DEFAULT 'P'          COMMENT 'Nivel del producto  K=Kit, P=Producto',
+    `prd_expendable`        VARCHAR(1) DEFAULT '0'          COMMENT 'Producto para venta expendable  1 = Expendable, 0 = No expendable',
     `prd_lonely`            VARCHAR(1)                      COMMENT 'Se puede rentar sin accesosrios 1-si, 0-no',
-    `prd_assured`           VARCHAR(1)                      COMMENT 'Cotiza seguro 1-si, 0-no',
+    `prd_insured`           VARCHAR(1)                      COMMENT 'Cotiza seguro 1-si, 0-no',
     `doc_id`                INT NULL                        COMMENT 'Id del docuemnto para relacionar la ficha técnica ctt_products_documents',
     `sbc_id`                INT NULL                        COMMENT 'Id de la subcategoría relacion ctt_subcategories',
     `srv_id`                INT NULL                        COMMENT 'Id del tipo de servicio relacion ctt_services',
@@ -317,20 +318,33 @@ PRIMARY KEY (`pjt_id`))
 COMMENT='proyectos registrados';
 
 
-DROP TABLE `cttapp_cire`.`ctt_projects_type`;
-CREATE TABLE `cttapp_cire`.`ctt_projects_type` (
-    `pjttp_id`              INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Id del tipo de proyecto',
-    `pjttp_name`            VARCHAR(100) NULL               COMMENT 'Nombre del tipo de proyecto',
-    `pjttp_min_download`    INT(11) NOT NULL                COMMENT 'Horas minimas requeridos para carga/descarga',
-    `pjttp_max_download`    INT(11) NOT NULL                COMMENT 'Horas maximas requeridos para carga/descarga',
-PRIMARY KEY (`pjttp_id`))
-COMMENT='Tipos de proyectos o eventos que se ofrecen y siministran';
+
+DROP TABLE `cttapp_cire`.`ctt_projects_content`;
+CREATE TABLE `cttapp_cire`.`ctt_projects_content` (
+    `pjtcn_id`                  INT NOT NULL AUTO_INCREMENT    COMMENT 'Id del contenido del projecto',
+    `pjtcn_prod_sku`            VARCHAR(15)  NULL              COMMENT 'SKU identificador del producto',
+    `pjtcn_prod_name`           VARCHAR(100) NULL              COMMENT 'Nombre del producto',
+    `pjtcn_prod_price`          DECIMAL(10,2) NULL             COMMENT 'Precio unitario del producto',
+    `pjtcn_quantity`            INT NULL                       COMMENT 'Cantidad de productos',
+    `pjtcn_days_base`           INT NULL                       COMMENT 'Días solicitados en renta',
+    `pjtcn_discount_base`       DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado a la renta',
+    `pjtcn_days_trip`           INT NULL                       COMMENT 'Días solicitados en viaje',
+    `pjtcn_discount_trip`       DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado al viaje',
+    `pjtcn_days_test`           INT NULL                       COMMENT 'Días solicitados en prueba',
+    `pjtcn_discount_test`       DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado en prueba',
+    `pjtcn_insured`             DECIMAL(10,2) NULL DEFAULT .1  COMMENT 'Porcentaje de seguro',
+    `pjtcn_prod_level`          VARCHAR(1) DEFAULT 'P'         COMMENT 'Nivel del producto  K=Kit, P=Producto',
+    `pjtcn_status`              VARCHAR(1) DEFAULT '1'         COMMENT 'Status del contendo del proyecto 1-activo 0-inactivo',
+    `ver_id`                    INT NOT NULL                   COMMENT 'FK Id de la version relación ctt_version',
+    `prd_id`                    INT NOT NULL                   COMMENT 'FK Id del producto relación ctt_products',
+    `pjt_id`                    INT NOT NULL                   COMMENT 'FK Id del proyecto relación ctt_proyect',
+
+PRIMARY KEY (`pjtcn_id`)) 
+COMMENT='Contenido del proyecto cotización promovida';
 
 
-
-
-DROP TABLE `cttapp_cire`.`ctt_proyects_detail`;
-CREATE TABLE `cttapp_cire`.`ctt_proyects_detail` (
+DROP TABLE `cttapp_cire`.`ctt_projects_detail`;
+CREATE TABLE `cttapp_cire`.`ctt_projects_detail` (
     `pjtdt_id`                   INT NOT NULL AUTO_INCREMENT    COMMENT 'Id del detalle de proyecto',
     `pjtdt_prod_sku`             VARCHAR(15)  NULL              COMMENT 'SKU identificador del producto',
     `pjtdt_prod_name`            VARCHAR(100) NULL              COMMENT 'Nombre del producto',
@@ -345,12 +359,21 @@ CREATE TABLE `cttapp_cire`.`ctt_proyects_detail` (
     `pjtdt_discount_test`        DECIMAL(10,2) NULL             COMMENT 'Descuento aplicado en prueba',
     `pjtdt_insured`              DECIMAL(10,2) NULL DEFAULT .1  COMMENT 'Porcentaje de seguro',
     `pjtdt_status`               VARCHAR(1) NULL DEFAULT 1      COMMENT 'Estatus de la serie 1-Activo, 0-Inactivo',
-    `ver_id`                     INT NOT NULL                   COMMENT 'FK Id de la version relación ctt_version',
     `ser_id`                     INT NOT NULL                   COMMENT 'FK Id de la serie relación ctt_series',
-    `pjt_id`                     INT NOT NULL                   COMMENT 'FK Id del proyecto relación ctt_projects',
+    `pjtcm_id`                   INT NOT NULL                   COMMENT 'FK Id del proyecto relación ctt_projects_content',
 
 PRIMARY KEY (`pjtdt_id`)) 
 COMMENT='Detalle del proyecto, cotización promovida';
+
+
+DROP TABLE `cttapp_cire`.`ctt_projects_type`;
+CREATE TABLE `cttapp_cire`.`ctt_projects_type` (
+    `pjttp_id`              INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Id del tipo de proyecto',
+    `pjttp_name`            VARCHAR(100) NULL               COMMENT 'Nombre del tipo de proyecto',
+    `pjttp_min_download`    INT(11) NOT NULL                COMMENT 'Horas minimas requeridos para carga/descarga',
+    `pjttp_max_download`    INT(11) NOT NULL                COMMENT 'Horas maximas requeridos para carga/descarga',
+PRIMARY KEY (`pjttp_id`))
+COMMENT='Tipos de proyectos o eventos que se ofrecen y siministran';
 
 
 

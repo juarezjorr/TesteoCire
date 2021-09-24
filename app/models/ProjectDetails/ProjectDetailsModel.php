@@ -55,5 +55,37 @@ class ProjectDetailsModel extends Model
         return $this->db->query($qry);
     }    
 
+// Listado de contenido de projecto
+    public function listBudgets($params)
+    {
+        $pjtId = $this->db->real_escape_string($params['pjtId']);
+        $dstr = $this->db->real_escape_string($params['dstr']);
+        $dend = $this->db->real_escape_string($params['dend']);
 
+        $qry = "SELECT pc.*, pj.pjt_id, 
+                date_format(pj.pjt_date_start, '%Y%m%d') AS pjt_date_start, 
+                date_format(pj.pjt_date_end, '%Y%m%d') AS pjt_date_end, 
+                CASE 
+                    WHEN pjtcn_prod_level ='K' THEN 
+                        (SELECT count(*) FROM ctt_products_packages WHERE prd_parent = pc.prd_id)
+                    WHEN pjtcn_prod_level ='P' THEN 
+                        (SELECT ifnull(SUM(stp_quantity),0) FROM ctt_series AS sr 
+                        INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id 
+                        WHERE prd_id =  pc.prd_id
+                        AND (ser_reserve_end < '$dstr' OR ser_reserve_end IS NULL
+                        AND ser_reserve_start > '$dend'  OR ser_reserve_start IS NULL) AND sr.ser_status = 1
+                        )
+                    ELSE 
+                        (SELECT ifnull(SUM(stp_quantity),0) FROM ctt_series AS sr 
+                        INNER JOIN ctt_stores_products AS st ON st.ser_id = sr.ser_id 
+                        WHERE prd_id =  pc.prd_id
+                        AND (ser_reserve_end < '$dstr' OR ser_reserve_end IS NULL
+                        AND ser_reserve_start > '$dend'  OR ser_reserve_start IS NULL) AND sr.ser_status = 1
+                        )
+                    END AS bdg_stock
+            FROM ctt_projects_content AS pc
+            INNER JOIN ctt_projects AS pj ON pj.pjt_id = pc.pjt_id
+            WHERE pc.pjt_id = $pjtId ORDER BY pjtcn_prod_name ASC;";
+        return $this->db->query($qry);
+    }  
 }
