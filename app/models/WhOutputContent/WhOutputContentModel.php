@@ -13,7 +13,7 @@ class ProductsForSublettingModel extends Model
     public function listProducts($store)
     {
         $store = $this->db->real_escape_string($store);
-        $qry = "SELECT 
+        $qry = "SELECT * 
                     p.prd_id, p.prd_name, p.prd_sku, ifnull(s.ser_id,0) as ser_id, ifnull(s.ser_serial_number,'') as ser_serial_number, ifnull(s.ser_cost,'') as ser_cost, ifnull(p.cin_id,'0') as cin_id
                 FROM ctt_products AS p
                 LEFT JOIN ctt_series AS s ON s.prd_id = p.prd_id AND s.ser_behaviour = 'R'
